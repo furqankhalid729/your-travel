@@ -1,11 +1,11 @@
 import React from "react";
 import BannerWithTabs from "../components/home/BannerWithTabs";
-import FeaturedFleets from "../components/home/FeaturedFleets";
-import FeatureOffers from "../components/home/FeatureOffers";
-import FeatureDestination from "../components/home/FeatureDestination";
-import Testimonials from "../components/home/Testimonials";
-import Gallery from "../components/home/Gallery";
-import Blog from "../components/home/Blog";
+import FeaturedFleets from "../Components/Home/FeaturedFleets";
+import FeatureOffers from "../Components/Home/FeatureOffers";
+import FeatureDestination from "../Components/Home/FeatureDestination";
+import Testimonials from "../Components/Home/Testimonials";
+import Gallery from "../Components/Home/Gallery";
+import Blog from "../Components/Home/Blog";
 
 const Home = () => {
   return (
