@@ -39,6 +39,14 @@ Route::get('/room', function () {
     return Inertia::render('User/HotelRoom');
 });
 
+Route::get('/career', function () {
+    return Inertia::render('User/Career');
+});
+
+Route::get('/profile', function () {
+    return Inertia::render('User/Profile');
+});
+
 Route::get('/test-1', function () {
     return Inertia::render('Test1');
 });
