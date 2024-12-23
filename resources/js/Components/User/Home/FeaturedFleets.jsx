@@ -1,6 +1,6 @@
 import React from "react";
-import FleetCard from "../snippets/FleetCard";
-import {ALT_TAGS} from '../../Constants/Global'
+import FleetCard from "../../User/snippets/FleetCard";
+import {ALT_TAGS} from '../../../Constants/Global';
 const FeaturedFleets = () => {
   const cardData = [
     {

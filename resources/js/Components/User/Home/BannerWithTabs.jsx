@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import FormField from "./FormField";
-import { formFields, formFieldsForTour, formFieldsForCar } from "../../Constants/Home"
+import { formFields, formFieldsForTour, formFieldsForCar } from "../../../Constants/Home"
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
 const BannerWithTabs = () => {

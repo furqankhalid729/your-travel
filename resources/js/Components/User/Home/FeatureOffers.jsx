@@ -1,5 +1,5 @@
 import React from "react";
-import FeatureCard from "../snippets/FeatureCard";
+import FeatureCard from "../../User/snippets/FeatureCard";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation,EffectCoverflow,} from "swiper/modules";
 

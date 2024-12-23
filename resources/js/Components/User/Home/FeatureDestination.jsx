@@ -1,5 +1,5 @@
 import React from 'react'
-import DestinationCard from '../snippets/DestinationCard';
+import DestinationCard from '../../User/snippets/DestinationCard';
 
 const FeatureDestination = () => {
     const cardData = [
