@@ -23,6 +23,14 @@ Route::get('/blog', function () {
     return Inertia::render('User/Blog');
 });
 
+Route::get('/blog/:id', function () {
+    return Inertia::render('User/BlogDetail');
+});
+
+Route::get('/contact', function () {
+    return Inertia::render('User/Contact');
+});
+
 Route::get('/test-1', function () {
     return Inertia::render('Test1');
 });
