@@ -31,6 +31,14 @@ Route::get('/contact', function () {
     return Inertia::render('User/Contact');
 });
 
+Route::get('/hotel', function () {
+    return Inertia::render('User/Hotel');
+});
+
+Route::get('/room', function () {
+    return Inertia::render('User/HotelRoom');
+});
+
 Route::get('/test-1', function () {
     return Inertia::render('Test1');
 });
