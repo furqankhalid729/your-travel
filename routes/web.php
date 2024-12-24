@@ -11,7 +11,7 @@ Route::get('/about', function () {
     return Inertia::render('User/About');
 });
 
-Route::get('/car', function () {
+Route::get('/carprimary', function () {
     return Inertia::render('User/CarPrimary');
 });
 
@@ -45,6 +45,26 @@ Route::get('/career', function () {
 
 Route::get('/profile', function () {
     return Inertia::render('User/Profile');
+});
+
+Route::get('/tour', function () {
+    return Inertia::render('User/Tour');
+});
+
+Route::get('/car', function () {
+    return Inertia::render('User/Car');
+});
+
+Route::get('/car-detail', function () {
+    return Inertia::render('User/CarDetail');
+});
+
+Route::get('/car-booking', function () {
+    return Inertia::render('User/CarBook');
+});
+
+Route::get('/tour-pkg', function () {
+    return Inertia::render('User/TourPKG');
 });
 
 Route::get('/test-1', function () {
