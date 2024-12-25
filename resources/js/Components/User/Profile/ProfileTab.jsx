@@ -8,7 +8,7 @@ const ProfileTab = () => {
       <div className="relative  w-full">
         {/* Cover Photo */}
         <img
-          src="/profilecover.png"
+          src="storage/images/profilecover.png"
           alt="Cover Photo"
           className="w-full  h-full object-cover  shadow-lg"
         />
@@ -25,7 +25,7 @@ const ProfileTab = () => {
         <div className="absolute left-8 bottom-[-62px]">
           <div className="relative">
             <img
-              src="/prifilephoto.png"
+              src="storage/images/prifilephoto.png"
               alt="Profile Photo"
               className="w-32 h-32 md:w-40 md:h-40 object-cover rounded-full border-4 border-white shadow-lg"
             />

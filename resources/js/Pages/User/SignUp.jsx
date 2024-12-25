@@ -58,7 +58,7 @@ const Signup = ({onSwitchToLogin}) => {
       {/* Social Media Icons */}
       <div className="flex justify-center space-x-20 mb-6">
         <FaFacebook className="text-blue-600 text-4xl cursor-pointer hover:opacity-80" />
-        <img src="/google.png" className="w-9 h-9 cursor-pointer " />
+        <img src="storage/images/google.png" className="w-9 h-9 cursor-pointer " />
         <FaApple className="text-black text-4xl cursor-pointer" />
       </div>
 

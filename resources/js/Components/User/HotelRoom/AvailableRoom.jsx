@@ -33,7 +33,7 @@ const AvailableRoom = () => {
       ],
       price: 400,
       total: 850,
-      image: '/hotel.jpg',
+      image: 'storage/images/hotel.jpg',
     },
     {
       id: 2,
@@ -55,7 +55,7 @@ const AvailableRoom = () => {
       ],
       price: 600,
       total: 950,
-      image: '/hotel.jpg',
+      image: 'storage/images/hotel.jpg',
     },
     {
       id: 3,
@@ -77,7 +77,7 @@ const AvailableRoom = () => {
       ],
       price: 200,
       total: 450,
-      image: '/hotel.jpg',
+      image: 'storage/images/hotel.jpg',
     },
     {
       id: 4,
@@ -99,7 +99,7 @@ const AvailableRoom = () => {
       ],
       price: 550,
       total: 950,
-      image: '/hotel.jpg',
+      image: 'storage/images/hotel.jpg',
     },
   ];
 

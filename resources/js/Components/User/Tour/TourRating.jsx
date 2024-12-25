@@ -8,7 +8,7 @@ const TourRating = () => {
     <div className="h-32 relative bg-gray-300 mb-4 rounded-md overflow-hidden">
   <div
     className="absolute inset-0 bg-cover bg-center rounded-md"
-    style={{ backgroundImage: `url('/map.jpg')` }}
+    style={{ backgroundImage: `url('storage/images/map.jpg')` }}
   >
     <span className="absolute inset-0 flex items-center justify-center text-white">
       <div className="py-1 px-2 bg-gray-500 opacity-50 rounded-xl">Show on map</div>

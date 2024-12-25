@@ -6,7 +6,7 @@ const CareerTab = () => {
       {/* Background Section */}
       <div className="relative w-full h-[75vh] md:h-screen">
         <img
-          src="/caree.png"
+          src="storage/images/caree.png"
           alt="Career Background"
           className="w-full h-full object-cover"
         />
@@ -72,7 +72,7 @@ const CareerTab = () => {
         {/* Image Section */}
         <div className="lg:w-1/2 mt-8 lg:mt-0 lg:pl-12">
           <img
-            src="/career1.png"
+            src="storage/images/career1.png"
             alt="Career Impact"
             className="w-full md:h-[770px] h-auto rounded-lg shadow-lg object-cover"
           />
@@ -83,7 +83,7 @@ const CareerTab = () => {
         {/* Image Section */}
         <div className="lg:w-1/2 mt-8 lg:mt-1 lg:pr-12">
           <img
-            src="/career2.png"
+            src="storage/images/career2.png"
             alt="Career Impact"
             className="w-full md:h-[700px] h-auto rounded-lg shadow-lg object-cover"
           />
