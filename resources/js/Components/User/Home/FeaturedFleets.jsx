@@ -24,7 +24,6 @@ const FeaturedFleets = () => {
       description: "Mercedes Benz E Class, BMW 9 Series,Audi A7 or Similar",
     },
   ];
-
   return (
     <>
       <div className="mx-8 sm:mx-20 mt-16 ">
