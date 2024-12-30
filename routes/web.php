@@ -218,3 +218,50 @@ Route::get('/dashboard/tour-booking/steps/timeline', function () {
 Route::get('/dashboard/tour-booking/steps/pricing', function () {
     return Inertia::render('Admin/TourBooking/TourBookingPricing');
 });
+
+
+// dashboard/pages
+
+Route::get('/dashboard/drafts', function () {
+    return Inertia::render('Admin/Drafts');
+});
+
+Route::get('/dashboard/customers', function () {
+    return Inertia::render('Admin/Customers');
+});
+
+Route::get('/dashboard/enquiries', function () {
+    return Inertia::render('Admin/Enquiries');
+});
+
+Route::get('/dashboard/enquiries/details', function () {
+    return Inertia::render('Admin/EnquiriesDetails');
+});
+
+Route::get('/dashboard/payments', function () {
+    return Inertia::render('Admin/Payments');
+});
+
+Route::get('/dashboard/transaction', function () {
+    return Inertia::render('Admin/Transaction');
+});
+
+
+Route::get('/dashboard/reports', function () {
+    return Inertia::render('Admin/Reports');
+});
+
+// Settings
+
+Route::get('/dashboard/settings', function () {
+    return Inertia::render('Admin/Settings/Settings');
+});
+
+Route::get('/dashboard/settings/general', function () {
+    return Inertia::render('Admin/Settings/General');
+});
+
+Route::get('/dashboard/settings/security', function () {
+    return Inertia::render('Admin/Settings/Security');
+});
+
