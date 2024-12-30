@@ -165,3 +165,56 @@ Route::get('/dashboard/hotel-booking/add-hotel-room', function () {
     return Inertia::render('Admin/HotelBooking/AddHotelRoom');
 });
 
+
+// Tour Booking
+
+
+Route::get('/dashboard/tour-booking', function () {
+    return Inertia::render('Admin/TourBooking/ViewTourBooking');
+});
+
+Route::get('/dashboard/tour-booking/view-location', function () {
+    return Inertia::render('Admin/TourBooking/TourViewLocation');
+});
+
+Route::get('/dashboard/tour-booking/view-tour', function () {
+    return Inertia::render('Admin/TourBooking/ViewTour');
+});
+
+Route::get('/dashboard/tour-booking/add-tour-booking', function () {
+    return Inertia::render('Admin/TourBooking/AddTourBooking');
+});
+
+Route::get('/dashboard/tour-booking/profile', function () {
+    return Inertia::render('Admin/TourBooking/TourBookingProfile');
+});
+
+Route::get('/dashboard/tour-booking/add-tour', function () {
+    return Inertia::render('Admin/TourBooking/AddTour');
+});
+
+Route::get('/dashboard/tour-booking/tour-draft', function () {
+    return Inertia::render('Admin/TourBooking/TourDraftPage');
+});
+
+// steps
+
+Route::get('/dashboard/tour-booking/steps', function () {
+    return Inertia::render('Admin/TourBooking/TourBookingSteps');
+});
+
+Route::get('/dashboard/tour-booking/steps/tour-book-details', function () {
+    return Inertia::render('Admin/TourBooking/TourBookingDetails');
+});
+
+Route::get('/dashboard/tour-booking/steps/planner', function () {
+    return Inertia::render('Admin/TourBooking/TourBookingPlanner');
+});
+
+Route::get('/dashboard/tour-booking/steps/timeline', function () {
+    return Inertia::render('Admin/TourBooking/TourBookingTimeline');
+});
+
+Route::get('/dashboard/tour-booking/steps/pricing', function () {
+    return Inertia::render('Admin/TourBooking/TourBookingPricing');
+});
