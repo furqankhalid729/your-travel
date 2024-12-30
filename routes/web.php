@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia; 
 
+// User Routes
+
 Route::get('/', function () {
     return Inertia::render('User/Home');
 });
@@ -70,3 +72,96 @@ Route::get('/tour-pkg', function () {
 Route::get('/test-1', function () {
     return Inertia::render('Test1');
 });
+
+// Admin Routes
+
+Route::get('/login', function () {
+    return Inertia::render('Admin/Login');
+});
+
+Route::get('/dashlayout', function () {
+    return Inertia::render('Admin/DashLayout');
+});
+
+Route::get('/dashboard', function () {
+    return Inertia::render('Admin/Dashboard');
+});
+
+
+// Car booking
+
+Route::get('/dashboard/car-booking', function () {
+    return Inertia::render('Admin/CarBooking/CarBookDash');
+});
+
+Route::get('/dashboard/car-booking/driver-listing', function () {
+    return Inertia::render('Admin/CarBooking/DriverListing');
+});
+
+Route::get('/dashboard/car-booking/orders', function () {
+    return Inertia::render('Admin/CarBooking/Orders');
+});
+
+Route::get('/dashboard/car-booking/special-offers', function () {
+    return Inertia::render('Admin/CarBooking/Orders');
+});
+
+Route::get('/dashboard/car-booking/add-car', function () {
+    return Inertia::render('Admin/CarBooking/AddCar');
+});
+
+Route::get('/dashboard/car-booking/view-car', function () {
+    return Inertia::render('Admin/CarBooking/ViewCar');
+});
+
+Route::get('/dashboard/car-booking/cars-collection', function () {
+    return Inertia::render('Admin/CarBooking/CarsCollection');
+});
+
+Route::get('/dashboard/car-booking/driver-profile', function () {
+    return Inertia::render('Admin/CarBooking/DriverProfile');
+});
+
+Route::get('/dashboard/car-booking/assign-drivers', function () {
+    return Inertia::render('Admin/CarBooking/AssignDrivers');
+});
+
+Route::get('/dashboard/car-booking/book-ride-assign-drivers', function () {
+    return Inertia::render('Admin/CarBooking/BookRideAssignDrivers');
+});
+
+Route::get('/dashboard/car-booking/book-car-assign-drivers', function () {
+    return Inertia::render('Admin/CarBooking/BookCarAssignDrivers');
+});
+
+// hotel booking
+
+Route::get('/dashboard/hotel-booking', function () {
+    return Inertia::render('Admin/HotelBooking/HotelBooking');
+});
+
+Route::get('/dashboard/hotel-booking/all-hotels', function () {
+    return Inertia::render('Admin/HotelBooking/AllHotels');
+});
+
+Route::get('/dashboard/hotel-booking/hotel-booking-form', function () {
+    return Inertia::render('Admin/HotelBooking/HotelBookingForm');
+});
+
+Route::get('/dashboard/hotel-booking/hotel-booking-profile', function () {
+    return Inertia::render('Admin/HotelBooking/HotelBookingProfile');
+});
+
+Route::get('/dashboard/hotel-booking/all-hotel-booking', function () {
+    return Inertia::render('Admin/HotelBooking/AllHotelBooking');
+});
+
+// rooms
+Route::get('/dashboard/hotel-booking/view-rooms', function () {
+    return Inertia::render('Admin/HotelBooking/ViewRooms');
+});
+
+Route::get('/dashboard/hotel-booking/add-hotel-room', function () {
+    return Inertia::render('Admin/HotelBooking/AddHotelRoom');
+});
+
