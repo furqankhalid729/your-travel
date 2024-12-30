@@ -52,13 +52,14 @@ const ViewRooms = () => {
     <div className="m-3 lg:m-5">
       <div className="space-y-3 mb-5 bg-white p-4">
         <div className="flex justify-between items-center">
-          <button
-            onClick={() => navigate(-1)}
+          <Link
+            href="/dashboard/hotel-booking"
+            // onClick={() => navigate(-1)}
             className="flex items-center text-gray-600 hover:text-gray-800"
           >
             <FaArrowLeft className="mr-2" />
             <span>Back</span>
-          </button>
+          </Link>
           <div className="flex space-x-2">
             <button className="flex items-center bg-[#e4baff] text-white px-3 py-1 rounded-md">
               <FaEdit className="mr-1" />
@@ -281,7 +282,7 @@ const ViewRooms = () => {
             Available Rooms
           </h2>
           <Link
-            to="/dashboard/hotel-booking/add-hotel-room"
+            href="/dashboard/hotel-booking/add-hotel-room"
             className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 py-1 lg:py-2 rounded-lg"
           >
             <FaPlus />

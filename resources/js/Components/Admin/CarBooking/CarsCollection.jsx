@@ -93,27 +93,28 @@ const CarsCollection = () => {
   // const navigate = useNavigate();
   return (
     <div>
-        <button
-          onClick={() => navigate(-1)}
+        <Link
+          href="/dashboard/car-booking"
+          // onClick={() => navigate(-1)}
           className="flex items-center p-3 text-gray-600 hover:text-gray-800"
         >
           <FaArrowLeft className="mr-2" />
           <span>Back</span>
-        </button>
+        </Link>
       <div className="px-4 md:px-7">
         <div className="bg-white p-5">
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-4xl text-[#808080]">Cars List</h2>
             <div className="flex items-center gap-2">
               <Link
-                to="/dashboard/car-booking/add-car"
+                href="/dashboard/car-booking/add-car"
                 className="flex items-center gap-1 bg-[#bb8dd9] text-white px-4 py-2 rounded-lg "
               >
                 <FaPlus />
                 Add New Car
               </Link>
               <Link
-                to="/dashboard/car-booking/assign-drivers"
+                href="/dashboard/car-booking/assign-drivers"
                 className="flex items-center gap-1 bg-[#bb8dd9] text-white px-4 py-2 rounded-lg "
               >
                 <FaPlus />

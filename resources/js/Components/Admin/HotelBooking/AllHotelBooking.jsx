@@ -1,5 +1,5 @@
 import { FaArrowLeft, FaEdit, FaEye, FaTrash } from "react-icons/fa";
-import { Link  } from "@inertiajs/react";
+import { Link } from "@inertiajs/react";
 // import { useNavigate  } from "react-router-dom";
 
 const AllHotelBooking = () => {
@@ -108,13 +108,14 @@ const AllHotelBooking = () => {
 
   return (
     <div>
-      <button
-        onClick={() => navigate(-1)}
+      <Link
+        href="//dashboard/hotel-booking"
+        // onClick={() => navigate(-1)}
         className="m-4 flex items-center text-gray-600 hover:text-gray-800"
       >
         <FaArrowLeft className="mr-2" />
         <span>Back</span>
-      </button>
+      </Link>
       <div className="p-2 md:p-4 mx-2 md:mx-6 bg-white">
         <h1 className="text-2xl text-[#808080] mb-4">All Hotel Bookings</h1>
         <div className="rounded-lg border-t overflow-x-auto">
@@ -176,13 +177,13 @@ const AllHotelBooking = () => {
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-base flex space-x-2">
                     <Link
-                      to="/dashboard/hotel-booking/hotel-booking-form"
+                      href="/dashboard/hotel-booking/hotel-booking-form"
                       className="text-green-500"
                     >
                       <FaEdit />
                     </Link>
                     <Link
-                      to="/dashboard/hotel-booking/hotel-booking-profile"
+                      href="/dashboard/hotel-booking/hotel-booking-profile"
                       className="text-blue-500 px-1"
                     >
                       <FaEye />

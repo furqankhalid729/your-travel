@@ -83,7 +83,7 @@ const HotelBooking = () => {
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-5">
         {topMenuItems.map((item, index) => (
           <Link
-            to={item.link}
+            href={item.link}
             key={index}
             className="border flex flex-col items-center text-base font-semibold cursor-pointer"
           >
@@ -133,7 +133,7 @@ const HotelBooking = () => {
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl md:text-4xl text-[#808080]">Latest Bookings</h2>
         <Link
-          to="/dashboard/drafts"
+          href="/dashboard/drafts"
           className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 md:px-3 py-1 md:py-2 rounded-lg"
         >
           <FaPlus />
@@ -199,13 +199,13 @@ const HotelBooking = () => {
                 </td>
                 <td className="px-2 py-4 whitespace-nowrap text-base flex space-x-2">
                   <Link
-                    to="/dashboard/hotel-booking/hotel-booking-form"
+                    href="/dashboard/hotel-booking/hotel-booking-form"
                     className="text-green-500"
                   >
                     <FaEdit />
                   </Link>
                   <Link
-                    to="/dashboard/hotel-booking/hotel-booking-profile"
+                    href="/dashboard/hotel-booking/hotel-booking-profile"
                     className="text-blue-500 px-1"
                   >
                     <FaEye />

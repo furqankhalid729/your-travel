@@ -1,5 +1,7 @@
 import { useState } from "react";
-// import { NavLink, Outlet } from "react-router-dom";
+import { Link } from "@inertiajs/react";
+// import { Outlet } from "react-router-dom";
+
 import {
   FaBell,
   FaUserCircle,
@@ -51,7 +53,7 @@ const DashLayout = () => {
         <div className="flex-1">
           <div className="bg-[#2e2532] w-64 h-full text-white lg:flex flex-col hidden">
             <nav className="flex-1 p-4 space-y-4">
-              <NavLink
+              <Link
                 to="/dashboard"
                 end
                 onClick={handleRouteChange}
@@ -71,7 +73,7 @@ const DashLayout = () => {
                     <FaArrowRight className="ml-auto" />
                   </>
                 )}
-              </NavLink>
+              </Link>
               {[
                 {
                   to: "/dashboard/car-booking",
@@ -124,7 +126,7 @@ const DashLayout = () => {
                   name: "Settings",
                 },
               ].map((item) => (
-                <NavLink
+                <Link
                   to={item.to}
                   key={item.name}
                   onClick={handleRouteChange}
@@ -144,7 +146,7 @@ const DashLayout = () => {
                       <FaArrowRight className="ml-auto" />
                     </>
                   )}
-                </NavLink>
+                </Link>
               ))}
             </nav>
           </div>
@@ -160,7 +162,7 @@ const DashLayout = () => {
               <FaTimes />
             </button>
             <nav className="flex-1 px-3 py-4 space-y-4">
-              <NavLink
+              <Link
                 to="/dashboard"
                 end
                 onClick={handleRouteChange}
@@ -180,7 +182,7 @@ const DashLayout = () => {
                     <FaArrowRight className="ml-auto" />
                   </>
                 )}
-              </NavLink>
+              </Link>
               {[
                 {
                   to: "/dashboard/car-booking",
@@ -233,7 +235,7 @@ const DashLayout = () => {
                   name: "Settings",
                 },
               ].map((item) => (
-                <NavLink
+                <Link
                   to={item.to}
                   key={item.name}
                   onClick={handleRouteChange}
@@ -253,13 +255,13 @@ const DashLayout = () => {
                       <FaArrowRight className="ml-auto" />
                     </>
                   )}
-                </NavLink>
+                </Link>
               ))}
             </nav>
           </div>
         </div>
         <div className="w-full bg-[#f3f3f3]">
-          <Outlet />
+          {/* <Outlet /> */}
         </div>
       </div>
     </div>

@@ -1,11 +1,11 @@
 import { FcGoogle } from "react-icons/fc";
-import { Link} from "@inertiajs/react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "@inertiajs/react";
+// import { useNavigate } from "react-router-dom";
 // import logo from "../assets/atello.jpg";
 import { FaHandsClapping } from "react-icons/fa6";
 
 const Login = () => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     const email = e.target.email.value;
@@ -85,10 +85,10 @@ const Login = () => {
               Login Now
             </button>
           </form>
-          <button className="border w-full flex items-center justify-center gap-2 py-2 rounded-lg transition">
+          <Link href="/dashboard" className="border w-full flex items-center justify-center gap-2 py-2 rounded-lg transition">
             <FcGoogle className="text-xl" />
             Login with Google
-          </button>
+          </Link>
           <p className="text-sm text-center mt-4">
             Forgot your password?{" "}
             <a href="#" className="text-red-500 underline">

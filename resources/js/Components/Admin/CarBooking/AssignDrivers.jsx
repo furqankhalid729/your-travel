@@ -12,6 +12,7 @@ import {
   FaPhone,
 } from "react-icons/fa";
 import { IoIosArrowBack } from "react-icons/io";
+import { Link } from "@inertiajs/react";
 // import user from "../../assets/user.png";
 // import { useNavigate } from "react-router-dom";
 
@@ -29,12 +30,13 @@ const AssignDrivers = () => {
     <div className="flex justify-center p-3 lg:p-6">
       <div className="w-full max-w-screen-lg">
         <div className="flex justify-between items-center bg-white p-2 rounded-lg">
-          <button
-            onClick={() => navigate(-1)}
+          <Link
+            href="/dashboard/car-booking"
+            // onClick={() => navigate(-1)}
             className="text-gray-600 hover:text-gray-800"
           >
             <IoIosArrowBack className="mr-2" />
-          </button>
+          </Link>
           <button className="flex items-center bg-[#e4baff] text-white px-2 rounded-md hover:bg-[#d19aed]">
             <FaSave className="mr-2" />
             Save
@@ -175,9 +177,8 @@ const AssignDrivers = () => {
                       <span>+880 123 456 789</span>
                     </div>
                     <button
-                      className={`rounded-xl text-white px-3 ${
-                        index === 0 ? "bg-[#e1baf9]" : "bg-[#808080]"
-                      }`}
+                      className={`rounded-xl text-white px-3 ${index === 0 ? "bg-[#e1baf9]" : "bg-[#808080]"
+                        }`}
                     >
                       Select
                     </button>

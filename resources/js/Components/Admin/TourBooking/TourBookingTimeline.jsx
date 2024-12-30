@@ -256,7 +256,7 @@ const TourBookingTimeline = () => {
       </div>
       <div className="flex justify-between">
         <Link
-          to="/dashboard/tour-booking/steps/planner"
+          href="/dashboard/tour-booking/steps/planner"
           type="button"
           className="flex items-center gap-1 px-3 py-1 bg-[#2e2532] text-white rounded-lg focus:outline-none"
         >
@@ -264,7 +264,7 @@ const TourBookingTimeline = () => {
           Previous
         </Link>
         <Link
-          to="/dashboard/tour-booking/steps/pricing"
+          href="/dashboard/tour-booking/steps/pricing"
           type="button"
           className="flex items-center gap-1 px-3 py-1 bg-[#2e2532] text-white rounded-lg focus:outline-none"
         >

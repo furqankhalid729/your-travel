@@ -16,19 +16,21 @@ import {
 // import map from "../../assets/map.png";
 // import user from "../../assets/user.png";
 import { FaCalendarAlt } from "react-icons/fa";
+import { Link } from "@inertiajs/react";
 
 const BookCarAssignDrivers = () => {
   // const navigate = useNavigate();
   return (
     <div className="mx-4 lg:mx-10 my-3 lg:my-5">
       <div className="flex justify-between items-center p-2">
-        <button
-          onClick={() => navigate(-1)}
+        <Link
+          href="/dashboard/car-booking"
+          // onClick={() => navigate(-1)}
           className="flex items-center text-gray-600 hover:text-gray-800"
         >
           <FaArrowLeft className="mr-2" />
           <span className="text-black">#A102</span>
-        </button>
+        </Link>
         <div className="flex items-center gap-5">
           <button className="bg-[#d9d9d9] px-2 py-1 rounded-md">Edit</button>
           <button className="bg-[#d9d9d9] px-2 py-1 rounded-md">Refund</button>

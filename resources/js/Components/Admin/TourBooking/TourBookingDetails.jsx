@@ -100,7 +100,7 @@ const TourBookingDetails = () => {
         </div>
         <div className="flex justify-end">
           <Link
-            to="/dashboard/tour-booking/steps/planner"
+            href="/dashboard/tour-booking/steps/planner"
             type="button"
             className="flex items-center gap-1 px-3 py-1 bg-black text-white rounded-lg focus:outline-none"
           >

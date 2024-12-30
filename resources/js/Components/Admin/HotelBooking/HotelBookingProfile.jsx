@@ -3,19 +3,21 @@ import { FaArrowLeft, FaTv, FaWifi } from "react-icons/fa6";
 import { TbFridge } from "react-icons/tb";
 import { BsFillCupHotFill } from "react-icons/bs";
 import { LiaStarOfLifeSolid } from "react-icons/lia";
+import { Link } from "@inertiajs/react";
 // import { useNavigate } from "react-router-dom";
 
 const HotelBookingProfile = () => {
   // const navigate = useNavigate();
   return (
     <div className="bg-white">
-      <button
-        onClick={() => navigate(-1)}
+      <Link
+        href="/dashboard/hotel-booking"
+        // onClick={() => navigate(-1)}
         className="flex items-center p-3 text-gray-600 hover:text-gray-800"
       >
         <FaArrowLeft className="mr-2" />
         <span>Back</span>
-      </button>
+      </Link>
       <div className="flex flex-col lg:flex-row rounded-lg shadow-lg p-6">
         <div className="lg:w-1/3 flex flex-col items-center  p-4 border-r">
           <img

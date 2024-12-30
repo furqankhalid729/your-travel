@@ -14,6 +14,7 @@ import {
   FaSnowflake,
   FaUser,
 } from "react-icons/fa6";
+import { Link } from "@inertiajs/react";
 // import { useNavigate } from "react-router-dom"; 
 
 const BookRideAssignDrivers = () => {
@@ -21,12 +22,13 @@ const BookRideAssignDrivers = () => {
   return (
     <div className="mb-8">
       <div className="bg-white flex justify-between items-center mb-6 p-3">
-        <button
-          onClick={() => navigate(-1)}
+        <Link
+          href="/dashboard/car-booking"
+          // onClick={() => navigate(-1)}
           className="text-gray-500 hover:text-gray-700"
         >
           <MdOutlineArrowBackIos size={20} />
-        </button>
+        </Link>
         <button className="text-white px-2 py-1 rounded-md bg-[#e0b0ff] flex items-center">
           <FaSave size={20} /> Save
         </button>

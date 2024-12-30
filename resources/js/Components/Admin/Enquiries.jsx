@@ -98,7 +98,7 @@ const Messages = () => {
                 <td className="px-4 py-2 border-b">{message.status}</td>
                 <td className="px-4 py-2 border-b">
                   <Link
-                    to="/dashboard/enquiries/details"
+                    href="/dashboard/enquiries/details"
                     className="text-black underline"
                   >
                     View

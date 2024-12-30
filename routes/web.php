@@ -73,6 +73,8 @@ Route::get('/test-1', function () {
     return Inertia::render('Test1');
 });
 
+
+
 // Admin Routes
 
 Route::get('/login', function () {
@@ -103,7 +105,7 @@ Route::get('/dashboard/car-booking/orders', function () {
 });
 
 Route::get('/dashboard/car-booking/special-offers', function () {
-    return Inertia::render('Admin/CarBooking/Orders');
+    return Inertia::render('Admin/CarBooking/Specialoffers');
 });
 
 Route::get('/dashboard/car-booking/add-car', function () {

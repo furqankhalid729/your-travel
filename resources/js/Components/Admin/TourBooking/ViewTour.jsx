@@ -84,44 +84,44 @@ const ViewTour = () => {
           <h2 className="text-4xl text-[#808080]">Tours</h2>
           <div className="grid grid-cols-2 lg:grid-cols-3 lg:flex items-center gap-1">
             <Link
-              to="/dashboard/tour-booking/steps"
+              href="/dashboard/tour-booking/steps"
               className="bg-[#bb8dd9] text-white px-2 py-2 rounded-lg"
             >
               Steps
             </Link>
             <Link
-              to="/dashboard/tour-booking/view-location"
+              href="/dashboard/tour-booking/view-location"
               className="bg-[#bb8dd9] text-white px-2 py-2 rounded-lg"
             >
               View Location
             </Link>
             <Link
-              to="/dashboard/tour-booking/View-tour-booking"
+              href="/dashboard/tour-booking/View-tour-booking"
               className="bg-[#bb8dd9] text-white px-2 py-2 rounded-lg"
             >
               View Tour Booking
             </Link>
             <Link
-              to="/dashboard/tour-booking/add-tour-booking"
+              href="/dashboard/tour-booking/add-tour-booking"
               className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 py-2 rounded-lg"
             >
               <FaPlus />
               Add Tour Booking
             </Link>
             <Link
-              to="/dashboard/tour-booking/profile"
+              href="/dashboard/tour-booking/profile"
               className="bg-[#bb8dd9] text-white px-2 py-2 rounded-lg"
             >
               Tour BookingProfile
             </Link>
             <Link
-              to="/dashboard/tour-booking/tour-draft"
+              href="/dashboard/tour-booking/tour-draft"
               className="bg-[#bb8dd9] text-white px-2 py-2 rounded-lg"
             >
               Tour Draft
             </Link>
             <Link
-              to="/dashboard/tour-booking/steps"
+              href="/dashboard/tour-booking/steps"
               className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 py-2 rounded-lg"
             >
               <FaPlus />

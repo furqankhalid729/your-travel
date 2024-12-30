@@ -1,3 +1,4 @@
+import { Link } from "@inertiajs/react";
 import { FaCogs, FaUserAlt } from "react-icons/fa";
 import { FaCar, FaSnowflake, FaSuitcase } from "react-icons/fa6";
 import { MdArrowBackIos } from "react-icons/md";
@@ -7,12 +8,13 @@ const TourDraftPage = () => {
   // const navigate = useNavigate();
   return (
     <div className="m-3 lg:m-6 p-2 bg-white">
-      <button
-        onClick={() => navigate(-1)}
+      <Link
+        href="/dashboard/tour-booking"
+        // onClick={() => navigate(-1)}
         className="text-gray-600 hover:text-gray-800 p-2 mb-2"
       >
         <MdArrowBackIos />
-      </button>
+      </Link>
       <div className="flex flex-col lg:flex-row lg:space-x-5">
         <div className="lg:w-[36%] space-y-6">
           <div className="p-4 rounded-lg border">

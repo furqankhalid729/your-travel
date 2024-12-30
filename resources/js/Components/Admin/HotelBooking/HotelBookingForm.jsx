@@ -1,3 +1,4 @@
+import { Link } from "@inertiajs/react";
 import { useState } from "react";
 import { FaSave } from "react-icons/fa";
 import { MdVerified, MdRemoveCircleOutline, MdOutlineArrowBackIos } from "react-icons/md";
@@ -47,12 +48,13 @@ const HotelBookingForm = () => {
   return (
     <div className="px-6 pt-4 pb-10 bg-white rounded-lg shadow-lg min-h-screen">
       <div className="flex justify-between items-center mb-4">
-        <button
-          onClick={() => navigate(-1)}
+        <Link
+          href="/dashboard/hotel-booking"
+          // onClick={() => navigate(-1)}
           className="text-gray-500 hover:text-gray-700"
         >
           <MdOutlineArrowBackIos size={20} />
-        </button>
+        </Link>
         <button
           onClick={handleSave}
           className="text-white px-3 py-[6px] rounded-md bg-[#e0b0ff] flex items-center"

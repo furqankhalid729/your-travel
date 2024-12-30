@@ -1,3 +1,4 @@
+import { Link } from "@inertiajs/react";
 import {
   FaArrowLeft,
   FaSnowflake,
@@ -12,13 +13,14 @@ const ViewCar = () => {
   return (
     <div className="m-3 lg:m-6">
       <div className="flex justify-between items-center bg-white p-2 rounded-lg shadow">
-        <button
-          onClick={() => navigate(-1)}
+        <Link
+          href="/dashboard/car-booking"
+          // onClick={() => navigate(-1)}
           className="flex items-center text-gray-600 hover:text-gray-800"
         >
           <FaArrowLeft className="mr-2" />
           <span>Back</span>
-        </button>
+        </Link>
         <span></span>
       </div>
       <div className="p-6 rounded-lg shadow">

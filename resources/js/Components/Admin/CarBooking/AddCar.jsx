@@ -2,19 +2,22 @@ import { FaSave } from "react-icons/fa";
 import { FaArrowLeft, FaPlus } from "react-icons/fa6";
 import { FaSnowflake, FaCarSide, FaLanguage, FaUser } from "react-icons/fa";
 // import { useNavigate } from "react-router-dom";
+import { Link } from "@inertiajs/react";
+
 
 const AddCar = () => {
   // const navigate = useNavigate();
   return (
     <div className="m-6">
       <div className="flex justify-between items-center bg-white p-2 rounded-lg shadow">
-        <button
-          onClick={() => navigate(-1)}
+        <Link
+          href="/dashboard/car-booking"
+          // onClick={() => navigate(-1)}
           className="flex items-center text-gray-600 hover:text-gray-800"
         >
           <FaArrowLeft className="mr-2" />
           <span>Back</span>
-        </button>
+        </Link>
         <button className="flex items-center bg-[#e4baff] text-white px-4 py-2 rounded-md hover:bg-[#d19aed]">
           <FaSave className="mr-2" />
           Save

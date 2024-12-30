@@ -147,7 +147,7 @@ const TourBookingPlanner = () => {
       </div>
       <div className="flex justify-between mt-4 lg:mt-0">
         <Link
-          to="/dashboard/tour-booking/steps"
+          href="/dashboard/tour-booking/steps"
           type="button"
           className="flex items-center gap-1 px-3 py-1 bg-[#2e2532] text-white rounded-lg focus:outline-none"
         >
@@ -155,7 +155,7 @@ const TourBookingPlanner = () => {
           Previous
         </Link>
         <Link
-          to="/dashboard/tour-booking/steps/timeline"
+          href="/dashboard/tour-booking/steps/timeline"
           type="button"
           className="flex items-center gap-1 px-3 py-1 bg-[#2e2532] text-white rounded-lg focus:outline-none"
         >

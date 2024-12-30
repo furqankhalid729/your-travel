@@ -1,3 +1,4 @@
+import { Link } from "@inertiajs/react";
 import { FaSnowflake, FaCarSide, FaLanguage, FaUser } from "react-icons/fa";
 // import user from "../../assets/user.png";
 // import car from "../../assets/car.png";
@@ -42,12 +43,13 @@ const DriverProfile = () => {
   return (
     <div>
       <div className="bg-white flex justify-between items-center mb-6">
-        <button
-          onClick={() => navigate(-1)}
+        <Link
+          href="/dashboard/car-booking"
+          // onClick={() => navigate(-1)}
           className="text-gray-500 hover:text-gray-700 p-3"
         >
           <MdOutlineArrowBackIos size={20} />
-        </button>
+        </Link>
       </div>
       <div className="flex flex-col lg:flex-row lg:space-x-5 rounded-lg shadow-lg px-6 pb-10">
         <div className="lg:w-1/3 p-6 bg-white">

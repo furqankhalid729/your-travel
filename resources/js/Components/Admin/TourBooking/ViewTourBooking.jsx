@@ -41,13 +41,14 @@ const ViewTourBooking = () => {
   // const navigate = useNavigate();
   return (
     <div>
-      <button
-        onClick={() => navigate(-1)}
+      <Link
+        href="/dashboard/tour-booking"
+        // onClick={() => navigate(-1)}
         className="flex items-center p-3 text-gray-600 hover:text-gray-800"
       >
         <FaArrowLeft className="mr-2" />
         <span>Back</span>
-      </button>
+      </Link>
       <div className="mx-6 p-5 bg-white min-h-screen">
         <div className="breadcrumbs text-sm">
           <ul>
@@ -63,14 +64,14 @@ const ViewTourBooking = () => {
           </h2>
           <div className="flex items-center gap-2">
             <Link
-              to="/dashboard/tour-booking/view-tour"
+              href="/dashboard/tour-booking/view-tour"
               className="flex items-center gap-1 bg-[#bb8dd9] text-white px-3 py-2 rounded-lg"
             >
               <FaPlus />
               View Tours
             </Link>
             <Link
-              to="/dashboard/tour-booking/add-tour"
+              href="/dashboard/tour-booking/add-tour"
               className="flex items-center gap-1 bg-[#bb8dd9] text-white px-3 py-2 rounded-lg"
             >
               <FaPlus />
@@ -136,11 +137,10 @@ const ViewTourBooking = () => {
                   </td>
                   <td className="px-4 py-4 whitespace-nowrap text-sm">
                     <span
-                      className={`px-2 py-1 rounded-full text-xs font-medium ${
-                        tour.status === "Booked"
+                      className={`px-2 py-1 rounded-full text-xs font-medium ${tour.status === "Booked"
                           ? "bg-[#2e2532] text-[#b38dcb]"
                           : "bg-[#f5a7ab] text-[#ea424a]"
-                      }`}
+                        }`}
                     >
                       {tour.status}
                     </span>

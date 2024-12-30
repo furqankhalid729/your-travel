@@ -1,3 +1,4 @@
+import { Link } from "@inertiajs/react";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 // import { useNavigate } from "react-router-dom";
 
@@ -6,12 +7,13 @@ const EnquiriesDetails = () => {
   return (
     <div className="m-7 lg:m-12">
       <div className="flex items-center mb-6">
-        <button
-          onClick={() => navigate(-1)}
+        <Link
+          href="/dashboard/enquiries"
+          // onClick={() => navigate(-1)}
           className="text-gray-600 hover:text-gray-800"
         >
           <MdOutlineArrowBackIos className="text-xl" />
-        </button>
+        </Link>
         <h1 className="ml-4 text-2xl md:text-3xl font-semibold text-gray-800">
           Message
         </h1>

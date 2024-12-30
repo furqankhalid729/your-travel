@@ -1,3 +1,4 @@
+import { Link } from "@inertiajs/react";
 import { useState } from "react";
 import { FaSave } from "react-icons/fa";
 // import { useNavigate } from "react-router-dom";
@@ -34,8 +35,8 @@ const AddTourBooking = () => {
       selectedRoomType === "Deluxe"
         ? 200
         : selectedRoomType === "Standard"
-        ? 100
-        : 50
+          ? 100
+          : 50
     );
   };
 
@@ -49,12 +50,13 @@ const AddTourBooking = () => {
   return (
     <div>
       <div className="bg-white flex justify-between items-center mb-6 p-3">
-        <button
-          onClick={() => navigate(-1)}
+        <Link
+          href="/dashboard/tour-booking"
+          // onClick={() => navigate(-1)}
           className="text-gray-500 hover:text-gray-700"
         >
           <MdOutlineArrowBackIos size={20} />
-        </button>
+        </Link>
         <button
           onClick={handleSave}
           className="text-white px-1 bg-[#e0b0ff] flex items-center"
@@ -167,9 +169,8 @@ const AddTourBooking = () => {
               </label>
               <input
                 type="text"
-                value={`${days} days, ${nights} night${
-                  nights === 1 ? "" : "s"
-                }`}
+                value={`${days} days, ${nights} night${nights === 1 ? "" : "s"
+                  }`}
                 readOnly
                 className="mt-1 p-2 w-full border border-gray-300 rounded-md bg-[#e0b0ff] text-white"
               />

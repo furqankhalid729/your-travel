@@ -22,7 +22,7 @@ const Settings = () => {
         </div>
         <div className="space-y-2 p-10 pb-4">
           <Link
-            to="/dashboard/settings"
+            href="/dashboard/settings"
             // className={`text-lg flex items-center gap-2 ${
             //   isActive("/dashboard/settings")
             //     ? "text-[#3b323f]"
@@ -33,7 +33,7 @@ const Settings = () => {
             General
           </Link>
           <Link
-            to="/dashboard/settings/security"
+            href="/dashboard/settings/security"
             // className={`text-lg flex items-center gap-2 ${
             //   isActive("/dashboard/settings/security")
             //     ? "text-[#3b323f]"
