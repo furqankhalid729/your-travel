@@ -9,7 +9,7 @@ function Footer() {
       <div className="bg-red-600 text-white w-5/6 md:w-3/4 p-4 py-8 md:p-12 flex flex-col items-center rounded-3xl shadow-md">
         <h2 className="text-sm md:text-3xl font-semibold p-4 flex flex-col items-end">
           Your Travel Journey Starts Here
-          <img src="layer.png" alt="layer" className="mt-2 w-[100px] md:w-[150px]" />
+          <img src="storage/images/layer.png" alt="layer" className="mt-2 w-[100px] md:w-[150px]" />
         </h2>
 
 
@@ -78,12 +78,12 @@ function Footer() {
               <div className="mt-4">
                 <div className="flex">
                   <a href="#" className="mr-2">
-                    <img src="Android.jpeg" alt="umer1" className='w-[100px] md:w-[150px] ' />
+                    <img src="storage/images/Android.jpeg" alt="umer1" className='w-[100px] md:w-[150px] ' />
                   </a>
                 </div>
                 <div className="flex mt-2">
                   <a href="#">
-                    <img src="Apple.png" alt="umer1" className='w-[100px] md:w-[150px]' />
+                    <img src="storage/images/Apple.png" alt="umer1" className='w-[100px] md:w-[150px]' />
                   </a>
                 </div>
               </div>

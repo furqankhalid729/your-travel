@@ -8,25 +8,25 @@ import { HiArrowsPointingIn } from "react-icons/hi2";
 const Blog = () => {
   const blogData = [
     {
-      imageSrc: "/blog1.png",
+      imageSrc: "storage/images/blog1.png",
       title: "Beautiful Switzerland. Let’s travel!",
       description:
         "A land where every sunrise paints the mountains with a golden hue and every meal feels like a taste of heaven.",
     },
     {
-      imageSrc: "/blog2.png",
+      imageSrc: "storage/images/blog2.png",
       title: "Beautiful Switzerland. Let’s travel!",
       description:
         "A land where every sunrise paints the mountains with a golden hue and every meal feels like a taste of heaven.",
     },
     {
-      imageSrc: "/blog3.png",
+      imageSrc: "storage/images/blog3.png",
       title: "Beautiful Switzerland. Let’s travel!",
       description:
         "A land where every sunrise paints the mountains with a golden hue and every meal feels like a taste of heaven.",
     },
     {
-      imageSrc: "/blog4.png",
+      imageSrc: "storage/images/blog4.png",
       title: "Beautiful Switzerland. Let’s travel!",
       description:
         "A land where every sunrise paints the mountains with a golden hue and every meal feels like a taste of heaven.",

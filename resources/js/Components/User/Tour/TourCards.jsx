@@ -9,7 +9,7 @@ function TourCards() {
   const tours = [
     {
       id: 1,
-      image: "/tour.jpeg",
+      image: "storage/images/tour.jpeg",
       name: "Lake Lucerne : Bodies of water",
       location: "Zurich",
       duration: "4 days, 3 nights",
@@ -22,7 +22,7 @@ function TourCards() {
     },
     {
       id: 2,
-      image: "/tour.jpeg",
+      image: "storage/images/tour4.jpeg",
       name: "Lake Lucerne : Bodies of water",
       location: "Zurich",
       duration: "4 days, 3 nights",
@@ -35,7 +35,7 @@ function TourCards() {
     },
     {
       id: 3,
-      image: "/tour.jpeg",
+      image: "storage/images/tour1.jpeg",
       name: "Lake Lucerne : Bodies of water",
       location: "Zurich",
       duration: "4 days, 3 nights",
@@ -48,7 +48,7 @@ function TourCards() {
     },
     {
       id: 4,
-      image: "/tour.jpeg",
+      image: "storage/images/tour2.jpeg",
       name: "Lake Lucerne : Bodies of water",
       location: "Zurich",
       duration: "4 days, 3 nights",
@@ -61,7 +61,7 @@ function TourCards() {
     },
     {
       id: 5,
-      image: "/tour.jpeg",
+      image: "storage/images/tour4.jpeg",
       name: "Lake Lucerne : Bodies of water",
       location: "Zurich",
       duration: "4 days, 3 nights",
@@ -73,7 +73,7 @@ function TourCards() {
     },
     {
       id: 6,
-      image: "/tour.jpeg",
+      image: "storage/images/tour3.jpeg",
       name: "Lake Lucerne : Bodies of water",
       location: "Zurich",
       duration: "4 days, 3 nights",

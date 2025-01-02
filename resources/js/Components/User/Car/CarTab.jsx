@@ -4,7 +4,7 @@ import { FaChevronDown } from 'react-icons/fa';
 const carData = [
   {
     id: 1,
-    image: '/carp1.png',
+    image: 'storage/images/carp1.png',
     title: 'Audi A4 2022',
     location: 'Lahore',
     carClass: 'Economy',
@@ -15,7 +15,7 @@ const carData = [
   },
   {
     id: 2,
-    image: '/carp2.png',
+    image: 'storage/images/carp2.png',
     title: ' Ford Raptor',
     location: 'Lahore',
     carClass: 'Economy',
@@ -26,7 +26,7 @@ const carData = [
   },
   {
     id: 3,
-    image: '/carp3.png',
+    image: 'storage/images/carp3.png',
     title: 'BMW AMG',
     location: 'Lahore',
     carClass: 'Economy',
@@ -37,7 +37,7 @@ const carData = [
   },
   {
     id: 4,
-    image: '/carp4.png',
+    image: 'storage/images/carp4.png',
     title: 'Lexus LX570',
     location: 'Lahore',
     carClass: 'Economy',
@@ -47,8 +47,8 @@ const carData = [
     person:'person4'
   },
   {
-    id: 4,
-    image: '/carp5.png',
+    id: 5,
+    image: 'storage/images/carp5.png',
     title: 'Nissan G-TR AWD',
     location: 'Lahore',
     carClass: 'Economy',
@@ -59,8 +59,8 @@ const carData = [
   },
 
   {
-    id: 4,
-    image: '/carp6.png',
+    id: 6,
+    image: 'storage/images/carp6.png',
     title: 'Nissan',
     location: 'Lahore',
     carClass: 'Economy',

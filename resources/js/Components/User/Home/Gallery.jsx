@@ -5,17 +5,17 @@ import { IoIosArrowRoundForward } from "react-icons/io";
 const Gallery = () => {
   const cardData = [
     {
-      image: " /gall1.png",
+      image: " storage/images/gall1.png",
       heading: "Summer Vacations",
       paragraph: "99,058 Properties",
     },
     {
-      image: "/gall2.png",
+      image: "storage/images/gall2.png",
       heading: "Winter Vacations",
       paragraph: "99,058 Properties",
     },
     {
-      image: "/gall3.png",
+      image: "storage/images/gall3.png",
       heading: "Spring Vacations",
       paragraph: "99,058 Properties",
     },

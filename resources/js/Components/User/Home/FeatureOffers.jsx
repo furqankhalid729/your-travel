@@ -12,28 +12,28 @@ import "swiper/css/navigation";
 function FeatureOffers() {
   const cardData = [
     {
-      image: "/hotel.png",
+      image: "storage/images/hotel.png",
       name: "Avari Hotel Lahore",
       rating: "4.7",
       reviews: "13 rating",
       price: "717.94",
     },
     {
-      image: "/hotel2.jpg",
+      image: "storage/images/hotel2.jpg",
       name: "Belvedere Hotel",
       rating: "4.5",
       reviews: "4 rating",
       price: "402.37",
     },
     {
-      image: "/hotel6.jpg",
+      image: "storage/images/hotel6.jpg",
       name: "Dolder Grand Hotel",
       rating: "4.9",
       reviews: "15 rating",
       price: "1085.57",
     },
     {
-      image: "/hotel4.png",
+      image: "storage/images/hotel4.png",
       name: "Des Alpes Hotel",
       rating: "4.8",
       reviews: "8 rating",

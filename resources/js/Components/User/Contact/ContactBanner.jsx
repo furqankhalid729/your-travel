@@ -14,14 +14,14 @@ const ContactBanner = () => {
           paragraph2: " Please share your thoughts with us.",
         },
         {
-          id: 1,
+          id: 2,
           icon: MdOutlineAttachEmail,
           title: "Email us",
           paragraph1: "We are available to assist.",
           paragraph2: "yourtrip24@info.com",
         },
         {
-          id: 1,
+          id: 3,
           icon: TbPhonePlus,
           title: "Contact us",
           paragraph1: "We are available to assist you. 24/7",
@@ -29,7 +29,7 @@ const ContactBanner = () => {
          
         },
         {
-          id: 1,
+          id: 4,
           icon: SlLocationPin,
           title: "Visit us",
           paragraph1: "Our crew is available to assist you.",

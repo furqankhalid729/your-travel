@@ -4,19 +4,19 @@ import DestinationCard from '../../User/snippets/DestinationCard';
 const FeatureDestination = () => {
     const cardData = [
         {
-          image: " /dest1.png",
+          image: " storage/images/dest1.png",
           heading: "Lake Lucrene",
         },
         {
-          image: "/dest2.png",
+          image: "storage/images/dest2.png",
           heading: "Zurich",
         },
         {
-          image: "/dest3.png",
+          image: "storage/images/dest3.png",
           heading: "Chapel Bridge",
         },
         {
-          image: " /dest4.png",
+          image: " storage/images/dest4.png",
           heading: "Zermatt",
         },
       ];

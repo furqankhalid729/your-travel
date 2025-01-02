@@ -3,7 +3,7 @@ import React from "react";
 const GuestReview = () => {
   const reviews = [
     {
-    image: '/testimonial1.jpg',
+      image: 'storage/images/testimonial1.jpg',
       name: "Muneeb ur Rehman",
       location: "Pakistan",
       rating: 5,
@@ -11,7 +11,7 @@ const GuestReview = () => {
         "Was looked after by hotel staff they where amazing. My room was great comfortable and very clean. My luggage was not on my flight from dubai when I arrived at home airport. It came 3 days later. When I arrived at airport hotel staff went and collected my luggage for me they went above and beyond there duties. I used to stay at the pearl continental but",
     },
     {
-        image: '/testimonial2.jpg',
+      image: 'storage/images/testimonial2.jpg',
       name: "James Thomas",
       location: "USA",
       rating: 4,
@@ -19,7 +19,7 @@ const GuestReview = () => {
         "Was looked after by hotel staff they where amazing. My room was great comfortable and very clean. My luggage was not on my flight from dubai when I arrived at home airport. It came 3 days later. When I arrived at airport hotel staff went and collected my luggage for me they went above and beyond there duties. I used to stay at the pearl continental but",
     },
     {
-        image: '/testimonial3.jpg',
+      image: 'storage/images/testimonial3.jpg',
       name: "Muhammad Aadil",
       location: "Switzerland",
       rating: 5,
@@ -41,26 +41,26 @@ const GuestReview = () => {
     <section className="mt-8 md:mt-0">
       <h2 className="text-lg md:text-2xl font-bold mb-4">Guest Review</h2>
       <div className="flex items-center gap-2 mb-4">
-            <span className="text-xs md:text-sm font-bold bg-red-500 text-white px-1  rounded-md">
-              4.2
-            </span>
-            <span className="text-xs md:text-sm font-medium text-gray-600">Good (2365 reviews)</span>
-          </div>
+        <span className="text-xs md:text-sm font-bold bg-red-500 text-white px-1  rounded-md">
+          4.2
+        </span>
+        <span className="text-xs md:text-sm font-medium text-gray-600">Good (2365 reviews)</span>
+      </div>
       <div className="md:flex items-start gap-10">
         <div className="md:w-[25%] mb-12 md:mb-0">
-          
+
           {ratings.map((rating, index) => (
             <div key={index} className="mb-3">
-                <div className="flex justify-between"> <p className="text-xs md:text-sm font-semibold">{rating.name}</p>
+              <div className="flex justify-between"> <p className="text-xs md:text-sm font-semibold">{rating.name}</p>
                 <p className="text-xs md:text-sm text-gray-500">{rating.value}</p></div>
-             
+
               <div className="w-full bg-gray-200 h-2 rounded">
                 <div
                   className="bg-red-500 h-2 rounded"
                   style={{ width: `${rating.value * 20}%` }}
                 ></div>
               </div>
-             
+
             </div>
           ))}
         </div>
@@ -72,25 +72,25 @@ const GuestReview = () => {
             >
               <div className="flex items-center gap-3 mb-3">
                 <div className="w-10 h-10 bg-gray-300 rounded-full"><img
-  src={review.image}
-  alt={review.name}
-  className="w-10 h-10 rounded-full object-cover"
-/></div>
+                  src={review.image}
+                  alt={review.name}
+                  className="w-10 h-10 rounded-full object-cover"
+                /></div>
                 <div className="text-[12px]">
-                    <div className="flex gap-1"><p className="font-semibold ">{review.name}</p>
+                  <div className="flex gap-1"><p className="font-semibold ">{review.name}</p>
                     <span className="text-yellow-500 ">
-                    {'★'.repeat(review.rating)}</span></div>
-                    
+                      {'★'.repeat(review.rating)}</span></div>
+
                   <p className="text-[12px] text-gray-500">{review.location}</p>
                 </div>
               </div>
               <div className="p-4">
-              <p className="text-[12px] text-gray-600 ">
-                {review.review.substring(0, 150)}...
-              </p>
-              <a href="#" className=" text-red-500 font-medium text-[12px] ">
-                Read More
-              </a>
+                <p className="text-[12px] text-gray-600 ">
+                  {review.review.substring(0, 150)}...
+                </p>
+                <a href="#" className=" text-red-500 font-medium text-[12px] ">
+                  Read More
+                </a>
               </div>
             </div>
           ))}

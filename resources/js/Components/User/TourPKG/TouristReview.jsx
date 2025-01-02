@@ -3,7 +3,7 @@ import React from "react";
 const TouristReview = () => {
   const reviews = [
     {
-    image: '/testimonial1.jpg',
+    image: 'storage/images/testimonial1.jpg',
       name: "Muneeb ur Rehman",
       location: "Pakistan",
       rating: 5,
@@ -11,7 +11,7 @@ const TouristReview = () => {
         "Was looked after by hotel staff they where amazing. My room was great comfortable and very clean. My luggage was not on my flight from dubai when I arrived at home airport. It came 3 days later. When I arrived at airport hotel staff went and collected my luggage for me they went above and beyond there duties. I used to stay at the pearl continental but",
     },
     {
-        image: '/testimonial2.jpg',
+        image: 'storage/images/testimonial2.jpg',
       name: "James Thomas",
       location: "USA",
       rating: 4,
@@ -19,7 +19,7 @@ const TouristReview = () => {
         "Was looked after by hotel staff they where amazing. My room was great comfortable and very clean. My luggage was not on my flight from dubai when I arrived at home airport. It came 3 days later. When I arrived at airport hotel staff went and collected my luggage for me they went above and beyond there duties. I used to stay at the pearl continental but",
     },
     {
-        image: '/testimonial3.jpg',
+        image: 'storage/images/testimonial3.jpg',
       name: "Muhammad Aadil",
       location: "Switzerland",
       rating: 5,

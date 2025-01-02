@@ -6,7 +6,7 @@ const CareerForm = () => {
       <div className="flex flex-col rounded-[30px] bg-red-600 text-white md:flex-row items-center overflow-hidden">
         {/* Left Section: Image */}
         <div className="md:w-1/3 flex justify-center items-center p-10">
-          <img src="/career4.png" alt="Career" className="w-full h-auto" />
+          <img src="storage/images/career4.png" alt="Career" className="w-full h-auto" />
         </div>
 
         {/* Right Section: Form */}

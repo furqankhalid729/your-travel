@@ -20,7 +20,7 @@ function HotelCards() {
       price: 700,
       amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
       types: ["Room", "Villa", "Resort", "Apartment"],
-      image: "/hotel.jpg",
+      image: "storage/images/hotel.jpg",
     },
     {
       id: 2,
@@ -33,7 +33,7 @@ function HotelCards() {
       price: 700,
       amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
       types: ["Room", "Villa", "Resort", "Apartment"],
-      image: "/hotel.jpg",
+      image: "storage/images/hotel.jpg",
     },
     {
       id: 3,
@@ -46,7 +46,7 @@ function HotelCards() {
       price: 700,
       amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
       types: ["Room", "Villa", "Resort", "Apartment"],
-      image: "/hotel.jpg",
+      image: "storage/images/hotel.jpg",
     },
     {
       id: 4,
@@ -59,7 +59,7 @@ function HotelCards() {
       price: 700,
       amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
       types: ["Room", "Villa", "Resort", "Apartment"],
-      image: "/hotel.jpg",
+      image: "storage/images/hotel.jpg",
     },
     {
       id: 5,
@@ -72,7 +72,7 @@ function HotelCards() {
       price: 700,
       amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
       types: ["Room", "Villa", "Resort", "Apartment"],
-      image: "/hotel.jpg",
+      image: "storage/images/hotel.jpg",
     },
 
   ];
