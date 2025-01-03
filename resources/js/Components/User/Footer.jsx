@@ -37,7 +37,7 @@ function Footer() {
               <ul className='text-sm lg:text-base'>
                 {company.map((link, index) => (
                   <li key={index} className='pt-2'>
-                    <Link to={link.url} className="text-gray-600 hover:text-red-600">{link.name}</Link>
+                    <Link href={link.url} className="text-gray-600 hover:text-red-600">{link.name}</Link>
                   </li>
                 ))}
               </ul>
