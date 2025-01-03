@@ -110,7 +110,7 @@ const Header = () => {
                       {link.items.map((item, index) => (
                         <li key={index}>
                           <Link
-                            to={item.to}
+                            href={item.to}
                             className="block px-4 py-2 hover:bg-gray-100"
                           >
                             {item.name}
@@ -121,7 +121,7 @@ const Header = () => {
                   )}
                 </div>
               ) : (
-                <Link to={link.to} className="hover:text-gray-200">
+                <Link href={link.to} className="hover:text-gray-200">
                   {link.name}
                 </Link>
               )}
@@ -239,7 +239,7 @@ const Header = () => {
                       {link.items.map((item, index) => (
                         <li key={index}>
                           <Link
-                            to={item.to}
+                            href={item.to}
                             className="block px-4 py-2 hover:bg-red-700"
                           >
                             {item.name}
@@ -250,7 +250,7 @@ const Header = () => {
                   )}
                 </>
               ) : (
-                <Link to={link.to} className="block hover:text-red-700">
+                <Link href={link.to} className="block hover:text-red-700">
                   {link.name}
                 </Link>
               )}
