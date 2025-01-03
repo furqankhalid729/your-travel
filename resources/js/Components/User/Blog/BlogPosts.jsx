@@ -1,7 +1,7 @@
 export const blogPosts = [
     {
       id: 1,
-      image: "/blogc1.png",
+      image: "storage/images/blogc1.png",
       title: "Most visited Places in Switzerland",
       publihed: "Published 10 Sep 2024",
       content:
@@ -9,7 +9,7 @@ export const blogPosts = [
     },
     {
       id: 2,
-      image: "/blogc2.png",
+      image: "storage/images/blogc2.png",
       title: "Hidden Gems in Paris",
       publihed: "Published 10 Sep 2024",
       content:
@@ -17,7 +17,7 @@ export const blogPosts = [
     },
     {
       id: 3,
-      image: "/blogc1.png",
+      image: "storage/images/blogc1.png",
       title: "Hidden Gems in Paris",
       publihed: "Published 10 Sep 2024",
       content:
@@ -25,7 +25,7 @@ export const blogPosts = [
     },
     {
       id: 4,
-      image: "/blogc2.png",
+      image: "storage/images/blogc2.png",
       title: "Hidden Gems in Paris",
       publihed: "Published 10 Sep 2024",
       content:

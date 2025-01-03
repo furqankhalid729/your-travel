@@ -7,12 +7,12 @@ import { FaMapMarkerAlt, FaCity } from 'react-icons/fa';
 import ImageGallery from '../Snippets/ImageGallery';
 const RoomProfile = () => {
   const images = [
-    "/hotel0.jpg",
-    "/hotel2.jpg",
-    "/hotels3.png",
-    "/hotel4.png",
-    "/hotel8.jpg",
-    "/hotel7.jpg"
+    "storage/images/hotel0.jpg",
+    "storage/images/hotel2.jpg",
+    "storage/images/hotels3.png",
+    "storage/images/hotel4.png",
+    "storage/images/hotel8.jpg",
+    "storage/images/hotel7.jpg"
   ];
   return (
     <div className="">
@@ -60,7 +60,7 @@ const RoomProfile = () => {
           <div className="h-44 lg:h-64 relative bg-gray-300 mb-4 rounded-md overflow-hidden">
             <div
               className="absolute inset-0 bg-cover bg-center rounded-md "
-              style={{ backgroundImage: `url('/map.jpg')` }}
+              style={{ backgroundImage: `url('storage/images/map.jpg')` }}
             >
               <span className="absolute inset-0 flex items-center justify-center text-white">
                 <div className="py-1 px-2 bg-gray-500 opacity-50 rounded-xl text-[6px] sm:text-sm lg:text-lg">Show on map</div>

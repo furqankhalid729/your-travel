@@ -4,22 +4,22 @@ import {ALT_TAGS} from '../../../Constants/Global';
 const FeaturedFleets = () => {
   const cardData = [
     {
-      imageSrc: " /car1.png",
+      imageSrc: " storage/images/car1.png",
       heading: "Business Class",
       description: "Mercedes Benz E Class, BMW 9 Series,Audi A7 or Similar",
     },
     {
-      imageSrc: "/car2.png",
+      imageSrc: "storage/images/car2.png",
       heading: "Elecric Class",
       description: "Mercedes Benz E Class, BMW 9 Series,Audi A7 or Similar",
     },
     {
-      imageSrc: "/car2.png",
+      imageSrc: "storage/images/car2.png",
       heading: "Business Van/SUV",
       description: "Mercedes Benz E Class, BMW 9 Series,Audi A7 or Similar",
     },
     {
-      imageSrc: " /car1.png",
+      imageSrc: " storage/images/car1.png",
       heading: "First Class",
       description: "Mercedes Benz E Class, BMW 9 Series,Audi A7 or Similar",
     },

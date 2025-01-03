@@ -3,7 +3,7 @@ import ProfileCard from "../Snippets/ProfileCard";
 function FeaturedProfile() {
   const cardData = [
     {
-      image: " /hotel.png",
+      image: " storage/images/hotel.png",
       name: "Avari Hotel Lahore",
       rating: 4.2,
       reviews: "Good (2365 reviews)",
@@ -11,7 +11,7 @@ function FeaturedProfile() {
       location: "gulberg",
     },
     {
-      image: " /hotel4.png",
+      image: " storage/images/hotel4.png",
       name: "Belvedere Hotel",
       rating: 4.8,
       reviews: "Good (2365 reviews)",
@@ -19,7 +19,7 @@ function FeaturedProfile() {
       location: "gulberg",
     },
     {
-      image: " /hotel.png",
+      image: " storage/images/hotel.png",
       name: "Dolder Grand Hotel",
       rating: 4,
       reviews: "Good (2365 reviews)",
@@ -27,7 +27,7 @@ function FeaturedProfile() {
       location: "gulberg",
     },
     {
-      image: " /hotel4.png",
+      image: " storage/images/hotel4.png",
       name: "Des Alpes Hotel",
       rating: 4.5,
       reviews: "Good (2365 reviews)",

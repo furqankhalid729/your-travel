@@ -9,12 +9,12 @@ import { Link } from '@inertiajs/react';
 
 const CarProfile = () => {
   const images = [
-    "/carde.png",
-    "/carde1.png",
-    "/carde2.png",
-    "/carde3.png",
-    "/carde4.png",
-    "/carde5.png"
+    "storage/images/carde.png",
+    "storage/images/carde1.png",
+    "storage/images/carde2.png",
+    "storage/images/carde3.png",
+    "storage/images/carde4.png",
+    "storage/images/carde5.png"
   ];
 
   return (
@@ -82,7 +82,7 @@ const CarProfile = () => {
             {/* Driver Info */}
             <div className="flex items-center space-x-1 md:space-x-4">
               <img
-                src="/avatardriver.png"
+                src="storage/images/avatardriver.png"
                 alt="Driver"
                 className="w-4 h-4 xs:w-8 lg:w-16 xs:h-8 lg:h-16 rounded-full object-cover"
               />

@@ -3,17 +3,17 @@ import React from 'react';
 const testimonials = [
   {
     name: "Alex H.",
-    image: "/testimonial1.jpg", 
+    image: "storage/images/testimonial1.jpg", 
     text: "Quality and reliability matter to me, and this website delivered. Diverse product selection and a team committed to customer satisfaction. Highly satisfied."
   },
   {
     name: "Alina H.",
-    image: "testimonial2.jpg", 
+    image: "storage/images/testimonial2.jpg", 
     text: "Quality and reliability matter to me, and this website delivered. Diverse product selection and a team committed to customer satisfaction. Highly satisfied."
   },
   {
     name: "Genz A.",
-    image: "testimonial3.jpg", 
+    image: "storage/images/testimonial3.jpg", 
     text: "Quality and reliability matter to me, and this website delivered. Diverse product selection and a team committed to customer satisfaction. Highly satisfied."
   }
 ];

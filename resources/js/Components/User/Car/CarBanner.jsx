@@ -11,7 +11,7 @@ const CarBanner = () => {
   return (
     <div
       className="relative h-screen w-full bg-cover bg-center"
-      style={{ backgroundImage: `url('/carbg.png')` }}
+      style={{ backgroundImage: `url('storage/images/carbg.png')` }}
     >
       <div className="absolute inset-0"></div>
       <div className="relative z-10 flex flex-col items-center justify-start lg:justify-center h-full text-white px-8 text-center">
