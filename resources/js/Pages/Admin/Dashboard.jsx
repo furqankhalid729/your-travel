@@ -1,5 +1,5 @@
 // import { Chart } from "react-google-charts";
-
+import AdminLayout from "../../Layout/AdminLayout";
 const Dashboard = () => {
   const salesReportData = [
     ["Month", "Total Sales", "Total Visitors", "Total Orders"],
@@ -180,5 +180,5 @@ const Dashboard = () => {
     </div>
   );
 };
-
+Dashboard.layout = page => <AdminLayout children={page} title="Dashboard" />
 export default Dashboard;

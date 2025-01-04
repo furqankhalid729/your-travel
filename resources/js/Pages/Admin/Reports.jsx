@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import AdminLayout from "../../Layout/AdminLayout";
 import ReportsCom from "../../Components/Admin/Reports";
 
 const Reports = () => {
@@ -8,5 +9,5 @@ const Reports = () => {
     </div>
   )
 }
-
-export default Reports
+Reports.layout = page => <AdminLayout children={page} title="Reports" />
+export default Reports;

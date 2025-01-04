@@ -1,7 +1,8 @@
-import React from 'react'
-import CarCatogory from '../../Components/User/Car/CarCategory'
-import CarBanner from '../../Components/User/Car/CarBanner'
-import CarTab from '../../Components/User/Car/CarTab'
+import React from 'react';
+import CarCatogory from '../../Components/User/Car/CarCategory';
+import CarBanner from '../../Components/User/Car/CarBanner';
+import CarTab from '../../Components/User/Car/CarTab';
+import UserLayout from "../../Layout/UserLayout";
 const CarPrimary = () => {
   return (
     <>
@@ -17,5 +18,5 @@ const CarPrimary = () => {
     </>
   )
 }
-
+CarPrimary.layout = page => <UserLayout children={page} title="Car Primary" />
 export default CarPrimary

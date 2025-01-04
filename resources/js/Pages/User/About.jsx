@@ -1,4 +1,5 @@
 import React from "react";
+import UserLayout from "../../Layout/UserLayout";
 
 const About = () => {
   return (
@@ -43,5 +44,5 @@ const About = () => {
     </div>
   );
 };
-
+About.layout = page => <UserLayout children={page} title="About Us" />
 export default About;

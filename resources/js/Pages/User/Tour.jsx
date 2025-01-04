@@ -2,7 +2,7 @@ import React from 'react'
 import Banner from '../../Components/User/Tour/Banner'
 import TourRating from '../../Components/User/Tour/TourRating'
 import TourCards from '../../Components/User/Tour/TourCards'
-
+import UserLayout from "../../Layout/UserLayout";
 const Tour = () => {
   return (
     <>
@@ -18,5 +18,5 @@ const Tour = () => {
     </>
   )
 }
-
-export default Tour
+Tour.layout = page => <UserLayout children={page} title="Tour" />
+export default Tour;
