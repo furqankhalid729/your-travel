@@ -1,6 +1,7 @@
 import React from "react";
 import { blogPosts } from "../../Components/User/Blog/BlogPosts";
 import BlogCard from "../../Components/User/Snippets/BlogCard";
+import UserLayout from "../../Layout/UserLayout";
 
 const Blog = () => {
   return (
@@ -22,5 +23,5 @@ const Blog = () => {
     </>
   );
 };
-
+Blog.layout = page => <UserLayout children={page} title="Blog" />
 export default Blog;

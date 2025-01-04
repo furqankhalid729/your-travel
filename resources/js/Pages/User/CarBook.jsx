@@ -1,6 +1,7 @@
 import React from 'react'
 import CarBooking from '../../Components/User/CarBooking/CarBooking';
 import BookingForm from '../../Components/User/CarBooking/BookingForm';
+import UserLayout from "../../Layout/UserLayout";
 const CarBook = () => {
   return (
     <div className=' mt-12 md:flex gap-6'>
@@ -10,5 +11,5 @@ const CarBook = () => {
       </div>
   )
 }
-
+CarBook.layout = page => <UserLayout children={page} title="Car booking" />
 export default CarBook

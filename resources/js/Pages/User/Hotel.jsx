@@ -2,7 +2,7 @@ import React from "react";
 import Banner from "../../Components/User/Hotel/Banner";
 import HotelCards from "../../Components/User/Hotel/HotelCards";
 import HotelRating from "../../Components/User/Hotel/HotelRating";
-
+import UserLayout from "../../Layout/UserLayout";
 const Hotel = () => {
   return (
     <>
@@ -18,5 +18,5 @@ const Hotel = () => {
     </>
   );
 };
-
+Hotel.layout = page => <UserLayout children={page} title="Hotel"/>
 export default Hotel;

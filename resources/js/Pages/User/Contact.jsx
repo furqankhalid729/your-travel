@@ -2,6 +2,7 @@ import React from "react";
 import ContactForm from "../../Components/User/Contact/ContantForm";
 import MapCard from "../../Components/User/Contact/MapCard";
 import ContactBanner from "../../Components/User/Contact/ContactBanner";
+import UserLayout from "../../Layout/UserLayout";
 const Contact = () => {
   return (
     <>
@@ -15,5 +16,5 @@ const Contact = () => {
     </>
   );
 };
-
+Contact.layout = page => <UserLayout children={page} title="Contact" />
 export default Contact;
