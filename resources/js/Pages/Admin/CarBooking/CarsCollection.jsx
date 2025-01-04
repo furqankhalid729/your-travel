@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import AdminLayout from "../../../Layout/AdminLayout";
 import CarsCollectionCom from "../../../Components/Admin/CarBooking/CarsCollection";
 
 const CarsCollection = () => {
@@ -8,5 +9,5 @@ const CarsCollection = () => {
         </div>
     )
 }
-
+CarsCollection.layout = page => <AdminLayout children={page} title="Cars Collection" />
 export default CarsCollection

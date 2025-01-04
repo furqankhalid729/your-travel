@@ -1,5 +1,6 @@
-import React from 'react'
-import CustomersCom from '../../Components/Admin/Customers'
+import React from 'react';
+import AdminLayout from "../../Layout/AdminLayout";
+import CustomersCom from '../../Components/Admin/Customers';
 const Customers = () => {
   return (
     <div>
@@ -7,5 +8,5 @@ const Customers = () => {
     </div>
   )
 }
-
+Customers.layout = page => <AdminLayout children={page} title="Customer" />
 export default Customers

@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import AdminLayout from "../../../Layout/AdminLayout";
 import DriverProfieCom from "../../../Components/Admin/CarBooking/DriverProfile";
 
 const DriverProfile = () => {
@@ -8,5 +9,5 @@ const DriverProfile = () => {
         </div>
     )
 }
-
+DriverProfile.layout = page => <AdminLayout children={page} title="Add Car" />
 export default DriverProfile
