@@ -63,7 +63,7 @@ const Signup = ({onSwitchToLogin}) => {
       </div>
 
       <p className="text-base  text-black text-center ">
-        Already have an account 
+        Already have an account
         <span className="mr-2"></span>
         <button
           onClick={onSwitchToLogin}

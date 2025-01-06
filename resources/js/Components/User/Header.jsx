@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
-import Login from "./Utils/Login";
+// import Login from "./Utils/Login";
+import Login from "@/Pages/Auth/Login";
+import Signup from "@/Pages/Auth/Register";
 import { Link } from "@inertiajs/react";
-import Signup from "./Utils/SignUp";
+// import Signup from "./Utils/SignUp";
 
 const Header = () => {
   const searchRef = useRef(null);

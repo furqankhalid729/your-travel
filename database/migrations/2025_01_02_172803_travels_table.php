@@ -9,29 +9,9 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void                                                                                                              
+    public function up(): void
     {
-        // Create Users Table
-        Schema::create('users', function (Blueprint $table) {
-            $table->id();
-            $table->string('role_name');
-            $table->string('first_name');
-            $table->string('last_name');
-            $table->string('username');
-            $table->enum('gender', ['Male', 'Female', 'Other']);
-            $table->string('address');
-            $table->string('city');
-            $table->string('postal_code', 10);
-            $table->string('country');
-            $table->bigInteger('contact_no');
-            $table->string('email');
-            $table->string('password');
-            $table->string('card_holder_name');
-            $table->enum('card_type', ['Credit', 'Debit']);
-            $table->bigInteger('card_number');
-            $table->date('expiry_date');
-            $table->timestamps();
-        });
+
 
         // Create Tours Table
         Schema::create('tours', function (Blueprint $table) {
