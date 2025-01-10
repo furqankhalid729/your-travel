@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\CarController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -293,4 +295,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+//Resource Admin
+Route::resource('cars',CarController::class);
 require __DIR__.'/auth.php';
