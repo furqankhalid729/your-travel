@@ -1,7 +1,11 @@
 <?php
 
+use App\Http\Controllers\CarController;
+use App\Http\Controllers\ProfileController;
+use App\Models\Car\CarBrand;
+use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
-use Inertia\Inertia; 
+use Inertia\Inertia;
 
 // User Routes
 
@@ -77,9 +81,9 @@ Route::get('/test-1', function () {
 
 // Admin Routes
 
-Route::get('/login', function () {
-    return Inertia::render('Admin/Login');
-});
+// Route::get('/login', function () {
+//     return Inertia::render('Admin/Login');
+// });
 
 Route::get('/dashlayout', function () {
     return Inertia::render('Admin/DashLayout');
@@ -108,9 +112,18 @@ Route::get('/dashboard/car-booking/special-offers', function () {
     return Inertia::render('Admin/CarBooking/Specialoffers');
 });
 
+// Route::get('/dashboard/car-booking/add-car', function () {
+//     $brands = CarBrand::all();
+//     return Inertia::render('Admin/CarBooking/AddCar', ['brands' => $brands]);
+// });
+
 Route::get('/dashboard/car-booking/add-car', function () {
-    return Inertia::render('Admin/CarBooking/AddCar');
-});
+    $brands = CarBrand::all();
+    // dd($brands);
+    return Inertia::render('Admin/CarBooking/AddCar', [
+        'brands' => $brands
+    ]);
+})->middleware(middleware: ['auth']);
 
 Route::get('/dashboard/car-booking/view-car', function () {
     return Inertia::render('Admin/CarBooking/ViewCar');
@@ -267,3 +280,31 @@ Route::get('/dashboard/settings/security', function () {
     return Inertia::render('Admin/Settings/Security');
 });
 
+// User Routes
+
+Route::get('/welcome', function () {
+    return Inertia::render('Welcome', [
+        'canLogin' => Route::has('login'),
+        'canRegister' => Route::has(name: 'register'),
+        'laravelVersion' => Application::VERSION,
+        'phpVersion' => PHP_VERSION,
+    ]);
+});
+
+// Route::get('/dashboard', function () {
+//     return Inertia::render(component: component: 'Dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::get('/dashboard', function () {
+    return Inertia::render(component: 'Admin/Dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+//Resource Admin
+Route::resource('cars',CarController::class);
+require __DIR__.'/auth.php';

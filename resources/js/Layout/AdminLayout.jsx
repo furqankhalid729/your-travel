@@ -1,5 +1,7 @@
 import { useState } from "react";
 import { Link, usePage } from "@inertiajs/react";
+import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+
 // import { Outlet } from "react-router-dom";
 
 import {
@@ -23,6 +25,8 @@ import {
 
 const AdminLayout = ({ title, children }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
+    const user = usePage().props.auth.user;
+
     const { url } = usePage();
     const isActive = (path) => url === path || url.startsWith(path);
 
@@ -60,8 +64,15 @@ const AdminLayout = ({ title, children }) => {
                     <FaBell className="text-lg cursor-pointer" />
                     <div className="flex items-center gap-2">
                         <FaUserCircle className="text-2xl" />
-                        <span>Muneeb&apos;s</span>
+                        <span>{user.name}</span>
                     </div>
+                    <ResponsiveNavLink
+                        method="post"
+                        href={route('logout')}
+                        as="button"
+                    >
+                        Log Out
+                    </ResponsiveNavLink>
                 </div>
             </div>
             <div className="flex">
@@ -86,7 +97,7 @@ const AdminLayout = ({ title, children }) => {
                             ))}
                         </nav>
                     </div>
-                    
+
                 </div>
                 <div className="w-full bg-[#f3f3f3]">
                     {children}

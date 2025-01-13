@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaSearch, FaBars, FaTimes } from "react-icons/fa";
 import { IoIosArrowDown } from "react-icons/io";
-import Login from "./Utils/Login";
-import { Link } from "@inertiajs/react";
-import Signup from "./Utils/SignUp";
+// import Login from "./Utils/Login";
+import Login from "@/Pages/Auth/Login";
+import Signup from "@/Pages/Auth/Register";
+import { Link , usePage} from "@inertiajs/react";
+// import Signup from "./Utils/SignUp";
 
 const Header = () => {
   const searchRef = useRef(null);
@@ -14,6 +16,9 @@ const Header = () => {
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
+
+  const { auth } = usePage().props; // Access the user authentication info
+  const user = auth.user;
 
   const searchHandler = () => {
     setIsSearchActive((prev) => !prev);
@@ -149,12 +154,21 @@ const Header = () => {
             </div>
           )}
 
-          <button
-            onClick={toggleLogin}
-            className="bg-white text-red-600 px-3 py-1 rounded text-[8px] md:text-base md:px-4 lg:py-2 hover:bg-gray-200"
-          >
-            Login / Register
-          </button>
+            {user ? (
+            <Link
+                href="/dashboard" // Replace with the correct route for your dashboard
+                className="bg-white text-red-600 px-3 py-1 rounded text-[8px] md:text-base md:px-4 lg:py-2 hover:bg-gray-200"
+            >
+                Dashboard
+            </Link>
+            ) : (
+            <button
+                onClick={toggleLogin}
+                className="bg-white text-red-600 px-3 py-1 rounded text-[8px] md:text-base md:px-4 lg:py-2 hover:bg-gray-200"
+            >
+                Login / Register
+            </button>
+            )}
         </div>
 
         {/* Mobile Hamburger Icon */}
