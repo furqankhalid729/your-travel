@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Car\CarBrand;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -111,9 +112,18 @@ Route::get('/dashboard/car-booking/special-offers', function () {
     return Inertia::render('Admin/CarBooking/Specialoffers');
 });
 
+// Route::get('/dashboard/car-booking/add-car', function () {
+//     $brands = CarBrand::all();
+//     return Inertia::render('Admin/CarBooking/AddCar', ['brands' => $brands]);
+// });
+
 Route::get('/dashboard/car-booking/add-car', function () {
-    return Inertia::render('Admin/CarBooking/AddCar');
-});
+    $brands = CarBrand::all();
+    // dd($brands);
+    return Inertia::render('Admin/CarBooking/AddCar', [
+        'brands' => $brands
+    ]);
+})->middleware(middleware: ['auth']);
 
 Route::get('/dashboard/car-booking/view-car', function () {
     return Inertia::render('Admin/CarBooking/ViewCar');
