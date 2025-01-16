@@ -10,7 +10,7 @@ const Signup = ({onSwitchToLogin}) => {
         <input
           type="text"
           placeholder="First Name"
-          className="w-full border rounded-[50px] p-4 focus:outline-none focus:ring-2 focus:ring-red-500 flex-1"
+          className="w-full border rounded-[50px] p-4 focus:outline-none focus:ring-2 focus:ring-red-500 flex-1 "
         />
         <input
           type="text"

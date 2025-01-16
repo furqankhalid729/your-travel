@@ -31,7 +31,7 @@ export default function Register() {
             <input
               type="text"
               placeholder="Name"
-              className="w-full border rounded-[50px] p-4 focus:outline-none focus:ring-2 focus:ring-red-500 flex-1"
+              className="w-full border rounded-[50px] p-4 focus:outline-none focus:ring-2 focus:ring-red-500 flex-1 text-black"
               value={data.name}
               onChange={(e) => setData("name", e.target.value)}
               required
@@ -49,7 +49,7 @@ export default function Register() {
             <input
               type="email"
               placeholder="Email"
-              className="w-full border rounded-[50px] p-4 focus:outline-none focus:ring-2 focus:ring-red-500 sm:flex-[110px]"
+              className="w-full border rounded-[50px] p-4 focus:outline-none focus:ring-2 focus:ring-red-500 sm:flex-[110px] text-black"
               value={data.email}
               onChange={(e) => setData("email", e.target.value)}
               required
@@ -66,7 +66,7 @@ export default function Register() {
             <input
               type="password"
               placeholder="Password"
-              className="w-full border rounded-[50px] p-4 focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full border rounded-[50px] p-4 focus:outline-none focus:ring-2 focus:ring-red-500 text-black"
               value={data.password}
               onChange={(e) => setData("password", e.target.value)}
               required
@@ -74,7 +74,7 @@ export default function Register() {
             <input
               type="password"
               placeholder="Confirm Password"
-              className="w-full border rounded-[50px] p-4 focus:outline-none focus:ring-2 focus:ring-red-500"
+              className="w-full border rounded-[50px] p-4 focus:outline-none focus:ring-2 focus:ring-red-500 text-black"
               value={data.password_confirmation}
               onChange={(e) => setData("password_confirmation", e.target.value)}
               required
