@@ -4,16 +4,25 @@ import { FaSave, FaArrowLeft, FaPlus, FaSnowflake, FaCarSide, FaLanguage, FaUser
 import { Link } from "@inertiajs/react";
 import Modal from 'react-modal';
 
+const iconMapping = {
+  FaSnowflake: <FaSnowflake />,
+  FaCarSide: <FaCarSide />,
+  FaLanguage: <FaLanguage />,
+  FaUser: <FaUser />,
+};
+
 const AddCar = () => {
   const [fuelOptions] = useState(["Petrol", "Diesel", "Electric", "Hybrid"]);
   const [transmissionOptions] = useState(["Manual", "Automatic"]);
   const [selectedFuel, setSelectedFuel] = useState(fuelOptions[0]);
   const [selectedTransmission, setSelectedTransmission] = useState(transmissionOptions[0]);
-  const [carImage, setCarImage] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(true);
+  const [carImages, setCarImages] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newFeature, setNewFeature] = useState("");
+  const [featureIcon, setFeatureIcon] = useState("FaSnowflake");
 
   const { data, setData, post, processing, errors } = useForm({
-    carName: "Car Name",
+    carName: "",
     brand: "",
     model: "",
     fuel: selectedFuel,
@@ -35,19 +44,28 @@ const AddCar = () => {
     }));
   };
 
+  // Handle file change
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    setCarImage(file);
+    const files = Array.from(e.target.files);
+    const imagePreviews = files.map((file) => URL.createObjectURL(file)); // Create preview URLs
+    setCarImages((prevImages) => [...prevImages, ...imagePreviews]); // Append new images
+  };
+
+  // Remove an image by index
+  const handleRemoveImage = (index) => {
+    setCarImages((prevImages) => prevImages.filter((_, i) => i !== index));
   };
 
   const handleFeatureAdd = () => {
-    setIsModalOpen(true)
-    // if (newFeature) {
-    //   setData((prevDetails) => ({
-    //     ...prevDetails,
-    //     features: [...prevDetails.features, newFeature],
-    //   }));
-    // }
+    if (newFeature && featureIcon) {
+      setData((prevDetails) => ({
+        ...prevDetails,
+        features: [...prevDetails.features, { name: newFeature, icon: featureIcon }],
+      }));
+      setNewFeature("");
+      setFeatureIcon("FaSnowflake");
+      setIsModalOpen(false);
+    }
   };
 
   const handleSubmit = (e) => {
@@ -61,7 +79,9 @@ const AddCar = () => {
     formData.append("capacity", data.capacity);
     formData.append("status", data.status);
     formData.append("price", data.price);
-    if (carImage) formData.append("mainImage", carImage); // Add the image
+    carImages.forEach((image, index) => {
+      formData.append(`carImage${index}`, image); // Add each image to FormData
+    });
     formData.append("features", JSON.stringify(data.features)); // Send features as JSON string
 
     post("/cars", formData, {
@@ -96,44 +116,89 @@ const AddCar = () => {
       <div className="flex mt-6 gap-6">
         {/* Left Panel */}
         <div className="w-2/5 p-4 rounded-lg shadow">
-          <div className="flex bg-[#eaeaea] flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md p-6 mb-2">
-            <label htmlFor="mainImage" className="flex flex-col items-center cursor-pointer">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                className="h-16 w-16 text-gray-400 mb-2"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-                strokeWidth={2}
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M3 16V8a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+          {/* Clickable Upload Area */}
+          <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md p-6 mb-2 relative bg-gray-50">
+            {carImages.length > 0 ? (
+              <div className="relative w-full h-full">
+                <img
+                  src={carImages[0]} // Display the first selected image
+                  alt="Main Car Preview"
+                  className="w-full h-40 object-cover rounded-md"
                 />
-                <path strokeLinecap="round" strokeLinejoin="round" d="M16 10.7a4.5 4.5 0 01-8 0M12 12v2" />
-              </svg>
-              <span className="text-gray-600 text-sm">Click to upload main image</span>
-            </label>
-            <input id="mainImage" type="file" accept="image/*" className="hidden" onChange={handleFileChange} />
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation(); // Prevent triggering the file picker
+                    handleRemoveImage(0); // Remove the first image
+                  }}
+                  className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600"
+                >
+                  ✖
+                </button>
+              </div>
+            ) : (
+              <>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-16 w-16 text-gray-400 mb-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    d="M3 16V8a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
+                  />
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 10.7a4.5 4.5 0 01-8 0M12 12v2" />
+                </svg>
+                <span className="text-gray-600 text-sm">Click to upload main image</span>
+              </>
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              className="absolute inset-0 opacity-0 cursor-pointer"
+              onChange={handleFileChange}
+              multiple
+            />
           </div>
-
+          {/* Grid for Additional Images */}
+          <div className="grid grid-cols-3 gap-2 my-4">
+            {carImages.slice(1).map((image, index) => (
+              <div key={index + 1} className="relative">
+                <img
+                  src={image}
+                  alt={`Additional Car Preview ${index}`}
+                  className="w-full h-20 object-cover rounded-lg"
+                />
+                <button
+                  onClick={() => handleRemoveImage(index + 1)} // Adjust index for additional images
+                  className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:bg-red-600"
+                >
+                  ✖
+                </button>
+              </div>
+            ))}
+          </div>
+          {/* Car title */}
           <div className="text-center">
             <input
               type="text"
               className="text-center"
               name="carName"
+              placeholder="Car Name"
               value={data.carName}
               onChange={handleInputChange}
             />
           </div>
-
+          {/* Add Feature Section */}
           <div className="w-[70%] mx-auto bg-white p-3 mt-2">
             <div className="flex justify-between items-center">
               <p className="text-gray-600 text-lg mb-4">Economy</p>
               <button
                 className="flex items-center gap-1 bg-[#bb8dd9] px-1 text-white rounded-lg"
-                onClick={handleFeatureAdd}
+                onClick={() => setIsModalOpen(true)}
               >
                 <FaPlus />
                 Add Features
@@ -141,9 +206,9 @@ const AddCar = () => {
             </div>
             <ul className="space-y-2">
               {data.features.map((feature, index) => (
-                <li key={index} className="text-gray-600 flex items-center">
-                  <FaSnowflake className="mr-2" />
-                  {feature}
+                <li key={index} className="text-gray-600 flex items-center gap-3 ">
+                  {iconMapping[feature.icon] || <FaSnowflake className="mr-2" />} {/* Fallback to FaSnowflake */}
+                  <p>{feature.name}</p>
                 </li>
               ))}
             </ul>
@@ -156,16 +221,14 @@ const AddCar = () => {
           <form id="carForm" onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-4">
               <DetailField label="Brand">
-                <select
+                <input
+                  type="text"
                   name="brand"
                   value={data.brand}
                   onChange={handleInputChange}
                   className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
-                >
-                  <option value="">Select Brand</option>
-                  <option value="audi">Audi</option>
-                  <option value="bmw">BMW</option>
-                </select>
+                  placeholder="Brand Name"
+                />
               </DetailField>
 
               <DetailField label="Model">
@@ -180,18 +243,14 @@ const AddCar = () => {
               </DetailField>
 
               <DetailField label="Fuel">
-                <select
+                <input
+                  type="text"
                   name="fuel"
                   value={data.fuel}
                   onChange={handleInputChange}
                   className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
-                >
-                  {fuelOptions.map((option, index) => (
-                    <option key={index} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
+                  placeholder="Fuel Name"
+                />
               </DetailField>
 
               <DetailField label="Car No.">
@@ -206,32 +265,25 @@ const AddCar = () => {
               </DetailField>
 
               <DetailField label="Transmission">
-                <select
+                <input
+                  type="text"
                   name="transmission"
                   value={data.transmission}
                   onChange={handleInputChange}
                   className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
-                >
-                  {transmissionOptions.map((option, index) => (
-                    <option key={index} value={option}>
-                      {option}
-                    </option>
-                  ))}
-                </select>
+                  placeholder="Transmission"
+                />
               </DetailField>
 
               <DetailField label="Capacity">
-                <select
+                <input
+                  type="text"
                   name="capacity"
                   value={data.capacity}
                   onChange={handleInputChange}
                   className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
-                >
-                  <option value="2">2 Persons</option>
-                  <option value="4">4 Persons</option>
-                  <option value="6">6 Persons</option>
-                  <option value="8">8 Persons</option>
-                </select>
+                  placeholder="Capacity"
+                />
               </DetailField>
 
               <DetailField label="Status">
@@ -261,6 +313,7 @@ const AddCar = () => {
         </div>
       </div>
       <div>
+        {/* Modal for Adding Features */}
         <Modal
           isOpen={isModalOpen}
           onRequestClose={() => setIsModalOpen(false)}
@@ -276,6 +329,8 @@ const AddCar = () => {
           </label>
           <select
             id="icon-select"
+            value={featureIcon}
+            onChange={(e) => setFeatureIcon(e.target.value)}
             className="w-full border rounded-lg p-2 mb-4"
           >
             <option value="FaSnowflake">❄️ Snowflake</option>
@@ -291,6 +346,8 @@ const AddCar = () => {
           <input
             id="feature-name"
             type="text"
+            value={newFeature}
+            onChange={(e) => setNewFeature(e.target.value)}
             className="w-full border rounded-lg p-2 mb-4"
             placeholder="Enter feature name"
           />
@@ -304,10 +361,7 @@ const AddCar = () => {
               Cancel
             </button>
             <button
-              onClick={() => {
-                // Add save logic here
-                setIsModalOpen(false);
-              }}
+              onClick={handleFeatureAdd}
               className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
             >
               Save
