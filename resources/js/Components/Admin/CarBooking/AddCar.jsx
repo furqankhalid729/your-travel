@@ -32,6 +32,7 @@ const AddCar = () => {
     status: "available",
     price: "",
     features: [], // Add features as a dynamic array
+    carImages: []  // Initialize carImages as an array
   });
 
   const [message, setMessage] = useState("");
@@ -46,14 +47,24 @@ const AddCar = () => {
 
   // Handle file change
   const handleFileChange = (e) => {
-    const files = Array.from(e.target.files);
-    const imagePreviews = files.map((file) => URL.createObjectURL(file)); // Create preview URLs
-    setCarImages((prevImages) => [...prevImages, ...imagePreviews]); // Append new images
+    const files = e.target.files;
+    const fileArray = Array.from(files).map((file) => ({
+      file, // Store the file object
+      url: URL.createObjectURL(file), // Optional: Create an object URL to preview the image
+    }));
+
+    // Update the carImages array in the useForm state
+    setData((prevData) => ({
+      ...prevData,
+      carImages: fileArray,
+    }));
   };
 
-  // Remove an image by index
   const handleRemoveImage = (index) => {
-    setCarImages((prevImages) => prevImages.filter((_, i) => i !== index));
+    setData((prevData) => ({
+      ...prevData,
+      carImages: prevData.carImages.filter((_, i) => i !== index), // Remove the image at the given index
+    }));
   };
 
   const handleFeatureAdd = () => {
@@ -79,11 +90,21 @@ const AddCar = () => {
     formData.append("capacity", data.capacity);
     formData.append("status", data.status);
     formData.append("price", data.price);
-    // Append each file object to the same key
-    carImages.forEach(({ file }) => {
-      formData.append("carImages[]", file); // Send as an array
-    });
+    // Append images from data.carImages
+    // if (data.carImages.length > 0) {
+    //   data.carImages.forEach(({ file }) => {
+    //     formData.append("carImages[]", file); // Append files
+    //   });
+    // } else {
+    //   console.log("No images selected");
+    // }
     formData.append("features", JSON.stringify(data.features)); // Send features as JSON string
+    formData.append("carImages", JSON.stringify(data.carImages)); // Send features as JSON string
+
+    // Log the FormData entries
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
+    }
 
     post("/cars", formData, {
       onSuccess: () => {
@@ -119,17 +140,20 @@ const AddCar = () => {
         <div className="w-2/5 p-4 rounded-lg shadow">
           {/* Clickable Upload Area */}
           <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md p-6 mb-2 relative bg-gray-50">
-            {carImages.length > 0 ? (
+            {data.carImages.length > 0 ? (
               <div className="relative w-full h-full">
                 <img
-                  src={carImages[0]} // Display the first selected image
+                  src={data.carImages[0].url} // Display the first selected image
                   alt="Main Car Preview"
                   className="w-full h-[300px] object-cover rounded-md"
                 />
                 <button
                   onClick={(e) => {
                     e.stopPropagation(); // Prevent triggering the file picker
-                    handleRemoveImage(0); // Remove the first image
+                    setData((prevData) => ({
+                      ...prevData,
+                      carImages: prevData.carImages.slice(1), // Remove the first image
+                    }));
                   }}
                   className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600"
                 >
@@ -166,10 +190,10 @@ const AddCar = () => {
           </div>
           {/* Grid for Additional Images */}
           <div className="grid grid-cols-3 gap-2 my-4">
-            {carImages.slice(1).map((image, index) => (
+            {data.carImages.slice(1).map((image, index) => (
               <div key={index + 1} className="relative w-[100px] h-[80px]">
                 <img
-                  src={image}
+                  src={image.url}
                   alt={`Additional Car Preview ${index}`}
                   className="w-full h-full object-cover rounded-lg"
                 />
