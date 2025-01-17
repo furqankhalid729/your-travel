@@ -79,8 +79,9 @@ const AddCar = () => {
     formData.append("capacity", data.capacity);
     formData.append("status", data.status);
     formData.append("price", data.price);
-    carImages.forEach((image, index) => {
-      formData.append(`carImage${index}`, image); // Add each image to FormData
+    // Append each file object to the same key
+    carImages.forEach(({ file }) => {
+      formData.append("carImages[]", file); // Send as an array
     });
     formData.append("features", JSON.stringify(data.features)); // Send features as JSON string
 
@@ -123,7 +124,7 @@ const AddCar = () => {
                 <img
                   src={carImages[0]} // Display the first selected image
                   alt="Main Car Preview"
-                  className="w-full h-40 object-cover rounded-md"
+                  className="w-full h-[300px] object-cover rounded-md"
                 />
                 <button
                   onClick={(e) => {
@@ -166,15 +167,15 @@ const AddCar = () => {
           {/* Grid for Additional Images */}
           <div className="grid grid-cols-3 gap-2 my-4">
             {carImages.slice(1).map((image, index) => (
-              <div key={index + 1} className="relative">
+              <div key={index + 1} className="relative w-[100px] h-[80px]">
                 <img
                   src={image}
                   alt={`Additional Car Preview ${index}`}
-                  className="w-full h-20 object-cover rounded-lg"
+                  className="w-full h-full object-cover rounded-lg"
                 />
                 <button
                   onClick={() => handleRemoveImage(index + 1)} // Adjust index for additional images
-                  className="absolute top-1 right-1 bg-red-500 text-white p-1 rounded-full hover:bg-red-600"
+                  className="absolute top-1 right-1 bg-red-500 text-white p-1 text-[5px] rounded-full hover:bg-red-600"
                 >
                   ✖
                 </button>
@@ -382,10 +383,10 @@ const FeatureItem = ({ icon, label }) => (
 );
 
 const DetailField = ({ label, children }) => (
-  <p className="text-sm text-gray-600">
+  <div className="text-sm text-gray-600">
     <strong>{label}</strong>
-    <div>{children}</div>
-  </p>
+    <p>{children}</p>
+  </div>
 );
 
 export default AddCar;
