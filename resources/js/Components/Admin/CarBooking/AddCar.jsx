@@ -37,6 +37,7 @@ const AddCar = () => {
 
   const [message, setMessage] = useState("");
 
+  // Handel input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setData((prevDetails) => ({
