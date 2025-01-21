@@ -16,7 +16,7 @@ const AddCar = () => {
   const [transmissionOptions] = useState(["Manual", "Automatic"]);
   const [selectedFuel, setSelectedFuel] = useState(fuelOptions[0]);
   const [selectedTransmission, setSelectedTransmission] = useState(transmissionOptions[0]);
-  const [carImages, setCarImages] = useState([]);
+  // const [carImages, setCarImages] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newFeature, setNewFeature] = useState("");
   const [featureIcon, setFeatureIcon] = useState("FaSnowflake");
