@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HotelRoomController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
@@ -13,3 +14,5 @@ Route::post('/car/add-car', [CarController::class, 'store']);
 // Route::get('/car/add-car', [CarController::class, 'store']);
 
 Route::post('/hotel/hotel-booking-form', [HotelController::class, 'store']);
+
+Route::post('/hotel/add-hotel-room', [HotelRoomController::class, 'store']);

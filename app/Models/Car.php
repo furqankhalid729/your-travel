@@ -24,7 +24,10 @@ class Car extends Model
         'capacity',
         'status',
         'price',
-        // 'features',
-        'car_images',
+    ];
+
+    protected $casts = [
+        'features' => 'array',
+        'car_images' => 'array',
     ];
 }
