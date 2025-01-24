@@ -166,11 +166,11 @@ const AddHotelRoom = () => {
       console.log(`${key}:`, value);
     }
 
-    post("/add-hotel-room", formData, {
-      onSuccess: () => {
-        setMessage("add-hotel-room added successfully!");
-      },
-    });
+    // post("/add-hotel-room", formData, {
+    //   onSuccess: () => {
+    //     setMessage("add-hotel-room added successfully!");
+    //   },
+    // });
 
     try {
       // Try sending the POST request
