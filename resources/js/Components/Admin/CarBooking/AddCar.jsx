@@ -16,23 +16,23 @@ const AddCar = () => {
   const [transmissionOptions] = useState(["Manual", "Automatic"]);
   const [selectedFuel, setSelectedFuel] = useState(fuelOptions[0]);
   const [selectedTransmission, setSelectedTransmission] = useState(transmissionOptions[0]);
-  // const [carImages, setCarImages] = useState([]);
+  // const [car_images, setcar_images] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newFeature, setNewFeature] = useState("");
   const [featureIcon, setFeatureIcon] = useState("FaSnowflake");
 
   const { data, setData, post, processing, errors } = useForm({
-    carName: "",
+    car_name: "",
     brand: "",
     model: "",
     fuel: selectedFuel,
-    carNumber: "",
+    car_number: "",
     transmission: selectedTransmission,
     capacity: "2",
     status: "available",
     price: "",
     features: [], // Add features as a dynamic array
-    carImages: []  // Initialize carImages as an array
+    car_images: []  // Initialize car_images as an array
   });
 
   const [message, setMessage] = useState("");
@@ -54,17 +54,17 @@ const AddCar = () => {
       url: URL.createObjectURL(file), // Optional: Create an object URL to preview the image
     }));
 
-    // Update the carImages array in the useForm state
+    // Update the car_images array in the useForm state
     setData((prevData) => ({
       ...prevData,
-      carImages: fileArray,
+      car_images: fileArray,
     }));
   };
 
   const handleRemoveImage = (index) => {
     setData((prevData) => ({
       ...prevData,
-      carImages: prevData.carImages.filter((_, i) => i !== index), // Remove the image at the given index
+      car_images: prevData.car_images.filter((_, i) => i !== index), // Remove the image at the given index
     }));
   };
 
@@ -80,38 +80,45 @@ const AddCar = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append("car_name", data.car_name);
     formData.append("brand", data.brand);
     formData.append("model", data.model);
     formData.append("fuel", data.fuel);
-    formData.append("carNumber", data.carNumber);
+    formData.append("car_number", data.car_number);
     formData.append("transmission", data.transmission);
     formData.append("capacity", data.capacity);
     formData.append("status", data.status);
     formData.append("price", data.price);
-    // Append images from data.carImages
-    // if (data.carImages.length > 0) {
-    //   data.carImages.forEach(({ file }) => {
-    //     formData.append("carImages[]", file); // Append files
-    //   });
-    // } else {
-    //   console.log("No images selected");
-    // }
     formData.append("features", JSON.stringify(data.features)); // Send features as JSON string
-    formData.append("carImages", JSON.stringify(data.carImages)); // Send features as JSON string
+    formData.append("car_images", JSON.stringify(data.car_images)); // Send features as JSON string
 
     // Log the FormData entries
     for (let [key, value] of formData.entries()) {
       console.log(`${key}:`, value);
     }
 
-    post("/cars", formData, {
-      onSuccess: () => {
-        setMessage("Car added successfully!");
-      },
-    });
+    // post("/cars", formData, {
+    //   onSuccess: () => {
+    //     setMessage("car added successfully!");
+    //   },
+    // });
+
+    try {
+      // Try sending the POST request
+      await post("/api/car/add-car", formData, {
+        onSuccess: () => {
+          setMessage("Car added successfully!");
+        },
+      });
+    } catch (error) {
+      // Catch and log any errors
+      console.error("Error while adding car:", error);
+      setMessage("An error occurred while adding the car.");
+    }
+
   };
 
   return (
@@ -141,10 +148,10 @@ const AddCar = () => {
         <div className="w-2/5 p-4 rounded-lg shadow">
           {/* Clickable Upload Area */}
           <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md p-6 mb-2 relative bg-gray-50">
-            {data.carImages.length > 0 ? (
+            {data.car_images.length > 0 ? (
               <div className="relative w-full h-full">
                 <img
-                  src={data.carImages[0].url} // Display the first selected image
+                  src={data.car_images[0].url} // Display the first selected image
                   alt="Main Car Preview"
                   className="w-full h-[300px] object-cover rounded-md"
                 />
@@ -153,7 +160,7 @@ const AddCar = () => {
                     e.stopPropagation(); // Prevent triggering the file picker
                     setData((prevData) => ({
                       ...prevData,
-                      carImages: prevData.carImages.slice(1), // Remove the first image
+                      car_images: prevData.car_images.slice(1), // Remove the first image
                     }));
                   }}
                   className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600"
@@ -191,7 +198,7 @@ const AddCar = () => {
           </div>
           {/* Grid for Additional Images */}
           <div className="grid grid-cols-3 gap-2 my-4">
-            {data.carImages.slice(1).map((image, index) => (
+            {data.car_images.slice(1).map((image, index) => (
               <div key={index + 1} className="relative w-[100px] h-[80px]">
                 <img
                   src={image.url}
@@ -212,9 +219,9 @@ const AddCar = () => {
             <input
               type="text"
               className="text-center"
-              name="carName"
+              name="car_name"
               placeholder="Car Name"
-              value={data.carName}
+              value={data.car_name}
               onChange={handleInputChange}
             />
           </div>
@@ -227,7 +234,7 @@ const AddCar = () => {
                 onClick={() => setIsModalOpen(true)}
               >
                 <FaPlus />
-                Add Features
+                Add features
               </button>
             </div>
             <ul className="space-y-2">
@@ -282,8 +289,8 @@ const AddCar = () => {
               <DetailField label="Car No.">
                 <input
                   type="text"
-                  name="carNumber"
-                  value={data.carNumber}
+                  name="car_number"
+                  value={data.car_number}
                   onChange={handleInputChange}
                   className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
                   placeholder="Car Number"
@@ -338,8 +345,8 @@ const AddCar = () => {
           </form>
         </div>
       </div>
+      {/* Modal for Adding features */}
       <div>
-        {/* Modal for Adding Features */}
         <Modal
           isOpen={isModalOpen}
           onRequestClose={() => setIsModalOpen(false)}

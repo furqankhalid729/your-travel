@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Car;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CarController extends Controller
 {
@@ -27,7 +29,36 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        return response()->json('success');
+        $validatedData = $request->validate([
+            'car_name' => 'required|string|max:255',
+            'brand' => 'required|string|max:255',
+            'model' => 'required|string|max:255',
+            'fuel' => 'required|string',
+            'car_number' => 'required|string|max:255|unique:cars',
+            'transmission' => 'required|string',
+            'capacity' => 'required|integer',
+            'status' => 'required|string',
+            'price' => 'required|numeric',
+            'features' => 'nullable|json',
+            'car_images.*' => 'nullable|file|image|max:2048',
+        ]);
+
+        // Handle file upload for images
+        $carImages = [];
+        if ($request->hasFile('car_images')) {
+            foreach ($request->file('car_images') as $file) {
+                $path = $file->store('car_images', 'public');
+                $carImages[] = $path;
+            }
+        }
+
+        $car = Car::create([
+            ...$validatedData,
+            'features' => $validatedData['features'] ?? json_encode([]),
+            'car_images' => json_encode($carImages),
+        ]);
+
+        return response()->json($car, 201);
     }
 
     /**
