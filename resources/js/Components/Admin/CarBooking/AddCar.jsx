@@ -51,7 +51,7 @@ const AddCar = () => {
     const files = e.target.files;
     const fileArray = Array.from(files).map((file) => ({
       file, // Store the file object
-      url: URL.createObjectURL(file), // Optional: Create an object URL to preview the image
+      url: URL.createObjectURL(file),
     }));
 
     // Update the carImages array in the useForm state
