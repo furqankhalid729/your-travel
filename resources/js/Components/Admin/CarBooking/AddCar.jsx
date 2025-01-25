@@ -11,12 +11,12 @@ const iconMapping = {
   FaUser: <FaUser />,
 };
 
-const AddCar = () => {
+const AddCar = ({ brands, models, fuels, transmissions }) => {
+  console.log(fuels);
   const [fuelOptions] = useState(["Petrol", "Diesel", "Electric", "Hybrid"]);
   const [transmissionOptions] = useState(["Manual", "Automatic"]);
   const [selectedFuel, setSelectedFuel] = useState(fuelOptions[0]);
   const [selectedTransmission, setSelectedTransmission] = useState(transmissionOptions[0]);
-  // const [car_images, setcar_images] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newFeature, setNewFeature] = useState("");
   const [featureIcon, setFeatureIcon] = useState("FaSnowflake");
@@ -31,8 +31,8 @@ const AddCar = () => {
     capacity: "2",
     status: "available",
     price: "",
-    features: [], // Add features as a dynamic array
-    car_images: []  // Initialize car_images as an array
+    features: [],
+    car_images: []
   });
 
   const [message, setMessage] = useState("");
@@ -50,14 +50,14 @@ const AddCar = () => {
   const handleFileChange = (e) => {
     const files = e.target.files;
     const fileArray = Array.from(files).map((file) => ({
-      file, // Store the file object
+      file, // Store the actual file object
       url: URL.createObjectURL(file),
     }));
 
-    // Update the car_images array in the useForm state
+    // Update the car_images array in the form state
     setData((prevData) => ({
       ...prevData,
-      car_images: fileArray,
+      car_images: fileArray, // Update car_images state with the new file array
     }));
   };
 
@@ -92,29 +92,22 @@ const AddCar = () => {
     formData.append("capacity", data.capacity);
     formData.append("status", data.status);
     formData.append("price", data.price);
-    formData.append("features", JSON.stringify(data.features)); // Send features as JSON string
-    formData.append("car_images", JSON.stringify(data.car_images)); // Send features as JSON string
-
+    formData.append("features", JSON.stringify(data.features));
+    data.car_images.forEach((image, index) => {
+      formData.append(`car_images[${index}]`, image.file);
+    });
     // Log the FormData entries
     for (let [key, value] of formData.entries()) {
       console.log(`${key}:`, value);
     }
 
-    // post("/cars", formData, {
-    //   onSuccess: () => {
-    //     setMessage("car added successfully!");
-    //   },
-    // });
-
     try {
-      // Try sending the POST request
       await post("/api/car/add-car", formData, {
         onSuccess: () => {
           setMessage("Car added successfully!");
         },
       });
     } catch (error) {
-      // Catch and log any errors
       console.error("Error while adding car:", error);
       setMessage("An error occurred while adding the car.");
     }
@@ -213,6 +206,11 @@ const AddCar = () => {
                 </button>
               </div>
             ))}
+            {errors?.car_images?.length > 0 && (
+              <p className="text-red-500 text-sm mt-2">
+                {Array.isArray(errors.car_images) ? errors.car_images[0].file : errors.car_images}
+              </p>
+            )}
           </div>
           {/* Car title */}
           <div className="text-center">
@@ -224,6 +222,7 @@ const AddCar = () => {
               value={data.car_name}
               onChange={handleInputChange}
             />
+            {errors.car_name && <p className="text-red-500 text-sm mt-1">{errors.car_name}</p>}
           </div>
           {/* Add Feature Section */}
           <div className="w-[70%] mx-auto bg-white p-3 mt-2">
@@ -254,36 +253,54 @@ const AddCar = () => {
           <form id="carForm" onSubmit={handleSubmit}>
             <div className="grid grid-cols-2 gap-4">
               <DetailField label="Brand">
-                <input
-                  type="text"
+                <select
                   name="brand"
                   value={data.brand}
                   onChange={handleInputChange}
                   className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
-                  placeholder="Brand Name"
-                />
+                >
+                  <option value="">Select a brand</option>
+                  {brands.map((brand) => (
+                    <option key={brand.id} value={brand.name}>
+                      {brand.name}
+                    </option>
+                  ))}
+                </select>
+                {errors.brand && <p className="text-red-500 text-sm mt-1">{errors.brand}</p>}
               </DetailField>
 
               <DetailField label="Model">
-                <input
-                  type="text"
+                <select
                   name="model"
                   value={data.model}
                   onChange={handleInputChange}
                   className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
-                  placeholder="Model Name"
-                />
+                >
+                  <option value="">Select a model</option>
+                  {models.map((model) => (
+                    <option key={model.id} value={model.name}>
+                      {model.name}
+                    </option>
+                  ))}
+                </select>
+                {errors.model && <p className="text-red-500 text-sm mt-1">{errors.model}</p>}
               </DetailField>
 
               <DetailField label="Fuel">
-                <input
-                  type="text"
+                <select
                   name="fuel"
                   value={data.fuel}
                   onChange={handleInputChange}
                   className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
-                  placeholder="Fuel Name"
-                />
+                >
+                  <option value="">Select fuel type</option>
+                  {fuels.map((fuel) => (
+                    <option key={fuel.id} value={fuel.type}>
+                      {fuel.type}
+                    </option>
+                  ))}
+                </select>
+                {errors.fuel && <p className="text-red-500 text-sm mt-1">{errors.fuel}</p>}
               </DetailField>
 
               <DetailField label="Car No.">
@@ -295,17 +312,24 @@ const AddCar = () => {
                   className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
                   placeholder="Car Number"
                 />
+                {errors.car_number && <p className="text-red-500 text-sm mt-1">{errors.car_number}</p>}
               </DetailField>
 
               <DetailField label="Transmission">
-                <input
-                  type="text"
+                <select
                   name="transmission"
                   value={data.transmission}
                   onChange={handleInputChange}
                   className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
-                  placeholder="Transmission"
-                />
+                >
+                  <option value="">Select transmission type</option>
+                  {transmissions.map((transmission) => (
+                    <option key={transmission.id} value={transmission.type}>
+                      {transmission.type}
+                    </option>
+                  ))}
+                </select>
+                {errors.transmission && <p className="text-red-500 text-sm mt-1">{errors.transmission}</p>}
               </DetailField>
 
               <DetailField label="Capacity">
@@ -317,6 +341,7 @@ const AddCar = () => {
                   className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
                   placeholder="Capacity"
                 />
+                {errors.capacity && <p className="text-red-500 text-sm mt-1">{errors.capacity}</p>}
               </DetailField>
 
               <DetailField label="Status">
@@ -329,6 +354,7 @@ const AddCar = () => {
                   <option value="available">Available</option>
                   <option value="not-available">Not Available</option>
                 </select>
+                {errors.status && <p className="text-red-500 text-sm mt-1">{errors.status}</p>}
               </DetailField>
 
               <DetailField label="Price (per day)">
@@ -340,9 +366,11 @@ const AddCar = () => {
                   className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
                   placeholder="Enter price"
                 />
+                {errors.price && <p className="text-red-500 text-sm mt-1">{errors.price}</p>}
               </DetailField>
             </div>
           </form>
+
         </div>
       </div>
       {/* Modal for Adding features */}

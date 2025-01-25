@@ -112,18 +112,9 @@ Route::get('/dashboard/car-booking/special-offers', function () {
     return Inertia::render('Admin/CarBooking/Specialoffers');
 });
 
-// Route::get('/dashboard/car-booking/add-car', function () {
-//     $brands = CarBrand::all();
-//     return Inertia::render('Admin/CarBooking/AddCar', ['brands' => $brands]);
-// });
-
-Route::get('/dashboard/car-booking/add-car', function () {
-    $brands = CarBrand::all();
-    // dd($brands);
-    return Inertia::render('Admin/CarBooking/AddCar', [
-        'brands' => $brands
-    ]);
-})->middleware(middleware: ['auth']);
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard/car-booking/add-car', [CarController::class, 'create']);
+});
 
 Route::get('/dashboard/car-booking/view-car', function () {
     return Inertia::render('Admin/CarBooking/ViewCar');

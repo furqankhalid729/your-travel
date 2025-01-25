@@ -2,9 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Car;
+
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Inertia\Inertia;
+use App\Enums\InertiaViews;
+use Illuminate\Support\Facades\Log;
+use App\Models\Car;
+use App\Models\Car\CarBrand;
+use App\Models\Car\CarFeature;
+use App\Models\Car\CarFuel;
+use App\Models\Car\CarModel;
+use App\Models\Car\CarTransmission;
+
 
 class CarController extends Controller
 {
@@ -22,15 +31,25 @@ class CarController extends Controller
      */
     public function create(Request $request)
     {
-        return response()->json('success');
+        $models = CarModel::all();
+        $fuels = CarFuel::all();
+        $transmissions = CarTransmission::all();
+        $brands = CarBrand::all();
+        return Inertia::render(InertiaViews::AddCar->value, [
+            'brands' => $brands,
+            'models' => $models,
+            'fuels' => $fuels,
+            'transmissions' => $transmissions,
+        ]);
     }
-    
+
 
     /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
     {
+        Log::info($request->all());
         $validatedData = $request->validate([
             'car_name' => 'required|string|max:255',
             'brand' => 'required|string|max:255',
@@ -41,22 +60,30 @@ class CarController extends Controller
             'capacity' => 'required|integer',
             'status' => 'required|string',
             'price' => 'required|numeric',
-            'features' => 'nullable|json',
-            'car_images.*' => 'nullable|file|image|max:2048',
+            'features' => 'nullable|array',
+            'features.*.name' => 'required|string|max:255',
+            'features.*.icon' => 'required|string|max:255',
+            'car_images' => 'nullable|array',
+            'car_images.*.file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
-        // Handle file upload for images
         $carImages = [];
-        if ($request->hasFile('car_images')) {
-            foreach ($request->file('car_images') as $file) {
-                $path = $file->store('car_images', 'public');
+        if ($request->has('car_images') && !empty($request->input('car_images'))) {
+            foreach ($request->file('car_images') as $carImage) {
+                Log::info('File Uploaded:', ['file' => $carImage]);
+                if (isset($carImage['file']) && $carImage['file'] instanceof \Illuminate\Http\UploadedFile) {
+                    $path = $carImage['file']->store('images/Car');
+                    $carImages[] = $path;
+                } else {
+                    Log::error('Not an instance of UploadedFile:', ['file' => $carImage['file']]);
+                }
                 $carImages[] = $path;
             }
         }
-
+        Log::info('Car Images:', ['images' => $validatedData['features']]);
         $car = Car::create([
             ...$validatedData,
-            'features' => $validatedData['features'] ?? json_encode([]),
+            'features' => $validatedData['features'] ?? [],
             'car_images' => json_encode($carImages),
         ]);
 

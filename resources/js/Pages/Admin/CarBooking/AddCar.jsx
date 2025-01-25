@@ -2,10 +2,15 @@ import React from 'react'
 import AdminLayout from "../../../Layout/AdminLayout";
 import AddCarCom from '../../../Components/Admin/CarBooking/AddCar';
 
-const AddCar = () => {
+const AddCar = ({brands, models, fuels, transmissions}) => {
     return (
         <div>
-            <AddCarCom />
+            <AddCarCom 
+                brands={brands}
+                models={models}
+                fuels={fuels}
+                transmissions={transmissions}
+            />
         </div>
     )
 }
