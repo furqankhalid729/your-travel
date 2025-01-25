@@ -43,12 +43,18 @@ const AddTour = () => {
 
 
   const { data, setData, post, processing, errors } = useForm({
-    tourImages: [],  // Initialize carImages as an array
+    duration: "",
+    location: "",
+    food: "",
+    tour_type: "",
+    persons: "",
+    price: 0,
+    tour_images: [],  // Initialize carImages as an array
     summary: "",
     facilities: [],
     includedExcludedTypes: [],
     condition: "",
-    tourItinerary: [],
+    tour_itinerary: [],
   });
 
 
@@ -102,11 +108,11 @@ const AddTour = () => {
         [field]: imageUrl, // Show preview image
       }));
 
-      // Store the image as an object with `file` and `url` in the `tourImages` array
+      // Store the image as an object with `file` and `url` in the `tour_images` array
       setData((prevData) => ({
         ...prevData,
-        tourImages: [
-          ...prevData.tourImages.filter((image) => image.field !== field), // Remove existing entry for this field
+        tour_images: [
+          ...prevData.tour_images.filter((image) => image.field !== field), // Remove existing entry for this field
           { field, file, url: imageUrl }, // Add new image with file and URL
         ],
       }));
@@ -115,14 +121,14 @@ const AddTour = () => {
 
   // Handle itinerary text and image change
   const handleItineraryChange = (index, field, value) => {
-    const updatedItinerary = [...data.tourItinerary];
+    const updatedItinerary = [...data.tour_itinerary];
     updatedItinerary[index] = {
       ...updatedItinerary[index],
       [field]: value,
     };
     setData((prev) => ({
       ...prev,
-      tourItinerary: updatedItinerary,
+      tour_itinerary: updatedItinerary,
     }));
   };
 
@@ -143,19 +149,25 @@ const AddTour = () => {
   const addNewItinerary = () => {
     setData((prev) => ({
       ...prev,
-      tourItinerary: [...prev.tourItinerary, { day: "", image: null }],
+      tour_itinerary: [...prev.tour_itinerary, { day: "", image: null }],
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("tourImages", JSON.stringify(data.tourImages)); // Send features as JSON string
+    formData.append("duration", data.duration);
+    formData.append("location", data.location);
+    formData.append("food", data.food);
+    formData.append("tour_type", data.tour_type);
+    formData.append("persons", data.persons);
+    formData.append("price", data.price);
+    formData.append("tour_images", JSON.stringify(data.tour_images)); // Send features as JSON string
     formData.append("summary", data.summary);
     formData.append("facilities", JSON.stringify(data.facilities)); // Send features as JSON string
     formData.append("includedExcludedTypes", JSON.stringify(data.includedExcludedTypes)); // Send types as JSON string
     formData.append("condition", data.condition);
-    formData.append("tourItinerary", JSON.stringify(data.tourItinerary)); // Send features as JSON string
+    formData.append("tour_itinerary", JSON.stringify(data.tour_itinerary)); // Send features as JSON string
 
 
     // Log the FormData entries
@@ -163,11 +175,24 @@ const AddTour = () => {
       console.log(`${key}:`, value);
     }
 
-    post("/add-tour", formData, {
-      onSuccess: () => {
-        setMessage("Tour added successfully!");
-      },
-    });
+    // post("/add-tour", formData, {
+    //   onSuccess: () => {
+    //     setMessage("Tour added successfully!");
+    //   },
+    // });
+
+    try {
+      // Try sending the POST request
+      await post("/api/tour/add-tour", formData, {
+        onSuccess: () => {
+          setMessage("tour added successfully!");
+        },
+      });
+    } catch (error) {
+      // Catch and log any errors
+      console.error("Error while adding tour:", error);
+      setMessage("An error occurred while adding the tour.");
+    }
   };
 
   // const navigate = useNavigate();
@@ -295,25 +320,69 @@ const AddTour = () => {
         </div>
         {/* Details */}
         <div className="bg-[#e6c0ff] p-4 rounded-md shadow row-span-2">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">Details</h3>
-          <ul className="space-y-5 font-semibold">
-            <li className="flex justify-between">
-              <span>Duration</span> 4 Days
+          <h3 className="text-lg font-semibold text-gray-800 mb-4">
+            Details
+          </h3>
+          <ul className="space-y-5">
+            <li className="flex justify-between items-center">
+              <span>Duration</span>
+              <input
+                type="text"
+                name="duration"
+                value={data.duration}
+                onChange={handleInputChange}
+                className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+              />
             </li>
             <li className="flex justify-between">
-              <span>Location</span> Lahore
+              <span>Location</span>
+              <input
+                type="text"
+                name="location"
+                value={data.location}
+                onChange={handleInputChange}
+                className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+              />
             </li>
             <li className="flex justify-between">
-              <span>Food</span> 2 time a day
+              <span>Food</span>
+              <input
+                type="text"
+                name="food"
+                value={data.food}
+                onChange={handleInputChange}
+                className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+              />
             </li>
             <li className="flex justify-between">
-              <span>Food Types</span> Family Tour
+              <span>Tour type</span>
+              <input
+                type="text"
+                name="tour_type"
+                value={data.tour_type}
+                onChange={handleInputChange}
+                className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+              />
             </li>
             <li className="flex justify-between">
-              <span>Person</span> 3 Person
+              <span>Person</span>
+              <input
+                type="text"
+                name="persons"
+                value={data.persons}
+                onChange={handleInputChange}
+                className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+              />
             </li>
             <li className="flex justify-between">
-              <span>Price(per head)</span> $200
+              <span>Price</span>
+              <input
+                type="text"
+                name="price"
+                value={data.price}
+                onChange={handleInputChange}
+                className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+              />
             </li>
           </ul>
         </div>
@@ -475,7 +544,7 @@ const AddTour = () => {
           <h1 className="text-2xl font-semibold text-gray-800 my-5">
             Tour Itinerary
           </h1>
-          {data.tourItinerary.map((itinerary, index) => (
+          {data.tour_itinerary.map((itinerary, index) => (
             <div key={index} className="flex items-center space-x-6">
               <div className="w-4/5">
                 <label className="block text-sm font-medium text-gray-700">

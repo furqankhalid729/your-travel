@@ -16,22 +16,22 @@ const HotelBookingForm = () => {
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
 
   const { data, setData, post, processing, errors } = useForm({
-    firstName: "",
-    lastName: "",
+    first_name: "",
+    last_name: "",
     email: "",
     email_verified: false,
     phoneNo: "",
     phoneNo_verified: false,
     identityNo: "",
     gender: "",
-    fromDate: "",
-    toDate: "",
+    from_date: "",
+    to_date: "",
     duration: "",
-    tourLocation: "",
-    noOfMember: 0,
+    tour_location: "",
+    no_of_member: 0,
     price: 0,
   });
-
+ 
   // Handle input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -95,24 +95,24 @@ const HotelBookingForm = () => {
     updatePrice(count);
   };
 
-  const { days, nights } = calculateDays(data.fromDate, data.toDate);
+  const { days, nights } = calculateDays(data.from_date, data.to_date);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("firstName", data.firstName);
-    formData.append("lastName", data.lastName);
+    formData.append("first_name", data.first_name);
+    formData.append("last_name", data.last_name);
     formData.append("email", data.email);
     formData.append("email_verified", isEmailVerified);
     formData.append("phoneNo", data.phoneNo);
     formData.append("phoneNo_verified", isPhoneVerified);
     formData.append("identityNo", data.identityNo);
     formData.append("gender", data.gender);
-    formData.append("fromDate", data.fromDate);  // append fromDate
-    formData.append("toDate", data.toDate);  // append toDate
+    formData.append("from_date", data.from_date);  // append from_date
+    formData.append("to_date", data.to_date);  // append to_date
     formData.append("duration", `${days} days, ${nights} night${nights === 1 ? "" : "s"}`);
-    formData.append("tourLocation", data.tourLocation);  // append tour location
-    formData.append("noOfMember", guestCount);
+    formData.append("tour_location", data.tour_location);  // append tour location
+    formData.append("no_of_member", guestCount);
     formData.append("price", price);
 
     // Log the FormData entries
@@ -120,11 +120,24 @@ const HotelBookingForm = () => {
       console.log(`${key}:`, value);
     }
 
-    post("/hotel-booking-form", formData, {
-      onSuccess: () => {
-        setMessage("hotel-booking-form added successfully!");
-      },
-    });
+    // post("/hotel-booking-form", formData, {
+    //   onSuccess: () => {
+    //     setMessage("hotel-booking-form added successfully!");
+    //   },
+    // });
+
+    try {
+      // Try sending the POST request
+      await post("/api/hotel/hotel-booking-form", formData, {
+        onSuccess: () => {
+          setMessage("Hotel Book successfully!");
+        },
+      });
+    } catch (error) {
+      // Catch and log any errors
+      console.error("Error while adding Hotel book:", error);
+      setMessage("An error occurred while adding the Hotel book.");
+    }
   };
 
   return (
@@ -160,24 +173,24 @@ const HotelBookingForm = () => {
         </div>
         <form>
           <div className="grid lg:grid-cols-2 gap-4">
-            {/* FirstName */}
+            {/* first_name */}
             <div>
               <input
                 type="text"
                 className="mt-1 p-3 w-full border border-gray-300 rounded-md"
-                name="firstName"
-                value={data.firstName}
+                name="first_name"
+                value={data.first_name}
                 onChange={handleInputChange}
                 placeholder="Mohammad"
               />
             </div>
-            {/* lastName */}
+            {/* last_name */}
             <div>
               <input
                 type="text"
                 className="mt-1 p-3 w-full border border-gray-300 rounded-md"
-                name="lastName"
-                value={data.lastName}
+                name="last_name"
+                value={data.last_name}
                 onChange={handleInputChange}
                 placeholder="adlan"
               />
@@ -255,8 +268,8 @@ const HotelBookingForm = () => {
               </label>
               <input
                 type="datetime-local"
-                name="fromDate"  // name should match the state property
-                value={data.fromDate}  // value linked to the state
+                name="from_date"  // name should match the state property
+                value={data.from_date}  // value linked to the state
                 onChange={handleDateChange}  // onChange to update state
                 className="mt-1 p-2 w-full border border-gray-300 text-gray-500 rounded-md"
               />
@@ -268,8 +281,8 @@ const HotelBookingForm = () => {
               </label>
               <input
                 type="datetime-local"
-                name="toDate"  // name should match the state property
-                value={data.toDate}  // value linked to the state
+                name="to_date"  // name should match the state property
+                value={data.to_date}  // value linked to the state
                 onChange={handleDateChange}  // onChange to update state
                 className="mt-1 p-2 w-full border border-gray-300 text-gray-500 rounded-md"
               />
@@ -295,8 +308,8 @@ const HotelBookingForm = () => {
               <input
                 type="text"
                 className="mt-1 p-2 w-full border text-gray-500 border-gray-300 rounded-md"
-                name="tourLocation"
-                value={data.tourLocation}
+                name="tour_location"
+                value={data.tour_location}
                 onChange={handleInputChange}
                 placeholder="Swat Valley"
               />

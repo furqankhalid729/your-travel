@@ -72,7 +72,13 @@ const AddHotelRoom = () => {
 
 
   const { data, setData, post, processing, errors } = useForm({
-    tourImages: [],  // Initialize carImages as an array
+    duration: "",
+    location: "",
+    food: "",
+    tour_type: "",
+    persons: "",
+    price: 0,
+    tour_images: [],  // Initialize carImages as an array
     summary: "",
     facilities: [],
     types: [],
@@ -129,21 +135,27 @@ const AddHotelRoom = () => {
         [field]: imageUrl, // Show preview image
       }));
 
-      // Store the image as an object with `file` and `url` in the `tourImages` array
+      // Store the image as an object with `file` and `url` in the `tour_images` array
       setData((prevData) => ({
         ...prevData,
-        tourImages: [
-          ...prevData.tourImages.filter((image) => image.field !== field), // Remove existing entry for this field
+        tour_images: [
+          ...prevData.tour_images.filter((image) => image.field !== field), // Remove existing entry for this field
           { field, file, url: imageUrl }, // Add new image with file and URL
         ],
       }));
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("tourImages", JSON.stringify(data.tourImages)); // Send features as JSON string
+    formData.append("duration", data.duration);
+    formData.append("location", data.location);
+    formData.append("food", data.food);
+    formData.append("tour_type", data.tour_type);
+    formData.append("persons", data.persons);
+    formData.append("price", data.price);
+    formData.append("tour_images", JSON.stringify(data.tour_images)); // Send features as JSON string
     formData.append("summary", data.summary);
     formData.append("facilities", JSON.stringify(data.facilities)); // Send features as JSON string
     formData.append("types", JSON.stringify(data.types)); // Send types as JSON string
@@ -154,11 +166,24 @@ const AddHotelRoom = () => {
       console.log(`${key}:`, value);
     }
 
-    post("/add-hotel-room", formData, {
-      onSuccess: () => {
-        setMessage("add-hotel-room added successfully!");
-      },
-    });
+    // post("/add-hotel-room", formData, {
+    //   onSuccess: () => {
+    //     setMessage("add-hotel-room added successfully!");
+    //   },
+    // });
+
+    try {
+      // Try sending the POST request
+      await post("/api/hotel/add-hotel-room", formData, {
+        onSuccess: () => {
+          setMessage("hotelroom added successfully!");
+        },
+      });
+    } catch (error) {
+      // Catch and log any errors
+      console.error("Error while adding hotelroom:", error);
+      setMessage("An error occurred while adding the hotelroom.");
+    }
   };
 
   return (
@@ -288,23 +313,65 @@ const AddHotelRoom = () => {
               Details
             </h3>
             <ul className="space-y-5">
-              <li className="flex justify-between">
-                <span>Type</span> Luxury Room
+              <li className="flex justify-between items-center">
+                <span>Duration</span>
+                <input
+                  type="text"
+                  name="duration"
+                  value={data.duration}
+                  onChange={handleInputChange}
+                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                />
               </li>
               <li className="flex justify-between">
-                <span>Location</span> Lahore
+                <span>Location</span>
+                <input
+                  type="text"
+                  name="location"
+                  value={data.location}
+                  onChange={handleInputChange}
+                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                />
               </li>
               <li className="flex justify-between">
-                <span>Food</span> No Food
+                <span>Food</span>
+                <input
+                  type="text"
+                  name="food"
+                  value={data.food}
+                  onChange={handleInputChange}
+                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                />
               </li>
               <li className="flex justify-between">
-                <span>Accommodation</span> Fully
+                <span>Tour type</span>
+                <input
+                  type="text"
+                  name="tour_type"
+                  value={data.tour_type}
+                  onChange={handleInputChange}
+                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                />
               </li>
               <li className="flex justify-between">
-                <span>Person</span> 3 Person
+                <span>Person</span> 
+                <input
+                  type="text"
+                  name="persons"
+                  value={data.persons}
+                  onChange={handleInputChange}
+                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                />
               </li>
               <li className="flex justify-between">
-                <span>Price</span> $200
+                <span>Price</span>
+                <input
+                  type="text"
+                  name="price"
+                  value={data.price}
+                  onChange={handleInputChange}
+                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                />
               </li>
             </ul>
           </div>
