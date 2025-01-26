@@ -111,6 +111,9 @@ Route::get('/dashboard/car-booking/orders', function () {
 Route::get('/dashboard/car-booking/special-offers', function () {
     return Inertia::render('Admin/CarBooking/Specialoffers');
 });
+Route::get('/dashboard/car-booking/add-driver', function () {
+    return Inertia::render('Admin/CarBooking/AddDriver');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard/car-booking/add-car', [CarController::class, 'create']);
