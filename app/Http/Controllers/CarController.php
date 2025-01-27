@@ -22,9 +22,15 @@ class CarController extends Controller
      */
     public function index()
     {
-        //
+        $cars = Car::all();
+        $cars = Car::all()->map(function ($car) {
+            $car->car_images = json_decode($car->car_images, true);
+            return $car;
+        });
+        return Inertia::render(InertiaViews::CarIndex->value, [
+            'cars' => $cars,
+        ]);
     }
-
 
     /**
      * Show the form for creating a new resource.
@@ -70,17 +76,14 @@ class CarController extends Controller
         $carImages = [];
         if ($request->has('car_images') && !empty($request->input('car_images'))) {
             foreach ($request->file('car_images') as $carImage) {
-                Log::info('File Uploaded:', ['file' => $carImage]);
                 if (isset($carImage['file']) && $carImage['file'] instanceof \Illuminate\Http\UploadedFile) {
                     $path = $carImage['file']->store('images/Car');
                     $carImages[] = $path;
                 } else {
                     Log::error('Not an instance of UploadedFile:', ['file' => $carImage['file']]);
                 }
-                $carImages[] = $path;
             }
         }
-        Log::info('Car Images:', ['images' => $validatedData['features']]);
         $car = Car::create([
             ...$validatedData,
             'features' => $validatedData['features'] ?? [],
@@ -103,7 +106,18 @@ class CarController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $models = CarModel::all();
+        $fuels = CarFuel::all();
+        $transmissions = CarTransmission::all();
+        $brands = CarBrand::all();
+        $car = Car::where('id', $id)->get();
+        return Inertia::render(InertiaViews::EditCar->value, [
+            'car' => $car,
+            'brands' => $brands,
+            'models' => $models,
+            'fuels' => $fuels,
+            'transmissions' => $transmissions,
+        ]);
     }
 
     /**

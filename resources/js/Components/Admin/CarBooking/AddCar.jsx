@@ -50,7 +50,7 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
   const handleFileChange = (e) => {
     const files = e.target.files;
     const fileArray = Array.from(files).map((file) => ({
-      file, // Store the actual file object
+      file,
       url: URL.createObjectURL(file),
     }));
 

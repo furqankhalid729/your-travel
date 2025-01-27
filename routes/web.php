@@ -113,7 +113,10 @@ Route::get('/dashboard/car-booking/special-offers', function () {
 });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard/car-booking', [CarController::class, 'index']);
     Route::get('/dashboard/car-booking/add-car', [CarController::class, 'create']);
+    Route::get('/dashboard/car/edit/{id}', [CarController::class, 'edit'])->name('car.edit');
+    
 });
 
 Route::get('/dashboard/car-booking/view-car', function () {
