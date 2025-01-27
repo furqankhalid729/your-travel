@@ -96,9 +96,7 @@ Route::get('/dashboard', function () {
 
 // Car booking
 
-Route::get('/dashboard/car-booking', function () {
-    return Inertia::render('Admin/CarBooking/CarBookDash');
-});
+
 
 Route::get('/dashboard/car-booking/driver-listing', function () {
     return Inertia::render('Admin/CarBooking/DriverListing');
@@ -110,6 +108,9 @@ Route::get('/dashboard/car-booking/orders', function () {
 
 Route::get('/dashboard/car-booking/special-offers', function () {
     return Inertia::render('Admin/CarBooking/Specialoffers');
+});
+Route::get('/dashboard/car-booking/add-driver', function () {
+    return Inertia::render('Admin/CarBooking/AddDriver');
 });
 
 Route::middleware('auth')->group(function () {
@@ -300,5 +301,5 @@ Route::middleware('auth')->group(function () {
 });
 
 //Resource Admin
-Route::resource('cars',CarController::class);
-require __DIR__.'/auth.php';
+Route::resource('cars', CarController::class);
+require __DIR__ . '/auth.php';
