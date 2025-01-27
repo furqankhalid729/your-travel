@@ -4,7 +4,6 @@ import CarDash from "../../../Components/Admin/CarBooking/CarDash";
 import CarsListing from '../../../Components/Admin/CarBooking/CarsListing';
 
 const CarBookDash = ({cars}) => {
-const CarBookDash = ({cars}) => {
     return (
         <div>
             <CarDash />
@@ -15,4 +14,4 @@ const CarBookDash = ({cars}) => {
     )
 }
 CarBookDash.layout = page => <AdminLayout children={page} title="Car Dash" />
-export default CarBookDash
+export default CarBookDash;

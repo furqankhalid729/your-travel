@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\DriverController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Car\CarBrand;
 use Illuminate\Foundation\Application;
@@ -85,6 +86,14 @@ Route::get('/test-1', function () {
 //     return Inertia::render('Admin/Login');
 // });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard/car-booking', [CarController::class, 'index']);
+    Route::get('/dashboard/car-booking/add-car', [CarController::class, 'create']);
+    Route::get('/dashboard/car/edit/{id}', [CarController::class, 'edit'])->name('car.edit');
+    Route::get('/dashboard/car-booking/driver-listing', [DriverController::class, 'index'])->name('driver.index'); 
+    Route::get('/dashboard/car-booking/add-driver', [DriverController::class, 'create'])->name('driver.create');
+});
+
 Route::get('/dashlayout', function () {
     return Inertia::render('Admin/DashLayout');
 });
@@ -96,12 +105,6 @@ Route::get('/dashboard', function () {
 
 // Car booking
 
-
-
-Route::get('/dashboard/car-booking/driver-listing', function () {
-    return Inertia::render('Admin/CarBooking/DriverListing');
-});
-
 Route::get('/dashboard/car-booking/orders', function () {
     return Inertia::render('Admin/CarBooking/Orders');
 });
@@ -109,16 +112,7 @@ Route::get('/dashboard/car-booking/orders', function () {
 Route::get('/dashboard/car-booking/special-offers', function () {
     return Inertia::render('Admin/CarBooking/Specialoffers');
 });
-Route::get('/dashboard/car-booking/add-driver', function () {
-    return Inertia::render('Admin/CarBooking/AddDriver');
-});
 
-Route::middleware('auth')->group(function () {
-    Route::get('/dashboard/car-booking', [CarController::class, 'index']);
-    Route::get('/dashboard/car-booking/add-car', [CarController::class, 'create']);
-    Route::get('/dashboard/car/edit/{id}', [CarController::class, 'edit'])->name('car.edit');
-    
-});
 
 Route::get('/dashboard/car-booking/view-car', function () {
     return Inertia::render('Admin/CarBooking/ViewCar');

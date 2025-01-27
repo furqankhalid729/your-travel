@@ -17,8 +17,6 @@ import { Link } from "@inertiajs/react";
 // import { useNavigate } from "react-router-dom";
 
 const AssignDrivers = () => {
-  // const navigate = useNavigate();
-
   Array(8).fill({
     name: "Muhammad Aadlan",
     id: "3520294317803",

@@ -2,12 +2,13 @@ import { FaEdit, FaEye, FaPlus, FaTrash } from "react-icons/fa";
 import { Link, usePage } from "@inertiajs/react";
 import DeleteModal from "@/Components/deleteModal";
 import { useState } from "react";
+import axios from "axios";
 
 const CarsListing = ({ cars }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
-  const { appUrl } = usePage().props;
-  
+  const [carItems, setCarItems] = useState(cars);
+
   const openModal = (id) => {
     setItemToDelete(id);
     setModalOpen(true);
@@ -17,8 +18,16 @@ const CarsListing = ({ cars }) => {
     setItemToDelete(null);
   };
 
-  const deleteItem = (id) => {
+  const deleteItem = async (id) => {
     console.log(`Deleting item with ID: ${id}`);
+    try {
+      const response = await axios.delete(route('car.delete', { id }));
+      console.log(response.data.message);
+      setCarItems((prevItems) => prevItems.filter((item) => item.id !== id));
+      closeModal();
+    } catch (error) {
+      console.error("Error deleting item:", error.response?.data?.message || error.message);
+    }
     closeModal();
   };
   return (
@@ -93,7 +102,7 @@ const CarsListing = ({ cars }) => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {cars.map((car, index) => (
+              {carItems.map((car, index) => (
                 <tr key={index}>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
                     {index + 1}
@@ -142,7 +151,7 @@ const CarsListing = ({ cars }) => {
                     </span>
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm flex space-x-2">
-                    <Link href={route('car.edit',car.id)} className="text-green-500">
+                    <Link href={route('car.edit', car.id)} className="text-green-500">
                       <FaEdit />
                     </Link>
                     <button className="text-blue-500 px-1">
