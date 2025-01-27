@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DriverController;
 use App\Http\Controllers\HotelRoomController;
 use App\Http\Controllers\TourController;
 use Illuminate\Http\Request;
@@ -12,8 +13,12 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 Route::post('/car/add-car', [CarController::class, 'store'])->middleware('auth:sanctum');
 
+Route::post('/car/add-driver', [DriverController::class, 'store']);
+
+
 Route::post('/hotel/hotel-booking-form', [HotelController::class, 'store']);
 
 Route::post('/hotel/add-hotel-room', [HotelRoomController::class, 'store']);
 
 Route::post('/tour/add-tour', [TourController::class, 'store']);
+

@@ -69,7 +69,8 @@ const carsData = [
   },
 ];
 
-const CarsListing = () => {
+const CarsListing = ({cars}) => {
+  console.log(cars);
   return (
     <div className="p-4 bg-white">
       <div className="flex justify-between items-center mb-4">
@@ -111,6 +112,13 @@ const CarsListing = () => {
           >
             <FaPlus />
             Add New Cars
+          </Link>
+          <Link
+            href="/dashboard/car-booking/add-driver"
+            className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 py-2 rounded-lg "
+          >
+            <FaPlus />
+            Add Driver
           </Link>
         </div>
       </div>
