@@ -69,7 +69,8 @@ const carsData = [
   },
 ];
 
-const CarsListing = () => {
+const CarsListing = ({cars}) => {
+  console.log(cars);
   return (
     <div className="p-4 bg-white">
       <div className="flex justify-between items-center mb-4">

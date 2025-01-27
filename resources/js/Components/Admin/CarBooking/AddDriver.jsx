@@ -16,6 +16,7 @@ const AddDriver = () => {
         name: "",
         identity_number: "",
         email: "",
+        gender: "",
         contact_no: "",
         license_no: "",
         license_category: "",
@@ -31,14 +32,20 @@ const AddDriver = () => {
         }));
     };
 
+    // Handle file change
     const handleFileChange = (e) => {
-        const file = e.target.files[0];
+        const file = e.target.files[0]; // Get the first file
         if (file) {
-            const reader = new FileReader();
-            reader.onload = (event) => {
-                setProfileImage(event.target.result);
+            const fileData = {
+                file, // Store the actual file object
+                url: URL.createObjectURL(file), // Generate a preview URL
             };
-            reader.readAsDataURL(file);
+
+            // Update the profile_image in the form state
+            setData((prevData) => ({
+                ...prevData,
+                profile_image: fileData, // Update profile_image with the new file object
+            }));
         }
     };
 
@@ -49,6 +56,7 @@ const AddDriver = () => {
         formData.append("name", data.name);
         formData.append("identity_no", data.identity_no);
         formData.append("email", data.email);
+        formData.append("gender", data.gender);
         formData.append("contact_no", data.contact_no);
         formData.append("license_no", data.license_no);
         formData.append("license_category", data.license_category);
@@ -59,16 +67,16 @@ const AddDriver = () => {
             console.log(`${key}:`, value);
         }
 
-        // try {
-        //     await post("/api/car/add-driver", formData, {
-        //         onSuccess: () => {
-        //             setMessage("driver added successfully!");
-        //         },
-        //     });
-        // } catch (error) {
-        //     console.error("Error while adding driver:", error);
-        //     setMessage("An error occurred while adding the driver.");
-        // }
+        try {
+            await post("/api/car/add-driver", formData, {
+                onSuccess: () => {
+                    alert("Driver added successfully!");
+                },
+            });
+        } catch (error) {
+            console.error("Error while adding driver:", error);
+            alert("An error occurred while adding the driver.");
+        }
 
     };
 
@@ -159,6 +167,7 @@ const AddDriver = () => {
                             Personal Information
                         </h3>
                         <div className="grid grid-cols-2 gap-4 mb-6">
+                            {/* name */}
                             <div>
                                 <h1 className="block text-sm font-medium">Name</h1>
                                 <input
@@ -168,7 +177,9 @@ const AddDriver = () => {
                                     onChange={handleInputChange}
                                     className="border border-gray-300 rounded-lg w-full focus:outline-none"
                                 />
+                                {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
                             </div>
+                            {/* identity_no */}
                             <div>
                                 <h1 className="block text-sm font-medium">Identity Number</h1>
                                 <input
@@ -178,7 +189,9 @@ const AddDriver = () => {
                                     onChange={handleInputChange}
                                     className="border border-gray-300 rounded-lg w-full focus:outline-none"
                                 />
+                                {errors.identity_no && <p className="text-red-500 text-sm mt-1">{errors.identity_no}</p>}
                             </div>
+                            {/* email */}
                             <div>
                                 <h1 className="block text-sm font-medium">Email</h1>
                                 <input
@@ -188,7 +201,27 @@ const AddDriver = () => {
                                     onChange={handleInputChange}
                                     className="border border-gray-300 rounded-lg w-full focus:outline-none"
                                 />
+                                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
                             </div>
+                            {/* Gender */}
+                            <div>
+                                <h1 className="block text-sm font-medium">Gender</h1>
+                                <select
+                                    name="gender"
+                                    value={data.gender || ""}
+                                    onChange={handleInputChange}
+                                    className="border border-gray-300 rounded-lg w-full focus:outline-none"
+                                >
+                                    <option value="" disabled>
+                                        Select Gender
+                                    </option>
+                                    <option value="male">Male</option>
+                                    <option value="female">Female</option>
+                                    <option value="other">Other</option>
+                                </select>
+                                {errors.gender && <p className="text-red-500 text-sm mt-1">{errors.gender}</p>}
+                            </div>
+                            {/* Contace_no */}
                             <div>
                                 <h1 className="block text-sm font-medium">Contact No</h1>
                                 <input
@@ -198,7 +231,9 @@ const AddDriver = () => {
                                     onChange={handleInputChange}
                                     className="border border-gray-300 rounded-lg w-full focus:outline-none"
                                 />
+                                {errors.contact_no && <p className="text-red-500 text-sm mt-1">{errors.contact_no}</p>}
                             </div>
+                            {/* license_no */}
                             <div>
                                 <h1 className="block text-sm font-medium">License No.</h1>
                                 <input
@@ -208,7 +243,9 @@ const AddDriver = () => {
                                     onChange={handleInputChange}
                                     className="border border-gray-300 rounded-lg w-full focus:outline-none"
                                 />
+                                {errors.license_no && <p className="text-red-500 text-sm mt-1">{errors.license_no}</p>}
                             </div>
+                            {/* license_category */}
                             <div>
                                 <h1 className="block text-sm font-medium">License Category</h1>
                                 <input
@@ -218,7 +255,9 @@ const AddDriver = () => {
                                     onChange={handleInputChange}
                                     className="border border-gray-300 rounded-lg w-full focus:outline-none"
                                 />
+                                {errors.license_category && <p className="text-red-500 text-sm mt-1">{errors.license_category}</p>}
                             </div>
+                            {/* experience */}
                             <div>
                                 <h1 className="block text-sm font-medium">Experience</h1>
                                 <input
@@ -228,6 +267,7 @@ const AddDriver = () => {
                                     onChange={handleInputChange}
                                     className="border border-gray-300 rounded-lg w-full focus:outline-none"
                                 />
+                                {errors.experience && <p className="text-red-500 text-sm mt-1">{errors.experience}</p>}
                             </div>
                         </div>
                     </form>

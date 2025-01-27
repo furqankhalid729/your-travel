@@ -22,7 +22,10 @@ class CarController extends Controller
      */
     public function index()
     {
-        //
+        $car = Car::all();
+        return Inertia::render(InertiaViews::CarIndex->value, [
+            'cars' => $car,
+        ]);
     }
 
 
