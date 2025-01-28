@@ -3,7 +3,7 @@ import AdminLayout from "../../../Layout/AdminLayout";
 import CarDash from "../../../Components/Admin/CarBooking/CarDash";
 import CarsListing from '../../../Components/Admin/CarBooking/CarsListing';
 
-const CarBookDash = ({cars}) => {
+const CarBookDash = ({ cars }) => {
     return (
         <div>
             <CarDash />

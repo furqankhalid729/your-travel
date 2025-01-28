@@ -50,7 +50,7 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
   const handleFileChange = (e) => {
     const files = e.target.files;
     const fileArray = Array.from(files).map((file) => ({
-      file,
+      file, // Store the actual file object
       url: URL.createObjectURL(file),
     }));
 
@@ -102,7 +102,7 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
     }
 
     try {
-      await post("/api/car/add-car", formData, {
+      await post(route("cars.store"), formData, {
         onSuccess: () => {
           setMessage("Car added successfully!");
         },
