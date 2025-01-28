@@ -19,5 +19,7 @@ class Driver extends Model
         'license_category',
         'experience',
         'profile_image',
+        'status',
+        'card_id',
     ];
 }

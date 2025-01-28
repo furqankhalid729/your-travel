@@ -193,6 +193,11 @@ class CarController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $car = Car::find($id);
+        if (!$car) {
+            return response()->json(['message' => 'Car not found.'], 404);
+        }
+        $car->delete();
+        return response()->json(['message' => 'Car deleted successfully.'], 200);
     }
 }

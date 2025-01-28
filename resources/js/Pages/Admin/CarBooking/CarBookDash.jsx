@@ -14,4 +14,4 @@ const CarBookDash = ({ cars }) => {
     )
 }
 CarBookDash.layout = page => <AdminLayout children={page} title="Car Dash" />
-export default CarBookDash
+export default CarBookDash;

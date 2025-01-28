@@ -2,13 +2,9 @@ import { Link } from "@inertiajs/react";
 import { useState } from "react";
 import { useForm } from "@inertiajs/react"; // Correct import
 import { FaSnowflake, FaCarSide, FaLanguage, FaUser, FaSave } from "react-icons/fa";
-// import user from "../../assets/user.png";
-// import car from "../../assets/car.png";
 import { MdOutlineArrowBackIos } from "react-icons/md";
-// import { useNavigate } from "react-router-dom";
 
 const AddDriver = () => {
-    // const navigate = useNavigate();
     const [profileImage, setProfileImage] = useState(null);
 
     const { data, setData, post, processing, errors } = useForm({
@@ -21,9 +17,9 @@ const AddDriver = () => {
         license_no: "",
         license_category: "",
         experience: "",
+        status:"active"
     });
 
-    // Handel input change
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setData((prevDetails) => ({
@@ -31,24 +27,20 @@ const AddDriver = () => {
             [name]: value,
         }));
     };
-
-    // Handle file change
     const handleFileChange = (e) => {
-        const file = e.target.files[0]; // Get the first file
+        const file = e.target.files[0];
         if (file) {
             const fileData = {
-                file, // Store the actual file object
-                url: URL.createObjectURL(file), // Generate a preview URL
+                file,
+                url: URL.createObjectURL(file),
             };
-
-            // Update the profile_image in the form state
+            console.log(fileData)
             setData((prevData) => ({
                 ...prevData,
-                profile_image: fileData, // Update profile_image with the new file object
+                profile_image: fileData,
             }));
         }
     };
-
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -68,7 +60,7 @@ const AddDriver = () => {
         }
 
         try {
-            await post("/api/car/add-driver", formData, {
+            await post(route('driver.store'), formData, {
                 onSuccess: () => {
                     alert("Driver added successfully!");
                 },
@@ -79,47 +71,12 @@ const AddDriver = () => {
         }
 
     };
-
-    const fakeData = [
-        {
-            transaction: "TXN123456",
-            amount: "$120.00",
-            date: "23-11-2024",
-            status: "Approved",
-        },
-        {
-            transaction: "TXN654321",
-            amount: "$85.00",
-            date: "22-11-2024",
-            status: "Pending",
-        },
-        {
-            transaction: "TXN987654",
-            amount: "$250.00",
-            date: "21-11-2024",
-            status: "Approved",
-        },
-        {
-            transaction: "TXN321987",
-            amount: "$50.00",
-            date: "20-11-2024",
-            status: "Pending",
-        },
-        {
-            transaction: "TXN456789",
-            amount: "$400.00",
-            date: "19-11-2024",
-            status: "Approved",
-        },
-    ];
-
     return (
         <div>
             {/* header section */}
-            <div className="bg-white flex justify-between items-center mb-6">
+            <div className="m-6 p-2 bg-white flex justify-between items-center mb-6">
                 <Link
-                    href="/dashboard/car-booking"
-                    // onClick={() => navigate(-1)}
+                    href={route('driver.index')}
                     className="text-gray-500 hover:text-gray-700 p-3"
                 >
                     <MdOutlineArrowBackIos size={20} />
@@ -143,9 +100,9 @@ const AddDriver = () => {
                     {/* Profile Image */}
                     <div className="flex flex-col items-center p-4">
                         <div className="relative w-32 h-32 rounded-full mb-4 flex items-center justify-center bg-gray-200 text-gray-500">
-                            {profileImage ? (
+                            {data.profile_image?.url ? (
                                 <img
-                                    src={profileImage}
+                                    src={data.profile_image.url}
                                     alt="User"
                                     className="w-32 h-32 rounded-full object-cover"
                                 />
@@ -269,57 +226,20 @@ const AddDriver = () => {
                                 />
                                 {errors.experience && <p className="text-red-500 text-sm mt-1">{errors.experience}</p>}
                             </div>
+                            <div>
+                                <h1 className="block text-sm font-medium">Status</h1>
+                                <select
+                                    name="status"
+                                    value={data.status || ""}
+                                    onChange={handleInputChange}
+                                    className="border border-gray-300 rounded-lg w-full focus:outline-none"
+                                >
+                                    <option value="active">Active</option>
+                                    <option value="disabled">Disabled</option>
+                                </select>
+                            </div>
                         </div>
                     </form>
-                    {/* payment table */}
-                    <div className="bg-white shadow rounded-lg">
-                        <h2 className="text-2xl font-semibold mb-4">Payment Details</h2>
-                        <div className="overflow-x-auto">
-                            <table className="table-auto w-full border-collapse border border-gray-200">
-                                <thead>
-                                    <tr className="bg-gray-100">
-                                        <th className="border border-gray-300 px-4 py-2 text-left">
-                                            Transaction
-                                        </th>
-                                        <th className="border border-gray-300 px-4 py-2 text-center">
-                                            Amount
-                                        </th>
-                                        <th className="border border-gray-300 px-4 py-2 text-center">
-                                            Date
-                                        </th>
-                                        <th className="border border-gray-300 px-4 py-2 text-center">
-                                            Status
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {fakeData.map((data, index) => (
-                                        <tr key={index} className="hover:bg-gray-50">
-                                            <td className="border border-gray-300 px-4 py-2">
-                                                {data.transaction}
-                                            </td>
-                                            <td className="border border-gray-300 text-center px-4 py-2">
-                                                {data.amount}
-                                            </td>
-                                            <td className="border border-gray-300 text-center px-4 py-2">
-                                                {data.date}
-                                            </td>
-                                            <td className="border border-gray-300 text-center px-2 py-3 font-medium">
-                                                <span
-                                                    className={`rounded-lg px-2 py-[3px] ${data.status === "Approved"
-                                                        ? "bg-[#a6c3a6] text-[#005500]"
-                                                        : "bg-[#d5a7a7] text-[#870305]"
-                                                        }`}
-                                                >
-                                                    {data.status}
-                                                </span>
-                                            </td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
