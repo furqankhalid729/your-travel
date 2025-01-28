@@ -174,7 +174,7 @@ const AddHotelRoom = () => {
 
     try {
       // Try sending the POST request
-      await post("/api/hotel/add-hotel-room", formData, {
+      await post(route("hotelRoom.store"), formData, {
         onSuccess: () => {
           setMessage("hotelroom added successfully!");
         },

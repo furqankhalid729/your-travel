@@ -80,6 +80,13 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
     }
   };
 
+  const handleRemoveFeature = (index) => {
+    setData((prevDetails) => ({
+      ...prevDetails,
+      features: prevDetails.features.filter((_, i) => i !== index),
+    }));
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
@@ -190,7 +197,7 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
             />
           </div>
           {/* Grid for Additional Images */}
-          <div className="grid grid-cols-3 gap-2 my-4">
+          <div className="grid grid-cols-3 gap-2">
             {data.car_images.slice(1).map((image, index) => (
               <div key={index + 1} className="relative w-[100px] h-[80px]">
                 <img
@@ -238,9 +245,17 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
             </div>
             <ul className="space-y-2">
               {data.features.map((feature, index) => (
-                <li key={index} className="text-gray-600 flex items-center gap-3 ">
-                  {iconMapping[feature.icon] || <FaSnowflake className="mr-2" />} {/* Fallback to FaSnowflake */}
-                  <p>{feature.name}</p>
+                <li key={index} className="text-gray-600 flex items-center justify-between gap-3 ">
+                  <div className="flex items-center gap-2">
+                    {iconMapping[feature.icon] || <FaSnowflake className="mr-2" />}
+                    <p>{feature.name}</p>
+                  </div>
+                  <button
+                    onClick={() => handleRemoveFeature(index)}
+                    className="text-red-500 ml-2 hover:text-red-700"
+                  >
+                    ✖
+                  </button>
                 </li>
               ))}
             </ul>

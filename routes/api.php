@@ -22,7 +22,7 @@ Route::post('/car/add-driver', [DriverController::class, 'store']);
 
 Route::post('/hotel/hotel-booking-form', [HotelController::class, 'store']);
 
-Route::post('/hotel/add-hotel-room', [HotelRoomController::class, 'store']);
+Route::post('/hotel/add-hotel-room', [HotelRoomController::class, 'store'])->name('hotelRoom.store');
 
 Route::post('/tour/add-tour', [TourController::class, 'store']);
 
