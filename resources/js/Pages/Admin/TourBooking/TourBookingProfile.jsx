@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import AdminLayout from "../../../Layout/AdminLayout";
 import TourBookingProfileCom from "../../../Components/Admin/TourBooking/TourBookingProfile";
 
 const TourBookingProfile = () => {
@@ -8,5 +9,5 @@ const TourBookingProfile = () => {
     </div>
   )
 }
-
-export default TourBookingProfile
+TourBookingProfile.layout = page => <AdminLayout children={page} title="Tour Booking Profile" />
+export default TourBookingProfile;

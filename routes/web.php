@@ -3,6 +3,7 @@
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HotelBookingController;
 use App\Models\Car\CarBrand;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -92,6 +93,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/car/edit/{id}', [CarController::class, 'edit'])->name('car.edit');
     Route::get('/dashboard/car-booking/driver-listing', [DriverController::class, 'index'])->name('driver.index'); 
     Route::get('/dashboard/car-booking/add-driver', [DriverController::class, 'create'])->name('driver.create');
+    Route::get('/dashboard/hotel-booking', [HotelBookingController::class, 'index'])->name('hotelBooking.index');
 });
 
 Route::get('/dashlayout', function () {
@@ -139,10 +141,6 @@ Route::get('/dashboard/car-booking/book-car-assign-drivers', function () {
 });
 
 // hotel booking
-
-Route::get('/dashboard/hotel-booking', function () {
-    return Inertia::render('Admin/HotelBooking/HotelBooking');
-});
 
 Route::get('/dashboard/hotel-booking/all-hotels', function () {
     return Inertia::render('Admin/HotelBooking/AllHotels');

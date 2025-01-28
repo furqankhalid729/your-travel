@@ -96,7 +96,7 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                         <option value="">Select a fuel type</option>
                         {fuels.map((fuel) => (
                             <option key={fuel.id} value={fuel.name}>
-                                {fuel.name}
+                                {fuel.type}
                             </option>
                         ))}
                     </select>
@@ -132,7 +132,7 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                         <option value="">Select a transmission</option>
                         {transmissions.map((transmission) => (
                             <option key={transmission.id} value={transmission.name}>
-                                {transmission.name}
+                                {transmission.type}
                             </option>
                         ))}
                     </select>
