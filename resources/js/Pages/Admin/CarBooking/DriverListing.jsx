@@ -1,10 +1,14 @@
 import React from 'react';
 import AdminLayout from "../../../Layout/AdminLayout";
+import CarDash from "../../../Components/Admin/CarBooking/CarDash";
 import DriverListingCom from "../../../Components/Admin/CarBooking/DriverListing";
-const DriverListing = () => {
+const DriverListing = ({drivers}) => {
     return (
         <div>
-            <DriverListingCom />
+            <CarDash />
+            <DriverListingCom 
+                drivers={drivers}
+            />
         </div>
     )
 }
