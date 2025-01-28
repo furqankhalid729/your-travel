@@ -141,16 +141,18 @@ const CarsListing = ({ cars }) => {
                       {car.status}
                     </span>
                   </td>
-                  <td className="px-2 py-4 whitespace-nowrap text-sm flex space-x-2">
-                    <Link href={route('car.edit',car.id)} className="text-green-500">
-                      <FaEdit />
-                    </Link>
-                    <button className="text-blue-500 px-1">
-                      <FaEye />
-                    </button>
-                    <button className="text-red-500" onClick={() => openModal(car.id)}>
-                      <FaTrash />
-                    </button>
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <div className="flex space-x-2">
+                      <Link href={route('car.edit', car.id)} className="text-green-500">
+                        <FaEdit />
+                      </Link>
+                      <button className="text-blue-500 px-1">
+                        <FaEye />
+                      </button>
+                      <button className="text-red-500" onClick={() => openModal(car.id)}>
+                        <FaTrash />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}

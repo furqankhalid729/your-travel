@@ -106,11 +106,17 @@ class CarController extends Controller
      */
     public function edit(string $id)
     {
+        $car = Car::find($id);
+
+        if (!$car) {
+            return redirect()->back()->withErrors(['error' => 'Car not found!']);
+        }
+
         $models = CarModel::all();
         $fuels = CarFuel::all();
         $transmissions = CarTransmission::all();
         $brands = CarBrand::all();
-        $car = Car::where('id', $id)->get();
+
         return Inertia::render(InertiaViews::EditCar->value, [
             'car' => $car,
             'brands' => $brands,
@@ -125,7 +131,38 @@ class CarController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $car = Car::find($id);
+
+        if (!$car) {
+            return redirect()->back()->withErrors(['error' => 'Car not found!']);
+        }
+
+        $validatedData = $request->validate([
+            'car_name' => 'required|string|max:255',
+            'brand' => 'required|string|max:255',
+            'model' => 'required|string|max:255',
+            'fuel' => 'required|string',
+            'car_number' => 'required|string|max:255|unique:cars,car_number,' . $car->id,
+            'transmission' => 'required|string',
+            'capacity' => 'required|integer',
+            'status' => 'required|string',
+            'price' => 'required|numeric',
+        ]);
+
+
+        $car->update([
+            'car_name' => $validatedData['car_name'],
+            'brand' => $validatedData['brand'],
+            'model' => $validatedData['model'],
+            'fuel' => $validatedData['fuel'],
+            'car_number' => $validatedData['car_number'],
+            'transmission' => $validatedData['transmission'],
+            'capacity' => $validatedData['capacity'],
+            'status' => $validatedData['status'],
+            'price' => $validatedData['price'],
+        ]);
+
+        return redirect()->route('cars.index')->with('success', 'Car updated successfully');
     }
 
     /**
