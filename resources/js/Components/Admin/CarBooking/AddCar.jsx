@@ -50,21 +50,21 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
   const handleFileChange = (e) => {
     const files = e.target.files;
     const fileArray = Array.from(files).map((file) => ({
-      file, // Store the actual file object
+      file,
       url: URL.createObjectURL(file),
     }));
 
     // Update the car_images array in the form state
     setData((prevData) => ({
       ...prevData,
-      car_images: fileArray, // Update car_images state with the new file array
+      car_images: fileArray,
     }));
   };
 
   const handleRemoveImage = (index) => {
     setData((prevData) => ({
       ...prevData,
-      car_images: prevData.car_images.filter((_, i) => i !== index), // Remove the image at the given index
+      car_images: prevData.car_images.filter((_, i) => i !== index), 
     }));
   };
 
@@ -151,16 +151,16 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
             {data.car_images.length > 0 ? (
               <div className="relative w-full h-full">
                 <img
-                  src={data.car_images[0].url} // Display the first selected image
+                  src={data.car_images[0].url}
                   alt="Main Car Preview"
                   className="w-full h-[300px] object-cover rounded-md"
                 />
                 <button
                   onClick={(e) => {
-                    e.stopPropagation(); // Prevent triggering the file picker
+                    e.stopPropagation();
                     setData((prevData) => ({
                       ...prevData,
-                      car_images: prevData.car_images.slice(1), // Remove the first image
+                      car_images: prevData.car_images.slice(1),
                     }));
                   }}
                   className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600"
@@ -206,7 +206,7 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
                   className="w-full h-full object-cover rounded-lg"
                 />
                 <button
-                  onClick={() => handleRemoveImage(index + 1)} // Adjust index for additional images
+                  onClick={() => handleRemoveImage(index + 1)}
                   className="absolute top-1 right-1 bg-red-500 text-white p-1 text-[5px] rounded-full hover:bg-red-600"
                 >
                   ✖

@@ -28,22 +28,31 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
         capacity: car.capacity || "",
         status: car.status || "",
         price: car.price || "",
-        car_images: [],
+        car_images: carImages,
         features: features,
     });
 
 
-    // Handle image selection (new images)
-    const handleImageChange = (e) => {
-        const files = Array.from(e.target.files);
-        setData("car_images", files); // Set the new images
+    // Handle file change
+    const handleFileChange = (e) => {
+        const files = e.target.files;
+        const fileArray = Array.from(files).map((file) => ({
+            file,
+            url: URL.createObjectURL(file),
+        }));
+
+        // Merge the previous images with the newly selected ones
+        setData((prevData) => ({
+            ...prevData,
+            car_images: [...prevData.car_images, ...fileArray],
+        }));
     };
 
-    // Handle image deletion
-    const handleImageDelete = (index) => {
-        const newImages = [...data.car_images];
-        newImages.splice(index, 1); // Remove the selected image
-        setData("car_images", newImages); // Update the form state
+    const handleRemoveImage = (index) => {
+        setData((prevData) => ({
+            ...prevData,
+            car_images: prevData.car_images.filter((_, i) => i !== index),
+        }));
     };
 
     // Handle adding new feature
@@ -56,7 +65,7 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
             setFeatures([...features, newFeatureObject]);
             setNewFeature("");
             setIsModalOpen(false);
-            setData("features", [...features, newFeatureObject]); // Update the features in form data
+            setData("features", [...features, newFeatureObject]);
         }
     };
 
@@ -64,7 +73,7 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
     const removeFeature = (index) => {
         const updatedFeatures = features.filter((_, i) => i !== index);
         setFeatures(updatedFeatures);
-        setData("features", updatedFeatures); // Update the features in form data after removing
+        setData("features", updatedFeatures);
     };
 
     const handleSubmit = (e) => {
@@ -94,40 +103,80 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
             <div className="flex mt-6 gap-6">
                 {/* Left Panel */}
                 <div className="w-2/5 p-4 rounded-lg shadow">
-                    {/* Car Images */}
-                    <div className="col-span-2  my-4">
-                        <label htmlFor="car_images" className="block text-sm font-medium text-gray-700">
-                            Car Images
-                        </label>
-
-                        {/* Display existing car images */}
-                        <div className="flex flex-wrap gap-4 mt-2">
-                            {carImages.map((image, index) => (
-                                <div key={index} className="relative">
-                                    <img
-                                        src={`/storage/${image}`} // Assuming your images are stored in public storage
-                                        alt={`Car Image ${index + 1}`}
-                                        className="w-32 h-32 object-cover rounded-lg"
+                    {/* Clickable Upload Area */}
+                    <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md p-6 mb-2 relative bg-gray-50">
+                        {/* Display Main Car Image (if available) */}
+                        {data.car_images.length > 0 ? (
+                            <div className="relative w-full h-full">
+                                <img
+                                    src={data.car_images[0].url}
+                                    alt="Main Car Preview"
+                                    className="w-full h-[300px] object-cover rounded-md"
+                                />
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setData((prevData) => ({
+                                            ...prevData,
+                                            car_images: prevData.car_images.slice(1),
+                                        }));
+                                    }}
+                                    className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600"
+                                >
+                                    ✖
+                                </button>
+                            </div>
+                        ) : (
+                            <>
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    className="h-16 w-16 text-gray-400 mb-2"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke="currentColor"
+                                    strokeWidth={2}
+                                >
+                                    <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        d="M3 16V8a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"
                                     />
-                                    <button
-                                        type="button"
-                                        onClick={() => handleImageDelete(index)}
-                                        className="absolute top-0 right-0 bg-red-500 text-white p-1 rounded-full"
-                                    >
-                                        X
-                                    </button>
-                                </div>
-                            ))}
-                        </div>
-
-                        {/* Image upload input */}
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="M16 10.7a4.5 4.5 0 01-8 0M12 12v2" />
+                                </svg>
+                                <span className="text-gray-600 text-sm">Click to upload main image</span>
+                            </>
+                        )}
                         <input
                             type="file"
-                            multiple
                             accept="image/*"
-                            onChange={handleImageChange}
-                            className="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                            className="absolute inset-0 opacity-0 cursor-pointer"
+                            onChange={handleFileChange}
+                            multiple
                         />
+                    </div>
+
+                    {/* Grid for Additional Images */}
+                    <div className="grid grid-cols-3 gap-2">
+                        {data.car_images.slice(1).map((image, index) => (
+                            <div key={index + 1} className="relative w-[100px] h-[80px]">
+                                <img
+                                    src={image.url}
+                                    alt={`Additional Car Preview ${index}`}
+                                    className="w-full h-full object-cover rounded-lg"
+                                />
+                                <button
+                                    onClick={() => handleRemoveImage(index + 1)}
+                                    className="absolute top-1 right-1 bg-red-500 text-white p-1 text-[5px] rounded-full hover:bg-red-600"
+                                >
+                                    ✖
+                                </button>
+                            </div>
+                        ))}
+                        {errors?.car_images?.length > 0 && (
+                            <p className="text-red-500 text-sm mt-2">
+                                {Array.isArray(errors.car_images) ? errors.car_images[0].file : errors.car_images}
+                            </p>
+                        )}
                     </div>
                     {/* Car Name */}
                     <div className="text-center">
@@ -153,7 +202,6 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                             </button>
                         </div>
                         <ul className="space-y-2">
-                            {/* Displaying previously added features */}
                             {features.map((feature, index) => (
                                 <li key={index} className="text-gray-600 flex items-center justify-between gap-3">
                                     <div className="flex items-center gap-2">
