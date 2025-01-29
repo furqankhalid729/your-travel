@@ -147,9 +147,30 @@ class CarController extends Controller
             'capacity' => 'required|integer',
             'status' => 'required|string',
             'price' => 'required|numeric',
+            'features' => 'nullable|array',
+            'features.*.name' => 'required|string|max:255',
+            'features.*.icon' => 'required|string|max:255',
+            'car_images' => 'nullable|array',
+            'car_images.*.file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
+        // Handle features
+        $features = $validatedData['features'] ?? [];
 
+        // Handle car_images
+        $carImages = json_decode($car->car_images, true) ?? [];
+        if ($request->has('car_images') && !empty($request->file('car_images'))) {
+            foreach ($request->file('car_images') as $carImage) {
+                if (isset($carImage['file']) && $carImage['file'] instanceof \Illuminate\Http\UploadedFile) {
+                    $path = $carImage['file']->store('images/Car');
+                    $carImages[] = $path;
+                } else {
+                    Log::error('Not an instance of UploadedFile:', ['file' => $carImage['file']]);
+                }
+            }
+        }
+
+        // Update the car record
         $car->update([
             'car_name' => $validatedData['car_name'],
             'brand' => $validatedData['brand'],
@@ -160,6 +181,8 @@ class CarController extends Controller
             'capacity' => $validatedData['capacity'],
             'status' => $validatedData['status'],
             'price' => $validatedData['price'],
+            'features' => $features,
+            'car_images' => json_encode($carImages),
         ]);
 
         return redirect()->route('cars.index')->with('success', 'Car updated successfully');

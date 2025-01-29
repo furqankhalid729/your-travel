@@ -50,21 +50,21 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
   const handleFileChange = (e) => {
     const files = e.target.files;
     const fileArray = Array.from(files).map((file) => ({
-      file, // Store the actual file object
+      file,
       url: URL.createObjectURL(file),
     }));
 
     // Update the car_images array in the form state
     setData((prevData) => ({
       ...prevData,
-      car_images: fileArray, // Update car_images state with the new file array
+      car_images: fileArray,
     }));
   };
 
   const handleRemoveImage = (index) => {
     setData((prevData) => ({
       ...prevData,
-      car_images: prevData.car_images.filter((_, i) => i !== index), // Remove the image at the given index
+      car_images: prevData.car_images.filter((_, i) => i !== index), 
     }));
   };
 
@@ -78,6 +78,13 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
       setFeatureIcon("FaSnowflake");
       setIsModalOpen(false);
     }
+  };
+
+  const handleRemoveFeature = (index) => {
+    setData((prevDetails) => ({
+      ...prevDetails,
+      features: prevDetails.features.filter((_, i) => i !== index),
+    }));
   };
 
   const handleSubmit = async (e) => {
@@ -144,16 +151,16 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
             {data.car_images.length > 0 ? (
               <div className="relative w-full h-full">
                 <img
-                  src={data.car_images[0].url} // Display the first selected image
+                  src={data.car_images[0].url}
                   alt="Main Car Preview"
                   className="w-full h-[300px] object-cover rounded-md"
                 />
                 <button
                   onClick={(e) => {
-                    e.stopPropagation(); // Prevent triggering the file picker
+                    e.stopPropagation();
                     setData((prevData) => ({
                       ...prevData,
-                      car_images: prevData.car_images.slice(1), // Remove the first image
+                      car_images: prevData.car_images.slice(1),
                     }));
                   }}
                   className="absolute top-2 right-2 bg-red-500 text-white p-1 rounded-full hover:bg-red-600"
@@ -190,7 +197,7 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
             />
           </div>
           {/* Grid for Additional Images */}
-          <div className="grid grid-cols-3 gap-2 my-4">
+          <div className="grid grid-cols-3 gap-2">
             {data.car_images.slice(1).map((image, index) => (
               <div key={index + 1} className="relative w-[100px] h-[80px]">
                 <img
@@ -199,7 +206,7 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
                   className="w-full h-full object-cover rounded-lg"
                 />
                 <button
-                  onClick={() => handleRemoveImage(index + 1)} // Adjust index for additional images
+                  onClick={() => handleRemoveImage(index + 1)}
                   className="absolute top-1 right-1 bg-red-500 text-white p-1 text-[5px] rounded-full hover:bg-red-600"
                 >
                   ✖
@@ -238,9 +245,17 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
             </div>
             <ul className="space-y-2">
               {data.features.map((feature, index) => (
-                <li key={index} className="text-gray-600 flex items-center gap-3 ">
-                  {iconMapping[feature.icon] || <FaSnowflake className="mr-2" />} {/* Fallback to FaSnowflake */}
-                  <p>{feature.name}</p>
+                <li key={index} className="text-gray-600 flex items-center justify-between gap-3 ">
+                  <div className="flex items-center gap-2">
+                    {iconMapping[feature.icon] || <FaSnowflake className="mr-2" />}
+                    <p>{feature.name}</p>
+                  </div>
+                  <button
+                    onClick={() => handleRemoveFeature(index)}
+                    className="text-red-500 ml-2 hover:text-red-700"
+                  >
+                    ✖
+                  </button>
                 </li>
               ))}
             </ul>
