@@ -28,7 +28,10 @@ const AdminLayout = ({ title, children }) => {
     const user = usePage().props.auth.user;
 
     const { url } = usePage();
-    const isActive = (path) => url === path || url.startsWith(path);
+    const isActive = (path) => {
+
+        return url.replace("/dashboard") === path.replace("/dashboard")
+    };    
 
     const handleRouteChange = () => {
         setSidebarOpen(false);

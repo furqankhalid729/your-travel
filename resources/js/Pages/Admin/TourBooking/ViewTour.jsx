@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import AdminLayout from "../../../Layout/AdminLayout";
 import ViewTourCom from "../../../Components/Admin/TourBooking/ViewTour"
 
 const ViewTour = () => {
@@ -8,5 +9,5 @@ const ViewTour = () => {
     </div>
   )
 }
-
-export default ViewTour
+ViewTour.layout = page => <AdminLayout children={page} title="All Tours" />
+export default ViewTour;
