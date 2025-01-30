@@ -42,7 +42,7 @@ const topMenuItems = [
 ];
 
 const CarDash = () => {
-  console.log(topMenuItems)
+  // console.log(topMenuItems)
   return (
     <div className="p-2 md:p-4 m-2 md:m-6 bg-white">
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-5">

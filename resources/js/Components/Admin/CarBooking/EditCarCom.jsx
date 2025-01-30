@@ -154,7 +154,6 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                             multiple
                         />
                     </div>
-
                     {/* Grid for Additional Images */}
                     <div className="grid grid-cols-3 gap-2">
                         {data.car_images.slice(1).map((image, index) => (

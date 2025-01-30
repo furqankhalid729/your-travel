@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\HotelRoomController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Car\CarBrand;
 use Illuminate\Foundation\Application;
@@ -90,8 +91,12 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/car-booking', [CarController::class, 'index']);
     Route::get('/dashboard/car-booking/add-car', [CarController::class, 'create']);
     Route::get('/dashboard/car/edit/{id}', [CarController::class, 'edit'])->name('car.edit');
-    Route::get('/dashboard/car-booking/driver-listing', [DriverController::class, 'index'])->name('driver.index'); 
+    Route::get('/dashboard/car-booking/driver-listing', [DriverController::class, 'index'])->name('driver.index');
     Route::get('/dashboard/car-booking/add-driver', [DriverController::class, 'create'])->name('driver.create');
+    Route::get('/dashboard/driver/edit/{id}', [DriverController::class, 'edit'])->name('driver.edit');
+    // Route::put('/dashboard/driver/update/{driver}', [DriverController::class, 'update'])->name('driver.update');
+    Route::get('/dashboard/hotel-booking/add-hotel-room', [HotelRoomController::class, 'create']);
+    Route::get('/dashboard/hotel-booking/all-hotels', [HotelRoomController::class, 'index'])->name('hotelRoom.index');
 });
 
 Route::get('/dashlayout', function () {
@@ -140,12 +145,10 @@ Route::get('/dashboard/car-booking/book-car-assign-drivers', function () {
 
 // hotel booking
 
+
+
 Route::get('/dashboard/hotel-booking', function () {
     return Inertia::render('Admin/HotelBooking/HotelBooking');
-});
-
-Route::get('/dashboard/hotel-booking/all-hotels', function () {
-    return Inertia::render('Admin/HotelBooking/AllHotels');
 });
 
 Route::get('/dashboard/hotel-booking/hotel-booking-form', function () {
@@ -165,9 +168,7 @@ Route::get('/dashboard/hotel-booking/view-rooms', function () {
     return Inertia::render('Admin/HotelBooking/ViewRooms');
 });
 
-Route::get('/dashboard/hotel-booking/add-hotel-room', function () {
-    return Inertia::render('Admin/HotelBooking/AddHotelRoom');
-});
+
 
 
 // Tour Booking

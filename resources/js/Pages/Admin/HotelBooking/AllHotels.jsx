@@ -1,9 +1,10 @@
 import React from 'react'
 import AllHotelsCom from "../../../Components/Admin/HotelBooking/AllHotels";
-const AllHotels = () => {
+const AllHotels = ({hotelRooms}) => {
   return (
     <div>
-      <AllHotelsCom />
+      <AllHotelsCom 
+      hotelRooms={hotelRooms}/>
     </div>
   )
 }

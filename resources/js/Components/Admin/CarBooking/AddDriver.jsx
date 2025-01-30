@@ -1,7 +1,7 @@
 import { Link } from "@inertiajs/react";
 import { useState } from "react";
 import { useForm } from "@inertiajs/react"; // Correct import
-import { FaSnowflake, FaCarSide, FaLanguage, FaUser, FaSave } from "react-icons/fa";
+import { FaSave } from "react-icons/fa";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 
 const AddDriver = () => {
