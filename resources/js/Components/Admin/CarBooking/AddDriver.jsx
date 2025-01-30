@@ -19,7 +19,6 @@ const AddDriver = () => {
         experience: "",
         status:"active"
     });
-
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setData((prevDetails) => ({
@@ -54,10 +53,6 @@ const AddDriver = () => {
         formData.append("license_category", data.license_category);
         formData.append("experience", data.experience);
         formData.append("profile_image", profileImage);
-        // Log the FormData entries
-        for (let [key, value] of formData.entries()) {
-            console.log(`${key}:`, value);
-        }
 
         try {
             await post(route('driver.store'), formData, {

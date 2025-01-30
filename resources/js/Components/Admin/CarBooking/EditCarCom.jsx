@@ -264,27 +264,26 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                                 </select>
                                 {errors.model && <p className="text-sm text-red-600">{errors.model}</p>}
                             </div>
-
-                            {/* Fuel */}
-                            <div>
-                                <label htmlFor="fuel" className="block text-sm font-medium text-gray-700">
-                                    Fuel Type
-                                </label>
-                                <select
-                                    id="fuel"
-                                    value={data.fuel}
-                                    onChange={(e) => setData("fuel", e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                >
-                                    <option value="">Select a fuel type</option>
-                                    {fuels.map((fuel) => (
-                                        <option key={fuel.id} value={fuel.type}>
-                                            {fuel.type}
-                                        </option>
-                                    ))}
-                                </select>
-                                {errors.fuel && <p className="text-sm text-red-600">{errors.fuel}</p>}
-                            </div>
+                {/* Fuel */}
+                <div>
+                    <label htmlFor="fuel" className="block text-sm font-medium text-gray-700">
+                        Fuel Type
+                    </label>
+                    <select
+                        id="fuel"
+                        value={data.fuel}
+                        onChange={(e) => setData("fuel", e.target.value)}
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    >
+                        <option value="">Select a fuel type</option>
+                        {fuels.map((fuel) => (
+                            <option key={fuel.id} value={fuel.name}>
+                                {fuel.type}
+                            </option>
+                        ))}
+                    </select>
+                    {errors.fuel && <p className="text-sm text-red-600">{errors.fuel}</p>}
+                </div>
 
                             {/* Car Number */}
                             <div>
@@ -321,6 +320,27 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                                 </select>
                                 {errors.transmission && <p className="text-sm text-red-600">{errors.transmission}</p>}
                             </div>
+                {/* Transmission */}
+                <div>
+                    <label htmlFor="transmission" className="block text-sm font-medium text-gray-700">
+                        Transmission
+                    </label>
+                    <select
+                        id="transmission"
+                        value={data.transmission}
+                        onChange={(e) => setData("transmission", e.target.value)}
+                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                    >
+                        <option value="">Select a transmission</option>
+                        {transmissions.map((transmission) => (
+                            <option key={transmission.id} value={transmission.name}>
+                                {transmission.type}
+                            </option>
+                        ))}
+                    </select>
+                    {errors.transmission && <p className="text-sm text-red-600">{errors.transmission}</p>}
+                </div>
+
 
                             {/* Capacity */}
                             <div>
