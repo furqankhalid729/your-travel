@@ -44,7 +44,7 @@ class DriverController extends Controller
             $validatedData['profile_image'] = $path;
         }
         Log::info($validatedData);
-        // Save to database
+
         $driver = Driver::create($validatedData);
 
         return response()->json([
@@ -53,13 +53,79 @@ class DriverController extends Controller
         ], 201);
     }
 
+    public function edit(string $id)
+    {
+        $driver = Driver::find($id);
+
+        if (!$driver) {
+            return redirect()->back()->withErrors(['error' => 'Car not found!']);
+        }
+        return Inertia::render(InertiaViews::EditDriver->value, [
+            'driver' => $driver,
+        ]);
+
+    }
+
+    public function update(Request $request, string $id)
+    {
+        // Find the driver by ID
+        $driver = Driver::find($id);
+
+        // Check if driver exists
+        if (!$driver) {
+            return redirect()->back()->withErrors(['error' => 'Driver not found!']);
+        }
+
+        // Validate incoming request data
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'identity_no' => 'required|string|max:255|unique:drivers,identity_no,' . $driver->id,
+            'email' => 'required|email|unique:drivers,email,' . $driver->id,
+            'gender' => 'required|in:male,female,other',
+            'contact_no' => 'required|string|max:15',
+            'license_no' => 'required|string|max:255',
+            'license_category' => 'required|string|max:255',
+            'experience' => 'required|string|max:255',
+            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'status' => 'required|in:active,disabled',
+        ]);
+
+        // Handle profile image upload
+        $profileImagePath = $driver->profile_image;
+        if ($request->hasFile('profile_image')) {
+            $file = $request->file('profile_image');
+            $profileImagePath = $file->store('profile_images', 'public');
+        }
+
+        // Update the driver record
+        $driver->update([
+            'name' => $validatedData['name'],
+            'identity_no' => $validatedData['identity_no'],
+            'email' => $validatedData['email'],
+            'gender' => $validatedData['gender'],
+            'contact_no' => $validatedData['contact_no'],
+            'license_no' => $validatedData['license_no'],
+            'license_category' => $validatedData['license_category'],
+            'experience' => $validatedData['experience'],
+            'profile_image' => $profileImagePath,
+            'status' => $validatedData['status'],
+        ]);
+
+        
+        // Redirect with success message
+        return redirect()->route('drivers.index')->with('success', 'Driver updated successfully!');
+    }
+    /**
+     * Remove the specified resource from storage.
+     */
     public function destroy(string $id)
     {
         $driver = Driver::find($id);
         if (!$driver) {
-            return response()->json(['message' => 'Driver not found.'], 404);
+            return redirect()->back()->withErrors(['error' => 'Driver not found!']);
         }
+
         $driver->delete();
-        return response()->json(['message' => 'Driver deleted successfully.'], 200);
+        return redirect()->route('drivers.index')->with('success', 'Driver deleted successfully!');
     }
 }

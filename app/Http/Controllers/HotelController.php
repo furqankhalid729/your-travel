@@ -19,9 +19,9 @@ class HotelController extends Controller
             'last_name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'email_verified' => 'required|boolean',
-            'phoneNo' => 'required|string|max:20',
-            'phoneNo_verified' => 'required|boolean',
-            'identityNo' => 'required|string|max:50',
+            'phone_no' => 'required|string|max:20',
+            'phone_no_verified' => 'required|boolean',
+            'identity_no' => 'required|string|max:50',
             'gender' => 'required|in:Male,Female,Other',
             'from_date' => 'required|date',
             'to_date' => 'required|date|after:from_date',
@@ -36,9 +36,9 @@ class HotelController extends Controller
             'last_name' => $validatedData['last_name'],
             'email' => $validatedData['email'],
             'email_verified' => $validatedData['email_verified'],
-            'phone_no' => $validatedData['phoneNo'],
-            'phone_no_verified' => $validatedData['phoneNo_verified'],
-            'identity_no' => $validatedData['identityNo'],
+            'phone_no' => $validatedData['phone_no'],
+            'phone_no_verified' => $validatedData['phone_no_verified'],
+            'identity_no' => $validatedData['identity_no'],
             'gender' => $validatedData['gender'],
             'from_date' => $validatedData['from_date'],
             'to_date' => $validatedData['to_date'],
@@ -48,6 +48,6 @@ class HotelController extends Controller
             'price' => $validatedData['price'],
         ]);
 
-        return response()->json(['message' => 'Hotel booking saved successfully'], 201);
+        return redirect()->route('hotel.index')->with('success', 'Booking created successfully!');
     }
 }

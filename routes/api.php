@@ -17,11 +17,14 @@ Route::middleware('auth')->group(function () {
     Route::delete('/car/delete/{id}', [CarController::class, 'destroy'])->name('car.delete');
     Route::post('/driver/add-driver', [DriverController::class, 'store'])->name('driver.store');
     Route::delete('/driver/delete/{id}', [DriverController::class, 'destroy'])->name('driver.delete');
+    // Route::put('/driver/update/{driver}', [DriverController::class, 'update'])->name('driver.update');
+    Route::post('/hotel/add-hotel-room', [HotelRoomController::class, 'store'])->name('hotelRoom.store');
 });
 
-Route::post('/hotel/hotel-booking-form', [HotelController::class, 'store']);
 
-Route::post('/hotel/add-hotel-room', [HotelRoomController::class, 'store'])->name('hotelRoom.store');
+
+Route::post('/hotel/hotel-booking-form', [HotelController::class, 'store'])->name('hotel.store');
+
 
 Route::post('/tour/add-tour', [TourController::class, 'store']);
 

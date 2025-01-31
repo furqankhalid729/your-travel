@@ -10,7 +10,7 @@ return new class extends Migration {
      */
     public function up()
     {
-        Schema::create('hotel_bookings', function (Blueprint $table) {
+        Schema::create('hotel', function (Blueprint $table) {
             $table->id();
             $table->string('first_name');
             $table->string('last_name');
@@ -33,8 +33,8 @@ return new class extends Migration {
     /**
      * Reverse the migrations.
      */
-    public function down(): void
+    public function down()
     {
-        Schema::dropIfExists('hotels');
+        Schema::dropIfExists('hotel');
     }
 };

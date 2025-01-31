@@ -9,9 +9,8 @@ const HotelBookingForm = () => {
   // const navigate = useNavigate();
   // const [checkIn, setCheckIn] = useState("");
   // const [checkOut, setCheckOut] = useState("");
-  const [guestCount, setGuestCount] = useState(1);
+  const [guestCount, setGuestCount] = useState(0);
   const [roomType, setRoomType] = useState("Standard");
-  const [price, setPrice] = useState(100);
   const [isEmailVerified, setIsEmailVerified] = useState(false);
   const [isPhoneVerified, setIsPhoneVerified] = useState(false);
 
@@ -20,9 +19,9 @@ const HotelBookingForm = () => {
     last_name: "",
     email: "",
     email_verified: false,
-    phoneNo: "",
-    phoneNo_verified: false,
-    identityNo: "",
+    phone_no: "",
+    phone_no_verified: false,
+    identity_no: "",
     gender: "",
     from_date: "",
     to_date: "",
@@ -31,7 +30,7 @@ const HotelBookingForm = () => {
     no_of_member: 0,
     price: 0,
   });
- 
+
   // Handle input change
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -41,13 +40,14 @@ const HotelBookingForm = () => {
     }));
   };
 
-  // email verified functions
-  const handleVerifyEmail = () => {
-    setIsEmailVerified((prev) => !prev);
+  const handleEmailVerify = () => {
+    setIsEmailVerified(!isEmailVerified);
+    setData('email_verified', !isEmailVerified);
   };
-  // phoneNo verified functions
-  const handleVerifyPhone = () => {
-    setIsPhoneVerified((prev) => !prev);
+
+  const handlePhoneVerify = () => {
+    setIsPhoneVerified(!isPhoneVerified);
+    setData('phone_no_verified', !isPhoneVerified);
   };
 
   // Calculate days
@@ -63,15 +63,17 @@ const HotelBookingForm = () => {
       nights: diffDays > 0 ? diffDays - 1 : 0,
     };
   };
-  ;
+
 
   // date change
   const handleDateChange = (e) => {
     const { name, value } = e.target;
-    setData((prevDetails) => ({
-      ...prevDetails,
-      [name]: value,
-    }));
+    setData(name, value);
+
+    if (name === 'from_date' || name === 'to_date') {
+      const { days, nights } = calculateDays(data.from_date, data.to_date);
+      setData('duration', `${days} days, ${nights} night${nights === 1 ? '' : 's'}`);
+    }
   };
 
   // Update price based on room type and guest count
@@ -86,16 +88,16 @@ const HotelBookingForm = () => {
       roomPrice = 50;
     }
 
-    setPrice(roomPrice * guestCount);
+    setData('price', roomPrice * guestCount);
   };
+
 
   const handleGuestCountChange = (e) => {
     const count = parseInt(e.target.value, 10) || 1;
     setGuestCount(count);
+    setData('no_of_member', count);
     updatePrice(count);
   };
-
-  const { days, nights } = calculateDays(data.from_date, data.to_date);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -103,32 +105,26 @@ const HotelBookingForm = () => {
     formData.append("first_name", data.first_name);
     formData.append("last_name", data.last_name);
     formData.append("email", data.email);
-    formData.append("email_verified", isEmailVerified);
-    formData.append("phoneNo", data.phoneNo);
-    formData.append("phoneNo_verified", isPhoneVerified);
-    formData.append("identityNo", data.identityNo);
+    formData.append("email_verified", data.email_verified);
+    formData.append("phone_no", data.phone_no);
+    formData.append("phone_no_verified", data.phone_no_verified);
+    formData.append("identity_no", data.identity_no);
     formData.append("gender", data.gender);
     formData.append("from_date", data.from_date);  // append from_date
     formData.append("to_date", data.to_date);  // append to_date
-    formData.append("duration", `${days} days, ${nights} night${nights === 1 ? "" : "s"}`);
+    formData.append("duration", data.duration);
     formData.append("tour_location", data.tour_location);  // append tour location
-    formData.append("no_of_member", guestCount);
-    formData.append("price", price);
+    formData.append("no_of_member", data.no_of_member);
+    formData.append("price", data.price);
 
     // Log the FormData entries
     for (let [key, value] of formData.entries()) {
       console.log(`${key}:`, value);
     }
 
-    // post("/hotel-booking-form", formData, {
-    //   onSuccess: () => {
-    //     setMessage("hotel-booking-form added successfully!");
-    //   },
-    // });
-
     try {
       // Try sending the POST request
-      await post("/api/hotel/hotel-booking-form", formData, {
+      await post(route("hotel.store"), formData, {
         onSuccess: () => {
           setMessage("Hotel Book successfully!");
         },
@@ -183,6 +179,7 @@ const HotelBookingForm = () => {
                 onChange={handleInputChange}
                 placeholder="Mohammad"
               />
+              {errors.first_name && <p className="text-red-500 text-sm mt-1">{errors.first_name}</p>}
             </div>
             {/* last_name */}
             <div>
@@ -194,6 +191,7 @@ const HotelBookingForm = () => {
                 onChange={handleInputChange}
                 placeholder="adlan"
               />
+              {errors.last_name && <p className="text-red-500 text-sm mt-1">{errors.last_name}</p>}
             </div>
             {/* email */}
             <div className="relative">
@@ -206,39 +204,48 @@ const HotelBookingForm = () => {
                   onChange={handleInputChange}
                   placeholder="M.aadlan9@gmail.com"
                 />
-                <button onClick={handleVerifyEmail} className={`p-3 border absolute right-0 rounded-md text-sm  ${isEmailVerified ? " bg-[#e0b0ff] text-white" : "bg-[#e4e4e4] text-gray-500"} flex items-center`}>
-                  {isEmailVerified ? "Verified" : "Non-Verified"}  <MdRemoveCircleOutline className="ml-1" />
+                {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email}</p>}
+                <button
+                  type="button"
+                  onClick={handleEmailVerify}
+                  className={`p-3 border absolute rounded-md right-0 text-sm ${isEmailVerified ? " bg-[#e0b0ff] text-white" : "bg-[#e4e4e4] text-gray-500"} flex items-center`}
+                >
+                  {isEmailVerified ? 'Verified' : 'Not Verified'}
                 </button>
               </div>
             </div>
-            {/* phoneNo */}
+            {/* phone_no */}
             <div className="relative">
               <div className="flex items-center">
                 <input
                   type="tel"
                   className="mt-1 p-3 w-[80%] border border-gray-300 rounded-md"
-                  name="phoneNo"
-                  value={data.phoneNo}
+                  name="phone_no"
+                  value={data.phone_no}
                   onChange={handleInputChange}
                   placeholder="+13 337 65 95 335"
                 />
-                <button onClick={handleVerifyPhone} className={`p-3 border absolute rounded-md right-0 text-sm ${isPhoneVerified ? " bg-[#e0b0ff] text-white" : "bg-[#e4e4e4] text-gray-500"} flex items-center`}>
-                  {isPhoneVerified ? "Verified" : "Non-Verified"}
-                  <MdRemoveCircleOutline className="ml-1" />
-                  {isPhoneVerified && <MdVerified className="ml-1" />}
+                {errors.phone_no && <p className="text-red-500 text-sm mt-1">{errors.phone_no}</p>}
+                <button
+                  type="button"
+                  onClick={handlePhoneVerify}
+                  className={`p-3 border absolute rounded-md right-0 text-sm ${isPhoneVerified ? " bg-[#e0b0ff] text-white" : "bg-[#e4e4e4] text-gray-500"} flex items-center`}
+                >
+                  {isPhoneVerified ? 'Verified' : 'Not Verified'}
                 </button>
               </div>
             </div>
-            {/* identityNo */}
+            {/* identity_no */}
             <div>
               <input
                 type="text"
                 className="mt-1 p-3 w-full border border-gray-300 rounded-md"
-                name="identityNo"
-                value={data.identityNo}
+                name="identity_no"
+                value={data.identity_no}
                 onChange={handleInputChange}
                 placeholder="Identity Number"
               />
+              {errors.identity_no && <p className="text-red-500 text-sm mt-1">{errors.identity_no}</p>}
             </div>
             {/* Gender */}
             <div>
@@ -253,6 +260,7 @@ const HotelBookingForm = () => {
                 <option value="Female">Female</option>
                 <option value="Other">Other</option>
               </select>
+              {errors.gender && <p className="text-red-500 text-sm mt-1">{errors.gender}</p>}
             </div>
           </div>
         </form>
@@ -268,11 +276,12 @@ const HotelBookingForm = () => {
               </label>
               <input
                 type="datetime-local"
-                name="from_date"  // name should match the state property
-                value={data.from_date}  // value linked to the state
-                onChange={handleDateChange}  // onChange to update state
+                name="from_date"
+                value={data.from_date}
+                onChange={handleDateChange}
                 className="mt-1 p-2 w-full border border-gray-300 text-gray-500 rounded-md"
               />
+              {errors.from_date && <p className="text-red-500 text-sm mt-1">{errors.from_date}</p>}
             </div>
             {/* to date */}
             <div>
@@ -281,24 +290,23 @@ const HotelBookingForm = () => {
               </label>
               <input
                 type="datetime-local"
-                name="to_date"  // name should match the state property
-                value={data.to_date}  // value linked to the state
-                onChange={handleDateChange}  // onChange to update state
+                name="to_date"
+                value={data.to_date}
+                onChange={handleDateChange}
                 className="mt-1 p-2 w-full border border-gray-300 text-gray-500 rounded-md"
               />
+              {errors.to_date && <p className="text-red-500 text-sm mt-1">{errors.to_date}</p>}
             </div>
             {/* duraiotn */}
             <div>
-              <label className="block text-sm font-medium text-gray-500">
-                Duration
-              </label>
+              <label className="block text-sm font-medium text-gray-500">Duration</label>
               <input
                 type="text"
-                value={`${days} days, ${nights} night${nights === 1 ? "" : "s"
-                  }`}
+                value={data.duration}
                 readOnly
                 className="mt-1 p-2 w-full border border-gray-300 rounded-md bg-[#e0b0ff] text-white"
               />
+              {errors.duration && <p className="text-red-500 text-sm mt-1">{errors.duration}</p>}
             </div>
             {/* tour location */}
             <div>
@@ -313,30 +321,29 @@ const HotelBookingForm = () => {
                 onChange={handleInputChange}
                 placeholder="Swat Valley"
               />
+              {errors.tour_location && <p className="text-red-500 text-sm mt-1">{errors.tour_location}</p>}
             </div>
-            {/* no of member */}
             <div>
-              <label className="block text-sm font-medium text-gray-500">
-                Number of Member
-              </label>
+              <label className="block text-sm font-medium text-gray-500">Number of Members</label>
               <input
                 type="number"
                 value={guestCount}
                 onChange={handleGuestCountChange}
                 className="mt-1 p-2 w-full border border-gray-300 text-gray-500 rounded-md"
               />
+              {errors.no_of_member && <p className="text-red-500 text-sm mt-1">{errors.no_of_member}</p>}
             </div>
             {/* price */}
             <div>
-              <label className="block text-sm font-medium text-gray-500">
-                Price
-              </label>
+              <label className="block text-sm font-medium text-gray-500">Price</label>
               <input
-                type="text"
-                value={`$${price}`}
-                className="mt-1 p-2 w-full border border-gray-300 text-gray-500 rounded-md bg-gray-100"
-                readOnly
+                type="number"
+                name="price"
+                value={data.price}
+                onChange={handleInputChange}
+                className="mt-1 p-2 w-full border border-gray-300 text-gray-500 rounded-md"
               />
+              {errors.price && <p className="text-red-500 text-sm mt-1">{errors.price}</p>}
             </div>
           </div>
         </form>

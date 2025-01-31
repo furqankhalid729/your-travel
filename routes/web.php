@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\DriverController;
+use App\Http\Controllers\HotelRoomController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HotelBookingController;
 use App\Http\Controllers\HotelController;
@@ -92,10 +93,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/car-booking', [CarController::class, 'index']);
     Route::get('/dashboard/car-booking/add-car', [CarController::class, 'create']);
     Route::get('/dashboard/car/edit/{id}', [CarController::class, 'edit'])->name('car.edit');
-    Route::get('/dashboard/car-booking/driver-listing', [DriverController::class, 'index'])->name('driver.index'); 
+    Route::get('/dashboard/car-booking/driver-listing', [DriverController::class, 'index'])->name('driver.index');
     Route::get('/dashboard/car-booking/add-driver', [DriverController::class, 'create'])->name('driver.create');
     Route::get('/dashboard/hotel-booking', [HotelBookingController::class, 'index'])->name('hotelBooking.index');
-    Route::get('/dashboard/hotel/add-hotel',[HotelController::class, 'create'] )->name('hotel.create');
 });
 
 Route::get('/dashlayout', function () {
@@ -144,8 +144,10 @@ Route::get('/dashboard/car-booking/book-car-assign-drivers', function () {
 
 // hotel booking
 
-Route::get('/dashboard/hotel-booking/all-hotels', function () {
-    return Inertia::render('Admin/HotelBooking/AllHotels');
+
+
+Route::get('/dashboard/hotel-booking', function () {
+    return Inertia::render('Admin/HotelBooking/HotelBooking');
 });
 
 Route::get('/dashboard/hotel-booking/hotel-booking-form', function () {
@@ -163,6 +165,10 @@ Route::get('/dashboard/hotel-booking/all-hotel-booking', function () {
 // rooms
 Route::get('/dashboard/hotel-booking/view-rooms', function () {
     return Inertia::render('Admin/HotelBooking/ViewRooms');
+});
+
+Route::get('/dashboard/hotel-booking/add-hotel-room', function () {
+    return Inertia::render('Admin/HotelBooking/AddHotelRoom');
 });
 
 
