@@ -12,4 +12,6 @@ enum InertiaViews: string
     case AddDriver = 'Admin/CarBooking/AddDriver';
 
     case HotelBookingIndex = 'Admin/HotelBooking/HotelBooking';
+
+    case HotelCreate = 'Admin/HotelBooking/AddHotelRoom';
 }

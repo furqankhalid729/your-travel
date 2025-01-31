@@ -4,6 +4,7 @@ use App\Http\Controllers\CarController;
 use App\Http\Controllers\DriverController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HotelBookingController;
+use App\Http\Controllers\HotelController;
 use App\Models\Car\CarBrand;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -94,6 +95,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/car-booking/driver-listing', [DriverController::class, 'index'])->name('driver.index'); 
     Route::get('/dashboard/car-booking/add-driver', [DriverController::class, 'create'])->name('driver.create');
     Route::get('/dashboard/hotel-booking', [HotelBookingController::class, 'index'])->name('hotelBooking.index');
+    Route::get('/dashboard/hotel/add-hotel',[HotelController::class, 'create'] )->name('hotel.create');
 });
 
 Route::get('/dashlayout', function () {
@@ -163,10 +165,6 @@ Route::get('/dashboard/hotel-booking/view-rooms', function () {
     return Inertia::render('Admin/HotelBooking/ViewRooms');
 });
 
-Route::get('/dashboard/hotel-booking/add-hotel-room', function () {
-    return Inertia::render('Admin/HotelBooking/AddHotelRoom');
-});
-
 
 // Tour Booking
 
@@ -196,7 +194,7 @@ Route::get('/dashboard/tour-booking/add-tour', function () {
 });
 
 Route::get('/dashboard/tour-booking/tour-draft', function () {
-    return Inertia::render('Admin/TourBooking/TourDraftPage');
+    return Inertia::renader('Admin/TourBooking/TourDraftPage');
 });
 
 // steps

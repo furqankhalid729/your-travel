@@ -16,8 +16,6 @@ import {
 } from "react-icons/fa";
 import { useForm } from "@inertiajs/react"; // Correct import
 
-// import mapImg from "../../assets/map.png";
-// import { useNavigate } from "react-router-dom";
 import { BiLocationPlus } from "react-icons/bi";
 import { useState } from "react";
 import Modal from 'react-modal';
@@ -72,13 +70,14 @@ const AddHotelRoom = () => {
 
 
   const { data, setData, post, processing, errors } = useForm({
+    title:"",
     duration: "",
     location: "",
     food: "",
     tour_type: "",
     persons: "",
     price: 0,
-    tour_images: [],  // Initialize carImages as an array
+    tour_images: [],
     summary: "",
     facilities: [],
     types: [],
@@ -122,25 +121,19 @@ const AddHotelRoom = () => {
     }));
   };
 
-  // Handle image change and save file and URL
   const handleImageChange = (event, field) => {
     const file = event.target.files[0];
     if (file) {
-      // Create a Blob URL for the uploaded image
       const imageUrl = URL.createObjectURL(file);
-
-      // Update image preview state
       setImagePreviews((prev) => ({
         ...prev,
-        [field]: imageUrl, // Show preview image
+        [field]: imageUrl,
       }));
-
-      // Store the image as an object with `file` and `url` in the `tour_images` array
       setData((prevData) => ({
         ...prevData,
         tour_images: [
-          ...prevData.tour_images.filter((image) => image.field !== field), // Remove existing entry for this field
-          { field, file, url: imageUrl }, // Add new image with file and URL
+          ...prevData.tour_images.filter((image) => image.field !== field),
+          { field, file, url: imageUrl },
         ],
       }));
     }
@@ -199,17 +192,20 @@ const AddHotelRoom = () => {
             <span>Back</span>
           </Link>
           <div className="flex space-x-2">
-            <button className="flex items-center bg-[#e4baff] text-white px-3 py-1 rounded-md">
-              <FaEdit className="mr-1" />
-              Edit
-            </button>
+
             <button onClick={handleSubmit} className="flex items-center bg-[#e4baff] text-white px-3 py-1 rounded-md">
               <FaSave className="mr-1" />
               Save
             </button>
           </div>
         </div>
-        <h2 className="text-2xl font-semibold text-gray-800">Luxury Room</h2>
+        <input
+          type="text"
+          name="title"
+          value={data.title}
+          onChange={handleInputChange}
+          className="rounded px-3 py-[5px] w-full"
+        />
         {/* images */}
         <div className="grid grid-cols-4 gap-4">
           {/* Image 1 (Main Image) */}
@@ -354,7 +350,7 @@ const AddHotelRoom = () => {
                 />
               </li>
               <li className="flex justify-between">
-                <span>Person</span> 
+                <span>Person</span>
                 <input
                   type="text"
                   name="persons"
@@ -682,5 +678,4 @@ const AddHotelRoom = () => {
     </div>
   );
 };
-
 export default AddHotelRoom;

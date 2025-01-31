@@ -53,7 +53,13 @@ const AllHotels = () => {
         <span>Back</span>
       </Link>
       <div className="p-2 md:p-4 mx-2 md:mx-6 bg-white">
-        <h1 className="text-2xl text-[#808080] mb-4">All Hotels</h1>
+        <div className="flex justify-between items-center mb-4">
+            <h1 className="text-2xl text-[#808080] mb-4">All Hotels</h1>
+            <Link href={route('hotel.create')} className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 md:px-3 py-1 md:py-2 rounded-lg">
+              Add Hotel
+            </Link>
+        </div>
+        
         <div className="rounded-lg border-t overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
             <thead>
