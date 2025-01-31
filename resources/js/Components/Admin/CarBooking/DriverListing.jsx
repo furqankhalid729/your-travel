@@ -64,10 +64,10 @@ const DriverListing = ({ drivers }) => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {driversData.map((driver,index) => (
+              {driversData.map((driver, index) => (
                 <tr key={driver.id}>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
-                    {index+1}
+                    {index + 1}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
                     {driver.name}
@@ -96,17 +96,17 @@ const DriverListing = ({ drivers }) => {
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-900">
                     <span
                       className={`rounded-xl inline-block px-2 py-[2px] text-sm ${driver.status === "active"
-                          ? "bg-green-100 text-green-800"
-                          : "bg-[#f5a7ab] text-[#e30510]"
+                        ? "bg-green-100 text-green-800"
+                        : "bg-[#f5a7ab] text-[#e30510]"
                         }`}
                     >
                       {driver.status}
                     </span>
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm flex space-x-2">
-                    <button className="text-green-500">
+                    <Link href={route('driver.edit', driver.id)} className="text-green-500">
                       <FaEdit />
-                    </button>
+                    </Link>
                     <button className="text-blue-500 px-1">
                       <FaEye />
                     </button>
