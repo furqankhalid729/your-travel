@@ -60,13 +60,12 @@ Route::get('/tour', function () {
     return Inertia::render('User/Tour');
 });
 
-Route::get('/car', function () {
-    return Inertia::render('User/Car');
-});
 
-Route::get('/car-detail', function () {
-    return Inertia::render('User/CarDetail');
-});
+
+Route::get('/cars/home/featured', [CarController::class, 'featured'])->name('cars.featured');
+Route::get('/car', [CarController::class, 'frontendIndex'])->name('car.frontendIndex');
+Route::get('/cars/filter', [CarController::class, 'filter'])->name('cars.filter');
+Route::get('/cars/car-details/{id}', [CarController::class, 'show'])->name('cars.show');
 
 Route::get('/car-booking', function () {
     return Inertia::render('User/CarBook');
