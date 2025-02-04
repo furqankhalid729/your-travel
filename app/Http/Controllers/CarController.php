@@ -17,6 +17,75 @@ use App\Models\Car\CarTransmission;
 
 class CarController extends Controller
 {
+
+    // For frontend car page
+
+    public function frontendIndex()
+    {
+        $cars = Car::all();
+        $cars = Car::all()->map(function ($car) {
+            $car->car_images = json_decode($car->car_images, true);
+            return $car;
+        });
+        return Inertia::render(InertiaViews::frontendIndex->value, [
+            'cars' => $cars,
+        ]);
+    }
+    /**
+     * Display the specified resource.
+     */
+
+    public function show($id)
+    {
+        $car = Car::findOrFail($id);
+        $car->car_images = json_decode($car->car_images, true);
+
+        return Inertia::render(InertiaViews::CarDetail->value, [
+            'car' => $car,
+        ]);
+    }
+
+    public function filter(Request $request)
+    {
+        $query = Car::query();
+
+        if ($request->has('topCars')) {
+            $query->whereIn('name', $request->input('topCars'));
+        }
+
+        if ($request->has('types')) {
+            $query->whereIn('type', $request->input('types'));
+        }
+
+        if ($request->has('categories')) {
+            $query->whereIn('category', $request->input('categories'));
+        }
+
+        if ($request->has('ratings')) {
+            $query->whereIn('rating', $request->input('ratings'));
+        }
+
+        if ($request->has('price')) {
+            $query->where('price', '<=', $request->input('price'));
+        }
+
+        $cars = $query->get();
+
+        return response()->json($cars);
+    }
+
+    public function featured(Request $request)
+    {
+        $limit = $request->input('limit', 4); // Default to 4 if no limit is provided
+        $cars = Car::limit($limit)->get();
+
+        return response()->json($cars);
+    }
+
+    
+    // Admin
+
+
     /**
      * Display a listing of the resource.
      */
@@ -93,13 +162,6 @@ class CarController extends Controller
         return response()->json($car, 201);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
 
     /**
      * Show the form for editing the specified resource.
