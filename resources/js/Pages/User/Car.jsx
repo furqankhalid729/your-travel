@@ -1,14 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CarBanner from '../../Components/User/Car/CarBanner';
 import CarTab from '../../Components/User/Car/CarTab';
 import UserLayout from "../../Layout/UserLayout";
-const Car = () => {
+import CarCategory from '@/Components/User/Car/CarCategory';
+
+const Car = ({ cars }) => {
+  const [filteredCars, setFilteredCars] = useState(cars);
+
+  const handleFilter = (filteredCars) => {
+    setFilteredCars(filteredCars);
+  };
+
   return (
     <div>
-      <CarBanner/>
-      <CarTab heading="Our Fleet"/>
+      <CarBanner />
+      <div className='flex flex-row justify-between mx-4 md:mx-16 '>
+        <div className='hidden md:block md:w-[30%] lg:w-1/4 mt-24'>
+          <CarCategory onFilter={handleFilter} />
+        </div>
+        <div className='w-full md:w-3/4 mt-24'>
+          <CarTab  cars={filteredCars} />
+        </div>
+      </div>
     </div>
-  )
-}
-Car.layout = page => <UserLayout children={page} title="Car Details" />
-export default Car
+  );
+};
+
+Car.layout = page => <UserLayout children={page} title="Car Details" />;
+export default Car;

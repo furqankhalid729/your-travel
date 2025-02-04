@@ -21,10 +21,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/hotel/add-hotel-room', [HotelRoomController::class, 'store'])->name('hotelRoom.store');
 });
 
-
-
 Route::post('/hotel/hotel-booking-form', [HotelController::class, 'store'])->name('hotel.store');
-
-
 Route::post('/tour/add-tour', [TourController::class, 'store']);
 

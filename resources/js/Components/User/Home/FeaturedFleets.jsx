@@ -1,29 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import FleetCard from "../../User/snippets/FleetCard";
-import {ALT_TAGS} from '../../../Constants/Global';
+import { ALT_TAGS } from '../../../Constants/Global';
+
 const FeaturedFleets = () => {
-  const cardData = [
-    {
-      imageSrc: " storage/images/car1.png",
-      heading: "Business Class",
-      description: "Mercedes Benz E Class, BMW 9 Series,Audi A7 or Similar",
-    },
-    {
-      imageSrc: "storage/images/car2.png",
-      heading: "Elecric Class",
-      description: "Mercedes Benz E Class, BMW 9 Series,Audi A7 or Similar",
-    },
-    {
-      imageSrc: "storage/images/car2.png",
-      heading: "Business Van/SUV",
-      description: "Mercedes Benz E Class, BMW 9 Series,Audi A7 or Similar",
-    },
-    {
-      imageSrc: " storage/images/car1.png",
-      heading: "First Class",
-      description: "Mercedes Benz E Class, BMW 9 Series,Audi A7 or Similar",
-    },
-  ];
+  const [cars, setCars] = useState([]);
+
+  useEffect(() => {
+    axios.get(route("cars.featured"), { params: { limit: 4 } })
+      .then((response) => {
+        setCars(response.data);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  }, []);
+  console.log("cars1:", cars);
+  
+
   return (
     <>
       <div className="mx-8 sm:mx-20 mt-16 ">
@@ -32,16 +26,17 @@ const FeaturedFleets = () => {
           Select from Our Range of Elite Vehicles for a First-Class Driving
           Experience.
         </p>
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2  lg:grid-cols-4 gap-6 mx-8 sm:mx-20 sm:py-5 mt-5 ">
-        {cardData.map((card, index) => (
-          <FleetCard
-            key={index}
-            imageSrc={card.imageSrc}
-            heading={card.heading}
-            description={card.description}
-          />
-        ))}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+          {cars.slice(0, 4).map((car, index) => (
+            <FleetCard
+              key={index}
+              imageSrc={car.car_images[0]}
+              car_name={car.car_name}
+              brand={car.brand}
+              model={car.model}
+            />
+          ))}
+        </div>
       </div>
     </>
   );
