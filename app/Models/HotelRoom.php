@@ -17,11 +17,13 @@ class HotelRoom extends Model
         'summary',
         'facilities',
         'types',
+        'rooms'
     ];
 
     protected $casts = [
         'tour_images' => 'array',
         'facilities' => 'array',
         'types' => 'array',
+        'rooms' => 'array'
     ];
 }

@@ -14,37 +14,12 @@ import {
   FaUtensils,
   FaWifi,
 } from "react-icons/fa";
-import { useForm } from "@inertiajs/react"; // Correct import
+import { useForm } from "@inertiajs/react";
 
-// import mapImg from "../../assets/map.png";
-// import { useNavigate } from "react-router-dom";
 import { BiLocationPlus } from "react-icons/bi";
 import { useState } from "react";
 import Modal from 'react-modal';
 
-const roomData = [
-  {
-    id: 1,
-    roomType: "Luxury Room",
-    numberOfRooms: 5,
-    availableRooms: 3,
-    price: "$250/night",
-  },
-  {
-    id: 2,
-    roomType: "Standard Room",
-    numberOfRooms: 10,
-    availableRooms: 6,
-    price: "$150/night",
-  },
-  {
-    id: 3,
-    roomType: "Deluxe Room",
-    numberOfRooms: 8,
-    availableRooms: 4,
-    price: "$200/night",
-  },
-];
 
 const iconMapping = {
   FaWifi: <FaWifi />,
@@ -70,12 +45,20 @@ const AddHotelRoom = () => {
     image5: null,
     image6: null,
   });
+  const [rooms, setRooms] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [newRoom, setNewRoom] = useState({
+    room_id: '',
+    room_type: '',
+    available_rooms: 'Yes',
+    price: '',
+  });
+  const [roomModalOpen, setRoomModalOpen] = useState(false);
   const [newFacility, setNewFacility] = useState("");
   const [featureIcon, setFeatureIcon] = useState("FaSnowflake");
   const [typeModalOpen, setTypeModalOpen] = useState(false);
   const [newType, setNewType] = useState("");
-  const [typeStatus, setTypeStatus] = useState("FaCheck"); // Default to FaCheck
+  const [typeStatus, setTypeStatus] = useState("FaCheck");
 
 
   const { data, setData, post, processing, errors } = useForm({
@@ -85,10 +68,11 @@ const AddHotelRoom = () => {
     tour_type: "",
     persons: "",
     price: 0,
-    tour_images: [],  // Initialize carImages as an array
+    tour_images: [],
     summary: "",
     facilities: [],
     types: [],
+    rooms: [],
   });
 
 
@@ -127,6 +111,27 @@ const AddHotelRoom = () => {
       ...prevDetails,
       [name]: value,
     }));
+  };
+
+  // Handle room input change
+  const handleRoomInputChange = (e) => {
+    const { name, value } = e.target;
+    setNewRoom({ ...newRoom, [name]: value });
+  };
+
+  // Handle add room
+  const handleAddRoom = () => {
+    setData((prevDetails) => ({
+      ...prevDetails,
+      rooms: [...prevDetails.rooms, newRoom],
+    }));
+    setNewRoom({
+      room_id: '',
+      room_type: '',
+      available_rooms: 'Yes',
+      price: '',
+    });
+    setRoomModalOpen(false);
   };
 
   const handleImageChange = (e) => {
@@ -200,12 +205,13 @@ const AddHotelRoom = () => {
     formData.append("price", data.price);
     data.tour_images.forEach((imageObj) => {
       if (imageObj.file) {
-        formData.append("tour_images[]", imageObj.file); // Append the actual file
+        formData.append("tour_images[]", imageObj.file);
       }
     });
     formData.append("summary", data.summary);
     formData.append("facilities", JSON.stringify(data.facilities));
     formData.append("types", JSON.stringify(data.types));
+    formData.append("rooms", JSON.stringify(data.rooms));
 
 
     // Log the FormData entries
@@ -526,7 +532,10 @@ const AddHotelRoom = () => {
           <h2 className="text-2xl lg:text-4xl text-[#808080]">
             Available Rooms
           </h2>
-          <button className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 py-2 rounded-lg">
+          <button
+            className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 py-2 rounded-lg"
+            onClick={() => setRoomModalOpen(true)}
+          >
             <FaPlus />
             Add More Rooms
           </button>
@@ -535,14 +544,7 @@ const AddHotelRoom = () => {
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-100">
               <tr>
-                {[
-                  "ID",
-                  "Room Type",
-                  "Number of Rooms",
-                  "Available Rooms",
-                  "Price",
-                  "Action",
-                ].map((header, index) => (
+                {['ID', 'Room Type', 'Available Rooms', 'Price', 'Action'].map((header, index) => (
                   <th
                     key={index}
                     className="px-2 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider whitespace-nowrap"
@@ -552,34 +554,25 @@ const AddHotelRoom = () => {
                 ))}
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200">
-              {roomData.map((room, index) => (
+            <tbody className="bg-white divide-y divide-gray-200">
+              {data.rooms.map((room, index) => (
                 <tr key={index}>
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">{room.room_id}</td>
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">{room.room_type}</td>
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">{room.available_rooms}</td>
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">${room.price}</td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {room.id}
-                  </td>
-                  <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {room.roomType}
-                  </td>
-                  <td className="px-16 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {room.numberOfRooms}
-                  </td>
-                  <td className="px-16 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {room.availableRooms}
-                  </td>
-                  <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {room.price}
-                  </td>
-                  <td className="px-2 py-4 whitespace-nowrap text-sm flex space-x-2">
-                    <button className="text-green-500 hover:text-green-700">
-                      <FaEdit />
-                    </button>
-                    <button className="text-blue-500 hover:text-blue-700">
-                      <FaEye />
-                    </button>
-                    <button className="text-red-500 hover:text-red-700">
-                      <FaTrash />
-                    </button>
+                    <div className="flex items-center space-x-2">
+                      <Link href="#" className="text-green-500">
+                        <FaEdit />
+                      </Link>
+                      <button className="text-blue-500 px-1">
+                        <FaEye />
+                      </button>
+                      <button className="text-red-500">
+                        <FaTrash />
+                      </button>
+                    </div>
                   </td>
                 </tr>
               ))}
@@ -681,6 +674,55 @@ const AddHotelRoom = () => {
             className="mt-4 bg-[#bb8dd9] text-white p-2 rounded-md w-full"
           >
             Add Type
+          </button>
+        </Modal>
+        {/* Modal for Adding Rooms */}
+        <Modal
+          isOpen={roomModalOpen}
+          onRequestClose={() => setIsModalOpen(false)}
+          contentLabel="Add Room"
+          className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-[400px] mx-auto mt-20"
+          overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
+        >
+          <h2 className="text-xl font-semibold mb-4">Add Room</h2>
+          <input
+            type="text"
+            name="room_id"
+            placeholder="Room ID"
+            value={newRoom.room_id}
+            onChange={handleRoomInputChange}
+            className="border p-2 mb-4 w-full"
+          />
+          <input
+            type="text"
+            name="room_type"
+            placeholder="Room Type"
+            value={newRoom.room_type}
+            onChange={handleRoomInputChange}
+            className="border p-2 mb-4 w-full"
+          />
+          <select
+            name="available_rooms"
+            value={newRoom.available_rooms}
+            onChange={handleRoomInputChange}
+            className="border p-2 mb-4 w-full"
+          >
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+          </select>
+          <input
+            type="number"
+            name="price"
+            placeholder="Price"
+            value={newRoom.price}
+            onChange={handleRoomInputChange}
+            className="border p-2 mb-4 w-full"
+          />
+          <button className="bg-[#bb8dd9] text-white px-4 py-2 rounded-lg" onClick={handleAddRoom}>
+            Add Room
+          </button>
+          <button className="bg-gray-500 text-white px-4 py-2 rounded-lg ml-2" onClick={() => setRoomModalOpen(false)}>
+            Cancel
           </button>
         </Modal>
       </div>

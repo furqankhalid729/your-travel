@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->text('summary');
             $table->json('facilities'); // JSON for facilities
             $table->json('types'); // JSON for types
+            $table->json('rooms');
             $table->timestamps();
         });
     }

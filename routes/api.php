@@ -24,3 +24,6 @@ Route::middleware('auth')->group(function () {
 Route::post('/hotel/hotel-booking-form', [HotelController::class, 'store'])->name('hotel.store');
 Route::post('/tour/add-tour', [TourController::class, 'store']);
 
+
+// Route::get('/frontend/car', [HotelRoomController::class, 'frontendIndex'])->name('car.frontendIndex');
+// Route::get('/frontend/car/car-details', [HotelRoomController::class, 'show'])->name('cars.show');
