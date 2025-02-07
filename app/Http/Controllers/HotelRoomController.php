@@ -60,7 +60,7 @@ class HotelRoomController extends Controller
             'types.*.icon' => 'required|string|max:255',
             'tour_images' => 'nullable|array',
             'tour_images.*.file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'rooms' => 'required|array', // Validate rooms as an array
+            'rooms' => 'required|array',
             'rooms.*.room_id' => 'required|string|max:255',
             'rooms.*.room_type' => 'required|string|max:255',
             'rooms.*.available_rooms' => 'required|string|max:255',
@@ -102,7 +102,13 @@ class HotelRoomController extends Controller
             return redirect()->back()->withErrors(['error' => 'Hotel room not found!']);
         }
 
-        return Inertia::render('HotelRoom/EditHotelRoom', [
+        // Decode the JSON fields
+        $hotelRoom->facilities = json_decode($hotelRoom->facilities, true);
+        $hotelRoom->types = json_decode($hotelRoom->types, true);
+        $hotelRoom->tour_images = json_decode($hotelRoom->tour_images, true);
+        $hotelRoom->rooms = json_decode($hotelRoom->rooms, true);
+
+        return Inertia::render(InertiaViews::EditHotelBooking->value, [
             'hotelRoom' => $hotelRoom,
         ]);
     }
@@ -163,7 +169,7 @@ class HotelRoomController extends Controller
             'rooms' => json_encode($validatedData['rooms']),
         ]);
 
-        return redirect()->route('hotelRooms.index')->with('success', 'Hotel room updated successfully');
+        return redirect()->route('hotelbook.index')->with('success', 'Hotel room updated successfully');
     }
 
     /**

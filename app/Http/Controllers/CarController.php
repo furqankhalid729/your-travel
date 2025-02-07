@@ -82,7 +82,7 @@ class CarController extends Controller
         return response()->json($cars);
     }
 
-    
+
     // Admin
 
 

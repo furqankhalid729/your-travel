@@ -92,9 +92,17 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/car-booking', [CarController::class, 'index']);
     Route::get('/dashboard/car-booking/add-car', [CarController::class, 'create']);
     Route::get('/dashboard/car/edit/{id}', [CarController::class, 'edit'])->name('car.edit');
+
     Route::get('/dashboard/car-booking/driver-listing', [DriverController::class, 'index'])->name('driver.index');
     Route::get('/dashboard/car-booking/add-driver', [DriverController::class, 'create'])->name('driver.create');
     Route::get('/dashboard/hotel-booking', [HotelBookingController::class, 'index'])->name('hotelBooking.index');
+    Route::get('/dashboard/car-booking/driver/edit/{id}', [DriverController::class, 'edit'])->name('driver.edit');
+    Route::put('/dashboard/car-booking/driver/update/{id}', [DriverController::class, 'update'])->name('driver.update');
+    
+    Route::get('/dashboard/hotel-booking/add-hotel-room', [HotelRoomController::class, 'create']);
+    Route::get('/dashboard/hotel-booking/all-hotels', [HotelRoomController::class, 'index'])->name('hotelbook.index');
+    Route::get('/dashboard/hotel-booking/edit/{id}', [HotelRoomController::class, 'edit'])->name('hotelbook.edit');
+    Route::put('/dashboard/hotel-booking/update/{id}', [HotelRoomController::class, 'update'])->name('hotelRooms.update');
 });
 
 Route::get('/dashlayout', function () {

@@ -93,30 +93,27 @@ const HotelBooking = () => {
             >
               <div className="flex items-center justify-between w-full px-2">
                 <span
-                  className={`text-4xl ${
-                    item.name === "Available Rooms"
-                      ? "text-[#808080]"
-                      : "text-white"
-                  }`}
+                  className={`text-4xl ${item.name === "Available Rooms"
+                    ? "text-[#808080]"
+                    : "text-white"
+                    }`}
                 >
                   {item.icon}
                 </span>
                 <span
-                  className={`font-medium text-4xl ${
-                    item.name === "Available Rooms"
-                      ? "text-[#808080]"
-                      : "text-white"
-                  }`}
+                  className={`font-medium text-4xl ${item.name === "Available Rooms"
+                    ? "text-[#808080]"
+                    : "text-white"
+                    }`}
                 >
                   {item.count}
                 </span>
               </div>
               <p
-                className={`mt-4 w-full text-right font-normal ${
-                  item.name === "Available Rooms"
-                    ? "text-[#808080]"
-                    : "text-white"
-                }`}
+                className={`mt-4 w-full text-right font-normal ${item.name === "Available Rooms"
+                  ? "text-[#808080]"
+                  : "text-white"
+                  }`}
               >
                 {item.name}
               </p>
@@ -132,13 +129,22 @@ const HotelBooking = () => {
       </div>
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-2xl md:text-4xl text-[#808080]">Latest Bookings</h2>
-        <Link
-          href="/dashboard/drafts"
-          className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 md:px-3 py-1 md:py-2 rounded-lg"
-        >
-          <FaPlus />
-          Create New Bookings
-        </Link>
+        <div className="flex items-center gap-2">
+          <Link
+            href="/dashboard/hotel-booking/add-hotel-room"
+            className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 md:px-3 py-1 md:py-2 rounded-lg"
+          >
+            <FaPlus />
+            Add New Hotel
+          </Link>
+          <Link
+            href="/dashboard/drafts"
+            className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 md:px-3 py-1 md:py-2 rounded-lg"
+          >
+            <FaPlus />
+            Create New Bookings
+          </Link>
+        </div>
       </div>
       <div className="rounded-lg border-t overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
