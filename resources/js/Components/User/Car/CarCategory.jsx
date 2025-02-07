@@ -50,7 +50,7 @@ const CarCategory = ({ onFilter }) => {
 
   const handleFilterSubmit = () => {
     axios
-      .get("/cars/filter", { params: filters })
+      .get(route('cars.filter'), { params: filters })
       .then((response) => {
         onFilter(response.data);
       })

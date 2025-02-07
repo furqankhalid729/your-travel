@@ -16,12 +16,13 @@ class HotelRoomController extends Controller
     public function index()
     {
         $hotelRooms = HotelRoom::all();
-        // $hotelRooms = HotelRoom::all()->map(function ($room) {
-        //     $room->facilities = json_decode($room->facilities, true);
-        //     $room->types = json_decode($room->types, true);
-        //     $room->tour_images = json_decode($room->tour_images, true);
-        //     return $room;
-        // });
+        $hotelRooms = HotelRoom::all()->map(function ($room) {
+            $room->facilities = json_decode($room->facilities, true);
+            $room->types = json_decode($room->types, true);
+            $room->tour_images = json_decode($room->tour_images, true);
+            $room->rooms = json_decode($room->rooms, true);
+            return $room;
+        });
 
         return Inertia::render(InertiaViews::RoomIndex->value, [
             'hotelRooms' => $hotelRooms,
@@ -59,6 +60,11 @@ class HotelRoomController extends Controller
             'types.*.icon' => 'required|string|max:255',
             'tour_images' => 'nullable|array',
             'tour_images.*.file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'rooms' => 'required|array', // Validate rooms as an array
+            'rooms.*.room_id' => 'required|string|max:255',
+            'rooms.*.room_type' => 'required|string|max:255',
+            'rooms.*.available_rooms' => 'required|string|max:255',
+            'rooms.*.price' => 'required|numeric',
         ]);
 
         // Handle tour_images upload
@@ -79,6 +85,7 @@ class HotelRoomController extends Controller
             'facilities' => json_encode($validatedData['facilities'] ?? []),
             'types' => json_encode($validatedData['types'] ?? []),
             'tour_images' => json_encode($tourImages),
+            'rooms' => json_encode($validatedData['rooms']),
         ]);
 
         return response()->json($hotelRoom, 201);
@@ -126,6 +133,7 @@ class HotelRoomController extends Controller
             'types.*.name' => 'required|string|max:255',
             'tour_images' => 'nullable|array',
             'tour_images.*.file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+            'rooms' => 'nullable|array',
         ]);
 
         // Handle tour_images upload
@@ -152,6 +160,7 @@ class HotelRoomController extends Controller
             'facilities' => json_encode($validatedData['facilities'] ?? []),
             'types' => json_encode($validatedData['types'] ?? []),
             'tour_images' => json_encode($tourImages),
+            'rooms' => json_encode($validatedData['rooms']),
         ]);
 
         return redirect()->route('hotelRooms.index')->with('success', 'Hotel room updated successfully');
