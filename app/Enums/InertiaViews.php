@@ -11,13 +11,13 @@ enum InertiaViews: string
 
     // drivers
     case AddDriver = 'Admin/CarBooking/AddDriver';
-
     case DriverIndex = 'Admin/CarBooking/DriverListing';
     case EditDriver = 'Admin/CarBooking/EditDriver';
 
-    // hotel rooms
+    // hotel booking
     case AddHotelRoom = 'Admin/HotelBooking/AddHotelRoom';
     case RoomIndex = 'Admin/HotelBooking/AllHotels';
+    case EditHotelBooking = 'Admin/HotelBooking/EditHotelBooking';
 
 
 

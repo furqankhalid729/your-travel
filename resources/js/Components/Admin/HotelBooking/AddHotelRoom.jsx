@@ -16,7 +16,6 @@ import {
 } from "react-icons/fa";
 import { useForm } from "@inertiajs/react";
 
-import { BiLocationPlus } from "react-icons/bi";
 import { useState } from "react";
 import Modal from 'react-modal';
 
@@ -36,7 +35,6 @@ const TypeIconMapping = {
 
 
 const AddHotelRoom = () => {
-  // const navigate = useNavigate();
   const [imagePreviews, setImagePreviews] = useState({
     image1: null,
     image2: null,
@@ -45,7 +43,6 @@ const AddHotelRoom = () => {
     image5: null,
     image6: null,
   });
-  const [rooms, setRooms] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newRoom, setNewRoom] = useState({
     room_id: '',
@@ -53,6 +50,7 @@ const AddHotelRoom = () => {
     available_rooms: 'Yes',
     price: '',
   });
+  const [editingRoomIndex, setEditingRoomIndex] = useState(null);
   const [roomModalOpen, setRoomModalOpen] = useState(false);
   const [newFacility, setNewFacility] = useState("");
   const [featureIcon, setFeatureIcon] = useState("FaSnowflake");
@@ -134,14 +132,50 @@ const AddHotelRoom = () => {
     setRoomModalOpen(false);
   };
 
+  // Handle delete room
+  const handleDeleteRoom = (index) => {
+    setData((prevDetails) => ({
+      ...prevDetails,
+      rooms: prevDetails.rooms.filter((_, i) => i !== index),
+    }));
+  };
+
+  // Handle edit room
+  const handleEditRoom = (index) => {
+    const roomToEdit = data.rooms[index];
+    setNewRoom(roomToEdit);
+    setRoomModalOpen(true);
+    setEditingRoomIndex(index);
+  };
+
+  // Handle update room
+  const handleUpdateRoom = () => {
+    setData((prevDetails) => {
+      const updatedRooms = [...prevDetails.rooms];
+      updatedRooms[editingRoomIndex] = newRoom;
+      return {
+        ...prevDetails,
+        rooms: updatedRooms,
+      };
+    });
+    setNewRoom({
+      room_id: '',
+      room_type: '',
+      available_rooms: 'Yes',
+      price: '',
+    });
+    setRoomModalOpen(false);
+    setEditingRoomIndex(null);
+  };
+
+
   const handleImageChange = (e) => {
     const files = Array.from(e.target.files);
     let updatedPreviews = { ...imagePreviews };
     let updatedImages = [...data.tour_images];
 
-    // Iterate through the selected files and add them to the images array
     files.forEach((file, index) => {
-      if (index < 6) { // Ensure no more than 6 images
+      if (index < 6) { 
         const imageKey = `image${index + 1}`;
 
         // Preview Image
@@ -154,7 +188,6 @@ const AddHotelRoom = () => {
           reader.readAsDataURL(file);
         }
 
-        // Store the file as an object in the images array
         updatedImages[index] = {
           file: file,
           preview: updatedPreviews[imageKey] || null,
@@ -164,7 +197,7 @@ const AddHotelRoom = () => {
 
     setData((prevDetails) => ({
       ...prevDetails,
-      tour_images: updatedImages, // Update tour_images with the selected files
+      tour_images: updatedImages, 
     }));
   };
 
@@ -172,24 +205,23 @@ const AddHotelRoom = () => {
     let updatedPreviews = { ...imagePreviews };
     updatedPreviews[imageKey] = null;
 
-    // Shift images after the removed one
+    
     for (let i = parseInt(imageKey.replace('image', '')); i < 6; i++) {
       const nextImageKey = `image${i + 1}`;
       updatedPreviews[`image${i}`] = updatedPreviews[nextImageKey];
     }
-    updatedPreviews.image6 = null; // Clear the last image as it doesn't shift.
+    updatedPreviews.image6 = null; 
 
     setImagePreviews(updatedPreviews);
 
-    // Remove the image from the images array
     let updatedImages = [...data.tour_images];
     const indexToRemove = parseInt(imageKey.replace('image', '')) - 1;
-    updatedImages.splice(indexToRemove, 1); // Remove the image object
-    updatedImages.push({ file: null, preview: null }); // Add empty object to keep the array size consistent
+    updatedImages.splice(indexToRemove, 1); 
+    updatedImages.push({ file: null, preview: null }); 
 
     setData((prevDetails) => ({
       ...prevDetails,
-      tour_images: updatedImages, // Update tour_images after removing an image
+      tour_images: updatedImages,
     }));
   };
 
@@ -563,13 +595,13 @@ const AddHotelRoom = () => {
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">${room.price}</td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div className="flex items-center space-x-2">
-                      <Link href="#" className="text-green-500">
+                      <button onClick={() => handleEditRoom(index)} className="text-green-500">
                         <FaEdit />
-                      </Link>
+                      </button>
                       <button className="text-blue-500 px-1">
                         <FaEye />
                       </button>
-                      <button className="text-red-500">
+                      <button onClick={() => handleDeleteRoom(index)} className="text-red-500">
                         <FaTrash />
                       </button>
                     </div>
@@ -676,15 +708,15 @@ const AddHotelRoom = () => {
             Add Type
           </button>
         </Modal>
-        {/* Modal for Adding Rooms */}
+        {/* Modal for Adding/Editing Rooms */}
         <Modal
           isOpen={roomModalOpen}
-          onRequestClose={() => setIsModalOpen(false)}
+          onRequestClose={() => setRoomModalOpen(false)}
           contentLabel="Add Room"
           className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-[400px] mx-auto mt-20"
           overlayClassName="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center"
         >
-          <h2 className="text-xl font-semibold mb-4">Add Room</h2>
+          <h2 className="text-xl font-semibold mb-4">{editingRoomIndex !== null ? 'Edit Room' : 'Add Room'}</h2>
           <input
             type="text"
             name="room_id"
@@ -718,8 +750,11 @@ const AddHotelRoom = () => {
             onChange={handleRoomInputChange}
             className="border p-2 mb-4 w-full"
           />
-          <button className="bg-[#bb8dd9] text-white px-4 py-2 rounded-lg" onClick={handleAddRoom}>
-            Add Room
+          <button
+            className="bg-[#bb8dd9] text-white px-4 py-2 rounded-lg"
+            onClick={editingRoomIndex !== null ? handleUpdateRoom : handleAddRoom}
+          >
+            {editingRoomIndex !== null ? 'Update Room' : 'Add Room'}
           </button>
           <button className="bg-gray-500 text-white px-4 py-2 rounded-lg ml-2" onClick={() => setRoomModalOpen(false)}>
             Cancel
