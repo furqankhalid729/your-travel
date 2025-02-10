@@ -8,15 +8,9 @@ import { RiArrowRightSLine } from 'react-icons/ri';
 import { Link } from '@inertiajs/react';
 
 const CarProfile = (car) => {
-  console.log("CarProfile :", car.car);
-  const images = [
-    "storage/images/carde.png",
-    "storage/images/carde1.png",
-    "storage/images/carde2.png",
-    "storage/images/carde3.png",
-    "storage/images/carde4.png",
-    "storage/images/carde5.png"
-  ];
+  console.log("CarProfile :", car.car.car_images);
+  const images = car.car.car_images.map(image => 'http://127.0.0.1:8000/storage/' + image);
+  //const images = car.car.car_images;
 
   return (
     <>
@@ -51,9 +45,7 @@ const CarProfile = (car) => {
           </div>
 
           <Link to='/car-booking'>
-
             <button className="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-600">
-
               Book Now
             </button>
           </Link>
@@ -69,7 +61,7 @@ const CarProfile = (car) => {
 
         {/* Right Section: Map & Profile */}
         <div className='w-1/4'>
-          <div className="h-20 lg:h-44 relative bg-gray-300 mb-4 rounded-md overflow-hidden ">
+          {/* <div className="h-20 lg:h-44 relative bg-gray-300 mb-4 rounded-md overflow-hidden ">
             <div
               className="absolute inset-0 bg-cover bg-center rounded-md"
               style={{ backgroundImage: `url('/map.jpg')` }}
@@ -78,9 +70,8 @@ const CarProfile = (car) => {
                 <div className="py-1 px-2 bg-gray-500 opacity-50 rounded-xl max-[320px]:text-[6px] text-[8px] md:text-lg">Show on map</div>
               </span>
             </div>
-          </div>
-          <div className='max-[320px]:text-[5px] text-[8px] lg:text-sm ' >
-            {/* Driver Info */}
+          </div> */}
+          {/* <div className='max-[320px]:text-[5px] text-[8px] lg:text-sm ' >
             <div className="flex items-center space-x-1 md:space-x-4">
               <img
                 src="storage/images/avatardriver.png"
@@ -93,8 +84,6 @@ const CarProfile = (car) => {
             </div>
 
             <hr className="border-gray-300 my-2" />
-
-            {/* Vendor Info */}
             <div className="space-y-1">
               <div className="flex items-center text-gray-600">
                 <CgProfile className="mr-2 text-xl text-red-500" />
@@ -107,8 +96,6 @@ const CarProfile = (car) => {
             </div>
 
             <hr className="border-gray-300 my-2" />
-
-            {/* Contact Info */}
             <div className="space-y-2">
               <div>
                 <div className="flex items-center text-gray-600">
@@ -129,7 +116,7 @@ const CarProfile = (car) => {
                 <h3 className="text-[8px] md:text-xs lg:text-sm text-gray-400 ml-2 sm:ml-6">+923076859695</h3>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </>

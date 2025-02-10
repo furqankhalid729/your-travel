@@ -27,13 +27,13 @@ const CarTab = ({ cars }) => {
           <div key={car.id} className="bg-white shadow-md rounded-lg overflow-hidden w-full flex flex-col lg:flex-row p-4">
             {/* car image */}
             <div className="relative w-full lg:w-56 md:h-56">
-              <img src={`/storage/images${car.car_images[0]}`} alt={car.car_name} className="w-full h-full object-cover rounded-lg" />
+              <img src={`/storage/${car.car_images[0]}`} alt={car.car_name} className="w-full h-full object-cover rounded-lg" />
               <div className="absolute top-2 right-2 bg-red-500 rounded-full p-1 cursor-pointer">
                 <AiOutlineHeart className="text-white text-xl" />
               </div>
             </div>
 
-            <div className="sm:grid sm:grid-cols-1 px-4 flex flex-col mt-4 lg:mt-0 gap-2">
+            <div className="sm:grid sm:grid-cols-1 lg:w-[50%] px-4 flex flex-col mt-4 lg:mt-0 gap-2">
               <div>
                 <h3 className="text-xl font-semibold">{car.car_name}</h3>
                 <p className="text-gray-600 flex items-center mt-1">{car.brand}</p>
@@ -45,7 +45,7 @@ const CarTab = ({ cars }) => {
               </div>
               <div className="grid sm:grid-cols-3 gap-2 w-[300px]">
                 {car.features.map((feature, index) => (
-                  <div key={index} className="flex items-center max-w-[50%] text-gray-700">
+                  <div key={index} className="flex items-center text-gray-700">
                     <span className="bg-red-500 text-white px-1 py-1 rounded-md">
                       {iconMapping[feature.icon]}
                     </span>
