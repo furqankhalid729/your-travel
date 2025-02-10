@@ -11,7 +11,7 @@ const topMenuItems = [
     icon: <FaCar />,
     bgColor: "#bceaff",
     count: 5,
-    text: "View Rooms",
+    text: "View Details",
     link: "/dashboard/car-booking",
     textColor: "#38738D",
   },

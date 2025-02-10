@@ -60,6 +60,7 @@ const AddHotelRoom = () => {
 
 
   const { data, setData, post, processing, errors } = useForm({
+    title:"",
     duration: "",
     location: "",
     food: "",
@@ -278,17 +279,20 @@ const AddHotelRoom = () => {
             <span>Back</span>
           </Link>
           <div className="flex space-x-2">
-            <button className="flex items-center bg-[#e4baff] text-white px-3 py-1 rounded-md">
-              <FaEdit className="mr-1" />
-              Edit
-            </button>
+
             <button onClick={handleSubmit} className="flex items-center bg-[#e4baff] text-white px-3 py-1 rounded-md">
               <FaSave className="mr-1" />
               Save
             </button>
           </div>
         </div>
-        <h2 className="text-2xl font-semibold text-gray-800">Luxury Room</h2>
+        <input
+          type="text"
+          name="title"
+          value={data.title}
+          onChange={handleInputChange}
+          className="rounded px-3 py-[5px] w-full"
+        />
         {/* images */}
         <div className="grid grid-cols-4 gap-4">
           {/* Image 1 */}
@@ -764,5 +768,4 @@ const AddHotelRoom = () => {
     </div>
   );
 };
-
 export default AddHotelRoom;

@@ -33,7 +33,7 @@ const CarTab = ({ cars }) => {
               </div>
             </div>
 
-            <div className="sm:grid sm:grid-cols-1 px-4 flex flex-col mt-4 lg:mt-0 gap-2">
+            <div className="sm:grid sm:grid-cols-1 lg:w-[50%] px-4 flex flex-col mt-4 lg:mt-0 gap-2">
               <div>
                 <h3 className="text-xl font-semibold">{car.car_name}</h3>
                 <p className="text-gray-600 flex items-center mt-1">{car.brand}</p>
@@ -45,7 +45,7 @@ const CarTab = ({ cars }) => {
               </div>
               <div className="grid sm:grid-cols-3 gap-2 w-[300px]">
                 {car.features.map((feature, index) => (
-                  <div key={index} className="flex items-center max-w-[50%] text-gray-700">
+                  <div key={index} className="flex items-center text-gray-700">
                     <span className="bg-red-500 text-white px-1 py-1 rounded-md">
                       {iconMapping[feature.icon]}
                     </span>

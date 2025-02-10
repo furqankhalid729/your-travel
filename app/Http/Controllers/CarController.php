@@ -27,7 +27,7 @@ class CarController extends Controller
             $car->car_images = json_decode($car->car_images, true);
             return $car;
         });
-        return Inertia::render(InertiaViews::frontendIndex->value, [
+        return Inertia::render(InertiaViews::carIndex->value, [
             'cars' => $cars,
         ]);
     }

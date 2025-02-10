@@ -31,7 +31,7 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
         car_images: carImages,
         features: features,
     });
-
+    console.log(carImages)
 
     // Handle file change
     const handleFileChange = (e) => {
@@ -109,7 +109,7 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                         {data.car_images.length > 0 ? (
                             <div className="relative w-full h-full">
                                 <img
-                                    src={data.car_images[0].url}
+                                    src={`/storage/${data.car_images[0]}`}
                                     alt="Main Car Preview"
                                     className="w-full h-[300px] object-cover rounded-md"
                                 />
@@ -158,11 +158,18 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                     <div className="grid grid-cols-3 gap-2">
                         {data.car_images.slice(1).map((image, index) => (
                             <div key={index + 1} className="relative w-[100px] h-[80px]">
-                                <img
-                                    src={image.url}
-                                    alt={`Additional Car Preview ${index}`}
-                                    className="w-full h-full object-cover rounded-lg"
-                                />
+                                { image.url ? 
+                                    <img
+                                        src={image.url}
+                                        alt={`Additional Car Preview ${index}`}
+                                        className="w-full h-full object-cover rounded-lg"
+                                    /> : 
+                                    <img
+                                        src={`/storage/${image}`}
+                                        alt={`Additional Car Preview ${index}`}
+                                        className="w-full h-full object-cover rounded-lg"
+                                    />
+                                }
                                 <button
                                     onClick={() => handleRemoveImage(index + 1)}
                                     className="absolute top-1 right-1 bg-red-500 text-white p-1 text-[5px] rounded-full hover:bg-red-600"

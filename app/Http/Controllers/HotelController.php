@@ -1,12 +1,17 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Inertia\Inertia;
+use App\Enums\InertiaViews;
 use Illuminate\Http\Request;
 use App\Models\Hotel;
 
 class HotelController extends Controller
 {
+    public function create(Request $request)
+    {
+        return Inertia::render(InertiaViews::HotelCreate->value);
+    }
     public function store(Request $request)
     {
         $validatedData = $request->validate([
