@@ -27,7 +27,7 @@ const CarTab = ({ cars }) => {
           <div key={car.id} className="bg-white shadow-md rounded-lg overflow-hidden w-full flex flex-col lg:flex-row p-4">
             {/* car image */}
             <div className="relative w-full lg:w-56 md:h-56">
-              <img src={`/storage/images${car.car_images[0]}`} alt={car.car_name} className="w-full h-full object-cover rounded-lg" />
+              <img src={`/storage/${car.car_images[0]}`} alt={car.car_name} className="w-full h-full object-cover rounded-lg" />
               <div className="absolute top-2 right-2 bg-red-500 rounded-full p-1 cursor-pointer">
                 <AiOutlineHeart className="text-white text-xl" />
               </div>
