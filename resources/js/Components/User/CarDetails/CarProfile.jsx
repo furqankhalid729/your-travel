@@ -60,7 +60,7 @@ const CarProfile = (car) => {
         </div>
 
         {/* Right Section: Map & Profile */}
-        <div className='w-1/4'>
+        {/* <div className='w-1/4'> */}
           {/* <div className="h-20 lg:h-44 relative bg-gray-300 mb-4 rounded-md overflow-hidden ">
             <div
               className="absolute inset-0 bg-cover bg-center rounded-md"
@@ -117,7 +117,7 @@ const CarProfile = (car) => {
               </div>
             </div>
           </div> */}
-        </div>
+        {/* </div> */}
       </div>
     </>
   );

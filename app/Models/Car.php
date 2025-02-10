@@ -16,6 +16,7 @@ class Car extends Model
         'capacity',
         'status',
         'price',
+        'tags',
         'features',
         'car_images',
     ];

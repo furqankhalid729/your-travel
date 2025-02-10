@@ -135,6 +135,7 @@ class CarController extends Controller
             'capacity' => 'required|integer',
             'status' => 'required|string',
             'price' => 'required|numeric',
+            'tags' => 'required|string|max:255',
             'features' => 'nullable|array',
             'features.*.name' => 'required|string|max:255',
             'features.*.icon' => 'required|string|max:255',
@@ -209,6 +210,7 @@ class CarController extends Controller
             'capacity' => 'required|integer',
             'status' => 'required|string',
             'price' => 'required|numeric',
+            'tags' => 'required|string|max:255',
             'features' => 'nullable|array',
             'features.*.name' => 'required|string|max:255',
             'features.*.icon' => 'required|string|max:255',
@@ -243,6 +245,7 @@ class CarController extends Controller
             'capacity' => $validatedData['capacity'],
             'status' => $validatedData['status'],
             'price' => $validatedData['price'],
+            'tags' => $validatedData['tags'],
             'features' => $features,
             'car_images' => json_encode($carImages),
         ]);
