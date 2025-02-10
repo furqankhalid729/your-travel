@@ -22,6 +22,7 @@ return new class extends Migration
             $table->integer('capacity');
             $table->string('status')->default('available');
             $table->decimal('price', 8, 2);
+            $table->string('tags');
             $table->json('features')->nullable();
             $table->json('car_images')->nullable();
             $table->timestamps();

@@ -28,10 +28,11 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
         capacity: car.capacity || "",
         status: car.status || "",
         price: car.price || "",
+        tags: car.tags || "",
         car_images: carImages,
         features: features,
     });
-    console.log(carImages)
+    console.log(car)
 
     // Handle file change
     const handleFileChange = (e) => {
@@ -158,12 +159,12 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                     <div className="grid grid-cols-3 gap-2">
                         {data.car_images.slice(1).map((image, index) => (
                             <div key={index + 1} className="relative w-[100px] h-[80px]">
-                                { image.url ? 
+                                {image.url ?
                                     <img
                                         src={image.url}
                                         alt={`Additional Car Preview ${index}`}
                                         className="w-full h-full object-cover rounded-lg"
-                                    /> : 
+                                    /> :
                                     <img
                                         src={`/storage/${image}`}
                                         alt={`Additional Car Preview ${index}`}
@@ -271,26 +272,26 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                                 </select>
                                 {errors.model && <p className="text-sm text-red-600">{errors.model}</p>}
                             </div>
-                {/* Fuel */}
-                <div>
-                    <label htmlFor="fuel" className="block text-sm font-medium text-gray-700">
-                        Fuel Type
-                    </label>
-                    <select
-                        id="fuel"
-                        value={data.fuel}
-                        onChange={(e) => setData("fuel", e.target.value)}
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                    >
-                        <option value="">Select a fuel type</option>
-                        {fuels.map((fuel) => (
-                            <option key={fuel.id} value={fuel.name}>
-                                {fuel.type}
-                            </option>
-                        ))}
-                    </select>
-                    {errors.fuel && <p className="text-sm text-red-600">{errors.fuel}</p>}
-                </div>
+                            {/* Fuel */}
+                            <div>
+                                <label htmlFor="fuel" className="block text-sm font-medium text-gray-700">
+                                    Fuel Type
+                                </label>
+                                <select
+                                    id="fuel"
+                                    value={data.fuel}
+                                    onChange={(e) => setData("fuel", e.target.value)}
+                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                >
+                                    <option value="">Select a fuel type</option>
+                                    {fuels.map((fuel) => (
+                                        <option key={fuel.id} value={fuel.name}>
+                                            {fuel.type}
+                                        </option>
+                                    ))}
+                                </select>
+                                {errors.fuel && <p className="text-sm text-red-600">{errors.fuel}</p>}
+                            </div>
 
                             {/* Car Number */}
                             <div>
@@ -327,26 +328,26 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                                 </select>
                                 {errors.transmission && <p className="text-sm text-red-600">{errors.transmission}</p>}
                             </div>
-                {/* Transmission */}
-                <div>
-                    <label htmlFor="transmission" className="block text-sm font-medium text-gray-700">
-                        Transmission
-                    </label>
-                    <select
-                        id="transmission"
-                        value={data.transmission}
-                        onChange={(e) => setData("transmission", e.target.value)}
-                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                    >
-                        <option value="">Select a transmission</option>
-                        {transmissions.map((transmission) => (
-                            <option key={transmission.id} value={transmission.name}>
-                                {transmission.type}
-                            </option>
-                        ))}
-                    </select>
-                    {errors.transmission && <p className="text-sm text-red-600">{errors.transmission}</p>}
-                </div>
+                            {/* Transmission */}
+                            <div>
+                                <label htmlFor="transmission" className="block text-sm font-medium text-gray-700">
+                                    Transmission
+                                </label>
+                                <select
+                                    id="transmission"
+                                    value={data.transmission}
+                                    onChange={(e) => setData("transmission", e.target.value)}
+                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                >
+                                    <option value="">Select a transmission</option>
+                                    {transmissions.map((transmission) => (
+                                        <option key={transmission.id} value={transmission.name}>
+                                            {transmission.type}
+                                        </option>
+                                    ))}
+                                </select>
+                                {errors.transmission && <p className="text-sm text-red-600">{errors.transmission}</p>}
+                            </div>
 
 
                             {/* Capacity */}
@@ -377,6 +378,22 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                                     className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
                                 />
                                 {errors.price && <p className="text-sm text-red-600">{errors.price}</p>}
+                            </div>
+
+                            {/* Tags */}
+                            <div>
+                                <label htmlFor="tags" className="block text-sm font-medium text-gray-700">
+                                    Tags
+                                </label>
+                                <input
+                                    id="tags"
+                                    type="text"
+                                    value={data.tags}
+                                    onChange={(e) => setData("tags", e.target.value)}
+                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                    placeholder="Enter tags separated by commas"
+                                />
+                                {errors.tags && <p className="text-sm text-red-600">{errors.tags}</p>}
                             </div>
 
                             {/* Status */}

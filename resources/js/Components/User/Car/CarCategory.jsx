@@ -11,6 +11,10 @@ const CarCategory = ({ onFilter }) => {
     price: 600,
   });
 
+  const [isTopCarsExpanded, setIsTopCarsExpanded] = useState(false);
+  const [isTypesExpanded, setIsTypesExpanded] = useState(false);
+  const [isCategoriesExpanded, setIsCategoriesExpanded] = useState(false);
+
   const data = {
     topCars: ["Audi A3 2019", "Toyota Prius Plus", "Mercedes Benz", "Lexus LX570", "BMW i5"],
     types: ["Economy", "Standard", "Luxury", "Commercial"],
@@ -46,6 +50,13 @@ const CarCategory = ({ onFilter }) => {
       ...prevFilters,
       price: newPrice,
     }));
+
+
+    const params = new URLSearchParams({ ...filters, price: newPrice });
+    window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
+
+    // Update the car list immediately
+    handleFilterSubmit();
   };
 
   const handleFilterSubmit = () => {
@@ -102,53 +113,77 @@ const CarCategory = ({ onFilter }) => {
 
         {/* Top Cars Section */}
         <div className="border-b border-gray-400 p-4">
-          <h3 className="font-semibold">Top Cars</h3>
-          {data.topCars.map((car) => (
-            <div key={car} className="flex items-center mb-1">
-              <input
-                type="checkbox"
-                name="topCars"
-                value={car}
-                onChange={handleCheckboxChange}
-                className="mr-2 accent-red-500"
-              />
-              <span>{car}</span>
+          <h3 className="font-semibold">
+            <button className="flex justify-between w-full" onClick={() => setIsTopCarsExpanded(!isTopCarsExpanded)}>
+              <p>Top Cars</p> {isTopCarsExpanded ? "▲" : "▼"}
+            </button>
+          </h3>
+          {isTopCarsExpanded && (
+            <div>
+              {data.topCars.map((car) => (
+                <div key={car} className="flex items-center mb-1">
+                  <input
+                    type="checkbox"
+                    name="topCars"
+                    value={car}
+                    onChange={handleCheckboxChange}
+                    className="mr-2 accent-red-500"
+                  />
+                  <span>{car}</span>
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
 
         {/* Types Section */}
         <div className="border-b border-gray-400 p-4">
-          <h3 className="font-semibold">Types</h3>
-          {data.types.map((type) => (
-            <div key={type} className="flex items-center mb-1">
-              <input
-                type="checkbox"
-                name="types"
-                value={type}
-                onChange={handleCheckboxChange}
-                className="mr-2 accent-red-500"
-              />
-              <span>{type}</span>
+          <h3 className="font-semibold">
+            <button className="flex justify-between w-full" onClick={() => setIsTypesExpanded(!isTypesExpanded)}>
+              <p>Types</p> {isTypesExpanded ? "▲" : "▼"}
+            </button>
+          </h3>
+          {isTypesExpanded && (
+            <div>
+              {data.types.map((type) => (
+                <div key={type} className="flex items-center mb-1">
+                  <input
+                    type="checkbox"
+                    name="types"
+                    value={type}
+                    onChange={handleCheckboxChange}
+                    className="mr-2 accent-red-500"
+                  />
+                  <span>{type}</span>
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
 
         {/* Categories Section */}
         <div className="p-4">
-          <h3 className="font-semibold">Categories</h3>
-          {data.categories.map((category) => (
-            <div key={category} className="flex items-center mb-1">
-              <input
-                type="checkbox"
-                name="categories"
-                value={category}
-                onChange={handleCheckboxChange}
-                className="mr-2 accent-red-500"
-              />
-              <span>{category}</span>
+          <h3 className="font-semibold">
+            <button className="flex justify-between w-full" onClick={() => setIsCategoriesExpanded(!isCategoriesExpanded)}>
+              <p>Categories</p> {isCategoriesExpanded ? "▲" : "▼"}
+            </button>
+          </h3>
+          {isCategoriesExpanded && (
+            <div>
+              {data.categories.map((category) => (
+                <div key={category} className="flex items-center mb-1">
+                  <input
+                    type="checkbox"
+                    name="categories"
+                    value={category}
+                    onChange={handleCheckboxChange}
+                    className="mr-2 accent-red-500"
+                  />
+                  <span>{category}</span>
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
       </div>
 

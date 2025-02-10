@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaCarSide, FaChevronDown, FaLanguage, FaSnowflake, FaUser } from 'react-icons/fa';
 import { AiOutlineHeart } from "react-icons/ai";
 import { Link } from "@inertiajs/react";
+
 const iconMapping = {
   FaSnowflake: <FaSnowflake />,
   FaCarSide: <FaCarSide />,
@@ -10,15 +11,34 @@ const iconMapping = {
 };
 
 const CarTab = ({ cars }) => {
-  console.log(cars);
+  const [sortOption, setSortOption] = useState('Best Matches');
+
+  const handleSortChange = (event) => {
+    const selectedOption = event.target.value;
+    setSortOption(selectedOption);
+
+    // Update URL parameters
+    const params = new URLSearchParams(window.location.search);
+    params.set('sort', selectedOption);
+    window.history.pushState({}, '', `${window.location.pathname}?${params.toString()}`);
+  };
+
   return (
     <div className=''>
       <div className="flex justify-between items-center p-4 ">
         <h2 className="text-sm md:text-xl font-semibold">{cars.length} Cars Available</h2>
         <div className="flex items-center space-x-1 text-gray-700 text-[8px] md:text-sm cursor-pointer">
           <span>Sort By:</span>
-          <span className="font-semibold">Best Matches</span>
-          <FaChevronDown className="text-gray-700" />
+          <select
+            value={sortOption}
+            onChange={handleSortChange}
+            className="font-semibold bg-transparent border-none outline-none cursor-pointer"
+          >
+            <option value="Best Matches">Best Matches</option>
+            <option value="Price: Low to High">Price: Low to High</option>
+            <option value="Price: High to Low">Price: High to Low</option>
+            <option value="Rating">Rating</option>
+          </select>
         </div>
       </div>
 
@@ -58,9 +78,11 @@ const CarTab = ({ cars }) => {
             <div className="sm:border-dotted sm:border-gray-300 p-4">
               <div className="mt-4">
                 <div className="grid grid-cols-3 lg:grid-cols-2 gap-3">
-                  <button className="w-full sm:w-[60px] justify-center h-8 text-[10px] text-red-500 border border-red-500 rounded-[50px] px-2 py-[2px] flex items-center hover:bg-red-500 hover:text-white transition">Sedan</button>
-                  <button className="w-full sm:w-[60px] justify-center h-8 text-[10px] text-red-500 border border-red-500 rounded-[50px] px-2 py-[2px] flex items-center hover:bg-red-500 hover:text-white transition">Hatchback</button>
-                  <button className="w-full sm:w-[60px] justify-center h-8 text-[10px] text-red-500 border border-red-500 rounded-[50px] px-2 py-[2px] flex items-center hover:bg-red-500 hover:text-white transition">Minivan</button>
+                  {car.tags.split(',').map((tag, index) => (
+                    <button key={index} className="w-full sm:w-[60px] justify-center h-8 text-[10px] text-red-500 border border-red-500 rounded-[50px] px-2 py-[2px] flex items-center hover:bg-red-500 hover:text-white transition">
+                      {tag.trim()}
+                    </button>
+                  ))}
                 </div>
                 <div className="flex flex-row lg:flex-col gap-6 mt-5">
                   <p className="text-xl font-bold text-gray-800 text-right">

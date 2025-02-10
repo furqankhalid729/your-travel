@@ -31,6 +31,7 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
     capacity: "2",
     status: "available",
     price: "",
+    tags: "",
     features: [],
     car_images: []
   });
@@ -64,7 +65,7 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
   const handleRemoveImage = (index) => {
     setData((prevData) => ({
       ...prevData,
-      car_images: prevData.car_images.filter((_, i) => i !== index), 
+      car_images: prevData.car_images.filter((_, i) => i !== index),
     }));
   };
 
@@ -99,6 +100,7 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
     formData.append("capacity", data.capacity);
     formData.append("status", data.status);
     formData.append("price", data.price);
+    formData.append("tags", data.tags); 
     formData.append("features", JSON.stringify(data.features));
     data.car_images.forEach((image, index) => {
       formData.append(`car_images[${index}]`, image.file);
@@ -382,6 +384,18 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
                   placeholder="Enter price"
                 />
                 {errors.price && <p className="text-red-500 text-sm mt-1">{errors.price}</p>}
+              </DetailField>
+
+              <DetailField label="Tags">
+                <input
+                  type="text"
+                  name="tags"
+                  value={data.tags}
+                  onChange={handleInputChange}
+                  className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                  placeholder="Enter tags separated by commas"
+                />
+                {errors.tags && <p className="text-red-500 text-sm mt-1">{errors.tags}</p>}
               </DetailField>
             </div>
           </form>
