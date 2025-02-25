@@ -1,11 +1,12 @@
 import React from 'react';
 import AdminLayout from "../../../Layout/AdminLayout";
 import AllHotelsCom from "../../../Components/Admin/HotelBooking/AllHotels";
-const AllHotels = ({ hotelRooms }) => {
+
+const AllHotels = ({ hotels }) => {
   return (
-    <div>
+    <div className='p-2 md:p-4 m-2 md:m-6 bg-white'>
       <AllHotelsCom
-        hotelRooms={hotelRooms} />
+        hotels={hotels} />
     </div>
   )
 }

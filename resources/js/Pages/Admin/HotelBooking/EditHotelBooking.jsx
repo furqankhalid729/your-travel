@@ -1,10 +1,10 @@
 import React from 'react';
 import AdminLayout from "../../../Layout/AdminLayout";
 import EditHotelBookingCom from "../../../Components/Admin/HotelBooking/EditHotelBooking";
-const EditHotelBooking = ({ hotelRoom }) => {
+const EditHotelBooking = ({ hotel, hotelRooms }) => {
     return (
         <div>
-            <EditHotelBookingCom  hotelRoom={hotelRoom}/>
+            <EditHotelBookingCom  hotel={hotel} hotelRooms={hotelRooms} />
         </div>
     )
 }

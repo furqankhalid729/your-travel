@@ -15,9 +15,10 @@ import {
   FaWifi,
 } from "react-icons/fa";
 import { useForm } from "@inertiajs/react";
-
 import { useState } from "react";
 import Modal from 'react-modal';
+import HotelLocationPicker from "../../HotelLocationPicker";
+import HotelImagePicker from "@/Components/HotelImagePicker";
 
 
 const iconMapping = {
@@ -47,7 +48,7 @@ const AddHotelRoom = () => {
   const [newRoom, setNewRoom] = useState({
     room_id: '',
     room_type: '',
-    available_rooms: 'Yes',
+    status: 'Yes',
     price: '',
   });
   const [editingRoomIndex, setEditingRoomIndex] = useState(null);
@@ -58,9 +59,12 @@ const AddHotelRoom = () => {
   const [newType, setNewType] = useState("");
   const [typeStatus, setTypeStatus] = useState("FaCheck");
 
+  {/* Image Importer Config */}
+  const[imageSelector,setImageSelector] = useState(false);
+
 
   const { data, setData, post, processing, errors } = useForm({
-    title:"",
+    name:"",
     duration: "",
     location: "",
     food: "",
@@ -68,7 +72,7 @@ const AddHotelRoom = () => {
     persons: "",
     price: 0,
     tour_images: [],
-    summary: "",
+    description: "",
     facilities: [],
     types: [],
     rooms: [],
@@ -127,7 +131,7 @@ const AddHotelRoom = () => {
     setNewRoom({
       room_id: '',
       room_type: '',
-      available_rooms: 'Yes',
+      status: 'Yes',
       price: '',
     });
     setRoomModalOpen(false);
@@ -162,7 +166,7 @@ const AddHotelRoom = () => {
     setNewRoom({
       room_id: '',
       room_type: '',
-      available_rooms: 'Yes',
+      status: 'Yes',
       price: '',
     });
     setRoomModalOpen(false);
@@ -230,6 +234,7 @@ const AddHotelRoom = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append("name", data.name);
     formData.append("duration", data.duration);
     formData.append("location", data.location);
     formData.append("food", data.food);
@@ -241,7 +246,7 @@ const AddHotelRoom = () => {
         formData.append("tour_images[]", imageObj.file);
       }
     });
-    formData.append("summary", data.summary);
+    formData.append("description", data.description);
     formData.append("facilities", JSON.stringify(data.facilities));
     formData.append("types", JSON.stringify(data.types));
     formData.append("rooms", JSON.stringify(data.rooms));
@@ -288,8 +293,8 @@ const AddHotelRoom = () => {
         </div>
         <input
           type="text"
-          name="title"
-          value={data.title}
+          name="name"
+          value={data.name}
           onChange={handleInputChange}
           className="rounded px-3 py-[5px] w-full"
         />
@@ -335,14 +340,7 @@ const AddHotelRoom = () => {
 
           {/* Map Image */}
           <div className="relative">
-            <img
-              src="/storage/images/map.png"
-              alt="Map"
-              className="w-full h-auto rounded-md shadow"
-            />
-            <button className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#e0bafb] rounded-lg text-white px-2 py-2">
-              Show on map
-            </button>
+            <HotelLocationPicker value = {data.location} name="location" handleInputChange={handleInputChange} />
           </div>
 
           {/* Image 3 */}
@@ -364,72 +362,77 @@ const AddHotelRoom = () => {
             )}
           </div>
           {/* Details */}
-          <div className="bg-[#e6c0ff] p-4 rounded-md shadow row-span-2">
-            <h3 className="text-lg font-semibold text-gray-800 mb-4">
-              Details
-            </h3>
-            <ul className="space-y-5">
-              <li className="flex justify-between items-center">
-                <span>Duration</span>
-                <input
-                  type="text"
-                  name="duration"
-                  value={data.duration}
-                  onChange={handleInputChange}
-                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
-                />
-              </li>
-              <li className="flex justify-between">
-                <span>Location</span>
-                <input
-                  type="text"
-                  name="location"
-                  value={data.location}
-                  onChange={handleInputChange}
-                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
-                />
-              </li>
-              <li className="flex justify-between">
-                <span>Food</span>
-                <input
-                  type="text"
-                  name="food"
-                  value={data.food}
-                  onChange={handleInputChange}
-                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
-                />
-              </li>
-              <li className="flex justify-between">
-                <span>Tour type</span>
-                <input
-                  type="text"
-                  name="tour_type"
-                  value={data.tour_type}
-                  onChange={handleInputChange}
-                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
-                />
-              </li>
-              <li className="flex justify-between">
-                <span>Person</span>
-                <input
-                  type="text"
-                  name="persons"
-                  value={data.persons}
-                  onChange={handleInputChange}
-                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
-                />
-              </li>
-              <li className="flex justify-between">
-                <span>Price</span>
-                <input
-                  type="text"
-                  name="price"
-                  value={data.price}
-                  onChange={handleInputChange}
-                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
-                />
-              </li>
-            </ul>
+          <div className="row-span-2">
+            <div className="bg-[#e6c0ff] p-4 rounded-md shadow ">
+              <h3 className="text-lg font-semibold text-gray-800 mb-4">
+                Details
+              </h3>
+              <ul className="space-y-5">
+                <li className="flex justify-between items-center">
+                  <span>Duration</span>
+                  <input
+                    type="text"
+                    name="duration"
+                    value={data.duration}
+                    onChange={handleInputChange}
+                    className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                  />
+                </li>
+                {/* <li className="flex justify-between">
+                  <span>Location</span>
+                  <input
+                    type="text"
+                    name="location"
+                    value={data.location}
+                    onChange={handleInputChange}
+                    className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                  />
+                </li> */}
+                <li className="flex justify-between">
+                  <span>Food</span>
+                  <input
+                    type="text"
+                    name="food"
+                    value={data.food}
+                    onChange={handleInputChange}
+                    className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                  />
+                </li>
+                <li className="flex justify-between">
+                  <span>Tour type</span>
+                  <input
+                    type="text"
+                    name="tour_type"
+                    value={data.tour_type}
+                    onChange={handleInputChange}
+                    className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                  />
+                </li>
+                <li className="flex justify-between">
+                  <span>Person</span>
+                  <input
+                    type="text"
+                    name="persons"
+                    value={data.persons}
+                    onChange={handleInputChange}
+                    className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                  />
+                </li>
+                <li className="flex justify-between">
+                  <span>Price</span>
+                  <input
+                    type="text"
+                    name="price"
+                    value={data.price}
+                    onChange={handleInputChange}
+                    className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                  />
+                </li>
+              </ul>
+            </div>
+            <button className="bg-[#e6c0ff] py-3 px-6 mt-3 rounded-md text-center w-full" onClick={() => setImageSelector(true)}>
+               Import Images
+            </button>
           </div>
           {/* Image 4 */}
           <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md">
@@ -509,8 +512,8 @@ const AddHotelRoom = () => {
         {/* summary */}
         <h1 className="text-2xl font-semibold text-gray-800">Summary</h1>
         <textarea
-          name="summary"
-          value={data.summary}
+          name="description"
+          value={data.description}
           onChange={handleInputChange}
           placeholder="Add Summary"
           rows="3"
@@ -595,7 +598,7 @@ const AddHotelRoom = () => {
                 <tr key={index}>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">{room.room_id}</td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">{room.room_type}</td>
-                  <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">{room.available_rooms}</td>
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">{room.status}</td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">${room.price}</td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
                     <div className="flex items-center space-x-2">
@@ -712,6 +715,7 @@ const AddHotelRoom = () => {
             Add Type
           </button>
         </Modal>
+
         {/* Modal for Adding/Editing Rooms */}
         <Modal
           isOpen={roomModalOpen}
@@ -738,8 +742,8 @@ const AddHotelRoom = () => {
             className="border p-2 mb-4 w-full"
           />
           <select
-            name="available_rooms"
-            value={newRoom.available_rooms}
+            name="status"
+            value={newRoom.status}
             onChange={handleRoomInputChange}
             className="border p-2 mb-4 w-full"
           >
@@ -764,6 +768,16 @@ const AddHotelRoom = () => {
             Cancel
           </button>
         </Modal>
+            
+        {imageSelector && (
+            <HotelImagePicker
+              imageSelector = {imageSelector}
+              setImageSelector = {setImageSelector}
+              setImagePreviews = {setImagePreviews}
+              setData = {setData}
+            />
+        )}
+
       </div>
     </div>
   );

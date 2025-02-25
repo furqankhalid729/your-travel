@@ -3,7 +3,7 @@ import Banner from "../../Components/User/Hotel/Banner";
 import HotelCards from "../../Components/User/Hotel/HotelCards";
 import HotelRating from "../../Components/User/Hotel/HotelRating";
 import UserLayout from "../../Layout/UserLayout";
-const Hotel = () => {
+const Hotel = ({hotels}) => {
   return (
     <>
       <Banner />
@@ -12,7 +12,9 @@ const Hotel = () => {
           <HotelRating />
         </div>
         <div className="w-full lg:w-3/4">
-          <HotelCards />
+          <HotelCards
+            hotels={hotels}
+          />
         </div>
       </div>
     </>

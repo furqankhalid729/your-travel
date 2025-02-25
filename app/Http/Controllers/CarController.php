@@ -18,19 +18,6 @@ use App\Models\Car\CarTransmission;
 class CarController extends Controller
 {
 
-    // For frontend car page
-
-    public function frontendIndex()
-    {
-        $cars = Car::all();
-        $cars = Car::all()->map(function ($car) {
-            $car->car_images = json_decode($car->car_images, true);
-            return $car;
-        });
-        return Inertia::render(InertiaViews::carIndex->value, [
-            'cars' => $cars,
-        ]);
-    }
     /**
      * Display the specified resource.
      */
@@ -76,15 +63,13 @@ class CarController extends Controller
 
     public function featured(Request $request)
     {
-        $limit = $request->input('limit', 4); // Default to 4 if no limit is provided
+        $limit = $request->input('limit', 4);
         $cars = Car::limit($limit)->get();
-
         return response()->json($cars);
     }
 
 
     // Admin
-
 
     /**
      * Display a listing of the resource.

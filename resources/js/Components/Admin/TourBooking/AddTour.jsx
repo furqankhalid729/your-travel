@@ -17,6 +17,7 @@ import { BiLocationPlus } from "react-icons/bi";
 import { Link } from "@inertiajs/react";
 import { useState } from "react";
 import Modal from 'react-modal';
+import HotelLocationPicker from "../../HotelLocationPicker";
 // import { useNavigate } from "react-router-dom";
 
 const iconMapping = {
@@ -43,6 +44,7 @@ const AddTour = () => {
 
 
   const { data, setData, post, processing, errors } = useForm({
+    name: "",
     duration: "",
     location: "",
     food: "",
@@ -156,6 +158,7 @@ const AddTour = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+    formData.append("duration", data.name);
     formData.append("duration", data.duration);
     formData.append("location", data.location);
     formData.append("food", data.food);
@@ -169,27 +172,13 @@ const AddTour = () => {
     formData.append("condition", data.condition);
     formData.append("tour_itinerary", JSON.stringify(data.tour_itinerary)); // Send features as JSON string
 
-
-    // Log the FormData entries
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-    }
-
-    // post("/add-tour", formData, {
-    //   onSuccess: () => {
-    //     setMessage("Tour added successfully!");
-    //   },
-    // });
-
     try {
-      // Try sending the POST request
       await post("/api/tour/add-tour", formData, {
         onSuccess: () => {
           setMessage("tour added successfully!");
         },
       });
     } catch (error) {
-      // Catch and log any errors
       console.error("Error while adding tour:", error);
       setMessage("An error occurred while adding the tour.");
     }
@@ -218,13 +207,13 @@ const AddTour = () => {
           </button>
         </div>
       </div>
-      <h1 className="text-2xl font-semibold text-gray-800">
-        Lake Lucerne : Bodies of water
-      </h1>
-      <span className="flex items-center text-sm text-[#808080]">
-        <BiLocationPlus />
-        Zurich
-      </span>
+      <input
+          type="text"
+          name="name"
+          value={data.name}
+          onChange={handleInputChange}
+          className="rounded px-3 py-[5px] w-full"
+        />
       {/* images */}
       <div className="grid grid-cols-4 gap-4">
         {/* Image 1 (Main Image) */}
@@ -285,10 +274,7 @@ const AddTour = () => {
 
         {/* Map Image */}
         <div className="relative">
-          <img src="/storage/images/map.png" alt="Map" className="w-full h-auto rounded-md shadow" />
-          <button className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center bg-[#e0bafb] rounded-lg text-white px-2 py-2">
-            Show on map
-          </button>
+          <HotelLocationPicker value={data.location} name="location" handleInputChange={handleInputChange} />
         </div>
 
         {/* Image 3 */}
@@ -330,16 +316,6 @@ const AddTour = () => {
                 type="text"
                 name="duration"
                 value={data.duration}
-                onChange={handleInputChange}
-                className="bg-[#e6c0ff] rounded px-1 py-[2px]"
-              />
-            </li>
-            <li className="flex justify-between">
-              <span>Location</span>
-              <input
-                type="text"
-                name="location"
-                value={data.location}
                 onChange={handleInputChange}
                 className="bg-[#e6c0ff] rounded px-1 py-[2px]"
               />

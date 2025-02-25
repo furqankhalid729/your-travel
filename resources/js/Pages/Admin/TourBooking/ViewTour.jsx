@@ -2,10 +2,12 @@ import React from 'react';
 import AdminLayout from "../../../Layout/AdminLayout";
 import ViewTourCom from "../../../Components/Admin/TourBooking/ViewTour"
 
-const ViewTour = () => {
+const ViewTour = ({tours}) => {
   return (
     <div>
-      <ViewTourCom />
+      <ViewTourCom 
+        tours={tours}
+      />
     </div>
   )
 }

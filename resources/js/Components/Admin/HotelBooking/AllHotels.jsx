@@ -4,10 +4,10 @@ import DeleteModal from "@/Components/DeleteModal";
 import { useState } from "react";
 import axios from "axios";
 
-const AllHotels = ({ hotelRooms }) => {
+const AllHotels = ({ hotels }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [itemToDelete, setItemToDelete] = useState(null);
-  const [hotelItems, setHotelItems] = useState(hotelRooms);
+  const [hotelItems, setHotelItems] = useState(hotels);
 
   const openModal = (id) => {
     setItemToDelete(id);
@@ -69,10 +69,10 @@ const AllHotels = ({ hotelRooms }) => {
               {hotelItems.map((hotel, index) => (
                 <tr key={index}>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {hotel.id}
+                    {index+1}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                    Hotel California
+                    {hotel.name}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
                     {hotel.location}
@@ -88,7 +88,7 @@ const AllHotels = ({ hotelRooms }) => {
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-base flex space-x-2">
                     <Link
-                      href={route("hotelbook.edit", hotel.id)}
+                      href={route("hotel.edit", hotel.id)}
                       className="text-green-500"
                     >
                       <FaEdit />

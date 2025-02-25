@@ -14,7 +14,6 @@ const Home = () => {
       <FeaturedFleets />
       <FeatureOffers/>
       <FeatureDestination/>
-      <Gallery/>
       <Blog/>
       <Testimonials/>
 

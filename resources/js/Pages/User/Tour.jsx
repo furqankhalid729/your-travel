@@ -3,7 +3,7 @@ import Banner from '../../Components/User/Tour/Banner'
 import TourRating from '../../Components/User/Tour/TourRating'
 import TourCards from '../../Components/User/Tour/TourCards'
 import UserLayout from "../../Layout/UserLayout";
-const Tour = () => {
+const Tour = ({tours}) => {
   return (
     <>
       <Banner/>
@@ -12,7 +12,9 @@ const Tour = () => {
           <TourRating />
         </div>
         <div className="w-full lg:w-3/4">
-          <TourCards />
+          <TourCards 
+            tours={tours}
+          />
         </div>
       </div>
     </>

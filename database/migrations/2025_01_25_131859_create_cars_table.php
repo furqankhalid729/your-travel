@@ -26,19 +26,6 @@ return new class extends Migration
             $table->json('features')->nullable();
             $table->json('car_images')->nullable();
             $table->timestamps();
-            // $table->id();
-            // $table->foreignId('model_id')->constrained('car_models')->onDelete('cascade');
-            // $table->foreignId('fuel_id')->constrained('car_fuels')->onDelete('cascade');
-            // $table->foreignId('transmission_id')->constrained('car_transmissions')->onDelete('cascade');
-            // $table->enum('car_type', ['Sedan', 'SUV', 'Van', 'Other']);
-            // $table->enum('category', ['Economy', 'Luxury', 'Standard']);
-            // $table->string('image');
-            // $table->integer('capacity');
-            // $table->enum('status', ['available', 'not_available'])->default('available');
-            // $table->string('car_no');
-            // $table->decimal('price_per_day', 8, 2);
-            // $table->json('features')->nullable();
-            // $table->timestamps();
         });
     }
 

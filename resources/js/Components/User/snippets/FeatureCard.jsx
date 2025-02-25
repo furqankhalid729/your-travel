@@ -6,7 +6,7 @@ const FeatureCard = ({ image, name, rating, reviews, price }) => {
   return (
     <div className="relative w-full max-w-xl rounded-lg  overflow-hidden bg-[#F4F4F4] mx-auto shadow-md">
       <img
-        src={image}
+        src={`/storage/${image}`}
         alt={name}
         className="w-full h-[300px] sm:h-[260px] xl:h-[325px] object-cover"
       />

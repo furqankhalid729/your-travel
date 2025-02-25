@@ -8,6 +8,7 @@ class Tour extends Model
 {
 
     protected $fillable = [
+        'name',
         'duration',
         'location',
         'food',

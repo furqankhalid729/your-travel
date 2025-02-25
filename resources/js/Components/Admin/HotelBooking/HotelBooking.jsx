@@ -49,7 +49,7 @@ const topMenuItems = [
     bgColor: "#bceaff",
     count: 5,
     text: "View Rooms",
-    link: "/dashboard/hotel-booking/all-hotels",
+    link: route('hotel.index'),
   },
   {
     name: "Confirmed Bookings",
@@ -131,7 +131,7 @@ const HotelBooking = () => {
         <h2 className="text-2xl md:text-4xl text-[#808080]">Latest Bookings</h2>
         <div className="flex items-center gap-2">
           <Link
-            href="/dashboard/hotel-booking/add-hotel-room"
+            href={route('hotel.create')}
             className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 md:px-3 py-1 md:py-2 rounded-lg"
           >
             <FaPlus />

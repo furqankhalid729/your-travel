@@ -78,7 +78,7 @@ const CarTab = ({ cars }) => {
             <div className="sm:border-dotted sm:border-gray-300 p-4">
               <div className="mt-4">
                 <div className="grid grid-cols-3 lg:grid-cols-2 gap-3">
-                  {car.tags.split(',').map((tag, index) => (
+                  {car.tags?.split(',').map((tag, index) => (
                     <button key={index} className="w-full sm:w-[60px] justify-center h-8 text-[10px] text-red-500 border border-red-500 rounded-[50px] px-2 py-[2px] flex items-center hover:bg-red-500 hover:text-white transition">
                       {tag.trim()}
                     </button>

@@ -7,23 +7,16 @@ use Illuminate\Database\Eloquent\Model;
 class HotelRoom extends Model
 {
     protected $fillable = [
-        'duration',
-        'location',
-        'food',
-        'tour_type',
-        'persons',
+        'room_id',
+        'room_type',
+        'status',
         'price',
-        'tour_images',
-        'summary',
-        'facilities',
-        'types',
-        'rooms'
+        'persons',
+        'hotel_id',
     ];
-
-    protected $casts = [
-        'tour_images' => 'array',
-        'facilities' => 'array',
-        'types' => 'array',
-        'rooms' => 'array'
-    ];
+    
+    public function hotel()
+    {
+        return $this->belongsTo(Hotel::class, 'hotel_id');
+    }
 }

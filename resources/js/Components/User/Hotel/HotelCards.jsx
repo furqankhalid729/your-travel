@@ -7,81 +7,83 @@ import { BiFridge } from "react-icons/bi";
 import { Link } from '@inertiajs/react';
 
 
-function HotelCards() {
-  const hotels = [
-    {
-      id: 1,
-      name: "Avari Hotel Lahore",
-      location: "Gulberg",
-      rating: 4.2,
-      stars: 5,
-      distance: "5.65 km to city center",
-      reviews: 2365,
-      price: 700,
-      amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
-      types: ["Room", "Villa", "Resort", "Apartment"],
-      image: "storage/images/hotel.jpg",
-    },
-    {
-      id: 2,
-      name: "Avari Hotel Lahore",
-      location: "Gulberg",
-      rating: 4.2,
-      stars: 5,
-      distance: "5.65 km to city center",
-      reviews: 2365,
-      price: 700,
-      amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
-      types: ["Room", "Villa", "Resort", "Apartment"],
-      image: "storage/images/hotel.jpg",
-    },
-    {
-      id: 3,
-      name: "Avari Hotel Lahore",
-      location: "Gulberg",
-      rating: 4.2,
-      stars: 5,
-      distance: "5.65 km to city center",
-      reviews: 2365,
-      price: 700,
-      amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
-      types: ["Room", "Villa", "Resort", "Apartment"],
-      image: "storage/images/hotel.jpg",
-    },
-    {
-      id: 4,
-      name: "Avari Hotel Lahore",
-      location: "Gulberg",
-      rating: 4.2,
-      stars: 5,
-      distance: "5.65 km to city center",
-      reviews: 2365,
-      price: 700,
-      amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
-      types: ["Room", "Villa", "Resort", "Apartment"],
-      image: "storage/images/hotel.jpg",
-    },
-    {
-      id: 5,
-      name: "Avari Hotel Lahore",
-      location: "Gulberg",
-      rating: 4.2,
-      stars: 5,
-      distance: "5.65 km to city center",
-      reviews: 2365,
-      price: 700,
-      amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
-      types: ["Room", "Villa", "Resort", "Apartment"],
-      image: "storage/images/hotel.jpg",
-    },
+function HotelCards({ hotels}) {
+  console.log(hotels[0]);
+  console.log(Array.isArray(JSON.parse(hotels[0].types)))
+  // const hotels = [
+  //   {
+  //     id: 1,
+  //     name: "Avari Hotel Lahore",
+  //     location: "Gulberg",
+  //     rating: 4.2,
+  //     stars: 5,
+  //     distance: "5.65 km to city center",
+  //     reviews: 2365,
+  //     price: 700,
+  //     amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
+  //     types: ["Room", "Villa", "Resort", "Apartment"],
+  //     image: "storage/images/hotel.jpg",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "Avari Hotel Lahore",
+  //     location: "Gulberg",
+  //     rating: 4.2,
+  //     stars: 5,
+  //     distance: "5.65 km to city center",
+  //     reviews: 2365,
+  //     price: 700,
+  //     amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
+  //     types: ["Room", "Villa", "Resort", "Apartment"],
+  //     image: "storage/images/hotel.jpg",
+  //   },
+  //   {
+  //     id: 3,
+  //     name: "Avari Hotel Lahore",
+  //     location: "Gulberg",
+  //     rating: 4.2,
+  //     stars: 5,
+  //     distance: "5.65 km to city center",
+  //     reviews: 2365,
+  //     price: 700,
+  //     amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
+  //     types: ["Room", "Villa", "Resort", "Apartment"],
+  //     image: "storage/images/hotel.jpg",
+  //   },
+  //   {
+  //     id: 4,
+  //     name: "Avari Hotel Lahore",
+  //     location: "Gulberg",
+  //     rating: 4.2,
+  //     stars: 5,
+  //     distance: "5.65 km to city center",
+  //     reviews: 2365,
+  //     price: 700,
+  //     amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
+  //     types: ["Room", "Villa", "Resort", "Apartment"],
+  //     image: "storage/images/hotel.jpg",
+  //   },
+  //   {
+  //     id: 5,
+  //     name: "Avari Hotel Lahore",
+  //     location: "Gulberg",
+  //     rating: 4.2,
+  //     stars: 5,
+  //     distance: "5.65 km to city center",
+  //     reviews: 2365,
+  //     price: 700,
+  //     amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
+  //     types: ["Room", "Villa", "Resort", "Apartment"],
+  //     image: "storage/images/hotel.jpg",
+  //   },
 
-  ];
+  // ];
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
   return (
     <div className=''>
       <div className="flex justify-between py-6">
-        <h2 className="text-[8px] sm:text-xl font-semibold text-black ">32 Hotel available</h2>
+        <h2 className="text-[8px] sm:text-xl font-semibold text-black ">{hotels.length} Hotel available</h2>
         <div className="relative flex gap-2 text-gray-900 text-[8px] md:text-sm">
           <span className="font-semibold">Sort by:</span>
           <button
@@ -126,13 +128,13 @@ function HotelCards() {
           <div key={hotel.id} className="flex flex-col lg:flex-row gap-6 bg-white shadow-md rounded-lg p-2 border md:border-gray-200 mt-6">
 
             {/* Left - Hotel Image and Favorite Icon */}
-            <div className="object-cover relative md:block">
-              <img src={hotel.image} alt='' className="w-full md:h-full rounded-lg" />
+            <div className="object-cover relative md:block max-w-[33%] min-h-[250px]">
+              <img src={`/storage/${JSON.parse(hotel.images)[0]}`} alt='' className="w-full md:h-full rounded-lg" />
               <div className="absolute top-2 right-2 bg-red-500 md:p-2 rounded-full shadow-md">
                 <CiHeart className="text-[8px] md:text-2xl text-white" />
               </div>
             </div>
-            <div className='block md:flex md:gap-5 md:py-4'>
+            <div className='block md:flex md:gap-5 md:py-4 flex-1'>
               {/* Middle - Hotel Information */}
               <div className="flex flex-col w-full md:w-6/12 lg:w-8/12">
                 <h2 className="text-xl font-semibold text-gray-900">{hotel.name}</h2>
@@ -162,7 +164,7 @@ function HotelCards() {
 
                 {/* Amenities List */}
                 <div className="flex flex-wrap gap-4 text-[10px] md:text-sm mt-4 text-gray-500">
-                  {hotel.amenities.map((amenity, index) => (
+                  {hotel?.amenities?.map((amenity, index) => (
                     <p key={index}>&#10003; {amenity}</p>
                   ))}
                 </div>
@@ -172,19 +174,19 @@ function HotelCards() {
               <div className="flex flex-col items-center space-y-4 border border-dotted md:border-l-gray-500 w-full md:w-6/12 lg:w-4/12 p-2">
                 {/* Room Types */}
                 <div className="mt-4 grid grid-cols-4 md:grid-cols-2 gap-4 text-red-500">
-                  {hotel.types.map((type, index) => (
+                  {JSON.parse(hotel.types).map((type, index) => (
                     <button
                       key={index}
                       className="px-1 py-1 border border-red-500 rounded-full text-[10px] md:text-sm w-16 md:w-24 hover:bg-red-500 hover:text-white"
                     >
-                      {type}
+                      {type.name}
                     </button>
                   ))}
                 </div>
 
                 {/* Price */}
                 <p className="text-lg md:text-2xl font-bold text-gray-900">
-                  ${hotel.price} <span className="text-lg font-normal md:text-sm">/ Night</span>
+                  ${hotel?.rooms[0]?.price} <span className="text-lg font-normal md:text-sm">/ Night</span>
                 </p>
 
                 {/* Details Button */}

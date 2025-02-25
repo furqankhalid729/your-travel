@@ -15,9 +15,6 @@ const FeaturedFleets = () => {
         console.error(error);
       });
   }, []);
-  console.log("cars1:", cars);
-  
-
   return (
     <>
       <div className="mx-8 sm:mx-20 mt-16 ">
@@ -30,7 +27,7 @@ const FeaturedFleets = () => {
           {cars.slice(0, 4).map((car, index) => (
             <FleetCard
               key={index}
-              imageSrc={car.car_images[0]}
+              imageSrc={JSON.parse(car.car_images)[0]}
               car_name={car.car_name}
               brand={car.brand}
               model={car.model}

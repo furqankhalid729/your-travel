@@ -16,6 +16,7 @@ import {
 } from "react-icons/fa";
 import { useState } from "react";
 import Modal from 'react-modal';
+import HotelLocationPicker from "../../HotelLocationPicker";
 
 const iconMapping = {
     FaWifi: <FaWifi />,
@@ -30,7 +31,8 @@ const TypeIconMapping = {
     FaTimes: <FaTimes />,
 };
 
-const EditHotelBooking = ({ hotelRoom }) => {
+const EditHotelBooking = ({ hotel, hotelRooms }) => {
+    console.log(hotel, hotelRooms)
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [typeModalOpen, setTypeModalOpen] = useState(false);
     const [roomModalOpen, setRoomModalOpen] = useState(false);
@@ -41,25 +43,26 @@ const EditHotelBooking = ({ hotelRoom }) => {
     const [newRoom, setNewRoom] = useState({
         room_id: '',
         room_type: '',
-        available_rooms: '',
+        status: 'Yes',
         price: '',
     });
     const [editingRoomIndex, setEditingRoomIndex] = useState(null);
-    const [facilities, setFacilities] = useState(Array.isArray(hotelRoom.facilities) ? hotelRoom.facilities : []);
-    const [types, setTypes] = useState(Array.isArray(hotelRoom.types) ? hotelRoom.types : []);
+    const [facilities, setFacilities] = useState(Array.isArray(hotel.facilities) ? hotel.facilities : []);
+    const [types, setTypes] = useState(Array.isArray(hotel.types) ? hotel.types : []);
 
     const { data, setData, put, processing, errors } = useForm({
-        duration: hotelRoom.duration || '',
-        location: hotelRoom.location || '',
-        food: hotelRoom.food || '',
-        tour_type: hotelRoom.tour_type || '',
-        persons: hotelRoom.persons || '',
-        price: hotelRoom.price || '',
-        summary: hotelRoom.summary || '',
+        name: hotel.name,
+        duration: hotel.duration || '',
+        location: hotel.location || '',
+        food: hotel.food || '',
+        tour_type: hotel.tour_type || '',
+        persons: hotel.persons || '',
+        price: hotel.price || '',
+        description: hotel.description || '',
         types: types,
         facilities: facilities,
-        rooms: Array.isArray(hotelRoom.rooms) ? hotelRoom.rooms : [],
-        images: hotelRoom.images || {
+        rooms: Array.isArray(hotelRooms) ? hotelRooms : [],
+        images: hotel.images || {
             image1: '',
             image2: '',
             image3: '',
@@ -69,16 +72,23 @@ const EditHotelBooking = ({ hotelRoom }) => {
         }
     });
 
-    const [imagePreviews, setImagePreviews] = useState({
-        image1: hotelRoom.images?.image1 || '',
-        image2: hotelRoom.images?.image2 || '',
-        image3: hotelRoom.images?.image3 || '',
-        image4: hotelRoom.images?.image4 || '',
-        image5: hotelRoom.images?.image5 || '',
-        image6: hotelRoom.images?.image6 || '',
+    const initialImages = JSON.parse(hotel.images) || {};
+    const maxImages = 6;
+    let imageArray = Object.values(initialImages);
+
+
+    while (imageArray.length < maxImages) {
+        imageArray.push('');
+    }
+
+    // Create the initial state object
+    const [imagePreviews, setImagePreviews] = useState(() => {
+        const previews = {};
+        for (let i = 0; i < maxImages; i++) {
+            previews[`image${i + 1}`] = imageArray[i];
+        }
+        return previews;
     });
-
-
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -165,7 +175,7 @@ const EditHotelBooking = ({ hotelRoom }) => {
         setNewRoom({
             room_id: '',
             room_type: '',
-            available_rooms: '',
+            status: '',
             price: '',
         });
         setRoomModalOpen(false);
@@ -184,7 +194,7 @@ const EditHotelBooking = ({ hotelRoom }) => {
         setNewRoom({
             room_id: '',
             room_type: '',
-            available_rooms: '',
+            status: '',
             price: '',
         });
         setEditingRoomIndex(null);
@@ -198,7 +208,33 @@ const EditHotelBooking = ({ hotelRoom }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route("hotelRooms.update", hotelRoom.id));
+        const formData = new FormData();
+        formData.append("name", data.name);
+        formData.append("duration", data.duration);
+        formData.append("location", data.location);
+        formData.append("food", data.food);
+        formData.append("tour_type", data.tour_type);
+        formData.append("persons", data.persons);
+        formData.append("price", data.price);
+        console.log(data.location)
+        if (data.images && Array.isArray(data.images)) {
+            data.images.forEach((imageObj) => {
+                if (imageObj.file) {
+                    formData.append("tour_images[]", imageObj.file);
+                }
+            });
+        } else {
+            console.log("data.images is not an array or is undefined");
+        }
+        formData.append("description", data.description);
+        formData.append("facilities", JSON.stringify(data.facilities));
+        formData.append("types", JSON.stringify(data.types));
+        formData.append("rooms", JSON.stringify(data.rooms));
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}:`, value);
+        }
+
+        put(route("hotel.update", hotel.id));
     };
 
     return (
@@ -206,7 +242,7 @@ const EditHotelBooking = ({ hotelRoom }) => {
             <div className="space-y-3 mb-5 bg-white p-4">
                 <div className="flex justify-between items-center">
                     <Link
-                        href="/dashboard/hotel-booking/all-hotels"
+                        href={route('hotel.index')}
                         className="flex items-center text-gray-600 hover:text-gray-800"
                     >
                         <FaArrowLeft className="mr-2" />
@@ -223,7 +259,13 @@ const EditHotelBooking = ({ hotelRoom }) => {
                         </button>
                     </div>
                 </div>
-                <h2 className="text-2xl font-semibold text-gray-800">Luxury Room</h2>
+                <input
+                    type="text"
+                    name="name"
+                    value={data.name}
+                    onChange={handleInputChange}
+                    className="rounded px-3 py-[5px] w-full"
+                />
                 {/* images */}
                 <div className="grid grid-cols-4 gap-4">
                     {/* Image 1 */}
@@ -231,7 +273,9 @@ const EditHotelBooking = ({ hotelRoom }) => {
                         {imagePreviews.image1 && (
                             <div className="relative">
                                 <img
-                                    src={imagePreviews.image1}
+                                    src={imagePreviews.image1.startsWith('data:') || imagePreviews.image1.startsWith('http')
+                                        ? imagePreviews.image1
+                                        : `/storage/${imagePreviews.image1}`}
                                     alt="image1"
                                     className="object-cover rounded-md"
                                 />
@@ -250,7 +294,9 @@ const EditHotelBooking = ({ hotelRoom }) => {
                         {imagePreviews.image2 && (
                             <div className="relative">
                                 <img
-                                    src={imagePreviews.image2}
+                                    src={imagePreviews.image2.startsWith('data:') || imagePreviews.image2.startsWith('http')
+                                        ? imagePreviews.image2
+                                        : `/storage/${imagePreviews.image2}`}
                                     alt="image2"
                                     className="object-cover rounded-md"
                                 />
@@ -266,14 +312,7 @@ const EditHotelBooking = ({ hotelRoom }) => {
 
                     {/* Map Image */}
                     <div className="relative">
-                        <img
-                            src="/storage/images/map.png"
-                            alt="Map"
-                            className="w-full h-auto rounded-md shadow"
-                        />
-                        <button className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-[#e0bafb] rounded-lg text-white px-2 py-2">
-                            Show on map
-                        </button>
+                        <HotelLocationPicker value = {data.location} name="location" handleInputChange={handleInputChange} />
                     </div>
 
                     {/* Image 3 */}
@@ -281,7 +320,7 @@ const EditHotelBooking = ({ hotelRoom }) => {
                         {imagePreviews.image3 && (
                             <div className="relative">
                                 <img
-                                    src={imagePreviews.image3}
+                                    src={`/storage/${imagePreviews.image3}`}
                                     alt="image3"
                                     className="object-cover rounded-md"
                                 />
@@ -310,7 +349,7 @@ const EditHotelBooking = ({ hotelRoom }) => {
                                     className="bg-[#e6c0ff] rounded px-1 py-[2px]"
                                 />
                             </li>
-                            <li className="flex justify-between">
+                            {/* <li className="flex justify-between">
                                 <span>Location</span>
                                 <input
                                     type="text"
@@ -319,7 +358,7 @@ const EditHotelBooking = ({ hotelRoom }) => {
                                     onChange={handleInputChange}
                                     className="bg-[#e6c0ff] rounded px-1 py-[2px]"
                                 />
-                            </li>
+                            </li> */}
                             <li className="flex justify-between">
                                 <span>Food</span>
                                 <input
@@ -330,7 +369,7 @@ const EditHotelBooking = ({ hotelRoom }) => {
                                     className="bg-[#e6c0ff] rounded px-1 py-[2px]"
                                 />
                             </li>
-                            <li className="flex justify-between">
+                            {/* <li className="flex justify-between">
                                 <span>Tour type</span>
                                 <input
                                     type="text"
@@ -359,7 +398,7 @@ const EditHotelBooking = ({ hotelRoom }) => {
                                     onChange={handleInputChange}
                                     className="bg-[#e6c0ff] rounded px-1 py-[2px]"
                                 />
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                     {/* Image 4 */}
@@ -367,7 +406,9 @@ const EditHotelBooking = ({ hotelRoom }) => {
                         {imagePreviews.image4 && (
                             <div className="relative">
                                 <img
-                                    src={imagePreviews.image4}
+                                    src={imagePreviews.image4.startsWith('data:') || imagePreviews.image4.startsWith('http')
+                                        ? imagePreviews.image4
+                                        : `/storage/${imagePreviews.image4}`}
                                     alt="image4"
                                     className="object-cover rounded-md"
                                 />
@@ -386,7 +427,9 @@ const EditHotelBooking = ({ hotelRoom }) => {
                         {imagePreviews.image5 && (
                             <div className="relative">
                                 <img
-                                    src={imagePreviews.image5}
+                                    src={imagePreviews.image5.startsWith('data:') || imagePreviews.image5.startsWith('http')
+                                        ? imagePreviews.image5
+                                        : `/storage/${imagePreviews.image5}`}
                                     alt="image5"
                                     className="object-cover rounded-md"
                                 />
@@ -406,7 +449,9 @@ const EditHotelBooking = ({ hotelRoom }) => {
                             {imagePreviews.image6 ? (
                                 <div className="relative">
                                     <img
-                                        src={imagePreviews.image6}
+                                        src={imagePreviews.image6.startsWith('data:') || imagePreviews.image6.startsWith('http')
+                                            ? imagePreviews.image6
+                                            : `/storage/${imagePreviews.image6}`}
                                         alt="Image 6 Preview"
                                         className="object-cover rounded-md"
                                     />
@@ -440,8 +485,8 @@ const EditHotelBooking = ({ hotelRoom }) => {
                 {/* Summary */}
                 <h1 className="text-2xl font-semibold text-gray-800">Summary</h1>
                 <textarea
-                    name="summary"
-                    value={data.summary}
+                    name="description"
+                    value={data.description}
                     onChange={handleInputChange}
                     placeholder="Add Summary"
                     rows="3"
@@ -536,7 +581,7 @@ const EditHotelBooking = ({ hotelRoom }) => {
                                 <tr key={index}>
                                     <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">{room.room_id}</td>
                                     <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">{room.room_type}</td>
-                                    <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">{room.available_rooms}</td>
+                                    <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">{room.status}</td>
                                     <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">${room.price}</td>
                                     <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
                                         <div className="flex items-center space-x-2">
@@ -679,8 +724,8 @@ const EditHotelBooking = ({ hotelRoom }) => {
                         className="border p-2 mb-4 w-full"
                     />
                     <select
-                        name="available_rooms"
-                        value={newRoom.available_rooms}
+                        name="status"
+                        value={newRoom.status}
                         onChange={handleRoomInputChange}
                         className="border p-2 mb-4 w-full"
                     >

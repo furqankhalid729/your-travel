@@ -5,92 +5,93 @@ import { Link } from '@inertiajs/react';
 
 
 
-function TourCards() {
-  const tours = [
-    {
-      id: 1,
-      image: "storage/images/tour.jpeg",
-      name: "Lake Lucerne : Bodies of water",
-      location: "Zurich",
-      duration: "4 days, 3 nights",
-      Recomendation: 100,
-      description: "Charming old town by a stunning lake with medieval streets, mountain views, and diverse shops and eateries. Scenic boat rides connect to mountain adventures.",
-      rating: 4.2,
-      reviews: 236,
-      price: 700,
+function TourCards({tours}) {
+  // const tours = [
+  //   {
+  //     id: 1,
+  //     image: "storage/images/tour.jpeg",
+  //     name: "Lake Lucerne : Bodies of water",
+  //     location: "Zurich",
+  //     duration: "4 days, 3 nights",
+  //     Recomendation: 100,
+  //     description: "Charming old town by a stunning lake with medieval streets, mountain views, and diverse shops and eateries. Scenic boat rides connect to mountain adventures.",
+  //     rating: 4.2,
+  //     reviews: 236,
+  //     price: 700,
 
-    },
-    {
-      id: 2,
-      image: "storage/images/tour4.jpeg",
-      name: "Lake Lucerne : Bodies of water",
-      location: "Zurich",
-      duration: "4 days, 3 nights",
-      Recomendation: 100,
-      description: "Charming old town by a stunning lake with medieval streets, mountain views, and diverse shops and eateries. Scenic boat rides connect to mountain adventures.",
-      rating: 4.2,
-      reviews: 236,
-      price: 700,
+  //   },
+  //   {
+  //     id: 2,
+  //     image: "storage/images/tour4.jpeg",
+  //     name: "Lake Lucerne : Bodies of water",
+  //     location: "Zurich",
+  //     duration: "4 days, 3 nights",
+  //     Recomendation: 100,
+  //     description: "Charming old town by a stunning lake with medieval streets, mountain views, and diverse shops and eateries. Scenic boat rides connect to mountain adventures.",
+  //     rating: 4.2,
+  //     reviews: 236,
+  //     price: 700,
 
-    },
-    {
-      id: 3,
-      image: "storage/images/tour1.jpeg",
-      name: "Lake Lucerne : Bodies of water",
-      location: "Zurich",
-      duration: "4 days, 3 nights",
-      Recomendation: 100,
-      description: "Charming old town by a stunning lake with medieval streets, mountain views, and diverse shops and eateries. Scenic boat rides connect to mountain adventures.",
-      rating: 4.2,
-      reviews: 236,
-      price: 700,
+  //   },
+  //   {
+  //     id: 3,
+  //     image: "storage/images/tour1.jpeg",
+  //     name: "Lake Lucerne : Bodies of water",
+  //     location: "Zurich",
+  //     duration: "4 days, 3 nights",
+  //     Recomendation: 100,
+  //     description: "Charming old town by a stunning lake with medieval streets, mountain views, and diverse shops and eateries. Scenic boat rides connect to mountain adventures.",
+  //     rating: 4.2,
+  //     reviews: 236,
+  //     price: 700,
 
-    },
-    {
-      id: 4,
-      image: "storage/images/tour2.jpeg",
-      name: "Lake Lucerne : Bodies of water",
-      location: "Zurich",
-      duration: "4 days, 3 nights",
-      Recomendation: 100,
-      description: "Charming old town by a stunning lake with medieval streets, mountain views, and diverse shops and eateries. Scenic boat rides connect to mountain adventures.",
-      rating: 4.2,
-      reviews: 236,
-      price: 700,
+  //   },
+  //   {
+  //     id: 4,
+  //     image: "storage/images/tour2.jpeg",
+  //     name: "Lake Lucerne : Bodies of water",
+  //     location: "Zurich",
+  //     duration: "4 days, 3 nights",
+  //     Recomendation: 100,
+  //     description: "Charming old town by a stunning lake with medieval streets, mountain views, and diverse shops and eateries. Scenic boat rides connect to mountain adventures.",
+  //     rating: 4.2,
+  //     reviews: 236,
+  //     price: 700,
 
-    },
-    {
-      id: 5,
-      image: "storage/images/tour4.jpeg",
-      name: "Lake Lucerne : Bodies of water",
-      location: "Zurich",
-      duration: "4 days, 3 nights",
-      Recomendation: 100,
-      description: "Charming old town by a stunning lake with medieval streets, mountain views, and diverse shops and eateries. Scenic boat rides connect to mountain adventures.",
-      rating: 4.2,
-      reviews: 236,
-      price: 700,
-    },
-    {
-      id: 6,
-      image: "storage/images/tour3.jpeg",
-      name: "Lake Lucerne : Bodies of water",
-      location: "Zurich",
-      duration: "4 days, 3 nights",
-      Recomendation: 100,
-      description: "Charming old town by a stunning lake with medieval streets, mountain views, and diverse shops and eateries. Scenic boat rides connect to mountain adventures.",
-      rating: 4.2,
-      reviews: 236,
-      price: 700,
+  //   },
+  //   {
+  //     id: 5,
+  //     image: "storage/images/tour4.jpeg",
+  //     name: "Lake Lucerne : Bodies of water",
+  //     location: "Zurich",
+  //     duration: "4 days, 3 nights",
+  //     Recomendation: 100,
+  //     description: "Charming old town by a stunning lake with medieval streets, mountain views, and diverse shops and eateries. Scenic boat rides connect to mountain adventures.",
+  //     rating: 4.2,
+  //     reviews: 236,
+  //     price: 700,
+  //   },
+  //   {
+  //     id: 6,
+  //     image: "storage/images/tour3.jpeg",
+  //     name: "Lake Lucerne : Bodies of water",
+  //     location: "Zurich",
+  //     duration: "4 days, 3 nights",
+  //     Recomendation: 100,
+  //     description: "Charming old town by a stunning lake with medieval streets, mountain views, and diverse shops and eateries. Scenic boat rides connect to mountain adventures.",
+  //     rating: 4.2,
+  //     reviews: 236,
+  //     price: 700,
 
-    },
-  ];
+  //   },
+  // ];
+  console.log(tours);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
   return (
     <div className=''>
       <div className="flex justify-between py-6">
-        <h2 className="text-[8px] sm:text-xl font-semibold text-black ">32 Tour available</h2>
+        <h2 className="text-[8px] sm:text-xl font-semibold text-black ">{tours.length} Tour available</h2>
         <div className="relative flex gap-2 text-gray-900 text-[8px] md:text-sm">
           <span className="font-semibold">Sort by:</span>
           <button
@@ -137,8 +138,8 @@ function TourCards() {
 
             <div className='w-full md:w-[33.33%]'>
               {/* Left - tour Image and Favorite Icon */}
-              <div className="relative  md:block">
-                <img src={tour.image} className="w-full md:h-full rounded-lg" />
+              <div className="relative h-[200px]  md:block">
+                <img src={`/storage/${JSON.parse(tour.tour_images)[0]}`} className="w-full md:h-full rounded-lg" />
                 <div className="absolute top-2 right-2 bg-red-500 p-2 rounded-full shadow-md">
                   <CiHeart className="text-2xl text-white" />
                 </div>
@@ -153,7 +154,7 @@ function TourCards() {
 
                 </p>
                 <p className="text-gray-500 text-xs sm:text-sm mt-1">{tour.duration}</p>
-                <p className="text-gray-500 text-xs sm:text-sm mt-1">{tour.Recomendation} % Recommended</p>
+                <p className="text-gray-500 text-xs sm:text-sm mt-1">100% Recommended</p>
                 <p className="text-gray-500 text-xs sm:text-sm mt-2">{tour.description}</p>
 
 
@@ -165,9 +166,9 @@ function TourCards() {
                   <div>
                     <div className='flex gap-x-2'>
                       <p className=" text-gray-600 text-xs sm:text-sm">{tour.rating >= 4 ? "Good" : "Average"}</p>
-                      <span className="bg-red-500 text-white  px-2 text-xs sm:text-sm  rounded-xl ">{tour.rating}</span>
+                      <span className="bg-red-500 text-white  px-2 text-xs sm:text-sm  rounded-xl ">4.2</span>
                     </div>
-                    <p className="text-gray-500 text-[12px]">({tour.reviews} reviews)</p>
+                    <p className="text-gray-500 text-[12px]">(236 reviews)</p>
                   </div>
 
                   <div className='mt-0 md:mt-6 text-right'>

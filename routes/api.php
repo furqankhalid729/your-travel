@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CarController;
 use App\Http\Controllers\HotelController;
+use App\Http\Controllers\LocationController;
+use App\Http\Controllers\HotelFrontendController;
+use App\Http\Controllers\TourFrontendController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -20,11 +23,24 @@ Route::middleware('auth')->group(function () {
     // Route::put('/driver/update/{driver}', [DriverController::class, 'update'])->name('driver.update');
     Route::post('/hotel/add-hotel-room', [HotelRoomController::class, 'store'])->name('hotelRoom.store');
     Route::delete('/hotel/delete/{id}', [HotelRoomController::class, 'destroy'])->name('hotelRoom.delete');
+
+    Route::post('/tour/add-tour', [TourController::class, 'store']);
+    Route::delete('/tour/delete/{id}', [TourController::class, 'destroy'])->name('tour.delete');
 });
 
-Route::post('/hotel/hotel-booking-form', [HotelController::class, 'store'])->name('hotel.store');
-Route::post('/tour/add-tour', [TourController::class, 'store']);
+Route::get('/locations', [LocationController::class, 'getGoogleMapSuggestions']);
+Route::get('/location-images', [LocationController::class, 'getLocationImages']);
 
+Route::post('/hotel/hotel-booking-form', [HotelController::class, 'store'])->name('hotel.store');
 
 // Route::get('/frontend/car', [HotelRoomController::class, 'frontendIndex'])->name('car.frontendIndex');
 // Route::get('/frontend/car/car-details', [HotelRoomController::class, 'show'])->name('cars.show');
+
+
+Route::get('/cars/home/featured', [CarController::class, 'featured'])->name('cars.featured');
+
+Route::get('/cars/filter', [CarController::class, 'filter'])->name('cars.filter');
+Route::get('/cars/car-details/{id}', [CarController::class, 'show'])->name('cars.show');
+
+Route::get('/hotel/home/featured', [HotelFrontendController::class, 'featured'])->name('hotel.featured');
+Route::get('/tour/home/featured', [TourFrontendController::class, 'featured'])->name('tour.featured');

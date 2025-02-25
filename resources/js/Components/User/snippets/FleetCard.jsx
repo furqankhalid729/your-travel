@@ -4,7 +4,7 @@ import { CiHeart } from "react-icons/ci";
 const FleetCard = ({ imageSrc, car_name, brand, model }) => {
   return (
     <div className="relative w-full max-w-xl rounded-lg overflow-hidden bg-[#F4F4F4] py-3">
-      <img src={`/storage/images${imageSrc}`} alt={car_name} className="w-full  object-cover" />
+      <img src={`/storage/${imageSrc}`} alt={car_name} className="w-full  object-cover h-[215px]" />
 
       <div className="absolute top-2 right-2 bg-white rounded-full p-1 shadow">
         <CiHeart className=" text-xl" />

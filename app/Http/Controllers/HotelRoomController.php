@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Enums\InertiaViews;
 use App\Models\HotelRoom;
+use App\Models\Hotel;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Log;
@@ -15,17 +16,9 @@ class HotelRoomController extends Controller
      */
     public function index()
     {
-        $hotelRooms = HotelRoom::all();
-        $hotelRooms = HotelRoom::all()->map(function ($room) {
-            $room->facilities = json_decode($room->facilities, true);
-            $room->types = json_decode($room->types, true);
-            $room->tour_images = json_decode($room->tour_images, true);
-            $room->rooms = json_decode($room->rooms, true);
-            return $room;
-        });
-
+        $hotels = Hotel::all();
         return Inertia::render(InertiaViews::RoomIndex->value, [
-            'hotelRooms' => $hotelRooms,
+            'hotels' => $hotels,
         ]);
     }
 
@@ -45,25 +38,26 @@ class HotelRoomController extends Controller
         Log::info($request->all());
 
         $validatedData = $request->validate([
-            'duration' => 'required|string',
-            'location' => 'required|string',
-            'food' => 'required|string',
-            'tour_type' => 'required|string',
-            'persons' => 'required|integer',
-            'price' => 'required|numeric',
-            'summary' => 'required|string',
+            'name' => 'required | string',
+            'description' => 'required | string',
+            'location' => 'required | string',
+            'food' => 'required | string',
+
             'facilities' => 'nullable|array',
             'facilities.*.name' => 'required|string|max:255',
             'facilities.*.icon' => 'required|string|max:255',
+
             'types' => 'nullable|array',
             'types.*.name' => 'required|string|max:255',
             'types.*.icon' => 'required|string|max:255',
+
             'tour_images' => 'nullable|array',
             'tour_images.*.file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
             'rooms' => 'required|array',
             'rooms.*.room_id' => 'required|string|max:255',
             'rooms.*.room_type' => 'required|string|max:255',
-            'rooms.*.available_rooms' => 'required|string|max:255',
+            'rooms.*.status' => 'required|string|max:255',
             'rooms.*.price' => 'required|numeric',
         ]);
 
@@ -72,7 +66,7 @@ class HotelRoomController extends Controller
         if ($request->has('tour_images') && !empty($request->file('tour_images'))) {
             foreach ($request->file('tour_images') as $tourImage) {
                 if (isset($tourImage['file']) && $tourImage['file'] instanceof \Illuminate\Http\UploadedFile) {
-                    $path = $tourImage['file']->store('images/hotel_rooms');
+                    $path = $tourImage['file']->store('images/Hotel');
                     $tourImages[] = $path;
                 } else {
                     Log::error('Not an instance of UploadedFile:', ['file' => $tourImage['file']]);
@@ -80,15 +74,24 @@ class HotelRoomController extends Controller
             }
         }
 
-        $hotelRoom = HotelRoom::create([
+        $hotel = Hotel::create([
             ...$validatedData,
             'facilities' => json_encode($validatedData['facilities'] ?? []),
             'types' => json_encode($validatedData['types'] ?? []),
-            'tour_images' => json_encode($tourImages),
-            'rooms' => json_encode($validatedData['rooms']),
+            'images' => json_encode($tourImages),
         ]);
 
-        return response()->json($hotelRoom, 201);
+        foreach ($validatedData['rooms'] as $roomData) {
+            HotelRoom::create([
+                'hotel_id' => $hotel->id,
+                'room_id' => $roomData['room_id'],
+                'room_type' => $roomData['room_type'],
+                'status' => $roomData['status'],
+                'price' => $roomData['price'],
+            ]);
+        }
+
+        return redirect()->route('hotel.index')->with('success', 'Hotel Added successfully');
     }
 
     /**
@@ -96,20 +99,21 @@ class HotelRoomController extends Controller
      */
     public function edit(string $id)
     {
-        $hotelRoom = HotelRoom::find($id);
+        $hotel = Hotel::find($id);
 
-        if (!$hotelRoom) {
+        if (!$hotel) {
             return redirect()->back()->withErrors(['error' => 'Hotel room not found!']);
         }
-
+        $hotelRooms = HotelRoom::where('hotel_id', $hotel->id)->get();
         // Decode the JSON fields
-        $hotelRoom->facilities = json_decode($hotelRoom->facilities, true);
-        $hotelRoom->types = json_decode($hotelRoom->types, true);
-        $hotelRoom->tour_images = json_decode($hotelRoom->tour_images, true);
-        $hotelRoom->rooms = json_decode($hotelRoom->rooms, true);
+        $hotel->facilities = json_decode($hotel->facilities, true);
+        $hotel->types = json_decode($hotel->types, true);
+        $hotel->tour_images = json_decode($hotel->tour_images, true);
+        $hotel->rooms = json_decode($hotel->rooms, true);
 
-        return Inertia::render(InertiaViews::EditHotelBooking->value, [
-            'hotelRoom' => $hotelRoom,
+        return Inertia::render(InertiaViews::EditHotel->value, [
+            'hotel' => $hotel,
+            'hotelRooms' => $hotelRooms
         ]);
     }
 
@@ -118,36 +122,41 @@ class HotelRoomController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $hotelRoom = HotelRoom::find($id);
+        $hotel = Hotel::find($id);
 
-        if (!$hotelRoom) {
+        if (!$hotel) {
             return redirect()->back()->withErrors(['error' => 'Hotel room not found!']);
         }
 
         $validatedData = $request->validate([
-            'duration' => 'required|string',
-            'location' => 'required|string',
-            'food' => 'required|string',
-            'tour_type' => 'required|string',
-            'persons' => 'required|integer',
-            'price' => 'required|numeric',
-            'summary' => 'required|string',
+            'name' => 'required | string',
+            'description' => 'required | string',
+            'location' => 'required | string',
+            'food' => 'required | string',
+
             'facilities' => 'nullable|array',
             'facilities.*.name' => 'required|string|max:255',
             'facilities.*.icon' => 'required|string|max:255',
+
             'types' => 'nullable|array',
             'types.*.name' => 'required|string|max:255',
+            'types.*.icon' => 'required|string|max:255',
+
             'tour_images' => 'nullable|array',
             'tour_images.*.file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'rooms' => 'nullable|array',
+
+            'rooms' => 'required|array',
+            'rooms.*.room_id' => 'required|string|max:255',
+            'rooms.*.room_type' => 'required|string|max:255',
+            'rooms.*.status' => 'required|string|max:255',
+            'rooms.*.price' => 'required|numeric',
         ]);
 
-        // Handle tour_images upload
-        $tourImages = json_decode($hotelRoom->tour_images, true) ?? [];
+        $tourImages = json_decode($hotel->tour_images, true) ?? [];
         if ($request->has('tour_images') && !empty($request->file('tour_images'))) {
             foreach ($request->file('tour_images') as $tourImage) {
                 if (isset($tourImage['file']) && $tourImage['file'] instanceof \Illuminate\Http\UploadedFile) {
-                    $path = $tourImage['file']->store('images/hotel_rooms');
+                    $path = $tourImage['file']->store('images/Hotel');
                     $tourImages[] = $path;
                 } else {
                     Log::error('Not an instance of UploadedFile:', ['file' => $tourImage['file']]);
@@ -155,21 +164,54 @@ class HotelRoomController extends Controller
             }
         }
 
-        $hotelRoom->update([
-            'duration' => $validatedData['duration'],
-            'location' => $validatedData['location'],
-            'food' => $validatedData['food'],
-            'tour_type' => $validatedData['tour_type'],
-            'persons' => $validatedData['persons'],
-            'price' => $validatedData['price'],
-            'summary' => $validatedData['summary'],
+        $hotel->update([
+            ...$validatedData,
             'facilities' => json_encode($validatedData['facilities'] ?? []),
             'types' => json_encode($validatedData['types'] ?? []),
-            'tour_images' => json_encode($tourImages),
-            'rooms' => json_encode($validatedData['rooms']),
+            'images' => json_encode($tourImages ?? []),
         ]);
 
-        return redirect()->route('hotelbook.index')->with('success', 'Hotel room updated successfully');
+        // Retrieve existing rooms from the database
+        $existingRooms = HotelRoom::where('hotel_id', $hotel->id)->get();
+
+        // Extract room IDs from the validated data
+        $submittedRoomIds = array_column($validatedData['rooms'], 'id');
+        Log::info($submittedRoomIds);
+        // Step 1: Detect and delete removed rooms
+        foreach ($existingRooms as $existingRoom) {
+            if (!in_array($existingRoom->room_id, $submittedRoomIds)) {
+                Log::info("ID match");
+                $existingRoom->delete();
+            }
+        }
+
+        // Step 2: Add new or update existing rooms
+        foreach ($validatedData['rooms'] as $roomData) {
+            $existingRoom = HotelRoom::where('hotel_id', $hotel->id)
+                ->where('room_id', $roomData['room_id'])
+                ->first();
+
+            if ($existingRoom) {
+                // Update existing room
+                $existingRoom->update([
+                    'room_type' => $roomData['room_type'],
+                    'status' => $roomData['status'],
+                    'price' => $roomData['price'],
+                ]);
+            } else {
+                // Create new room
+                HotelRoom::create([
+                    'hotel_id' => $hotel->id,
+                    'room_id' => $roomData['room_id'],
+                    'room_type' => $roomData['room_type'],
+                    'status' => $roomData['status'],
+                    'price' => $roomData['price'],
+                ]);
+            }
+        }
+
+
+        return redirect()->route('hotel.index')->with('success', 'Hotel room updated successfully');
     }
 
     /**
@@ -177,11 +219,11 @@ class HotelRoomController extends Controller
      */
     public function destroy(string $id)
     {
-        $hotelRoom = HotelRoom::find($id);
-        if (!$hotelRoom) {
+        $hotel = Hotel::find($id);
+        if (!$hotel) {
             return response()->json(['message' => 'Hotel room not found.'], 404);
         }
-        $hotelRoom->delete();
+        $hotel->delete();
         return response()->json(['message' => 'Hotel room deleted successfully.'], 200);
     }
 }

@@ -11,7 +11,6 @@ enum InertiaViews: string
 
     // drivers
     case AddDriver = 'Admin/CarBooking/AddDriver';
-
     case HotelBookingIndex = 'Admin/HotelBooking/HotelBooking';
 
     //case HotelCreate = 'Admin/HotelBooking/AddHotelRoom';
@@ -21,13 +20,17 @@ enum InertiaViews: string
     // hotel booking
     case AddHotelRoom = 'Admin/HotelBooking/AddHotelRoom';
     case RoomIndex = 'Admin/HotelBooking/AllHotels';
-    case EditHotelBooking = 'Admin/HotelBooking/EditHotelBooking';
+    case EditHotel = 'Admin/HotelBooking/EditHotelBooking';
 
+    //Tour Index
+    case TourIndex = 'Admin/TourBooking/ViewTour';
 
 
     // Frontend
     // cars
     case carIndex = 'User/Car';
     case CarDetail = 'User/CarDetail';
+    case HotelIndex = 'User/Hotel';
+    case TourIndexFrontend = 'User/Tour';
 
 }

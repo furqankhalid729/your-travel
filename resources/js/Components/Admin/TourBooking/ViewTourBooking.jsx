@@ -50,14 +50,14 @@ const ViewTourBooking = () => {
         <span>Back</span>
       </Link>
       <div className="mx-6 p-5 bg-white min-h-screen">
-        <div className="breadcrumbs text-sm">
+        {/* <div className="breadcrumbs text-sm">
           <ul>
             <li>
               <a>Tours</a>
             </li>
             <li>View Tour Bookings</li>
           </ul>
-        </div>
+        </div> */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl lg:text-4xl text-[#808080]">
             View Tour Bookings

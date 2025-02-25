@@ -282,7 +282,7 @@ const ViewRooms = () => {
             Available Rooms
           </h2>
           <Link
-            href="/dashboard/hotel-booking/add-hotel-room"
+            href={route('hotel.create')}
             className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 py-1 lg:py-2 rounded-lg"
           >
             <FaPlus />

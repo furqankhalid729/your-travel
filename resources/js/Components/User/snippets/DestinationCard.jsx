@@ -5,7 +5,7 @@ const DestinationCard = ({ image, heading }) => {
     <div className="relative w-full max-w-xl rounded-lg overflow-hidden mx-auto bg-[#F4F4F4] ">
       
       <img
-        src={image}
+        src={`/storage/${image}`}
         alt={image}
         className="w-full h-[200px] sm:h-[260px] md:h-[330px] object-cover"
       />
