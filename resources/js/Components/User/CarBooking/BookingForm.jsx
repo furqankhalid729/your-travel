@@ -2,7 +2,7 @@ import React from "react";
 
 const BookingForm = () => {
   return (
-    <div className="w-full">
+    <div className="w-full lg:w-[70%] py-5 lg:py-0">
       <div className=" flex-col ">
         <div className="bg-white border border-gray-300 rounded-lg p-6 ">
           {/* First Row: Heading */}

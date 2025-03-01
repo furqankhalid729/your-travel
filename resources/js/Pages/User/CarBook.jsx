@@ -4,7 +4,7 @@ import BookingForm from '../../Components/User/CarBooking/BookingForm';
 import UserLayout from "../../Layout/UserLayout";
 const CarBook = () => {
   return (
-    <div className=' mt-12 md:flex gap-6'>
+    <div className=' mt-12 lg:flex gap-6 p-6'>
       {/* xl:mx-24 px-2 mx-4 md:mx-8 lg:mx:20 */}
       <CarBooking/>
       <BookingForm/>

@@ -1,11 +1,15 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { addBooking } from '../../../store/bookingSlice';
 import { CiHeart } from 'react-icons/ci';
 // import { LuParkingCircle } from "react-icons/lu";
 
 import { MdLocationPin } from "react-icons/md";
 import { FaMapMarkerAlt, FaCity } from 'react-icons/fa';
 import ImageGallery from '../Snippets/ImageGallery';
+import { Link } from '@inertiajs/react';
 const TourProfile = () => {
+  const dispatch = useDispatch();
   const images = [
     "storage/images/tour5.jpg",
     "storage/images/tour.jpeg",
@@ -15,6 +19,18 @@ const TourProfile = () => {
     "storage/images/tour4.jpeg"
   ];
 
+  const handleBookNow = () => {
+    const bookingData = {
+      type: 'tour',
+      id: '1', // Replace with actual tour ID
+      name: 'Lake Lucerne: Bodies Of Water',
+      price: '200',
+      additional_info: {
+        tour_location: 'Swetzerland',
+      },
+    };
+    dispatch(addBooking(bookingData));
+  };
   const tourData = [
     { label: "Duration", value: "6 Days" },
     { label: "Location", value: "Zurich" },
@@ -42,7 +58,9 @@ const TourProfile = () => {
             <span className='text-lg md:text-xl lg:text-4xl text-red-500 md:mt-4'><CiHeart /></span>
             <div className='flex flex-col'><p className='text-xs md:text-sm text-gray-500 text-right'>from</p> <p className="text-base md:text-2xl font-semibold text-gray-800">$200</p></div>
 
-            <button className="px-2 lg:px-6 py-1 mt-1 lg:mt-0 lg:py-2  bg-red-500 text-white text-[10px] md:text-sm rounded-full">Book Now</button>
+            <Link href="/car-booking">
+              <button onClick={handleBookNow} className="px-2 lg:px-6 py-1 mt-1 lg:mt-0 lg:py-2  bg-red-500 text-white text-[10px] md:text-sm rounded-full">Book Now</button>
+            </Link>
           </div>
         </div>
         <div>

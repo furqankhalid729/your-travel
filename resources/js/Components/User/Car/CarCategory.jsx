@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { useForm } from "@inertiajs/react";
-import Slider from "@material-ui/core/Slider";
+// import Slider from "@material-ui/core/Slider";
 
 const CarCategory = ({ filters, modelsFilter, brandFilter }) => {
   console.log(brandFilter)

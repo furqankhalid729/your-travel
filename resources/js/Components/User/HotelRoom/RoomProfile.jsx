@@ -1,11 +1,15 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { addBooking } from '../../../store/bookingSlice';
 import { CiHeart } from 'react-icons/ci';
 import { LuParkingMeter } from "react-icons/lu";
 
 import { MdLocationPin } from "react-icons/md";
 import { FaMapMarkerAlt, FaCity } from 'react-icons/fa';
 import ImageGallery from '../Snippets/ImageGallery';
+import { Link } from '@inertiajs/react';
 const RoomProfile = () => {
+  const dispatch = useDispatch();
   const images = [
     "storage/images/hotel0.jpg",
     "storage/images/hotel2.jpg",
@@ -14,6 +18,20 @@ const RoomProfile = () => {
     "storage/images/hotel8.jpg",
     "storage/images/hotel7.jpg"
   ];
+
+  const handleBookNow = () => {
+    const bookingData = {
+      type: 'hotel',
+      id: '1', // Replace with actual hotel ID
+      name: 'Avari Hotel Lahore',
+      price: '170',
+      additional_info: {
+        hotel_location: '87 - Shahrah-e-Quaid-e-Azam, 54000 Lahore, Pakistan',
+      },
+    };
+    dispatch(addBooking(bookingData));
+  };
+
   return (
     <div className="">
       {/* Breadcrumb */}
@@ -33,7 +51,8 @@ const RoomProfile = () => {
             <span className='text-lg md:text-xl lg:text-4xl text-red-500 md:mt-4'><CiHeart /></span>
             <div className='flex flex-col'><p className='text-xs md:text-sm text-gray-500 text-right'>from</p> <p className="text-base md:text-2xl font-semibold text-gray-800">$200</p></div>
 
-            <button className="px-2 lg:px-6 py-1 mt-1 lg:mt-0 lg:py-2  bg-red-500 text-white text-[10px] md:text-sm rounded-full">Book Now</button>
+            <Link href='/car-booking'>
+              <button onClick={handleBookNow} className="px-2 lg:px-6 py-1 mt-1 lg:mt-0 lg:py-2  bg-red-500 text-white text-[10px] md:text-sm rounded-full">Book Now</button></Link>
           </div>
         </div>
         <div>
@@ -112,9 +131,11 @@ const RoomProfile = () => {
           <p className='text-xs md:text-sm text-gray-500 text-right'>from</p>
           <p className="text-base md:text-2xl font-semibold text-gray-800">$200</p>
         </div>
-        <button className="px-2 lg:px-6 py-1 mt-1 lg:mt-0 lg:py-2 bg-red-500 text-white text-[10px] md:text-sm rounded-full">
-          Book Now
-        </button>
+        <Link href="/car-booking">
+          <button onClick={handleBookNow} className="px-2 lg:px-6 py-1 mt-1 lg:mt-0 lg:py-2 bg-red-500 text-white text-[10px] md:text-sm rounded-full">
+            Book Now
+          </button>
+        </Link>
       </div>
     </div>
   );
