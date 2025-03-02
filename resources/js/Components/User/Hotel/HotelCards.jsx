@@ -7,9 +7,9 @@ import { BiFridge } from "react-icons/bi";
 import { Link } from '@inertiajs/react';
 
 
-function HotelCards({ hotels}) {
+function HotelCards({ hotels }) {
   console.log(hotels[0]);
-  console.log(Array.isArray(JSON.parse(hotels[0].types)))
+  // console.log(Array.isArray(JSON.parse(hotels[0].types)))
   // const hotels = [
   //   {
   //     id: 1,

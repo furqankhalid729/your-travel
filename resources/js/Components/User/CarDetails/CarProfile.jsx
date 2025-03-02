@@ -1,4 +1,6 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
+import { addBooking } from '../../../store/bookingSlice';
 import { CiHeart } from 'react-icons/ci';
 import { CgProfile } from "react-icons/cg";
 import { GrStatusGood } from "react-icons/gr";
@@ -11,6 +13,23 @@ const CarProfile = (car) => {
   console.log("CarProfile :", car.car.car_images);
   const images = car.car.car_images.map(image => 'http://127.0.0.1:8000/storage/' + image);
   //const images = car.car.car_images;
+
+  const dispatch = useDispatch();
+  const handleBookNow = () => {
+    const bookingData = {
+      type: 'car',
+      id: car.car.id,
+      name: car.car.car_name,
+      price: car.car.price,
+      additional_info: {
+        pickup_location: 'Lahore, Punjab, Pakistan',
+        dropout_location: "Islamabad, Pakistan",
+        pickup_date: '02-02-2024',
+        dropout_date: '03-03-2024',
+      },
+    };
+    dispatch(addBooking(bookingData));
+  };
 
   return (
     <>
@@ -44,8 +63,8 @@ const CarProfile = (car) => {
             <p className="text-sm sm:text-2xl font-semibold text-gray-800">${car.car.price}</p>
           </div>
 
-          <Link to='/car-booking'>
-            <button className="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-600">
+          <Link href='/car-booking'>
+            <button onClick={handleBookNow} className="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-600">
               Book Now
             </button>
           </Link>
@@ -61,7 +80,7 @@ const CarProfile = (car) => {
 
         {/* Right Section: Map & Profile */}
         {/* <div className='w-1/4'> */}
-          {/* <div className="h-20 lg:h-44 relative bg-gray-300 mb-4 rounded-md overflow-hidden ">
+        {/* <div className="h-20 lg:h-44 relative bg-gray-300 mb-4 rounded-md overflow-hidden ">
             <div
               className="absolute inset-0 bg-cover bg-center rounded-md"
               style={{ backgroundImage: `url('/map.jpg')` }}
@@ -71,7 +90,7 @@ const CarProfile = (car) => {
               </span>
             </div>
           </div> */}
-          {/* <div className='max-[320px]:text-[5px] text-[8px] lg:text-sm ' >
+        {/* <div className='max-[320px]:text-[5px] text-[8px] lg:text-sm ' >
             <div className="flex items-center space-x-1 md:space-x-4">
               <img
                 src="storage/images/avatardriver.png"
