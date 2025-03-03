@@ -190,7 +190,7 @@ function HotelCards({ hotels }) {
                 </p>
 
                 {/* Details Button */}
-                <Link to="/room" className="mt-4 px-4 py-3 md:px-8 md:py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 text-sm md:text-lg">
+                <Link href={route('hotel.show', { id: hotel.id })} className="mt-4 px-4 py-3 md:px-8 md:py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 text-sm md:text-lg">
                   See Details
                 </Link>
               </div>

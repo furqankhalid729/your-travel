@@ -5,16 +5,16 @@ import AvailableRoom from '../../Components/User/HotelRoom/AvailableRoom';
 import GuestReview from '../../Components/User/HotelRoom/GuestReview';
 import RulesPolicy from '../../Components/User/HotelRoom/RulesPolicy';
 import UserLayout from "../../Layout/UserLayout";
-const HotelRoom = () => {
+const HotelRoom = ({ hotel, hotelRooms }) => {
     return (
         <div className='p-4 md:p-8 mx-4 md:mx-16'>
-            <RoomProfile />
-            <RoomSummary />
-            <AvailableRoom />
-            <GuestReview />
-            <RulesPolicy />
+            <RoomProfile hotel={hotel} hotelRooms={hotelRooms} />
+            <RoomSummary hotel={hotel} hotelRooms={hotelRooms} />
+            <AvailableRoom hotel={hotel} hotelRooms={hotelRooms} />
+            <GuestReview hotel={hotel} hotelRooms={hotelRooms} />
+            <RulesPolicy hotel={hotel} hotelRooms={hotelRooms} />
         </div>
     )
 }
-HotelRoom.layout = page => <UserLayout children={page} title="Hotel Room"/>
+HotelRoom.layout = page => <UserLayout children={page} title="Hotel Room" />
 export default HotelRoom
