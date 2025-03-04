@@ -1,25 +1,37 @@
 import React from "react";
-import { FaWifi, FaUtensils, FaTv } from "react-icons/fa";
+import { FaWifi, FaUtensils, FaTv, FaSpa, FaSwimmingPool, FaParking, FaCheck, FaTimes } from "react-icons/fa";
 import { LiaShuttleVanSolid } from "react-icons/lia";
 import { MdEmojiFoodBeverage } from "react-icons/md";
 import { IoMdCheckmark } from "react-icons/io";
 import { RxCross1 } from "react-icons/rx";
 
+const iconMapping = {
+  FaWifi: <FaWifi />,
+  FaUtensils: <FaUtensils />,
+  FaSpa: <FaSpa />,
+  FaSwimmingPool: <FaSwimmingPool />,
+  FaParking: <FaParking />,
+};
 
-const TourSummary = () => {
-  const includedItems = [
-    "Specialized bilingual guide",
-    "Entrance fees (Cable and car and Moon Valley)",
-    "Private Transport",
-    "Box lunch water, banana apple and chocolate",
-  ];
+const TypeIconMapping = {
+  FaCheck: <FaCheck />,
+  FaTimes: <FaTimes />,
+};
 
-  const excludedItems = [
-    "Additional Services",
-    "Drink",
-    "Insurance",
-    "Tickets",
-  ];
+const TourSummary = ({ tour }) => {
+  // const includedItems = [
+  //   "Specialized bilingual guide",
+  //   "Entrance fees (Cable and car and Moon Valley)",
+  //   "Private Transport",
+  //   "Box lunch water, banana apple and chocolate",
+  // ];
+
+  // const excludedItems = [
+  //   "Additional Services",
+  //   "Drink",
+  //   "Insurance",
+  //   "Tickets",
+  // ];
 
   const facilities = [
     { name: "Free Wifi", icon: <FaWifi /> },
@@ -38,18 +50,18 @@ const TourSummary = () => {
       <div>
         <h2 className="text-lg md:text-xl font-semibold mb-1 ">Summary</h2>
         <p className="text-xs md:text-sm text-gray-800">
-          Start and end in San Francisco! With the in-depth cultural tour Northern California Summer 2024, you have a 6 day tour package taking you through San Francisco, USA and 9 other destinations in USA. Northern California Summer 2024 includes accommodation as well as an expert guide, meals, transport and more.
+          {tour.summary}
         </p>
       </div>
 
       <div className="my-12">
         <h2 className="text-lg md:text-xl font-semibold mb-4">Facilities</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4  text-xs md:text-sm">
-          {facilities.map((items, index) => (
+          {tour.facilities.map((facility, index) => (
             <div key={index} className="text-gray-800 flex mb-4">
-              <span className="text-lg md:text-xl text-red-500 mr-2" >{items.icon}
+              <span className="text-lg md:text-xl text-red-500 mr-2" >{iconMapping[facility.icon]}
               </span>
-              {items.name}
+              {facility.name}
             </div>
           ))}
         </div>
@@ -61,24 +73,28 @@ const TourSummary = () => {
           {/* Included List */}
           <div>
             <ul className="space-y-3 text-xs md:text-sm">
-              {includedItems.map((item, index) => (
-                <li key={index} className="flex items-center">
-                  <span className="text-red-500 text-lg md:text-xl font-bold mr-2"><IoMdCheckmark /></span>
-                  {item}
-                </li>
-              ))}
+              {tour.includedExcludedTypes
+                .filter(type => type.icon === 'FaCheck')
+                .map((type, index) => (
+                  <div key={index} className="text-gray-800 flex mb-4">
+                    <span className="text-lg md:text-xl text-red-500 mr-2">{TypeIconMapping[type.icon]}</span>
+                    {type.name}
+                  </div>
+                ))}
             </ul>
           </div>
 
           {/* Excluded List */}
           <div className="mt-4 md:mt-0">
             <ul className="space-y-3 text-xs md:text-sm">
-              {excludedItems.map((item, index) => (
-                <li key={index} className="flex items-center">
-                  <span className="text-red-500 text-lg md:text-xl font-bold mr-2"><RxCross1 /></span>
-                  {item}
-                </li>
-              ))}
+              {tour.includedExcludedTypes
+                .filter(type => type.icon === 'FaTimes')
+                .map((type, index) => (
+                  <div key={index} className="text-gray-800 flex mb-4">
+                    <span className="text-lg md:text-xl text-red-500 mr-2">{TypeIconMapping[type.icon]}</span>
+                    {type.name}
+                  </div>
+                ))}
             </ul>
           </div>
         </div>
@@ -88,18 +104,7 @@ const TourSummary = () => {
       <div>
         <h2 className="text-lg md:text-xl font-bold mb-4">Condition</h2>
         <div className="text-xs md:text-sm text-gray-800">
-          <p className="">
-            Booking possible 48 hours prior departure.
-          </p>
-          <p className="">
-            Cancellation up to 48 hours before (9 AM – 2 days prior): Free of charge. Afterwards: No refund. With medical
-            certificate / flight proof: CHF 10.00 cancellation fee.
-          </p>
-          <p className="">Rebooking: Free of charge.</p>
-          <p>
-            If there are fewer than 15 registrations 48 hours before departure, the excursion will be cancelled, and a
-            full refund will be issued.
-          </p>
+          {tour.condition}
         </div></div>
     </div>
   );

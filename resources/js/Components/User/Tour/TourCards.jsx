@@ -178,7 +178,7 @@ function TourCards({tours}) {
                 </div>
                 {/* Details Button */}
 
-                <Link to="/tour-pkg"  className="mt-4 px-4 lg:px-8 py-2 bg-red-500 text-white f rounded-full hover:bg-red-600 text-xs sm:text-sm ">
+                <Link href={route('tour.show', { id: tour.id })}  className="mt-4 px-4 lg:px-8 py-2 bg-red-500 text-white f rounded-full hover:bg-red-600 text-xs sm:text-sm ">
                   See Details
                 </Link>
               </div>
