@@ -48,17 +48,7 @@ const RoomSummary = ({ hotel, hotelRooms }) => {
       <div>
         <h2 className="text-xl font-semibold mb-1">Summary</h2>
         <p className="text-xs md:text-sm text-gray-700">
-          {hotel.name} was founded in 1944 by Dinshaw Avari. Avari Hotels first
-          location was the Beach Luxury Hotel in Karachi which opened in 1948.
-          Later, the company established the 17-story Avari Tower Hotel with 120
-          suites in Karachi In May 2012, Avari Hotels partnered with Etihad to
-          join the Etihad Guest loyalty program In 2013, the group announced the
-          launch of a major expansion phase. In 2017, Avari Hotels announced the
-          opening of two 4-star hotels in Multan. The hotel chain is owned by the
-          Parsi Avari family and which was led by Byram D. Avari, who was the
-          Chairman of the group. The hotel chain offers a dedicated toll-free
-          round-the-clock reservations number in Pakistan, 0800-AVARI. For callers
-          from overseas, the number is +92 333 0602743.
+          {hotel.description}
         </p>
       </div>
       <div className="my-12">

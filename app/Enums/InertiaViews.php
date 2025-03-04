@@ -33,6 +33,7 @@ enum InertiaViews: string
     case CarDetail = 'User/CarDetail';
     case HotelIndex = 'User/Hotel';
     case HotelDetail = 'User/HotelRoom';
+    case TourDetail = 'User/TourPKG';
     case TourIndexFrontend = 'User/Tour';
     case Checkout = 'User/CarBook';
 

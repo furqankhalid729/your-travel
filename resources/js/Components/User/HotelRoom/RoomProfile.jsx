@@ -9,7 +9,6 @@ import { FaMapMarkerAlt, FaCity } from 'react-icons/fa';
 import ImageGallery from '../Snippets/ImageGallery';
 import { Link } from '@inertiajs/react';
 const RoomProfile = ({ hotel, hotelRooms }) => {
-  const dispatch = useDispatch();
   // const images = hotel.tour_images.map(image => 'http://127.0.0.1:8000/storage/' + image);
   const images = [
     "/storage/images/hotel0.jpg",
@@ -20,13 +19,14 @@ const RoomProfile = ({ hotel, hotelRooms }) => {
     "/storage/images/hotel7.jpg"
   ];
   console.log(hotel, hotelRooms);
-
+  
+  const dispatch = useDispatch();
   const handleBookNow = () => {
     const bookingData = {
       type: 'hotel',
       id: hotel.id, // Replace with actual hotel ID
       name: hotel.name,
-      price: '170',
+      price: hotelRooms[0].price,
       additional_info: {
         hotel_location: hotel.location,
       },
