@@ -8,25 +8,27 @@ import { MdLocationPin } from "react-icons/md";
 import { FaMapMarkerAlt, FaCity } from 'react-icons/fa';
 import ImageGallery from '../Snippets/ImageGallery';
 import { Link } from '@inertiajs/react';
-const RoomProfile = () => {
+const RoomProfile = ({ hotel, hotelRooms }) => {
   const dispatch = useDispatch();
+  // const images = hotel.tour_images.map(image => 'http://127.0.0.1:8000/storage/' + image);
   const images = [
-    "storage/images/hotel0.jpg",
-    "storage/images/hotel2.jpg",
-    "storage/images/hotels3.png",
-    "storage/images/hotel4.png",
-    "storage/images/hotel8.jpg",
-    "storage/images/hotel7.jpg"
+    "/storage/images/hotel0.jpg",
+    "/storage/images/hotel2.jpg",
+    "/storage/images/hotels3.png",
+    "/storage/images/hotel4.png",
+    "/storage/images/hotel8.jpg",
+    "/storage/images/hotel7.jpg"
   ];
+  console.log(hotel, hotelRooms);
 
   const handleBookNow = () => {
     const bookingData = {
       type: 'hotel',
-      id: '1', // Replace with actual hotel ID
-      name: 'Avari Hotel Lahore',
+      id: hotel.id, // Replace with actual hotel ID
+      name: hotel.name,
       price: '170',
       additional_info: {
-        hotel_location: '87 - Shahrah-e-Quaid-e-Azam, 54000 Lahore, Pakistan',
+        hotel_location: hotel.location,
       },
     };
     dispatch(addBooking(bookingData));
@@ -39,17 +41,17 @@ const RoomProfile = () => {
         <a href="#" className="hover:text-red-800">Home</a> &gt;
         <a href="#" className="hover:text-red-800"> Hotels</a> &gt;
         <a href="#" className="hover:text-red-800"> Pakistan</a> &gt;
-        <a href="#" className="hover:text-red-800"> Lahore</a> &gt;
-        <span className="text-red-400"> Avari Hotel Lahore</span>
+        <a href="#" className="hover:text-red-800"> {hotel.location}</a> &gt;
+        <span className="text-red-400">{hotel.name}</span>
       </nav>
 
       {/* Title and Rating */}
       <div className='my-12'>
         <div className="md:flex items-center justify-between">
-          <h1 className="max-[320px]:text-base text-lg md:text-3xl font-bold">Avari Hotel Lahore  <span className="text-xl text-yellow-500 ml-4">{'★'.repeat(5)}</span></h1>
+          <h1 className="max-[320px]:text-base text-lg md:text-3xl font-bold">{hotel.name}<span className="text-xl text-yellow-500 ml-4">{'★'.repeat(5)}</span></h1>
           <div className="md:flex justify-between space-x-2  hidden">
             <span className='text-lg md:text-xl lg:text-4xl text-red-500 md:mt-4'><CiHeart /></span>
-            <div className='flex flex-col'><p className='text-xs md:text-sm text-gray-500 text-right'>from</p> <p className="text-base md:text-2xl font-semibold text-gray-800">$200</p></div>
+            <div className='flex flex-col'><p className='text-xs md:text-sm text-gray-500 text-right'>from</p> <p className="text-base md:text-2xl font-semibold text-gray-800">${hotelRooms[0].price || 200}</p></div>
 
             <Link href='/car-booking'>
               <button onClick={handleBookNow} className="px-2 lg:px-6 py-1 mt-1 lg:mt-0 lg:py-2  bg-red-500 text-white text-[10px] md:text-sm rounded-full">Book Now</button></Link>
@@ -65,7 +67,7 @@ const RoomProfile = () => {
           </div>
           <div className="items-center space-x-2 mb-1">
             <span className='text-red-500 text-[10px] md:text-sm inline-block'><MdLocationPin /></span>
-            <span className="text-gray-500 text-[8px] md:text-sm"> 87 - Shahrah-e-Quaid-e-Azam, 54000 Lahore, Pakistan</span>
+            <span className="text-gray-500 text-[8px] md:text-sm"> {hotel.location}</span>
           </div>
         </div>
       </div>
