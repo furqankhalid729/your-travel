@@ -23,4 +23,11 @@ class TourFrontendController extends Controller
         $tours = Tour::limit($limit)->get();
         return response()->json($tours);
     }
+    public function show($id)
+    {
+        $tour = Tour::findOrFail($id);
+        return Inertia::render(InertiaViews::TourDetail->value, [
+            'tour' => $tour,
+        ]);
+    }
 }

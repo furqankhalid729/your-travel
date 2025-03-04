@@ -1,6 +1,6 @@
 import React from 'react';
 
-const TourItinerary = () => {
+const TourItinerary = ({ tour }) => {
   const itinerary = [
     {
       day: 'Day 01',
@@ -49,19 +49,18 @@ const TourItinerary = () => {
   return (
     <div className="mt-12">
       <h1 className="text-lg md:text-xl font-bold mb-6 ">Tour Itinerary</h1>
-      {itinerary.map((day, index) => (
+      {tour.tour_itinerary.map((itinerary, index) => (
         <div
           key={index}
           className="md:flex gap-6 mb-8"
         >
-          <div className='w-full md:w-7/12 lg:w-10/12'><p className='text-base md:text-lg font-semibold'>{day.day}</p>
-            <p className='text-base md:text-lg font-semibold mb-4'>{day.title}</p>
-            <p className="text-xs md:text-sm text-gray-800">{day.description}<span className='ml-1'>{day.overnight}</span> </p>
+          <div className='w-full md:w-7/12 lg:w-10/12'><p className='text-base md:text-lg font-semibold'>Day: {index + 1}</p>
+            <p className="text-xs md:text-sm text-gray-800">{itinerary.day}</p>
           </div>
           <div className='w-full md:w-5/12 lg:w-2/12 mt-4 md:mt-0'>
             <img
-              src={day.image}
-              alt={day.title}
+              src={'/storage/images/tour.jpeg' || itinerary.image}
+              alt={itinerary.image}
               className="w-full h-full object-cover rounded-lg shadow-lg"
             />
           </div>

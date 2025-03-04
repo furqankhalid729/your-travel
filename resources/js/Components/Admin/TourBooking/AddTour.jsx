@@ -206,7 +206,11 @@ const AddTour = () => {
     formData.append("tour_type", data.tour_type);
     formData.append("persons", data.persons);
     formData.append("price", data.price);
-    formData.append("tour_images", JSON.stringify(data.tour_images)); // Send features as JSON string
+    data.tour_images.forEach((imageObj) => {
+      if (imageObj.file) {
+        formData.append("tour_images[]", imageObj.file);
+      }
+    });
     formData.append("summary", data.summary);
     formData.append("facilities", JSON.stringify(data.facilities)); // Send features as JSON string
     formData.append("includedExcludedTypes", JSON.stringify(data.includedExcludedTypes)); // Send types as JSON string

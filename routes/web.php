@@ -24,6 +24,9 @@ Route::get('/car', [CarFrontendController::class, 'frontendIndex'])->name('car.f
 Route::get('/hotel', [HotelFrontendController::class, 'frontendIndex'])->name('hotel.frontendIndex');
 Route::get('/tour', [TourFrontendController::class, 'frontendIndex'])->name('tour.frontendIndex');
 
+Route::get('/hotel/hotel-details/{id}', [HotelRoomController::class, 'show'])->name('hotel.show');
+Route::get('/tour/tour-details/{id}', [TourFrontendController::class, 'show'])->name('tour.show');
+
 Route::get('/about', function () {
     return Inertia::render('User/About');
 });
@@ -48,11 +51,6 @@ Route::get('/contact', function () {
     return Inertia::render('User/Contact');
 });
 
-
-// Route::get('/room', function () {
-//     return Inertia::render('User/HotelRoom');
-// });
-Route::get('/hotel/hotel-details/{id}', [HotelRoomController::class, 'show'])->name('hotel.show');
 
 
 Route::get('/career', function () {
@@ -90,10 +88,10 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/dashboard/car-booking/driver-listing', [DriverController::class, 'index'])->name('driver.index');
     Route::get('/dashboard/car-booking/add-driver', [DriverController::class, 'create'])->name('driver.create');
-    
+
     Route::get('/dashboard/car-booking/driver/edit/{id}', [DriverController::class, 'edit'])->name('driver.edit');
     Route::put('/dashboard/car-booking/driver/update/{id}', [DriverController::class, 'update'])->name('driver.update');
-    
+
     Route::get('/dashboard/hotel-booking', [HotelBookingController::class, 'index'])->name('hotelbooking.index');
 
     Route::get('/dashboard/hotel/add-hotel', [HotelRoomController::class, 'create'])->name('hotel.create');
