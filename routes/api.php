@@ -10,6 +10,7 @@ use App\Http\Controllers\HotelController;
 use App\Http\Controllers\LocationController;
 use App\Http\Controllers\HotelFrontendController;
 use App\Http\Controllers\TourFrontendController;
+use App\Http\Controllers\BookingController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -35,12 +36,9 @@ Route::post('/hotel/hotel-booking-form', [HotelController::class, 'store'])->nam
 
 // Route::get('/frontend/car', [HotelRoomController::class, 'frontendIndex'])->name('car.frontendIndex');
 // Route::get('/frontend/car/car-details', [HotelRoomController::class, 'show'])->name('cars.show');
-
-
 Route::get('/cars/home/featured', [CarController::class, 'featured'])->name('cars.featured');
-
 Route::get('/cars/filter', [CarController::class, 'filter'])->name('cars.filter');
 Route::get('/cars/car-details/{id}', [CarController::class, 'show'])->name('cars.show');
-
 Route::get('/hotel/home/featured', [HotelFrontendController::class, 'featured'])->name('hotel.featured');
 Route::get('/tour/home/featured', [TourFrontendController::class, 'featured'])->name('tour.featured');
+Route::post('/add/booking', [BookingController::class, 'booking'])->name('booking');

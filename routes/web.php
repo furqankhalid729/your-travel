@@ -10,6 +10,8 @@ use App\Http\Controllers\CarFrontendController;
 use App\Http\Controllers\HotelFrontendController;
 use App\Http\Controllers\TourFrontendController;
 use App\Http\Controllers\TourController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\AdminDashboardController;
 use App\Models\Car\CarBrand;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -23,6 +25,7 @@ Route::get('/', function () {
 Route::get('/car', [CarFrontendController::class, 'frontendIndex'])->name('car.frontendIndex');
 Route::get('/hotel', [HotelFrontendController::class, 'frontendIndex'])->name('hotel.frontendIndex');
 Route::get('/tour', [TourFrontendController::class, 'frontendIndex'])->name('tour.frontendIndex');
+Route::get('/car-booking',[BookingController::class, 'index'] )->name('checkout');
 
 Route::get('/about', function () {
     return Inertia::render('User/About');
@@ -82,6 +85,8 @@ Route::get('/test-1', function () {
 // });
 
 Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'] );
+
     Route::get('/dashboard/car-booking', [CarController::class, 'index']);
     Route::get('/dashboard/car-booking/add-car', [CarController::class, 'create']);
     Route::get('/dashboard/car/edit/{id}', [CarController::class, 'edit'])->name('car.edit');
@@ -107,10 +112,6 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/dashlayout', function () {
     return Inertia::render('Admin/DashLayout');
-});
-
-Route::get('/dashboard', function () {
-    return Inertia::render('Admin/Dashboard');
 });
 
 
@@ -272,10 +273,6 @@ Route::get('/welcome', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
-Route::get('/dashboard', function () {
-    return Inertia::render(component: 'Admin/Dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

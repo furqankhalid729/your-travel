@@ -4,6 +4,7 @@ namespace App\Enums;
 
 enum InertiaViews: string
 {
+    case AdminDashboard = 'Admin/Dashboard';
     // cars
     case AddCar = 'Admin/CarBooking/AddCar';
     case CarIndex = 'Admin/CarBooking/CarBookDash';
@@ -32,5 +33,6 @@ enum InertiaViews: string
     case CarDetail = 'User/CarDetail';
     case HotelIndex = 'User/Hotel';
     case TourIndexFrontend = 'User/Tour';
+    case Checkout = 'User/CarBook';
 
 }

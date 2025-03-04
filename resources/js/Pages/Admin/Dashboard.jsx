@@ -1,6 +1,8 @@
 // import { Chart } from "react-google-charts";
 import AdminLayout from "../../Layout/AdminLayout";
-const Dashboard = () => {
+const Dashboard = ({ totalValueYearly , totalValueMonthly, currentYear}) => {
+  console.log(totalValueYearly, totalValueMonthly, currentYear);
+
   const salesReportData = [
     ["Month", "Total Sales", "Total Visitors", "Total Orders"],
     ["Jan", 100, 200, 300],

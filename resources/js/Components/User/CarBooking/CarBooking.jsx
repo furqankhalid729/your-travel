@@ -13,7 +13,6 @@ const CarBooking = () => {
   if (bookings.length === 0) {
     return <div>No booking data available.</div>;
   }
-
   // const handleRemoveBooking = (id) => {
   //   dispatch(removeBooking(id));
   // };
