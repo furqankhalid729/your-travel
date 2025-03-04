@@ -34,14 +34,23 @@ const TypeIconMapping = {
 };
 
 const AddTour = () => {
-  const [imagePreviews, setImagePreviews] = useState([]);
+  const [imagePreviews, setImagePreviews] = useState({
+    image1: null,
+    image2: null,
+    image3: null,
+    image4: null,
+    image5: null,
+    image6: null,
+  });
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [newFacility, setNewFacility] = useState("");
-  const [featureIcon, setFeatureIcon] = useState("FaSnowflake");
+  const [featureIcon, setFeatureIcon] = useState("FaWifi");
   const [typeModalOpen, setTypeModalOpen] = useState(false);
   const [newType, setNewType] = useState("");
   const [typeStatus, setTypeStatus] = useState("FaCheck"); // Default to FaCheck
 
+  {/* Image Importer Config */ }
+  const [imageSelector, setImageSelector] = useState(false);
 
   const { data, setData, post, processing, errors } = useForm({
     name: "",
@@ -68,7 +77,7 @@ const AddTour = () => {
         facilities: [...prevDetails.facilities, { name: newFacility, icon: featureIcon }],
       }));
       setNewFacility("");
-      setFeatureIcon("FaSnowflake");
+      setFeatureIcon("FaWifi");
       setIsModalOpen(false);
     }
   };
@@ -95,30 +104,6 @@ const AddTour = () => {
       ...prevDetails,
       [name]: value,
     }));
-  };
-
-  // Handle image change and save file and URL
-  const handleImageChange = (event, field) => {
-    const file = event.target.files[0];
-    if (file) {
-      // Create a Blob URL for the uploaded image
-      const imageUrl = URL.createObjectURL(file);
-
-      // Update image preview state
-      setImagePreviews((prev) => ({
-        ...prev,
-        [field]: imageUrl, // Show preview image
-      }));
-
-      // Store the image as an object with `file` and `url` in the `tour_images` array
-      setData((prevData) => ({
-        ...prevData,
-        tour_images: [
-          ...prevData.tour_images.filter((image) => image.field !== field), // Remove existing entry for this field
-          { field, file, url: imageUrl }, // Add new image with file and URL
-        ],
-      }));
-    }
   };
 
   // Handle itinerary text and image change
@@ -152,6 +137,62 @@ const AddTour = () => {
     setData((prev) => ({
       ...prev,
       tour_itinerary: [...prev.tour_itinerary, { day: "", image: null }],
+    }));
+  };
+
+  const handleImageChange = (e) => {
+    const files = Array.from(e.target.files);
+    let updatedPreviews = { ...imagePreviews };
+    let updatedImages = [...data.tour_images];
+
+    files.forEach((file, index) => {
+      if (index < 6) {
+        const imageKey = `image${index + 1}`;
+
+        // Preview Image
+        if (!updatedPreviews[imageKey]) {
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            updatedPreviews[imageKey] = reader.result;
+            setImagePreviews({ ...updatedPreviews });
+          };
+          reader.readAsDataURL(file);
+        }
+
+        updatedImages[index] = {
+          file: file,
+          preview: updatedPreviews[imageKey] || null,
+        };
+      }
+    });
+
+    setData((prevDetails) => ({
+      ...prevDetails,
+      tour_images: updatedImages,
+    }));
+  };
+
+  const handleRemoveImage = (imageKey) => {
+    let updatedPreviews = { ...imagePreviews };
+    updatedPreviews[imageKey] = null;
+
+
+    for (let i = parseInt(imageKey.replace('image', '')); i < 6; i++) {
+      const nextImageKey = `image${i + 1}`;
+      updatedPreviews[`image${i}`] = updatedPreviews[nextImageKey];
+    }
+    updatedPreviews.image6 = null;
+
+    setImagePreviews(updatedPreviews);
+
+    let updatedImages = [...data.tour_images];
+    const indexToRemove = parseInt(imageKey.replace('image', '')) - 1;
+    updatedImages.splice(indexToRemove, 1);
+    updatedImages.push({ file: null, preview: null });
+
+    setData((prevDetails) => ({
+      ...prevDetails,
+      tour_images: updatedImages,
     }));
   };
 
@@ -208,68 +249,50 @@ const AddTour = () => {
         </div>
       </div>
       <input
-          type="text"
-          name="name"
-          value={data.name}
-          onChange={handleInputChange}
-          className="rounded px-3 py-[5px] w-full"
-        />
+        type="text"
+        name="name"
+        value={data.name}
+        onChange={handleInputChange}
+        className="rounded px-3 py-[5px] w-full"
+      />
       {/* images */}
       <div className="grid grid-cols-4 gap-4">
-        {/* Image 1 (Main Image) */}
+        {/* Image 1 */}
         <div className="col-span-2 row-span-2 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md">
-          <label htmlFor="mainImage" className="flex flex-col items-center cursor-pointer">
-            {imagePreviews.mainImage ? (
+          {imagePreviews.image1 && (
+            <div className="relative">
               <img
-                src={imagePreviews.mainImage}
-                alt="Main Image Preview"
-                className=" object-cover rounded-md"
+                src={imagePreviews.image1}
+                alt="image1"
+                className="object-cover rounded-md"
               />
-            ) : (
-              <>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-16 w-16 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16V8a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 10.7a4.5 4.5 0 01-8 0M12 12v2" />
-                </svg>
-                <span className="text-gray-600 text-sm">Click to upload main image</span>
-              </>
-            )}
-          </label>
-          <input
-            id="mainImage"
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => handleImageChange(e, 'mainImage')}
-          />
+              <button
+                onClick={() => handleRemoveImage('image1')}
+                className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
+              >
+                X
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Image 2 */}
         <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md">
-          <label htmlFor={"image2"} className="flex flex-col items-center cursor-pointer">
-            {imagePreviews.image2 ? (
+          {imagePreviews.image2 && (
+            <div className="relative">
               <img
                 src={imagePreviews.image2}
-                alt="Image 2 Preview"
+                alt="image2"
                 className="object-cover rounded-md"
               />
-            ) : (
-              <>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16V8a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 10.7a4.5 4.5 0 01-8 0M12 12v2" />
-                </svg>
-                <span className="text-gray-600 text-sm">Click to upload image</span>
-              </>
-            )}
-          </label>
-          <input
-            id={"image2"}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => handleImageChange(e, 'image2')}
-          />
+              <button
+                onClick={() => handleRemoveImage('image2')}
+                className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
+              >
+                X
+              </button>
+            </div>
+          )}
         </div>
 
         {/* Map Image */}
@@ -279,161 +302,145 @@ const AddTour = () => {
 
         {/* Image 3 */}
         <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md">
-          <label htmlFor={"image3"} className="flex flex-col items-center cursor-pointer">
-            {imagePreviews.image3 ? (
+          {imagePreviews.image3 && (
+            <div className="relative">
               <img
                 src={imagePreviews.image3}
-                alt="Image 3 Preview"
+                alt="image3"
                 className="object-cover rounded-md"
               />
-            ) : (
-              <>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16V8a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 10.7a4.5 4.5 0 01-8 0M12 12v2" />
-                </svg>
-                <span className="text-gray-600 text-sm">Click to upload image</span>
-              </>
-            )}
-          </label>
-          <input
-            id={"image3"}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => handleImageChange(e, 'image3')}
-          />
+              <button
+                onClick={() => handleRemoveImage('image3')}
+                className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
+              >
+                X
+              </button>
+            </div>
+          )}
         </div>
         {/* Details */}
-        <div className="bg-[#e6c0ff] p-4 rounded-md shadow row-span-2">
-          <h3 className="text-lg font-semibold text-gray-800 mb-4">
-            Details
-          </h3>
-          <ul className="space-y-5">
-            <li className="flex justify-between items-center">
-              <span>Duration</span>
-              <input
-                type="text"
-                name="duration"
-                value={data.duration}
-                onChange={handleInputChange}
-                className="bg-[#e6c0ff] rounded px-1 py-[2px]"
-              />
-            </li>
-            <li className="flex justify-between">
-              <span>Food</span>
-              <input
-                type="text"
-                name="food"
-                value={data.food}
-                onChange={handleInputChange}
-                className="bg-[#e6c0ff] rounded px-1 py-[2px]"
-              />
-            </li>
-            <li className="flex justify-between">
-              <span>Tour type</span>
-              <input
-                type="text"
-                name="tour_type"
-                value={data.tour_type}
-                onChange={handleInputChange}
-                className="bg-[#e6c0ff] rounded px-1 py-[2px]"
-              />
-            </li>
-            <li className="flex justify-between">
-              <span>Person</span>
-              <input
-                type="text"
-                name="persons"
-                value={data.persons}
-                onChange={handleInputChange}
-                className="bg-[#e6c0ff] rounded px-1 py-[2px]"
-              />
-            </li>
-            <li className="flex justify-between">
-              <span>Price</span>
-              <input
-                type="text"
-                name="price"
-                value={data.price}
-                onChange={handleInputChange}
-                className="bg-[#e6c0ff] rounded px-1 py-[2px]"
-              />
-            </li>
-          </ul>
+        <div className="row-span-2">
+          <div className="bg-[#e6c0ff] p-4 rounded-md shadow row-span-2">
+            <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              Details
+            </h3>
+            <ul className="space-y-5">
+              <li className="flex justify-between items-center">
+                <span>Duration</span>
+                <input
+                  type="text"
+                  name="duration"
+                  value={data.duration}
+                  onChange={handleInputChange}
+                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                />
+              </li>
+              <li className="flex justify-between">
+                <span>Food</span>
+                <input
+                  type="text"
+                  name="food"
+                  value={data.food}
+                  onChange={handleInputChange}
+                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                />
+              </li>
+              <li className="flex justify-between">
+                <span>Tour type</span>
+                <input
+                  type="text"
+                  name="tour_type"
+                  value={data.tour_type}
+                  onChange={handleInputChange}
+                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                />
+              </li>
+              <li className="flex justify-between">
+                <span>Person</span>
+                <input
+                  type="text"
+                  name="persons"
+                  value={data.persons}
+                  onChange={handleInputChange}
+                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                />
+              </li>
+              <li className="flex justify-between">
+                <span>Price</span>
+                <input
+                  type="text"
+                  name="price"
+                  value={data.price}
+                  onChange={handleInputChange}
+                  className="bg-[#e6c0ff] rounded px-1 py-[2px]"
+                />
+              </li>
+            </ul>
+          </div>
+          <button className="bg-[#e6c0ff] py-3 px-6 mt-3 rounded-md text-center w-full" onClick={() => setImageSelector(true)}>
+            Import Images
+          </button>
         </div>
         {/* Image 4 */}
         <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md">
-          <label htmlFor={"image4"} className="flex flex-col items-center cursor-pointer">
-            {imagePreviews.image4 ? (
+          {imagePreviews.image4 && (
+            <div className="relative">
               <img
                 src={imagePreviews.image4}
-                alt="Image 4 Preview"
+                alt="image4"
                 className="object-cover rounded-md"
               />
-            ) : (
-              <>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16V8a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 10.7a4.5 4.5 0 01-8 0M12 12v2" />
-                </svg>
-                <span className="text-gray-600 text-sm">Click to upload image</span>
-              </>
-            )}
-          </label>
-          <input
-            id={"image4"}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => handleImageChange(e, 'image4')}
-          />
+              <button
+                onClick={() => handleRemoveImage('image4')}
+                className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
+              >
+                X
+              </button>
+            </div>
+          )}
         </div>
-
         {/* Image 5 */}
         <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md">
-          <label htmlFor={"image5"} className="flex flex-col items-center cursor-pointer">
-            {imagePreviews.image5 ? (
+          {imagePreviews.image5 && (
+            <div className="relative">
               <img
                 src={imagePreviews.image5}
-                alt="Image 5 Preview"
+                alt="image5"
                 className="object-cover rounded-md"
               />
-            ) : (
-              <>
-                <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M3 16V8a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M16 10.7a4.5 4.5 0 01-8 0M12 12v2" />
-                </svg>
-                <span className="text-gray-600 text-sm">Click to upload image</span>
-              </>
-            )}
-          </label>
-          <input
-            id={"image5"}
-            type="file"
-            accept="image/*"
-            className="hidden"
-            onChange={(e) => handleImageChange(e, 'image5')}
-          />
+              <button
+                onClick={() => handleRemoveImage('image5')}
+                className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
+              >
+                X
+              </button>
+            </div>
+          )}
         </div>
-
-        {/* Image 6 */}
+        {/* Image 6 (Only Uploadable Image) */}
         <div className="flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-md">
           <label htmlFor={"image6"} className="flex flex-col items-center cursor-pointer">
             {imagePreviews.image6 ? (
-              <img
-                src={imagePreviews.image6}
-                alt="Image 6 Preview"
-                className="object-cover rounded-md"
-              />
+              <div className="relative">
+                <img
+                  src={imagePreviews.image6}
+                  alt="Image 6 Preview"
+                  className="object-cover rounded-md"
+                />
+                <button
+                  onClick={() => handleRemoveImage('image6')}
+                  className="absolute top-2 right-2 bg-red-500 text-white rounded-full p-1"
+                >
+                  X
+                </button>
+              </div>
             ) : (
               <>
                 <svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
                   <path strokeLinecap="round" strokeLinejoin="round" d="M3 16V8a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
                   <path strokeLinecap="round" strokeLinejoin="round" d="M16 10.7a4.5 4.5 0 01-8 0M12 12v2" />
                 </svg>
-                <span className="text-gray-600 text-sm">Click to upload image</span>
+                <span className="text-gray-600 text-sm">Click to upload images</span>
               </>
             )}
           </label>
@@ -441,8 +448,9 @@ const AddTour = () => {
             id={"image6"}
             type="file"
             accept="image/*"
+            multiple
             className="hidden"
-            onChange={(e) => handleImageChange(e, 'image6')}
+            onChange={handleImageChange}
           />
         </div>
       </div>
