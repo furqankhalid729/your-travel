@@ -54,17 +54,17 @@ const AddHotelRoom = () => {
   const [editingRoomIndex, setEditingRoomIndex] = useState(null);
   const [roomModalOpen, setRoomModalOpen] = useState(false);
   const [newFacility, setNewFacility] = useState("");
-  const [featureIcon, setFeatureIcon] = useState("FaSnowflake");
+  const [facilityIcon, setFacilityIcon] = useState("FaWifi");
   const [typeModalOpen, setTypeModalOpen] = useState(false);
   const [newType, setNewType] = useState("");
   const [typeStatus, setTypeStatus] = useState("FaCheck");
 
-  {/* Image Importer Config */}
-  const[imageSelector,setImageSelector] = useState(false);
+  {/* Image Importer Config */ }
+  const [imageSelector, setImageSelector] = useState(false);
 
 
   const { data, setData, post, processing, errors } = useForm({
-    name:"",
+    name: "",
     duration: "",
     location: "",
     food: "",
@@ -81,13 +81,13 @@ const AddHotelRoom = () => {
 
   // handle facilities add
   const handleFacilitiesAdd = () => {
-    if (newFacility && featureIcon) {
+    if (newFacility && facilityIcon) {
       setData((prevDetails) => ({
         ...prevDetails,
-        facilities: [...prevDetails.facilities, { name: newFacility, icon: featureIcon }],
+        facilities: [...prevDetails.facilities, { name: newFacility, icon: facilityIcon }],
       }));
       setNewFacility("");
-      setFeatureIcon("FaSnowflake");
+      setFacilityIcon("FaWifi");
       setIsModalOpen(false);
     }
   };
@@ -180,7 +180,7 @@ const AddHotelRoom = () => {
     let updatedImages = [...data.tour_images];
 
     files.forEach((file, index) => {
-      if (index < 6) { 
+      if (index < 6) {
         const imageKey = `image${index + 1}`;
 
         // Preview Image
@@ -202,7 +202,7 @@ const AddHotelRoom = () => {
 
     setData((prevDetails) => ({
       ...prevDetails,
-      tour_images: updatedImages, 
+      tour_images: updatedImages,
     }));
   };
 
@@ -210,19 +210,19 @@ const AddHotelRoom = () => {
     let updatedPreviews = { ...imagePreviews };
     updatedPreviews[imageKey] = null;
 
-    
+
     for (let i = parseInt(imageKey.replace('image', '')); i < 6; i++) {
       const nextImageKey = `image${i + 1}`;
       updatedPreviews[`image${i}`] = updatedPreviews[nextImageKey];
     }
-    updatedPreviews.image6 = null; 
+    updatedPreviews.image6 = null;
 
     setImagePreviews(updatedPreviews);
 
     let updatedImages = [...data.tour_images];
     const indexToRemove = parseInt(imageKey.replace('image', '')) - 1;
-    updatedImages.splice(indexToRemove, 1); 
-    updatedImages.push({ file: null, preview: null }); 
+    updatedImages.splice(indexToRemove, 1);
+    updatedImages.push({ file: null, preview: null });
 
     setData((prevDetails) => ({
       ...prevDetails,
@@ -340,7 +340,7 @@ const AddHotelRoom = () => {
 
           {/* Map Image */}
           <div className="relative">
-            <HotelLocationPicker value = {data.location} name="location" handleInputChange={handleInputChange} />
+            <HotelLocationPicker value={data.location} name="location" handleInputChange={handleInputChange} />
           </div>
 
           {/* Image 3 */}
@@ -431,7 +431,7 @@ const AddHotelRoom = () => {
               </ul>
             </div>
             <button className="bg-[#e6c0ff] py-3 px-6 mt-3 rounded-md text-center w-full" onClick={() => setImageSelector(true)}>
-               Import Images
+              Import Images
             </button>
           </div>
           {/* Image 4 */}
@@ -556,12 +556,12 @@ const AddHotelRoom = () => {
         </div>
         {/* facilities div */}
         <div className="grid grid-cols-4 gap-4">
-          {data.facilities.map((feature, index) => (
+          {data.facilities.map((facility, index) => (
             <p key={index} className="flex items-center gap-2 p-4">
               <span className="text-[#e4baff]">
-                {iconMapping[feature.icon] || <FaWifi className="mr-2" />} {/* Fallback to FaSnowflake */}
+                {iconMapping[facility.icon] || <FaWifi className="mr-2" />} {/* Fallback to FaSnowflake */}
               </span>{" "}
-              {feature.name}
+              {facility.name}
             </p>
           ))}
         </div>
@@ -637,8 +637,8 @@ const AddHotelRoom = () => {
           </label>
           <select
             id="icon-select"
-            value={featureIcon}
-            onChange={(e) => setFeatureIcon(e.target.value)}
+            value={facilityIcon}
+            onChange={(e) => setFacilityIcon(e.target.value)}
             className="w-full border rounded-lg p-2 mb-4"
           >
             <option value="FaWifi">FaWifi</option>
@@ -768,14 +768,14 @@ const AddHotelRoom = () => {
             Cancel
           </button>
         </Modal>
-            
+
         {imageSelector && (
-            <HotelImagePicker
-              imageSelector = {imageSelector}
-              setImageSelector = {setImageSelector}
-              setImagePreviews = {setImagePreviews}
-              setData = {setData}
-            />
+          <HotelImagePicker
+            imageSelector={imageSelector}
+            setImageSelector={setImageSelector}
+            setImagePreviews={setImagePreviews}
+            setData={setData}
+          />
         )}
 
       </div>

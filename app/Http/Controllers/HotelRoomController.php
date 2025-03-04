@@ -25,6 +25,26 @@ class HotelRoomController extends Controller
     /**
      * Show the form for creating a new hotel room.
      */
+    public function show(string $id)
+    {
+        $hotel = Hotel::find($id);
+
+        if (!$hotel) {
+            return redirect()->back()->withErrors(['error' => 'Hotel room not found!']);
+        }
+
+        $hotelRooms = HotelRoom::where('hotel_id', $hotel->id)->get();
+        // Decode the JSON fields
+        $hotel->facilities = json_decode($hotel->facilities, true);
+        $hotel->types = json_decode($hotel->types, true);
+        $hotel->tour_images = json_decode($hotel->tour_images, true);
+
+        return Inertia::render(InertiaViews::HotelDetail->value, [
+            'hotel' => $hotel,
+            'hotelRooms' => $hotelRooms
+        ]);
+    }
+
     public function create()
     {
         return Inertia::render(InertiaViews::AddHotelRoom->value);

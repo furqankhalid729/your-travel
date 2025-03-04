@@ -49,9 +49,11 @@ Route::get('/contact', function () {
 });
 
 
-Route::get('/room', function () {
-    return Inertia::render('User/HotelRoom');
-});
+// Route::get('/room', function () {
+//     return Inertia::render('User/HotelRoom');
+// });
+Route::get('/hotel/hotel-details/{id}', [HotelRoomController::class, 'show'])->name('hotel.show');
+
 
 Route::get('/career', function () {
     return Inertia::render('User/Career');
