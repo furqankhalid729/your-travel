@@ -34,7 +34,6 @@ class HotelRoomController extends Controller
         }
 
         $hotelRooms = HotelRoom::where('hotel_id', $hotel->id)->get();
-        // Decode the JSON fields
         $hotel->facilities = json_decode($hotel->facilities, true);
         $hotel->types = json_decode($hotel->types, true);
         $hotel->tour_images = json_decode($hotel->tour_images, true);

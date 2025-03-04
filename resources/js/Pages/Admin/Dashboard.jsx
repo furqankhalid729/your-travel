@@ -1,7 +1,7 @@
 // import { Chart } from "react-google-charts";
 import AdminLayout from "../../Layout/AdminLayout";
-const Dashboard = ({ totalValueYearly , totalValueMonthly, currentYear}) => {
-  console.log(totalValueYearly, totalValueMonthly, currentYear);
+const Dashboard = ({ totalValueYearly, totalValueMonthly, currentYear, pastYear , currentMonth, totalBookingsYearly }) => {
+  console.log(totalValueYearly, totalValueMonthly, currentYear, currentMonth, totalBookingsYearly);
 
   const salesReportData = [
     ["Month", "Total Sales", "Total Visitors", "Total Orders"],
@@ -43,62 +43,31 @@ const Dashboard = ({ totalValueYearly , totalValueMonthly, currentYear}) => {
     pieSliceText: "percentage",
   };
 
+  const statsData = [
+    { title: "Draft", value: 36987, date: "2023-2024" },
+    { title: "Booking", value: 28950, date: "2023-2024" },
+    { title: "Cancellation", value: 12560, date: "2023-2024" },
+    { title: "Message", value: 8450, date: "2023-2024" },
+    { title: "Total Sales Yearly", value: totalValueYearly, date: "2023-2024" },
+    { title: "Total Orders", value: totalBookingsYearly, date: "2023-2024" },
+    { title: "Total Visitors", value: 785230, date: "2023-2024" },
+    { title: "Total Revenue Monthly", value: totalValueMonthly, date: "2023-2024" },
+  ];
+
   return (
     <div className="min-h-screen p-4 lg:p-8">
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        {[
-          "Draft",
-          "Booking",
-          "Cancellation",
-          "Message",
-          "Total Sales",
-          "Total Orders",
-          "Total Visitors",
-          "Total Revenue",
-        ].map((title, index) => (
+        {statsData.map((stat, index) => (
           <div
             key={index}
             className="bg-white rounded-lg border shadow p-3 flex flex-col justify-between"
           >
             <div>
               <h3 className="flex justify-between items-center">
-                {title}
-                <span className="text-sm text-gray-500">2023-2024</span>
+                {stat.title}
+                <span className="text-sm text-gray-500">{stat.date}</span>
               </h3>
-              <p className="text-2xl mt-2">36,987</p>
-              <div className="flex items-center mt-1">
-                {/* <Chart
-                  chartType="LineChart"
-                  data={[
-                    ["Time", "Value"],
-                    ["Jan", 100],
-                    ["Feb", 200],
-                    ["Mar", 150],
-                    ["Apr", 250],
-                    ["May", 400],
-                    ["Jun", 300],
-                    ["Jul", 450],
-                  ]}
-                  options={{
-                    legend: { position: "none" },
-                    hAxis: {
-                      textPosition: "none",
-                      gridlines: { color: "transparent" },
-                    },
-                    vAxis: {
-                      textPosition: "none",
-                      gridlines: { color: "transparent" },
-                    },
-                    chartArea: { width: "80%", height: "50%" },
-                    colors: ["#1f1f1f"],
-                    pointSize: 6,
-                    lineWidth: 1,
-                    curveType: "none",
-                  }}
-                  width="100%"
-                  height="100px"
-                /> */}
-              </div>
+              <p className="text-2xl mt-2">{stat.value.toLocaleString()}</p>
             </div>
             <div className="flex justify-between items-center mt-2">
               <p className="text-sm">
