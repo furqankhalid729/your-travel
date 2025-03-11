@@ -88,40 +88,58 @@ const AddCar = ({ brands, models, fuels, transmissions }) => {
     }));
   };
 
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   const formData = new FormData();
+  //   formData.append("car_name", data.car_name);
+  //   formData.append("brand", data.brand);
+  //   formData.append("model", data.model);
+  //   formData.append("fuel", data.fuel);
+  //   formData.append("car_number", data.car_number);
+  //   formData.append("transmission", data.transmission);
+  //   formData.append("capacity", data.capacity);
+  //   formData.append("status", data.status);
+  //   formData.append("price", data.price);
+  //   formData.append("tags", data.tags); 
+  //   formData.append("features", JSON.stringify(data.features));
+  //   data.car_images.forEach((image, index) => {
+  //     formData.append(`car_images[${index}]`, image.file);
+  //   });
+  //   // Log the FormData entries
+  //   for (let [key, value] of formData.entries()) {
+  //     console.log(`${key}:`, value);
+  //   }
+
+  //   try {
+  //     await post(route("cars.store"), formData, {
+  //       onSuccess: () => {
+  //         setMessage("Car added successfully!");
+  //       },
+  //     });
+  //   } catch (error) {
+  //     console.error("Error while adding car:", error);
+  //     setMessage("An error occurred while adding the car.");
+  //   }
+
+  // };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("car_name", data.car_name);
-    formData.append("brand", data.brand);
-    formData.append("model", data.model);
-    formData.append("fuel", data.fuel);
-    formData.append("car_number", data.car_number);
-    formData.append("transmission", data.transmission);
-    formData.append("capacity", data.capacity);
-    formData.append("status", data.status);
-    formData.append("price", data.price);
-    formData.append("tags", data.tags); 
-    formData.append("features", JSON.stringify(data.features));
-    data.car_images.forEach((image, index) => {
-      formData.append(`car_images[${index}]`, image.file);
+  
+    post(route("cars.store"), {
+      data,
+      forceFormData: true, 
+      onSuccess: () => {
+        setMessage("Car added successfully!");
+        console.log("Car added successfully!");
+      },
+      onError: (errors) => {
+        console.error("Validation errors:", errors);
+        setMessage("An error occurred while adding the car.");
+      },
     });
-    // Log the FormData entries
-    for (let [key, value] of formData.entries()) {
-      console.log(`${key}:`, value);
-    }
-
-    try {
-      await post(route("cars.store"), formData, {
-        onSuccess: () => {
-          setMessage("Car added successfully!");
-        },
-      });
-    } catch (error) {
-      console.error("Error while adding car:", error);
-      setMessage("An error occurred while adding the car.");
-    }
-
   };
+  
 
   return (
     <div className="m-6">

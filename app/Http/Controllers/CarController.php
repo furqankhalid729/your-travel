@@ -144,7 +144,9 @@ class CarController extends Controller
             'features' => $validatedData['features'] ?? [],
             'car_images' => json_encode($carImages),
         ]);
-
+        if ($request->header('X-Inertia')) {
+            return redirect()->route('cars.index')->with('success', 'Car added successfully!');
+        }
         return response()->json($car, 201);
     }
 

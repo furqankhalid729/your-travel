@@ -8,6 +8,7 @@ use App\Http\Controllers\HotelBookingController;
 use App\Http\Controllers\HotelController;
 use App\Http\Controllers\CarFrontendController;
 use App\Http\Controllers\HotelFrontendController;
+use App\Http\Controllers\TourBookingController;
 use App\Http\Controllers\TourFrontendController;
 use App\Http\Controllers\TourController;
 use App\Models\Car\CarBrand;
@@ -193,6 +194,26 @@ Route::get('/dashboard/tour-booking/profile', function () {
 Route::get('/dashboard/tour-booking/tour-draft', function () {
     return Inertia::renader('Admin/TourBooking/TourDraftPage');
 });
+
+// tour booking crud
+Route::prefix('tour-bookings')->name('tour_bookings.')->group(function () {
+    Route::get('/', [TourBookingController::class, 'index'])->name('index');
+    Route::get('/{id}', [TourBookingController::class, 'show'])->name('show');
+    Route::post('/', [TourBookingController::class, 'store'])->name('store');
+    Route::put('/{id}', [TourBookingController::class, 'update'])->name('update');
+    Route::delete('/{id}', [TourBookingController::class, 'destroy'])->name('destroy');
+});
+
+// hotel booking crud
+
+Route::prefix('hotel-bookings')->name('hotel_bookings.')->group(function () {
+    Route::get('/', [HotelBookingController::class, 'index'])->name('index');
+    Route::post('/', [HotelBookingController::class, 'store'])->name('store');
+    Route::get('/{id}', [HotelBookingController::class, 'show'])->name('show');
+    Route::put('/{id}', [HotelBookingController::class, 'update'])->name('update');
+    Route::delete('/{id}', [HotelBookingController::class, 'destroy'])->name('destroy');
+});
+
 
 // steps
 
