@@ -27,6 +27,7 @@ const FeaturedFleets = () => {
           {cars.slice(0, 4).map((car, index) => (
             <FleetCard
               key={index}
+              id={car.id}
               imageSrc={JSON.parse(car.car_images)[0]}
               car_name={car.car_name}
               brand={car.brand}

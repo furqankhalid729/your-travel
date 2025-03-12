@@ -44,6 +44,7 @@ const FeatureDestination = () => {
         {tours.map((card, index) => (
           <DestinationCard
             key={index}
+            id={card.id}
             image={JSON.parse(card.tour_images)[0]}
             heading={card.name}
           />

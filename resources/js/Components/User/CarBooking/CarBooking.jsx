@@ -1,21 +1,26 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeBooking } from "../../../store/bookingSlice";
-import { CiLock } from "react-icons/ci";
-import { FaRegSnowflake } from "react-icons/fa";
-import { IoPersonOutline } from "react-icons/io5";
-import { PiSeat, PiVectorThreeLight } from "react-icons/pi";
 
-const CarBooking = () => {
+const CarBooking = ({setDisabled}) => {
   const bookings = useSelector((state) => state.booking.bookings);
   const dispatch = useDispatch();
 
+  useEffect(() => {
+    setDisabled(bookings.length === 0);
+  }, [bookings]);
+
   if (bookings.length === 0) {
-    return <div>No booking data available.</div>;
+    return (
+      <div className="flex flex-col w-full lg:w-[30%]">
+        <div className="bg-white rounded-lg p-6 mt-2 border border-gray-300">
+          No booking data available.
+        </div>
+      </div>);
   }
-  // const handleRemoveBooking = (id) => {
-  //   dispatch(removeBooking(id));
-  // };
+  const handleRemoveBooking = (id) => {
+    dispatch(removeBooking(id));
+  };
 
   const calculateTotalPrice = () => {
     return bookings.reduce((total, booking) => total + booking.price, 0);
@@ -69,9 +74,9 @@ const CarBooking = () => {
             </div>
           </div>
         )}
-        {/* <button onClick={() => handleRemoveBooking(booking.id)} className="mt-2 bg-red-500 text-white px-3 py-2 rounded-md">
+        <button onClick={() => handleRemoveBooking(booking.id)} className="mt-2 bg-red-500 text-white px-3 py-2 rounded-md">
           Remove Booking
-        </button> */}
+        </button>
       </div>
 
     </div>

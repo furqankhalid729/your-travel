@@ -7,6 +7,7 @@ use App\Enums\InertiaViews;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use App\Models\Booking;
 
 class TourController extends Controller
 {
@@ -18,10 +19,21 @@ class TourController extends Controller
         ]);
     }
 
+    public function tourDashboard()
+    {
+        $allBooking = Booking::where('status', 'active')
+            ->join('booking_items', 'bookings.id', '=', 'booking_items.booking_id')
+            ->where('booking_items.type', 'tour')
+            ->get();
+        return Inertia::render(InertiaViews::TourDashboard->value,[
+            'allBooking' => $allBooking
+        ]);
+    }
+
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'name'=> 'required|string',
+            'name' => 'required|string',
             'duration' => 'required|string',
             'location' => 'required|string',
             'food' => 'required|string',
@@ -58,7 +70,8 @@ class TourController extends Controller
         return redirect()->route('tour.index')->with('success', 'Tour Added successfully');
     }
 
-    public function destroy(string $id){
+    public function destroy(string $id)
+    {
         $tour = Tour::find($id);
         if (!$tour) {
             return response()->json(['message' => 'Tour room not found.'], 404);

@@ -1,13 +1,17 @@
-import React from 'react'
+import React, {useState} from 'react'
 import CarBooking from '../../Components/User/CarBooking/CarBooking';
 import BookingForm from '../../Components/User/CarBooking/BookingForm';
 import UserLayout from "../../Layout/UserLayout";
 const CarBook = () => {
+  const [disabled, setDisabled] = useState(false);
   return (
     <div className=' mt-12 lg:flex gap-6 p-6'>
-      {/* xl:mx-24 px-2 mx-4 md:mx-8 lg:mx:20 */}
-      <CarBooking/>
-      <BookingForm/>
+      <CarBooking
+        setDisabled={setDisabled}
+      />
+      <BookingForm
+        disabled={disabled}
+      />
       </div>
   )
 }

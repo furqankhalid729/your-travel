@@ -1,6 +1,7 @@
 // import { Chart } from "react-google-charts";
 import AdminLayout from "../../Layout/AdminLayout";
-   console.log(totalValueYearly, totalValueMonthly, currentYear, currentMonth, totalBookingsYearly);
+
+const Dashboard = ({totalValueYearly,totalValueMonthly,currentYear,currentMonth,totalBookingsYearly, activeBookingsTotal, cancelBookingsTotal}) => {
 
   const salesReportData = [
     ["Month", "Total Sales", "Total Visitors", "Total Orders"],
@@ -44,8 +45,8 @@ import AdminLayout from "../../Layout/AdminLayout";
 
   const statsData = [
     { title: "Draft", value: 36987, date: "2023-2024" },
-    { title: "Booking", value: 28950, date: "2023-2024" },
-    { title: "Cancellation", value: 12560, date: "2023-2024" },
+    { title: "Booking", value: activeBookingsTotal, date: "2023-2024" },
+    { title: "Cancellation", value: cancelBookingsTotal, date: "2023-2024" },
     { title: "Message", value: 8450, date: "2023-2024" },
     { title: "Total Sales Yearly", value: totalValueYearly, date: "2023-2024" },
     { title: "Total Orders", value: totalBookingsYearly, date: "2023-2024" },

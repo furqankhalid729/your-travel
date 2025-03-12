@@ -1,10 +1,12 @@
 import React from 'react';
 import AdminLayout from "../../../Layout/AdminLayout";
 import AllHotelBookingCom from "../../../Components/Admin/HotelBooking/AllHotelBooking";
-const AllHotelBooking = () => {
+const AllHotelBooking = ({allBooking}) => {
   return (
     <div>
-      <AllHotelBookingCom />
+      <AllHotelBookingCom 
+        allBooking={allBooking}
+      />
     </div>
   )
 }

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "@inertiajs/react";
 import { useSelector, useDispatch } from "react-redux";
+import { clearBookings } from "../../../store/bookingSlice";
 
-const BookingForm = () => {
+const BookingForm = ({disabled}) => {
+  const dispatch = useDispatch();
   const bookings = useSelector((state) => state.booking.bookings);
 
   const { data, setData, post, processing } = useForm({
@@ -56,6 +58,7 @@ const BookingForm = () => {
     })
       .then((response) => response.json())
       .then((result) => {
+        dispatch(clearBookings());
         alert("Form submitted successfully!");
       })
       .catch((error) => {
@@ -165,7 +168,7 @@ const BookingForm = () => {
             <p className="text-sm text-gray-600">You agree with our <span className="text-red-500">Terms & conditions</span> and <span className="text-red-500">Privacy statement</span></p>
           </div>
 
-          <button type="submit" disabled={processing} className="bg-red-500 text-white px-6 py-2 rounded-lg mt-4">
+          <button type="submit" disabled={processing || disabled} className="bg-red-500 text-white px-6 py-2 rounded-lg mt-4">
             {processing ? "Processing..." : "Submit Booking"}
           </button>
         </div>

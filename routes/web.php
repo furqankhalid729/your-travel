@@ -26,8 +26,7 @@ Route::get('/car', [CarFrontendController::class, 'frontendIndex'])->name('car.f
 Route::get('/hotel', [HotelFrontendController::class, 'frontendIndex'])->name('hotel.frontendIndex');
 Route::get('/hotel/hotel-details/{id}', [HotelRoomController::class, 'show'])->name('hotel.show');
 Route::get('/tour', [TourFrontendController::class, 'frontendIndex'])->name('tour.frontendIndex');
-Route::get('/car-booking',[BookingController::class, 'index'] )->name('checkout');
-
+Route::get('/car-booking', [BookingController::class, 'index'])->name('checkout');
 Route::get('/hotel/hotel-details/{id}', [HotelRoomController::class, 'show'])->name('hotel.show');
 Route::get('/tour/tour-details/{id}', [TourFrontendController::class, 'show'])->name('tour.show');
 
@@ -46,7 +45,6 @@ Route::get('/signup', function () {
 Route::get('/blog', function () {
     return Inertia::render('User/Blog');
 });
-
 Route::get('/blog/:id', function () {
     return Inertia::render('User/BlogDetail');
 });
@@ -54,14 +52,6 @@ Route::get('/blog/:id', function () {
 Route::get('/contact', function () {
     return Inertia::render('User/Contact');
 });
-
-
-// Route::get('/room', function () {
-//     return Inertia::render('User/HotelRoom');
-// });
-
-
-
 Route::get('/career', function () {
     return Inertia::render('User/Career');
 });
@@ -91,11 +81,13 @@ Route::get('/test-1', function () {
 // });
 
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [AdminDashboardController::class, 'index'] )->name('dashboard');
+    Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/dashboard/car-booking', [CarController::class, 'index']);
     Route::get('/dashboard/car-booking/add-car', [CarController::class, 'create']);
     Route::get('/dashboard/car/edit/{id}', [CarController::class, 'edit'])->name('car.edit');
+
+    Route::get('/dashboard/car-booking/orders', [CarController::class, 'carBooking'] )->name('car.booking');
 
     Route::get('/dashboard/car-booking/driver-listing', [DriverController::class, 'index'])->name('driver.index');
     Route::get('/dashboard/car-booking/add-driver', [DriverController::class, 'create'])->name('driver.create');
@@ -104,6 +96,7 @@ Route::middleware('auth')->group(function () {
     Route::put('/dashboard/car-booking/driver/update/{id}', [DriverController::class, 'update'])->name('driver.update');
 
     Route::get('/dashboard/hotel-booking', [HotelBookingController::class, 'index'])->name('hotelbooking.index');
+    Route::get('/dashboard/hotel-booking/all-hotel-booking', [HotelBookingController::class, 'allHotelBooking'])->name('hotelbooking.all');
 
     Route::get('/dashboard/hotel/add-hotel', [HotelRoomController::class, 'create'])->name('hotel.create');
     Route::get('/dashboard/hotel/all-hotels', [HotelRoomController::class, 'index'])->name('hotel.index');
@@ -111,6 +104,8 @@ Route::middleware('auth')->group(function () {
     Route::put('/dashboard/hotel/update/{id}', [HotelRoomController::class, 'update'])->name('hotel.update');
 
     Route::get('/dashboard/tour-booking/view-tour', [TourController::class, 'index'])->name('tour.index');
+    Route::get('/dashboard/tour-booking', [TourController::class, 'tourDashboard'])->name('tour.dashboard');
+
     Route::get('/dashboard/tour-booking/add-tour', function () {
         return Inertia::render('Admin/TourBooking/AddTour');
     })->name("tour.create");
@@ -122,10 +117,6 @@ Route::get('/dashlayout', function () {
 
 
 // Car booking
-
-Route::get('/dashboard/car-booking/orders', function () {
-    return Inertia::render('Admin/CarBooking/Orders');
-});
 
 Route::get('/dashboard/car-booking/special-offers', function () {
     return Inertia::render('Admin/CarBooking/Specialoffers');
@@ -158,12 +149,6 @@ Route::get('/dashboard/car-booking/book-car-assign-drivers', function () {
 
 // hotel booking
 
-
-
-Route::get('/dashboard/hotel-booking', function () {
-    return Inertia::render('Admin/HotelBooking/HotelBooking');
-});
-
 Route::get('/dashboard/hotel-booking/hotel-booking-form', function () {
     return Inertia::render('Admin/HotelBooking/HotelBookingForm');
 });
@@ -172,19 +157,11 @@ Route::get('/dashboard/hotel-booking/hotel-booking-profile', function () {
     return Inertia::render('Admin/HotelBooking/HotelBookingProfile');
 });
 
-Route::get('/dashboard/hotel-booking/all-hotel-booking', function () {
-    return Inertia::render('Admin/HotelBooking/AllHotelBooking');
-});
-
 // rooms
 Route::get('/dashboard/hotel-booking/view-rooms', function () {
     return Inertia::render('Admin/HotelBooking/ViewRooms');
 });
 // Tour Booking
-Route::get('/dashboard/tour-booking', function () {
-    return Inertia::render('Admin/TourBooking/ViewTourBooking');
-});
-
 Route::get('/dashboard/tour-booking/view-location', function () {
     return Inertia::render('Admin/TourBooking/TourViewLocation');
 });

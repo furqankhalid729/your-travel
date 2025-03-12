@@ -37,18 +37,11 @@ const tourData = [
   },
 ];
 
-const ViewTourBooking = () => {
+const ViewTourBooking = ({allBooking}) => {
+  console.log(allBooking)
   // const navigate = useNavigate();
   return (
-    <div>
-      <Link
-        href="/dashboard/tour-booking"
-        // onClick={() => navigate(-1)}
-        className="flex items-center p-3 text-gray-600 hover:text-gray-800"
-      >
-        <FaArrowLeft className="mr-2" />
-        <span>Back</span>
-      </Link>
+    <div className="my-5">
       <div className="mx-6 p-5 bg-white min-h-screen">
         {/* <div className="breadcrumbs text-sm">
           <ul>
@@ -95,7 +88,6 @@ const ViewTourBooking = () => {
                   "ID",
                   "Name",
                   "Email",
-                  "Contact",
                   "Type",
                   "Members",
                   "Price",
@@ -112,7 +104,7 @@ const ViewTourBooking = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {tourData.map((tour, index) => (
+              {allBooking.map((tour, index) => (
                 <tr key={index}>
                   <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                     {tour.id}
@@ -122,9 +114,6 @@ const ViewTourBooking = () => {
                   </td>
                   <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                     {tour.email}
-                  </td>
-                  <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {tour.contact}
                   </td>
                   <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                     {tour.type}

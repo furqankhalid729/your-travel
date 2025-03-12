@@ -67,17 +67,10 @@ const topMenuItems = [
     text: "View Details",
     link: "/dashboard/hotel-booking",
   },
-  // {
-  //   name: "Special Offers",
-  //   icon: <LuAlarmClock />,
-  //   bgColor: "#522864",
-  //   count: 5,
-  //   text: "Special Offers",
-  //   link: "/dashboard/hotel-booking",
-  // },
 ];
 
-const HotelBooking = () => {
+const HotelBooking = ({latestBooking}) => {
+  console.log(latestBooking)
   return (
     <div className="p-2 md:p-4 m-2 md:m-6 bg-white">
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-5">
@@ -159,7 +152,6 @@ const HotelBooking = () => {
                 "First Name",
                 "Last Name",
                 "Email",
-                "Phone",
                 "Action",
               ].map((header, index) => (
                 <th
@@ -172,7 +164,7 @@ const HotelBooking = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {bookingData.map((booking, index) => (
+            {latestBooking.map((booking, index) => (
               <tr key={index}>
                 <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
                   {booking.id}
@@ -192,16 +184,13 @@ const HotelBooking = () => {
                   {booking.price}
                 </td>
                 <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {booking.firstName}
+                  {booking.first_name}
                 </td>
                 <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {booking.lastName}
+                  {booking.last_name}
                 </td>
                 <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
                   {booking.email}
-                </td>
-                <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                  {booking.phone}
                 </td>
                 <td className="px-2 py-4 whitespace-nowrap text-base flex space-x-2">
                   <Link

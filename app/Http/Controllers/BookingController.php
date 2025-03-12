@@ -63,6 +63,7 @@ class BookingController extends Controller
                 'booking_id'      => $booking->id,
                 'name'            => $item['name'],
                 'price'           => $item['price'],
+                'type'            => $item['type'],
                 'additional_info' => json_encode($item['additional_info'] ?? []),
             ]);
         }

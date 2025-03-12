@@ -2,10 +2,12 @@ import React from 'react';
 import AdminLayout from "../../../Layout/AdminLayout";
 import HotelBookingCom from "../../../Components/Admin/HotelBooking/HotelBooking";
 
-const HotelBooking = () => {
+const HotelBooking = ({latestBooking}) => {
   return (
     <div>
-      <HotelBookingCom />
+      <HotelBookingCom
+        latestBooking={latestBooking}
+      />
     </div>
   )
 }

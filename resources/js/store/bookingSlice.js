@@ -41,8 +41,11 @@ const bookingSlice = createSlice({
             state.bookings = state.bookings.filter(booking => booking.id !== action.payload);
             saveState(state.bookings);
         },
+        clearBookings: (state) => {
+            state.bookings = [];
+        },
     },
 });
 
-export const { addBooking, removeBooking } = bookingSlice.actions;
+export const { addBooking, removeBooking,clearBookings } = bookingSlice.actions;
 export default bookingSlice.reducer;

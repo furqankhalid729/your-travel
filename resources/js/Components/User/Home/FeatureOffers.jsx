@@ -53,6 +53,7 @@ function FeatureOffers() {
             <SwiperSlide key={index}>
               <FeatureCard
                 image={JSON.parse(card.images)[0]}
+                id={card.id}
                 name={card.name}
                 rating={card.rating}
                 reviews={card.reviews}

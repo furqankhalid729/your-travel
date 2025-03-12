@@ -3,11 +3,10 @@ import { useDispatch } from 'react-redux';
 import { addBooking } from '../../../store/bookingSlice';
 import { CiHeart } from 'react-icons/ci';
 import { LuParkingMeter } from "react-icons/lu";
-
 import { MdLocationPin } from "react-icons/md";
 import { FaMapMarkerAlt, FaCity } from 'react-icons/fa';
 import ImageGallery from '../Snippets/ImageGallery';
-import { Link } from '@inertiajs/react';
+import { Link, usePage, router } from '@inertiajs/react';
 const RoomProfile = ({ hotel, hotelRooms }) => {
   // const images = hotel.tour_images.map(image => 'http://127.0.0.1:8000/storage/' + image);
   const images = [
@@ -19,12 +18,18 @@ const RoomProfile = ({ hotel, hotelRooms }) => {
     "/storage/images/hotel7.jpg"
   ];
   console.log(hotel, hotelRooms);
-  
+  const { auth } = usePage().props;
   const dispatch = useDispatch();
+
   const handleBookNow = () => {
+    if (!auth.user) {
+      console.log(router)
+      router.visit('/login');
+      return;
+    }
     const bookingData = {
       type: 'hotel',
-      id: hotel.id, // Replace with actual hotel ID
+      id: hotel.id,
       name: hotel.name,
       price: hotelRooms[0].price,
       additional_info: {
@@ -32,16 +37,15 @@ const RoomProfile = ({ hotel, hotelRooms }) => {
       },
     };
     dispatch(addBooking(bookingData));
+    router.visit("/car-booking");
   };
 
   return (
     <div className="">
       {/* Breadcrumb */}
       <nav className="text-sm text-red-500 mb-4">
-        <a href="#" className="hover:text-red-800">Home</a> &gt;
-        <a href="#" className="hover:text-red-800"> Hotels</a> &gt;
-        <a href="#" className="hover:text-red-800"> Pakistan</a> &gt;
-        <a href="#" className="hover:text-red-800"> {hotel.location}</a> &gt;
+        <Link href="/" className="hover:text-red-800">Home</Link> &gt;
+        <Link href={route('hotel.frontendIndex')} className="hover:text-red-800"> Hotels</Link> &gt;
         <span className="text-red-400">{hotel.name}</span>
       </nav>
 
@@ -133,11 +137,9 @@ const RoomProfile = ({ hotel, hotelRooms }) => {
           <p className='text-xs md:text-sm text-gray-500 text-right'>from</p>
           <p className="text-base md:text-2xl font-semibold text-gray-800">$200</p>
         </div>
-        <Link href="/car-booking">
-          <button onClick={handleBookNow} className="px-2 lg:px-6 py-1 mt-1 lg:mt-0 lg:py-2 bg-red-500 text-white text-[10px] md:text-sm rounded-full">
-            Book Now
-          </button>
-        </Link>
+        <button onClick={handleBookNow} className="px-2 lg:px-6 py-1 mt-1 lg:mt-0 lg:py-2 bg-red-500 text-white text-[10px] md:text-sm rounded-full">
+          Book Now
+        </button>
       </div>
     </div>
   );

@@ -2,20 +2,21 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addBooking } from '../../../store/bookingSlice';
 import { CiHeart } from 'react-icons/ci';
-import { CgProfile } from "react-icons/cg";
-import { GrStatusGood } from "react-icons/gr";
 import { MdLocationPin } from "react-icons/md";
-import ImageGallery from '../Snippets/ImageGallery';
-import { RiArrowRightSLine } from 'react-icons/ri';
-import { Link } from '@inertiajs/react';
+import ImageGallery from '../snippets/ImageGallery';
+import { Link, usePage, router } from '@inertiajs/react';
 
 const CarProfile = (car) => {
-  console.log("CarProfile :", car.car.car_images);
+  const { auth } = usePage().props;
+  console.log("CarProfile :", auth);
   const images = car.car.car_images.map(image => 'http://127.0.0.1:8000/storage/' + image);
-  //const images = car.car.car_images;
-
   const dispatch = useDispatch();
   const handleBookNow = () => {
+    if (!auth.user) {
+      console.log(router)
+      router.visit('/login');
+      return;
+    }
     const bookingData = {
       type: 'car',
       id: car.car.id,
@@ -29,16 +30,15 @@ const CarProfile = (car) => {
       },
     };
     dispatch(addBooking(bookingData));
+    router.visit("/car-booking");
   };
 
   return (
     <>
       {/* Breadcrumb */}
       <nav className="text-sm text-red-500 mb-4 flex flex-wrap gap-1">
-        <Link href="#" className="hover:text-red-800">Home</Link> &gt;
-        <Link href="#" className="hover:text-red-800"> Cars</Link> &gt;
-        <Link href="#" className="hover:text-red-800"> Pakistan</Link> &gt;
-        <Link href="#" className="hover:text-red-800"> Lahore</Link> &gt;
+        <Link href="/" className="hover:text-red-800">Home</Link> &gt;
+        <Link href="/car" className="hover:text-red-800"> Cars</Link> &gt;
         <span className="text-red-400"> {car.car.car_name}</span>
       </nav>
 
@@ -62,12 +62,9 @@ const CarProfile = (car) => {
             <p className="text-[8px] sm:text-sm text-gray-500">from</p>
             <p className="text-sm sm:text-2xl font-semibold text-gray-800">${car.car.price}</p>
           </div>
-
-          <Link href='/car-booking'>
-            <button onClick={handleBookNow} className="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-600">
-              Book Now
-            </button>
-          </Link>
+          <button onClick={handleBookNow} className="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-600">
+            Book Now
+          </button>
 
         </div>
       </div>
@@ -77,66 +74,6 @@ const CarProfile = (car) => {
         <div className='w-full'>
           <ImageGallery images={images} />
         </div>
-
-        {/* Right Section: Map & Profile */}
-        {/* <div className='w-1/4'> */}
-        {/* <div className="h-20 lg:h-44 relative bg-gray-300 mb-4 rounded-md overflow-hidden ">
-            <div
-              className="absolute inset-0 bg-cover bg-center rounded-md"
-              style={{ backgroundImage: `url('/map.jpg')` }}
-            >
-              <span className="absolute inset-0 flex items-center justify-center text-white">
-                <div className="py-1 px-2 bg-gray-500 opacity-50 rounded-xl max-[320px]:text-[6px] text-[8px] md:text-lg">Show on map</div>
-              </span>
-            </div>
-          </div> */}
-        {/* <div className='max-[320px]:text-[5px] text-[8px] lg:text-sm ' >
-            <div className="flex items-center space-x-1 md:space-x-4">
-              <img
-                src="storage/images/avatardriver.png"
-                alt="Driver"
-                className="w-4 h-4 xs:w-8 lg:w-16 xs:h-8 lg:h-16 rounded-full object-cover"
-              />
-              <div className="flex items-center text-[8px] md:text-sm lg:text-lg font-medium text-gray-800">
-                Muhammad Ahmed <GrStatusGood className="md:ml-2 text-gray-400" />
-              </div>
-            </div>
-
-            <hr className="border-gray-300 my-2" />
-            <div className="space-y-1">
-              <div className="flex items-center text-gray-600">
-                <CgProfile className="mr-2 text-xl text-red-500" />
-                <span>Vendor</span>
-              </div>
-              <div className="flex items-center text-gray-600">
-                <GrStatusGood className="mr-2" />
-                <span>110 Reviews</span>
-              </div>
-            </div>
-
-            <hr className="border-gray-300 my-2" />
-            <div className="space-y-2">
-              <div>
-                <div className="flex items-center text-gray-600">
-                  <RiArrowRightSLine className="sm:mr-2 text-sm" />
-                  <span>Email</span>
-                </div>
-                <h3 className="text-[6px] md:text-xs lg:text-sm flex flex-wrap text-gray-400 ml-2 sm:ml-6 break-all whitespace-normal">
-                  muhammadahmed12@gmail.com
-                </h3>
-
-
-              </div>
-              <div>
-                <div className="flex items-center text-gray-600">
-                  <RiArrowRightSLine className="sm:mr-2 text-sm" />
-                  <span>Phone Number</span>
-                </div>
-                <h3 className="text-[8px] md:text-xs lg:text-sm text-gray-400 ml-2 sm:ml-6">+923076859695</h3>
-              </div>
-            </div>
-          </div> */}
-        {/* </div> */}
       </div>
     </>
   );

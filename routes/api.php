@@ -21,21 +21,15 @@ Route::middleware('auth')->group(function () {
     Route::delete('/car/delete/{id}', [CarController::class, 'destroy'])->name('car.delete');
     Route::post('/driver/add-driver', [DriverController::class, 'store'])->name('driver.store');
     Route::delete('/driver/delete/{id}', [DriverController::class, 'destroy'])->name('driver.delete');
-    // Route::put('/driver/update/{driver}', [DriverController::class, 'update'])->name('driver.update');
     Route::post('/hotel/add-hotel-room', [HotelRoomController::class, 'store'])->name('hotelRoom.store');
     Route::delete('/hotel/delete/{id}', [HotelRoomController::class, 'destroy'])->name('hotelRoom.delete');
-
     Route::post('/tour/add-tour', [TourController::class, 'store']);
     Route::delete('/tour/delete/{id}', [TourController::class, 'destroy'])->name('tour.delete');
 });
-
 Route::get('/locations', [LocationController::class, 'getGoogleMapSuggestions']);
 Route::get('/location-images', [LocationController::class, 'getLocationImages']);
-
 Route::post('/hotel/hotel-booking-form', [HotelController::class, 'store'])->name('hotel.store');
 
-// Route::get('/frontend/car', [HotelRoomController::class, 'frontendIndex'])->name('car.frontendIndex');
-// Route::get('/frontend/car/car-details', [HotelRoomController::class, 'show'])->name('cars.show');
 Route::get('/cars/home/featured', [CarController::class, 'featured'])->name('cars.featured');
 Route::get('/cars/filter', [CarController::class, 'filter'])->name('cars.filter');
 Route::get('/cars/car-details/{id}', [CarController::class, 'show'])->name('cars.show');

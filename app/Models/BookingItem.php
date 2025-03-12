@@ -11,6 +11,7 @@ class BookingItem extends Model {
         'booking_id',
         'name',
         'price',
+        'type',
         'additional_info'
     ];
 

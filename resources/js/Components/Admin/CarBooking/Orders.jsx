@@ -52,9 +52,10 @@ const ordersData = [
   },
 ];
 
-const Orders = () => {
+const Orders = ({ activeBooking }) => {
+  console.log(activeBooking)
   return (
-    <div className="md:min-h-screen">
+    <div className="md:min-h-screen p-10">
       <div className="flex justify-between items-center my-2">
         <h2 className="text-3xl font-semibold text-[#808080]">Orders</h2>
         <Link
@@ -78,7 +79,6 @@ const Orders = () => {
                 "First Name",
                 "Last Name",
                 "Email",
-                "Phone",
                 "Action",
               ].map((header, index) => (
                 <th
@@ -91,50 +91,50 @@ const Orders = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {ordersData.map((order, index) => (
-              <tr key={index}>
-                <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
-                  {order.id}
-                </td>
-                <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
-                  <span className="inline-block px-2 py-1 bg-[#e0b0ff] text-[#808080]">
-                    {order.car}
-                  </span>
-                </td>
-                <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
-                  {order.from}
-                </td>
-                <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
-                  {order.to}
-                </td>
-                <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
-                  {order.price}
-                </td>
-                <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
-                  {order.firstName}
-                </td>
-                <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
-                  {order.lastName}
-                </td>
-                <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
-                  {order.email}
-                </td>
-                <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
-                  {order.phone}
-                </td>
-                <td className="px-2 py-4 whitespace-nowrap text-sm flex space-x-2">
-                  <button className="text-green-500">
-                    <FaEdit />
-                  </button>
-                  <button className="text-blue-500 px-1">
-                    <FaEye />
-                  </button>
-                  <button className="text-red-500">
-                    <FaTrash />
-                  </button>
-                </td>
-              </tr>
-            ))}
+            {activeBooking.map((order, index) => {
+              const additionalInfo = JSON.parse(JSON.parse(order.additional_info));
+              return (
+                <tr key={index}>
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
+                    {order.id}
+                  </td>
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
+                    <span className="inline-block px-2 py-1 bg-[#e0b0ff] text-[#808080]">
+                      {order.name}
+                    </span>
+                  </td>
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
+                    {additionalInfo.pickup_location}
+                  </td>
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
+                    {additionalInfo.dropout_location}
+                  </td>
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
+                    {order.price}
+                  </td>
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
+                    {order.first_name}
+                  </td>
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
+                    {order.last_name}
+                  </td>
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
+                    {order.email}
+                  </td>
+                  <td className="px-2 py-4 whitespace-nowrap text-sm flex space-x-2">
+                    <button className="text-green-500">
+                      <FaEdit />
+                    </button>
+                    <button className="text-blue-500 px-1">
+                      <FaEye />
+                    </button>
+                    <button className="text-red-500">
+                      <FaTrash />
+                    </button>
+                  </td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </div>

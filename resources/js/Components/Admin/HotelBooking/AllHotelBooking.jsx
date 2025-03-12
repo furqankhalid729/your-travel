@@ -2,8 +2,9 @@ import { FaArrowLeft, FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import { Link } from "@inertiajs/react";
 // import { useNavigate  } from "react-router-dom";
 
-const AllHotelBooking = () => {
+const AllHotelBooking = ({allBooking}) => {
   // const navigate = useNavigate();
+  console.log(allBooking)
   const bookingData = [
     {
       id: 1,
@@ -109,7 +110,7 @@ const AllHotelBooking = () => {
   return (
     <div>
       <Link
-        href="//dashboard/hotel-booking"
+        href={route('hotelbooking.index')}
         // onClick={() => navigate(-1)}
         className="m-4 flex items-center text-gray-600 hover:text-gray-800"
       >
@@ -131,7 +132,6 @@ const AllHotelBooking = () => {
                   "First Name",
                   "Last Name",
                   "Email",
-                  "Phone",
                   "Action",
                 ].map((header, index) => (
                   <th
@@ -144,7 +144,7 @@ const AllHotelBooking = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {bookingData.map((booking, index) => (
+              {allBooking.map((booking, index) => (
                 <tr key={index}>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
                     {booking.id}
@@ -164,16 +164,13 @@ const AllHotelBooking = () => {
                     {booking.price}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {booking.firstName}
+                    {booking.first_name}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {booking.lastName}
+                    {booking.last_name}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
                     {booking.email}
-                  </td>
-                  <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {booking.phone}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-base flex space-x-2">
                     <Link

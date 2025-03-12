@@ -13,7 +13,7 @@ use App\Models\Car\CarFeature;
 use App\Models\Car\CarFuel;
 use App\Models\Car\CarModel;
 use App\Models\Car\CarTransmission;
-
+use App\Models\Booking;
 
 class CarController extends Controller
 {
@@ -249,5 +249,17 @@ class CarController extends Controller
         }
         $car->delete();
         return response()->json(['message' => 'Car deleted successfully.'], 200);
+    }
+
+    public function carBooking(Request $request)
+    {
+        $activeBookingsTotal = Booking::where('status', 'active')
+            ->join('booking_items', 'bookings.id', '=', 'booking_items.booking_id')
+            ->where('booking_items.type', 'car')
+            ->get();
+
+        return Inertia::render(InertiaViews::CarBooking->value, [
+            'activeBooking' => $activeBookingsTotal
+        ]);
     }
 }

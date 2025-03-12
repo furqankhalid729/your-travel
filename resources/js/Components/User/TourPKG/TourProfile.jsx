@@ -2,12 +2,9 @@ import React from 'react';
 import { useDispatch } from 'react-redux';
 import { addBooking } from '../../../store/bookingSlice';
 import { CiHeart } from 'react-icons/ci';
-// import { LuParkingCircle } from "react-icons/lu";
-
 import { MdLocationPin } from "react-icons/md";
-import { FaMapMarkerAlt, FaCity } from 'react-icons/fa';
 import ImageGallery from '../Snippets/ImageGallery';
-import { Link } from '@inertiajs/react';
+import { Link, usePage, router } from '@inertiajs/react';
 const TourProfile = ({ tour }) => {
   // const images = tour.tour_images.map(image => 'http://127.0.0.1:8000/storage/' + image);
   const images = [
@@ -18,12 +15,17 @@ const TourProfile = ({ tour }) => {
     "/storage/images/tour3.jpeg",
     "/storage/images/tour4.jpeg"
   ];
-
+  const { auth } = usePage().props;
   const dispatch = useDispatch();
   const handleBookNow = () => {
+    if (!auth.user) {
+      console.log(router)
+      router.visit('/login');
+      return;
+    }
     const bookingData = {
       type: 'tour',
-      id: tour.id, // Replace with actual tour ID
+      id: tour.id,
       name: tour.name,
       price: tour.price,
       additional_info: {
@@ -31,6 +33,7 @@ const TourProfile = ({ tour }) => {
       },
     };
     dispatch(addBooking(bookingData));
+    router.visit("/car-booking");
   };
   const tourData = [
     { label: "Duration", value: tour.duration },
@@ -45,8 +48,7 @@ const TourProfile = ({ tour }) => {
       {/* Breadcrumb */}
       <nav className="text-sm text-red-500 mb-4">
         <a href="#" className="hover:text-red-800">Home</a> &gt;
-        <a href="#" className="hover:text-red-800"> Hotels</a> &gt;
-        <a href="#" className="hover:text-red-800"> Pakistan</a> &gt;
+        <Link href={route('tour.frontendIndex')} className="hover:text-red-800"> Tours</Link> &gt;
         <a href="#" className="hover:text-red-800"> {tour.location}</a> &gt;
         <span className="text-red-400">{tour.name}</span>
       </nav>
@@ -58,10 +60,7 @@ const TourProfile = ({ tour }) => {
           <div className="flex items-center space-x-2 lg:space-x-6">
             <span className='text-lg md:text-xl lg:text-4xl text-red-500 md:mt-4'><CiHeart /></span>
             <div className='flex flex-col'><p className='text-xs md:text-sm text-gray-500 text-right'>from</p> <p className="text-base md:text-2xl font-semibold text-gray-800">${tour.price}</p></div>
-
-            <Link href="/car-booking">
-              <button onClick={handleBookNow} className="px-2 lg:px-6 py-1 mt-1 lg:mt-0 lg:py-2  bg-red-500 text-white text-[10px] md:text-sm rounded-full">Book Now</button>
-            </Link>
+            <button onClick={handleBookNow} className="px-2 lg:px-6 py-1 mt-1 lg:mt-0 lg:py-2  bg-red-500 text-white text-[10px] md:text-sm rounded-full">Book Now</button>
           </div>
         </div>
         <div>

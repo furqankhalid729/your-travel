@@ -61,8 +61,6 @@ const AddHotelRoom = () => {
 
   {/* Image Importer Config */ }
   const [imageSelector, setImageSelector] = useState(false);
-
-
   const { data, setData, post, processing, errors } = useForm({
     name: "",
     duration: "",
