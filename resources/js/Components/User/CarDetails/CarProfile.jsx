@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { addBooking } from '../../../store/bookingSlice';
 import { CiHeart } from 'react-icons/ci';
 import { MdLocationPin } from "react-icons/md";
-import ImageGallery from '../snippets/ImageGallery';
+import ImageGallery from '../Snippets/ImageGallery';
 import { Link, usePage, router } from '@inertiajs/react';
 
 const CarProfile = (car) => {

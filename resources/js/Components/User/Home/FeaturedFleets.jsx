@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import FleetCard from "../../User/snippets/FleetCard";
+import FleetCard from "../Snippets/FleetCard";
 import { ALT_TAGS } from '../../../Constants/Global';
 
 const FeaturedFleets = () => {
