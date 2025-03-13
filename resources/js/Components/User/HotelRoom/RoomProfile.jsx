@@ -5,7 +5,7 @@ import { CiHeart } from 'react-icons/ci';
 import { LuParkingMeter } from "react-icons/lu";
 import { MdLocationPin } from "react-icons/md";
 import { FaMapMarkerAlt, FaCity } from 'react-icons/fa';
-import ImageGallery from '../Snippets/ImageGallery';
+import ImageGallery from '../snippets/ImageGallery';
 import { Link, usePage, router } from '@inertiajs/react';
 const RoomProfile = ({ hotel, hotelRooms }) => {
   // const images = hotel.tour_images.map(image => 'http://127.0.0.1:8000/storage/' + image);

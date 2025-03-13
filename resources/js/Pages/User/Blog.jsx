@@ -1,6 +1,6 @@
 import React from "react";
 import { blogPosts } from "../../Components/User/Blog/BlogPosts";
-import BlogCard from "../../Components/User/Snippets/BlogCard";
+import BlogCard from "../../Components/User/snippets/BlogCard";
 import UserLayout from "../../Layout/UserLayout";
 
 const Blog = () => {

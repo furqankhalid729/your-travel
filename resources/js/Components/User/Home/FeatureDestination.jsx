@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import DestinationCard from '../Snippets/DestinationCard';
+import DestinationCard from '../snippets/DestinationCard';
 
 const FeatureDestination = () => {
   const cardData = [

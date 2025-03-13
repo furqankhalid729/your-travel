@@ -1,5 +1,5 @@
 import React from "react";
-import ProfileCard from "../Snippets/ProfileCard";
+import ProfileCard from "../snippets/ProfileCard";
 function FeaturedProfile() {
   const cardData = [
     {

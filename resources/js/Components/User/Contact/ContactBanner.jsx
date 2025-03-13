@@ -1,5 +1,5 @@
 import React from 'react';
-import ContactCard from '../Snippets/ContactCard';
+import ContactCard from '../snippets/ContactCard';
 import { MdOutlineAttachEmail } from "react-icons/md";
 import { TbPhonePlus } from "react-icons/tb";
 import { SlLocationPin } from "react-icons/sl";
