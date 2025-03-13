@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { formFieldsForCar } from "../../../Constants/Home"; 
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
-import FormField from "../home/FormField";
+import FormField from "../Home/FormField";
 import { CiSearch } from "react-icons/ci";
 
 const CarBanner = () => {

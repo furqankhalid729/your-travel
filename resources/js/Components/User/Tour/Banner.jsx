@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
-import FormField from "../home/FormField";
+import FormField from "../Home/FormField";
 import { formFieldsForTour } from "../../../Constants/Home";
 
 const Banner = () => {
