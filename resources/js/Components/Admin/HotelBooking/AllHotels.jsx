@@ -1,6 +1,6 @@
 import { FaArrowLeft, FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import { Link } from "@inertiajs/react";
-import DeleteModal from "@/Components/DeleteModal";
+import DeleteModal from "../../../Components/deleteModal";
 import { useState } from "react";
 import axios from "axios";
 
