@@ -9,7 +9,7 @@ import { Link, usePage, router } from '@inertiajs/react';
 const CarProfile = (car) => {
   const { auth } = usePage().props;
   console.log("CarProfile :", auth);
-  const images = car.car.car_images.map(image => 'http://127.0.0.1:8000/storage/' + image);
+  const images = car.car.car_images.map(image => '/storage/' + image);
   const dispatch = useDispatch();
   const handleBookNow = () => {
     if (!auth.user) {
