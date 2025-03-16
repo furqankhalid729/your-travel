@@ -2,8 +2,8 @@ import { Link } from "@inertiajs/react";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 // import { useNavigate } from "react-router-dom";
 
-const EnquiriesDetails = () => {
-  // const navigate = useNavigate();
+const EnquiriesDetails = ({enquiry}) => {
+  console.log(enquiry)
   return (
     <div className="m-7 lg:m-12">
       <div className="flex items-center mb-6">
@@ -29,6 +29,8 @@ const EnquiriesDetails = () => {
           <input
             type="text"
             id="name"
+            value={enquiry.name}
+            disabled
             placeholder="Muneeb Ur Rehman"
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#bb8dd9]"
           />
@@ -43,6 +45,8 @@ const EnquiriesDetails = () => {
           <input
             type="email"
             id="email"
+            value={enquiry.email}
+            disabled
             placeholder="Enter your email"
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#bb8dd9]"
           />
@@ -92,6 +96,8 @@ const EnquiriesDetails = () => {
           id="comment"
           placeholder="Enter your comment"
           rows="5"
+          value={enquiry.message}
+            disabled
           className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#bb8dd9]"
         ></textarea>
       </div>

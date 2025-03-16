@@ -1,6 +1,7 @@
 import { Link } from "@inertiajs/react";
 
-const Messages = () => {
+const Messages = ({enquiries}) => {
+  console.log(enquiries)
   const messages = [
     {
       id: "M101",
@@ -66,13 +67,7 @@ const Messages = () => {
                 Email
               </th>
               <th className="px-4 py-2 border-b text-left font-semibold">
-                Contact
-              </th>
-              <th className="px-4 py-2 border-b text-left font-semibold">
                 Comment
-              </th>
-              <th className="px-4 py-2 border-b text-left font-semibold">
-                Your Comment
               </th>
               <th className="px-4 py-2 border-b text-left font-semibold">
                 Status
@@ -83,22 +78,18 @@ const Messages = () => {
             </tr>
           </thead>
           <tbody>
-            {messages.map((message) => (
+            {enquiries.map((message) => (
               <tr className="text-[#909090]" key={message.id}>
                 <td className="px-4 py-2 border-b">{message.id}</td>
                 <td className="px-4 py-2 border-b">{message.name}</td>
                 <td className="px-4 py-2 border-b">{message.email}</td>
-                <td className="px-4 py-2 border-b">{message.contact}</td>
                 <td className="px-4 py-2 border-b">
-                  {message.comment.slice(0, 9)}...
-                </td>
-                <td className="px-4 py-2 border-b">
-                  {message.yourComment.slice(0, 12)}...
+                  {message.message.slice(0, 9)}...
                 </td>
                 <td className="px-4 py-2 border-b">{message.status}</td>
                 <td className="px-4 py-2 border-b">
                   <Link
-                    href="/dashboard/enquiries/details"
+                    href={route('enquiry.detail',message.id)}
                     className="text-black underline"
                   >
                     View

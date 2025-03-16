@@ -12,6 +12,7 @@ use App\Http\Controllers\TourFrontendController;
 use App\Http\Controllers\TourController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\EnquiryController;
 use App\Models\Car\CarBrand;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -29,6 +30,9 @@ Route::get('/tour', [TourFrontendController::class, 'frontendIndex'])->name('tou
 Route::get('/car-booking', [BookingController::class, 'index'])->name('checkout');
 Route::get('/hotel/hotel-details/{id}', [HotelRoomController::class, 'show'])->name('hotel.show');
 Route::get('/tour/tour-details/{id}', [TourFrontendController::class, 'show'])->name('tour.show');
+Route::get('/contact', function () {
+    return Inertia::render('User/Contact');
+});
 
 Route::get('/about', function () {
     return Inertia::render('User/About');
@@ -49,9 +53,7 @@ Route::get('/blog/:id', function () {
     return Inertia::render('User/BlogDetail');
 });
 
-Route::get('/contact', function () {
-    return Inertia::render('User/Contact');
-});
+
 Route::get('/career', function () {
     return Inertia::render('User/Career');
 });
@@ -109,6 +111,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard/tour-booking/add-tour', function () {
         return Inertia::render('Admin/TourBooking/AddTour');
     })->name("tour.create");
+
+    Route::get('/dashboard/enquiries', [EnquiryController::class, 'index'])->name('enquiry.index');
+    Route::get('/dashboard/enquiries/details/{id}',[EnquiryController::class, 'show'] )->name('enquiry.detail');
 });
 
 Route::get('/dashlayout', function () {
@@ -209,14 +214,6 @@ Route::get('/dashboard/drafts', function () {
 
 Route::get('/dashboard/customers', function () {
     return Inertia::render('Admin/Customers');
-});
-
-Route::get('/dashboard/enquiries', function () {
-    return Inertia::render('Admin/Enquiries');
-});
-
-Route::get('/dashboard/enquiries/details', function () {
-    return Inertia::render('Admin/EnquiriesDetails');
 });
 
 Route::get('/dashboard/payments', function () {

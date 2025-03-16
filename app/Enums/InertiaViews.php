@@ -31,6 +31,9 @@ enum InertiaViews: string
 
     case AdminPayment = 'Admin/Payments';
 
+    case AdminEnquiry = 'Admin/Enquiries';
+    case AdminEnquiryDetail = 'Admin/EnquiriesDetails';
+
     // Frontend
     // cars
     case carIndex = 'User/Car';

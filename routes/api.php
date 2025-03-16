@@ -11,6 +11,7 @@ use App\Http\Controllers\LocationController;
 use App\Http\Controllers\HotelFrontendController;
 use App\Http\Controllers\TourFrontendController;
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\EnquiryController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -36,3 +37,4 @@ Route::get('/cars/car-details/{id}', [CarController::class, 'show'])->name('cars
 Route::get('/hotel/home/featured', [HotelFrontendController::class, 'featured'])->name('hotel.featured');
 Route::get('/tour/home/featured', [TourFrontendController::class, 'featured'])->name('tour.featured');
 Route::post('/add/booking', [BookingController::class, 'booking'])->name('booking');
+Route::post('/contact', [EnquiryController::class , 'store'])->name('contact.store');
