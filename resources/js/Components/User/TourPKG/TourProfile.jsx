@@ -7,7 +7,7 @@ import ImageGallery from '../snippets/ImageGallery';
 import { Link, usePage, router } from '@inertiajs/react';
 const TourProfile = ({ tour }) => {
   console.log(tour)
-  const images = JSON.parse(tour.tour_images).map(image => 'http://127.0.0.1:8000/storage/' + image);
+  const images = JSON.parse(tour.tour_images).map(image => '/storage/' + image);
   const { auth } = usePage().props;
   const dispatch = useDispatch();
   const handleBookNow = () => {
