@@ -6,15 +6,8 @@ import { MdLocationPin } from "react-icons/md";
 import ImageGallery from '../snippets/ImageGallery';
 import { Link, usePage, router } from '@inertiajs/react';
 const TourProfile = ({ tour }) => {
-  // const images = tour.tour_images.map(image => 'http://127.0.0.1:8000/storage/' + image);
-  const images = [
-    "/storage/images/tour5.jpg",
-    "/storage/images/tour.jpeg",
-    "/storage/images/tour1.jpeg",
-    "/storage/images/tour2.jpeg",
-    "/storage/images/tour3.jpeg",
-    "/storage/images/tour4.jpeg"
-  ];
+  console.log(tour)
+  const images = JSON.parse(tour.tour_images).map(image => 'http://127.0.0.1:8000/storage/' + image);
   const { auth } = usePage().props;
   const dispatch = useDispatch();
   const handleBookNow = () => {
@@ -78,11 +71,11 @@ const TourProfile = ({ tour }) => {
         </div>
       </div>
 
-      <div className='flex gap-4 md:gap-8'>
-        <div className='w-3/4'>
+      <div className='flex flex-col md:flex-row gap-4 md:gap-8'>
+        <div className='w-full md:w-3/4'>
           <ImageGallery images={images} />
         </div>
-        <div className='w-1/4'>
+        <div className='w-full md:w-1/4'>
           <div className="h-32 lg:h-72 relative bg-gray-300 mb-4 rounded-md overflow-hidden">
             <div
               className="absolute inset-0 bg-cover bg-center rounded-md"

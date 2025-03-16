@@ -8,15 +8,16 @@ import { FaMapMarkerAlt, FaCity } from 'react-icons/fa';
 import ImageGallery from '../snippets/ImageGallery';
 import { Link, usePage, router } from '@inertiajs/react';
 const RoomProfile = ({ hotel, hotelRooms }) => {
-  // const images = hotel.tour_images.map(image => 'http://127.0.0.1:8000/storage/' + image);
-  const images = [
-    "/storage/images/hotel0.jpg",
-    "/storage/images/hotel2.jpg",
-    "/storage/images/hotels3.png",
-    "/storage/images/hotel4.png",
-    "/storage/images/hotel8.jpg",
-    "/storage/images/hotel7.jpg"
-  ];
+  console.log(JSON.parse(hotel.images))
+  const images = JSON.parse(hotel.images).map(image => '/storage/' + image);
+  // const images = [
+  //   "/storage/images/hotel0.jpg",
+  //   "/storage/images/hotel2.jpg",
+  //   "/storage/images/hotels3.png",
+  //   "/storage/images/hotel4.png",
+  //   "/storage/images/hotel8.jpg",
+  //   "/storage/images/hotel7.jpg"
+  // ];
   console.log(hotel, hotelRooms);
   const { auth } = usePage().props;
   const dispatch = useDispatch();
@@ -77,11 +78,11 @@ const RoomProfile = ({ hotel, hotelRooms }) => {
       </div>
 
 
-      <div className='flex gap-4 md:gap-8'>
-        <div className='w-3/4'>
+      <div className='flex flex-col md:flex-row gap-4 md:gap-8'>
+        <div className='w-full md:w-3/4'>
           <ImageGallery images={images} />
         </div>
-        <div className='w-1/4'>
+        <div className='w-full md:w-1/4'>
           <div className="h-44 lg:h-64 relative bg-gray-300 mb-4 rounded-md overflow-hidden">
             <div
               className="absolute inset-0 bg-cover bg-center rounded-md "
