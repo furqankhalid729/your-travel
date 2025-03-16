@@ -10,15 +10,6 @@ import { Link, usePage, router } from '@inertiajs/react';
 const RoomProfile = ({ hotel, hotelRooms }) => {
   console.log(JSON.parse(hotel.images))
   const images = JSON.parse(hotel.images).map(image => '/storage/' + image);
-  // const images = [
-  //   "/storage/images/hotel0.jpg",
-  //   "/storage/images/hotel2.jpg",
-  //   "/storage/images/hotels3.png",
-  //   "/storage/images/hotel4.png",
-  //   "/storage/images/hotel8.jpg",
-  //   "/storage/images/hotel7.jpg"
-  // ];
-  console.log(hotel, hotelRooms);
   const { auth } = usePage().props;
   const dispatch = useDispatch();
 
@@ -35,6 +26,7 @@ const RoomProfile = ({ hotel, hotelRooms }) => {
       price: hotelRooms[0].price,
       additional_info: {
         hotel_location: hotel.location,
+        room_id: hotelRooms[0].id
       },
     };
     dispatch(addBooking(bookingData));

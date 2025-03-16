@@ -1,15 +1,9 @@
 import React from 'react'
 import { FaCalendarAlt, FaUser, FaWifi, FaTv, FaSwimmer, FaUtensils, FaSpa, FaSwimmingPool, FaParking, FaTimes } from 'react-icons/fa';
 import { FaCheck } from "react-icons/fa6";
-import { MdOutlineMeetingRoom } from "react-icons/md";
-import { IoIosSnow } from "react-icons/io";
-import { HiOutlineBuildingOffice2 } from "react-icons/hi2";
-import { GiCoffeeCup } from "react-icons/gi";
-import { PiBathtub } from "react-icons/pi";
-import { GiPineTree } from "react-icons/gi";
-import { BiFridge } from "react-icons/bi";
-import { PiCity } from "react-icons/pi";
-
+import { useDispatch } from 'react-redux';
+import { addBooking } from '../../../store/bookingSlice';
+import { Link, usePage, router } from '@inertiajs/react';
 
 const iconMapping = {
   FaWifi: <FaWifi />,
@@ -25,97 +19,29 @@ const TypeIconMapping = {
 };
 
 const AvailableRoom = ({ hotel, hotelRooms }) => {
-  const rooms = [
-    {
-      id: 1,
-      name: 'Double Luxury Bed',
-      amenities: [
-        { name: 'Room', icon: <MdOutlineMeetingRoom /> },
-        { name: 'Free Wifi', icon: <FaWifi /> },
-        { name: 'Air Condition', icon: <IoIosSnow /> },
-        { name: 'Ultra HD TV', icon: <FaTv /> },
-        { name: '30 m', icon: <HiOutlineBuildingOffice2 /> },
-        { name: 'Tea/Coffee', icon: <GiCoffeeCup /> },
-        { name: 'Excite Bathroom', icon: <PiBathtub /> },
-        { name: 'Garden View', icon: <GiPineTree /> },
-        { name: 'Fridge', icon: <BiFridge /> },
-        { name: 'Pool View', icon: <FaSwimmer /> },
-        { name: 'City View', icon: <PiCity /> },
 
+  const { auth } = usePage().props;
+  const dispatch = useDispatch();
 
-      ],
-      price: 400,
-      total: 850,
-      image: 'storage/images/hotel.jpg',
-    },
-    {
-      id: 2,
-      name: 'Luxury Villa',
-      amenities: [
-        { name: 'Room', icon: <MdOutlineMeetingRoom /> },
-        { name: 'Free Wifi', icon: <FaWifi /> },
-        { name: 'Air Condition', icon: <IoIosSnow /> },
-        { name: 'Ultra HD TV', icon: <FaTv /> },
-        { name: '30 m', icon: <HiOutlineBuildingOffice2 /> },
-        { name: 'Tea/Coffee', icon: <GiCoffeeCup /> },
-        { name: 'Excite Bathroom', icon: <PiBathtub /> },
-        { name: 'Garden View', icon: <GiPineTree /> },
-        { name: 'Fridge', icon: <BiFridge /> },
-        { name: 'Pool View', icon: <FaSwimmer /> },
-        { name: 'City View', icon: <PiCity /> },
-
-
-      ],
-      price: 600,
-      total: 950,
-      image: 'storage/images/hotel.jpg',
-    },
-    {
-      id: 3,
-      name: 'Simple Double Bed',
-      amenities: [
-        { name: 'Room', icon: <MdOutlineMeetingRoom /> },
-        { name: 'Free Wifi', icon: <FaWifi /> },
-        { name: 'Air Condition', icon: <IoIosSnow /> },
-        { name: 'Ultra HD TV', icon: <FaTv /> },
-        { name: '30 m', icon: <HiOutlineBuildingOffice2 /> },
-        { name: 'Tea/Coffee', icon: <GiCoffeeCup /> },
-        { name: 'Excite Bathroom', icon: <PiBathtub /> },
-        { name: 'Garden View', icon: <GiPineTree /> },
-        { name: 'Fridge', icon: <BiFridge /> },
-        { name: 'Pool View', icon: <FaSwimmer /> },
-        { name: 'City View', icon: <PiCity /> },
-
-
-      ],
-      price: 200,
-      total: 450,
-      image: 'storage/images/hotel.jpg',
-    },
-    {
-      id: 4,
-      name: 'King Luxury Bed',
-      amenities: [
-        { name: 'Room', icon: <MdOutlineMeetingRoom /> },
-        { name: 'Free Wifi', icon: <FaWifi /> },
-        { name: 'Air Condition', icon: <IoIosSnow /> },
-        { name: 'Ultra HD TV', icon: <FaTv /> },
-        { name: '30 m', icon: <HiOutlineBuildingOffice2 /> },
-        { name: 'Tea/Coffee', icon: <GiCoffeeCup /> },
-        { name: 'Excite Bathroom', icon: <PiBathtub /> },
-        { name: 'Garden View', icon: <GiPineTree /> },
-        { name: 'Fridge', icon: <BiFridge /> },
-        { name: 'Pool View', icon: <FaSwimmer /> },
-        { name: 'City View', icon: <PiCity /> },
-
-
-      ],
-      price: 550,
-      total: 950,
-      image: 'storage/images/hotel.jpg',
-    },
-  ];
-
+  const handleBookNow = (id,price) => {
+    if (!auth.user) {
+      console.log(router)
+      router.visit('/login');
+      return;
+    }
+    const bookingData = {
+      type: 'hotel',
+      id: hotel.id,
+      name: hotel.name,
+      price:price,
+      additional_info: {
+        hotel_location: hotel.location,
+        room_id:id
+      },
+    };
+    dispatch(addBooking(bookingData));
+    router.visit("/car-booking");
+  };
   const defaultImage = '/storage/images/hotel.jpg';
 
   return (
@@ -182,7 +108,7 @@ const AvailableRoom = ({ hotel, hotelRooms }) => {
                   <p className="text-red-500 text-base lg:text-sm">Total: ${room.price}</p>
 
                 </div>
-                <button className=" bg-red-500 text-[16px] leading-[19px] text-white font-[500] px-2 py-1 rounded-full w-32 h-[30px] lg:w-[130px] hover:bg-red-600 ">
+                <button onClick={() => handleBookNow(room.id,room.price)} className=" bg-red-500 text-[16px] leading-[19px] text-white font-[500] px-2 py-1 rounded-full w-32 h-[30px] lg:w-[130px] hover:bg-red-600 ">
                   Book Now
                 </button>
               </div>

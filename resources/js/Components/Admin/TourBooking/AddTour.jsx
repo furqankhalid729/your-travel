@@ -122,12 +122,11 @@ const AddTour = () => {
   const handleItineraryImageChange = (index, event) => {
     const file = event.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file); // Generate preview URL
+      const imageUrl = URL.createObjectURL(file);
       setImagePreviews((prev) => ({
         ...prev,
         [index]: imageUrl,
       }));
-
       handleItineraryChange(index, "image", file);
     }
   };
@@ -199,6 +198,7 @@ const AddTour = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = new FormData();
+
     formData.append("duration", data.name);
     formData.append("duration", data.duration);
     formData.append("location", data.location);
@@ -217,6 +217,15 @@ const AddTour = () => {
     formData.append("condition", data.condition);
     formData.append("tour_itinerary", JSON.stringify(data.tour_itinerary)); // Send features as JSON string
 
+    // Append tour itinerary (handling images separately)
+    data.tour_itinerary.forEach((item, index) => {
+      formData.append(`tour_itinerary[${index}][day]`, item.day);
+      if (item.image instanceof File) {
+        formData.append(`tour_itinerary[${index}][image]`, item.image);
+      }
+    });
+
+    console.log(data.tour_itinerary)
     try {
       await post("/api/tour/add-tour", formData, {
         onSuccess: () => {

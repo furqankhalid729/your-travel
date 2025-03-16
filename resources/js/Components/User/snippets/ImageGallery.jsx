@@ -40,7 +40,7 @@ const ImageGallery = ({ images }) => {
         {/* Overlay image */}
         {images.length > 5 && (
           <div className="relative">
-            <img src={images[5]} alt="Image 5" className="w-full h-full object-cover rounded-lg" />
+            <img src={images[5]} alt="Image 5" className="w-full h-full object-cover rounded-lg h-[200px]" />
             <span className="absolute inset-0 bg-opacity-50 text-white flex items-center justify-center">
               <button
                 onClick={() => handleShowModal(5)}

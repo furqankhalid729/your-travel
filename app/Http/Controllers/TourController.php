@@ -25,7 +25,7 @@ class TourController extends Controller
             ->join('booking_items', 'bookings.id', '=', 'booking_items.booking_id')
             ->where('booking_items.type', 'tour')
             ->get();
-        return Inertia::render(InertiaViews::TourDashboard->value,[
+        return Inertia::render(InertiaViews::TourDashboard->value, [
             'allBooking' => $allBooking
         ]);
     }
@@ -49,6 +49,7 @@ class TourController extends Controller
             'includedExcludedTypes' => 'required|array',
             'condition' => 'required|string',
             'tour_itinerary' => 'required|array',
+            'tour_itinerary.*.file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
 
         $tourImages = [];
@@ -63,11 +64,28 @@ class TourController extends Controller
             }
         }
 
+        $tourItinerary = [];
+        foreach ($request->tour_itinerary as $index => $itinerary) {
+            $imagePath = null;
+            Log::info("image check",[$itinerary]);
+            if ($request->hasFile("tour_itinerary.$index.image")) {
+                $imagePath = $request->file("tour_itinerary.$index.image")->store('images/TourItinerary');
+            }
+
+            $tourItinerary[] = [
+                'day' => $itinerary['day'],
+                'image' => $imagePath,
+            ];
+        }
+
+
         $tour = Tour::create([
             ...$validated,
             'tour_images' => json_encode($tourImages),
+            'tour_itinerary' => json_encode($tourItinerary),
         ]);
-        return redirect()->route('tour.index')->with('success', 'Tour Added successfully');
+        return response()->json("Success");
+        //return redirect()->route('tour.index')->with('success', 'Tour Added successfully');
     }
 
     public function destroy(string $id)
