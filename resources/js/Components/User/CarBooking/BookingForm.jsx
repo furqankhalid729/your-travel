@@ -31,12 +31,12 @@ const BookingForm = ({disabled}) => {
   console.log(data)
   const [csrfToken, setCsrfToken] = useState("");
   
-  useEffect(() => {
-    const token = document.querySelector('meta[name="csrf-token"]')?.content;
-    if (token) {
-      setCsrfToken(token);
-    }
-  }, []);
+  // useEffect(() => {
+  //   const token = document.querySelector('meta[name="csrf-token"]')?.content;
+  //   if (token) {
+  //     setCsrfToken(token);
+  //   }
+  // }, []);
 
   const handleChange = (e) => {
     setData({
@@ -48,22 +48,32 @@ const BookingForm = ({disabled}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    fetch("/api/add/booking", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "X-CSRF-TOKEN": csrfToken, 
-      },
-      body: JSON.stringify(data),
-    })
-      .then((response) => response.json())
-      .then((result) => {
-        dispatch(clearBookings());
+    post("/api/add/booking", {
+      preserveScroll: true, // Keeps page position after submission
+      onSuccess: () => {
         alert("Form submitted successfully!");
-      })
-      .catch((error) => {
-        console.error("Error submitting form:", error);
-      });
+        reset();
+      },
+      onError: (errors) => {
+        console.error("Form submission failed:", errors);
+      },
+    });
+    // fetch("/api/add/booking", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     "X-CSRF-TOKEN": csrfToken, 
+    //   },
+    //   body: JSON.stringify(data),
+    // })
+    //   .then((response) => response.json())
+    //   .then((result) => {
+    //     dispatch(clearBookings());
+    //     alert("Form submitted successfully!");
+    //   })
+    //   .catch((error) => {
+    //     console.error("Error submitting form:", error);
+    //   });
   };
 
   return (
