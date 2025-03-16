@@ -88,11 +88,13 @@ const Header = () => {
       <div className="container mx-auto flex items-center justify-between">
         {/* Logo */}
         <div className="flex flex-1 md:flex-none">
-          <img
-            src="storage/images/image1.png"
-            alt="Logo"
-            className=" w-28 sm:w-32 md:w-48 lg:w-72 mr-2"
-          />
+          <Link href="/">
+            <img
+              src="storage/images/image1.png"
+              alt="Logo"
+              className=" w-28 sm:w-32 md:w-48 lg:w-72 mr-2"
+            />
+          </Link>
         </div>
 
         {/* Center Links for Desktop */}

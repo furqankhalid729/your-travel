@@ -41,7 +41,6 @@ const AdminLayout = ({ title, children }) => {
         { to: "/dashboard/car-booking", icon: <FaCar />, name: "Car Booking" },
         { to: "/dashboard/hotel-booking", icon: <FaHotel />, name: "Hotel Booking" },
         { to: "/dashboard/tour-booking", icon: <FaSuitcase />, name: "Tour Booking" },
-        { to: "/dashboard/drafts", icon: <FaDraft2Digital />, name: "Drafts" },
         { to: "/dashboard/customers", icon: <FaUsers />, name: "Customers" },
         { to: "/dashboard/enquiries", icon: <FaEnvelope />, name: "Enquiries" },
         { to: "/dashboard/payments", icon: <FaCreditCard />, name: "Payments" },
@@ -49,7 +48,6 @@ const AdminLayout = ({ title, children }) => {
         { to: "/dashboard/reports", icon: <FaChartBar />, name: "Reports" },
         { to: "/dashboard/settings", icon: <FaCog />, name: "Settings" },
     ];
-
     return (
         <>
             <Head title={title} />
@@ -88,7 +86,7 @@ const AdminLayout = ({ title, children }) => {
                                     <Link
                                         key={item.to}
                                         href={item.to}
-                                        onClick={handleRouteChange} // Make sure you define this function elsewhere
+                                        onClick={handleRouteChange}
                                         className={`relative flex items-center gap-4 px-4 py-2 rounded hover:bg-gray-700 transition ${isActive(item.to) ? "text-white" : "text-gray-400"
                                             }`}
                                     >
@@ -166,7 +164,8 @@ const AdminLayout = ({ title, children }) => {
                             <span>{item.name}</span>
                             <FaArrowRight className="ml-auto" />
                         </Link>
-                    ))}            </nav>
+                    ))}            
+                </nav>
             </div>
         </>
     );

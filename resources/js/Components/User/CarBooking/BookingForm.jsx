@@ -49,7 +49,7 @@ const BookingForm = ({disabled}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     post("/api/add/booking", {
-      preserveScroll: true, // Keeps page position after submission
+      preserveScroll: true,
       onSuccess: () => {
         alert("Form submitted successfully!");
         reset();
@@ -58,22 +58,6 @@ const BookingForm = ({disabled}) => {
         console.error("Form submission failed:", errors);
       },
     });
-    // fetch("/api/add/booking", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "X-CSRF-TOKEN": csrfToken, 
-    //   },
-    //   body: JSON.stringify(data),
-    // })
-    //   .then((response) => response.json())
-    //   .then((result) => {
-    //     dispatch(clearBookings());
-    //     alert("Form submitted successfully!");
-    //   })
-    //   .catch((error) => {
-    //     console.error("Error submitting form:", error);
-    //   });
   };
 
   return (

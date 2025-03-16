@@ -1,14 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from '@inertiajs/react';
 import { CiHeart } from "react-icons/ci";
+import Cookies from "js-cookie";
 
-const FleetCard = ({ id,imageSrc, car_name, brand, model }) => {
+
+const FleetCard = ({ id, imageSrc, car_name, brand, model }) => {
+  const [favorites, setFavorites] = useState(() => {
+    return JSON.parse(Cookies.get("favorites") || "[]");
+  });
+  const isFavorited = favorites.some((car) => car.id === id);
+  const handleFavorite = (e) => {
+    e.preventDefault();
+    let updatedFavorites = [...favorites];
+    if (isFavorited) {
+      updatedFavorites = updatedFavorites.filter((car) => car.id !== id);
+    } else {
+      updatedFavorites.push({ id, name:car_name, image:imageSrc, type:"car" });
+    }
+    Cookies.set("favorites", JSON.stringify(updatedFavorites), { expires: 30 });
+    setFavorites(updatedFavorites);
+  };
   return (
     <Link href={`/cars/${id}`}>
       <div className="relative w-full max-w-xl rounded-lg overflow-hidden bg-[#F4F4F4] py-3">
         <img src={`/storage/${imageSrc}`} alt={car_name} className="w-full  object-cover h-[215px]" />
 
-        <div className="absolute top-2 right-2 bg-white rounded-full p-1 shadow">
+        <div onClick={handleFavorite} className={`absolute top-2 right-2 rounded-full p-1 shadow cursor-pointer transition ${isFavorited ? "bg-red-500 text-white" : "bg-white text-gray-500"
+          }`}>
           <CiHeart className=" text-xl" />
         </div>
 

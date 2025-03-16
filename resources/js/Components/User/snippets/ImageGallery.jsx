@@ -28,12 +28,12 @@ const ImageGallery = ({ images }) => {
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         {/* Main image */}
         <div className="col-span-2 row-span-2">
-          <img src={images[0]} alt="Image 0" className="w-full h-full object-cover rounded-lg" />
+          <img src={images[0]} alt="Image 0" className="w-full object-cover rounded-lg h-[400px]" />
         </div>
 
         {images.slice(1, 5).map((src, index) => (
           <div key={index} className="relative">
-            <img src={src} alt={`Image ${index + 1}`} className="w-full h-full object-cover rounded-lg" />
+            <img src={src} alt={`Image ${index + 1}`} className="w-full object-cover rounded-lg h-[200px]" />
           </div>
         ))}
 

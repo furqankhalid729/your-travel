@@ -5,81 +5,28 @@ import { FiWifi, FiTv, FiCoffee } from 'react-icons/fi';
 import { IoIosSnow } from "react-icons/io";
 import { BiFridge } from "react-icons/bi";
 import { Link } from '@inertiajs/react';
-
+import Cookies from "js-cookie";
 
 function HotelCards({ hotels }) {
-  console.log(hotels[0]);
-  // console.log(Array.isArray(JSON.parse(hotels[0].types)))
-  // const hotels = [
-  //   {
-  //     id: 1,
-  //     name: "Avari Hotel Lahore",
-  //     location: "Gulberg",
-  //     rating: 4.2,
-  //     stars: 5,
-  //     distance: "5.65 km to city center",
-  //     reviews: 2365,
-  //     price: 700,
-  //     amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
-  //     types: ["Room", "Villa", "Resort", "Apartment"],
-  //     image: "storage/images/hotel.jpg",
-  //   },
-  //   {
-  //     id: 2,
-  //     name: "Avari Hotel Lahore",
-  //     location: "Gulberg",
-  //     rating: 4.2,
-  //     stars: 5,
-  //     distance: "5.65 km to city center",
-  //     reviews: 2365,
-  //     price: 700,
-  //     amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
-  //     types: ["Room", "Villa", "Resort", "Apartment"],
-  //     image: "storage/images/hotel.jpg",
-  //   },
-  //   {
-  //     id: 3,
-  //     name: "Avari Hotel Lahore",
-  //     location: "Gulberg",
-  //     rating: 4.2,
-  //     stars: 5,
-  //     distance: "5.65 km to city center",
-  //     reviews: 2365,
-  //     price: 700,
-  //     amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
-  //     types: ["Room", "Villa", "Resort", "Apartment"],
-  //     image: "storage/images/hotel.jpg",
-  //   },
-  //   {
-  //     id: 4,
-  //     name: "Avari Hotel Lahore",
-  //     location: "Gulberg",
-  //     rating: 4.2,
-  //     stars: 5,
-  //     distance: "5.65 km to city center",
-  //     reviews: 2365,
-  //     price: 700,
-  //     amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
-  //     types: ["Room", "Villa", "Resort", "Apartment"],
-  //     image: "storage/images/hotel.jpg",
-  //   },
-  //   {
-  //     id: 5,
-  //     name: "Avari Hotel Lahore",
-  //     location: "Gulberg",
-  //     rating: 4.2,
-  //     stars: 5,
-  //     distance: "5.65 km to city center",
-  //     reviews: 2365,
-  //     price: 700,
-  //     amenities: ["Good amenities", "Delicious food", "Clean Rooms", "Great Location", "Friendly Staff"],
-  //     types: ["Room", "Villa", "Resort", "Apartment"],
-  //     image: "storage/images/hotel.jpg",
-  //   },
-
-  // ];
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+
+  const [favorites, setFavorites] = useState(() => {
+    return JSON.parse(Cookies.get("favorites") || "[]");
+  });
+  
+  const handleFavorite = (id,name,image) => {
+    const isFavorited = favorites.some((fav) => fav.id === id);
+    let updatedFavorites = [...favorites];
+    if (isFavorited) {
+      updatedFavorites = updatedFavorites.filter((car) => car.id !== id);
+    } else {
+      updatedFavorites.push({ id, name: name, image: image, type:"hotel" });
+    }
+    Cookies.set("favorites", JSON.stringify(updatedFavorites), { expires: 30 });
+    setFavorites(updatedFavorites);
+  };
+
   return (
     <div className=''>
       <div className="flex justify-between py-6">
@@ -124,14 +71,18 @@ function HotelCards({ hotels }) {
       </div>
       {/* Hotel Cards */}
       <div>
-        {hotels.map((hotel) => (
+        {hotels.map((hotel) => {
+          const isFavorited = favorites.some((fav) => fav.id === hotel.id);
+          return(
           <div key={hotel.id} className="flex flex-col lg:flex-row gap-6 bg-white shadow-md rounded-lg p-2 border md:border-gray-200 mt-6">
 
             {/* Left - Hotel Image and Favorite Icon */}
             <div className="object-cover relative md:block max-w-[33%] min-h-[250px]">
               <img src={`/storage/${JSON.parse(hotel.images)[0]}`} alt='' className="w-full md:h-full rounded-lg" />
-              <div className="absolute top-2 right-2 bg-red-500 md:p-2 rounded-full shadow-md">
-                <CiHeart className="text-[8px] md:text-2xl text-white" />
+
+              <div onClick={() => handleFavorite(hotel.id,hotel.name, JSON.parse(hotel.images)[0])} className={`absolute top-2 right-2 rounded-full p-1 shadow cursor-pointer transition ${isFavorited ? "bg-red-500 text-white" : "bg-white text-gray-500"
+                }`}>
+                <CiHeart className="text-[8px] md:text-2xl" />
               </div>
             </div>
             <div className='block md:flex md:gap-5 md:py-4 flex-1'>
@@ -196,7 +147,7 @@ function HotelCards({ hotels }) {
               </div>
             </div>
           </div>
-        ))}
+        )})}
       </div>
     </div>
   );

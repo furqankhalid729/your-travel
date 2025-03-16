@@ -61,7 +61,7 @@ const BannerWithTabs = () => {
 
 
                 {/* Render fields based on the active button */}
-                <div className="w-full max-w-4xl mx-auto mt-6">
+                <div className="w-full max-w-5xl mx-auto mt-6">
                     {/* Accordion (visible below lg) */}
                     <div className="lg:hidden">
                         {/* Accordion Header */}
@@ -83,13 +83,14 @@ const BannerWithTabs = () => {
                                 } overflow-hidden`}
                         >
                             <div
-                                className={`grid grid-cols-2 items-start sm:items-center py-2 bg-white rounded-lg sm:p-6 mt-4 mb-10 w-full max-w-4xl lg:space-y-0 lg:flex`}
+                                className={`grid grid-cols-2 items-start sm:items-center py-2 bg-white rounded-lg sm:p-6 mt-4 mb-10 w-full max-w-5xl lg:space-y-0 lg:flex`}
                             >
-                                {formFields.map((field, index) => (
+                                {renderFormFields().map((field, index) => (
                                     <FormField
                                         key={index}
                                         icon={field.icon}
                                         label={field.label}
+                                        type={field.type}
                                         description={field.description}
                                         isLast={index === formFields.length - 1}
                                         showCenterIcon={field.showCenterIcon}
@@ -107,19 +108,23 @@ const BannerWithTabs = () => {
 
                     {/* Normal Div (visible on lg and above) */}
                     <div className="hidden lg:block">
+                    <form action="/search" method="get">
                         <div
-                            className={`grid grid-cols-2 items-start sm:items-center py-2 bg-white rounded-lg sm:p-6 mt-4 mb-10 w-full max-w-4xl lg:space-y-0 lg:flex`}
+                            className={`grid grid-cols-2 items-start sm:items-center py-2 bg-white rounded-lg sm:p-6 mt-4 mb-10 w-full max-w-5xl lg:space-y-0 lg:flex`}
                         >
-                            {formFields.map((field, index) => (
-                                <FormField
-                                    key={index}
-                                    icon={field.icon}
-                                    label={field.label}
-                                    description={field.description}
-                                    isLast={index === formFields.length - 1}
-                                    showCenterIcon={field.showCenterIcon}
-                                />
-                            ))}
+
+                                {renderFormFields().map((field, index) => (
+                                    <FormField
+                                        key={index}
+                                        icon={field.icon}
+                                        label={field.label}
+                                        type={field.type}
+                                        description={field.description}
+                                        isLast={index === formFields.length - 1}
+                                        showCenterIcon={field.showCenterIcon}
+                                    />
+                                ))}
+
 
                             {/* Search Button */}
                             <button className="bg-red-600 px-2 md:px-6 py-1 md:py-3 rounded-lg font-semibold flex items-center w-24 md:w-32 space-x-2 mt-2 ml-2 lg:mt-0">
@@ -127,6 +132,7 @@ const BannerWithTabs = () => {
                                 <span>Search</span>
                             </button>
                         </div>
+                        </form>
                     </div>
                 </div>
             </div>
