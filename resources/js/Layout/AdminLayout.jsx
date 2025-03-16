@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Head } from '@inertiajs/react';
 import { Link, usePage } from "@inertiajs/react";
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
+//import ResponsiveLink from '@/Components/ResponsiveLink';
 
 // import { Outlet } from "react-router-dom";
 
@@ -31,7 +31,7 @@ const AdminLayout = ({ title, children }) => {
     const { url } = usePage();
     const isActive = (path) => {
         return url.replace("/dashboard") === path.replace("/dashboard")
-    };    
+    };
 
     const handleRouteChange = () => {
         setSidebarOpen(false);
@@ -71,13 +71,13 @@ const AdminLayout = ({ title, children }) => {
                             <FaUserCircle className="text-2xl" />
                             <span>{user.name}</span>
                         </div>
-                        <ResponsiveNavLink
+                        <Link
                             method="post"
                             href={route('logout')}
                             as="button"
                         >
                             Log Out
-                        </ResponsiveNavLink>
+                        </Link>
                     </div>
                 </div>
                 <div className="flex">
@@ -108,6 +108,65 @@ const AdminLayout = ({ title, children }) => {
                         {children}
                     </div>
                 </div>
+            </div>
+            <div
+                className={`bg-[#2e2532] w-56 text-white flex flex-col fixed top-0 left-0 h-full z-50 transition-all duration-500 lg:hidden overflow-y-auto ${sidebarOpen ? "block" : "hidden"
+                    }`}
+            >
+                <button
+                    onClick={() => setSidebarOpen(false)}
+                    className="text-white text-xl mx-2 p-4"
+                >
+                    <FaTimes />
+                </button>
+                <nav className="flex-1 px-3 py-4 space-y-4">
+                    <Link
+                        to="/dashboard"
+                        end
+                        onClick={handleRouteChange}
+                        className={({ isActive }) =>
+                            `relative flex items-center gap-4 px-4 py-2 rounded hover:bg-gray-700 transition ${isActive ? "text-white" : "text-gray-400"
+                            }`
+                        }
+                    >
+                        {({ isActive }) => (
+                            <>
+                                {isActive && (
+                                    <span className="absolute left-0 top-1/2 -translate-y-1/2 bg-[#e0b0ff] h-full w-1 p-1 rounded" />
+                                )}
+                                <FaHome />
+                                <span>Dashboard</span>
+                                <FaArrowRight className="ml-auto" />
+                            </>
+                        )}
+                    </Link>
+                    {[
+                        { to: "/dashboard/car-booking", icon: <FaCar />, name: "Car Booking" },
+                        { to: "/dashboard/hotel-booking", icon: <FaHotel />, name: "Hotel Booking" },
+                        { to: "/dashboard/tour-booking", icon: <FaSuitcase />, name: "Tour Booking" },
+                        { to: "/dashboard/drafts", icon: <FaDraft2Digital />, name: "Drafts" },
+                        { to: "/dashboard/customers", icon: <FaUsers />, name: "Customers" },
+                        { to: "/dashboard/enquiries", icon: <FaEnvelope />, name: "Enquiries" },
+                        { to: "/dashboard/payments", icon: <FaCreditCard />, name: "Payments" },
+                        { to: "/dashboard/transaction", icon: <FaExchangeAlt />, name: "Transaction" },
+                        { to: "/dashboard/reports", icon: <FaChartBar />, name: "Reports" },
+                        { to: "/dashboard/settings", icon: <FaCog />, name: "Settings" },
+                    ].map((item) => (
+                        <Link
+                            href={item.to}
+                            key={item.name}
+                            onClick={handleRouteChange}
+                            className={`relative flex items-center gap-4 px-4 py-2 rounded hover:bg-gray-700 transition ${route().current(item.to) ? "text-white" : "text-gray-400"
+                                }`}
+                        >
+                            {route().current(item.to) && (
+                                <span className="absolute left-0 top-1/2 -translate-y-1/2 bg-[#e0b0ff] h-full w-1 p-1 rounded" />
+                            )}
+                            {item.icon}
+                            <span>{item.name}</span>
+                            <FaArrowRight className="ml-auto" />
+                        </Link>
+                    ))}            </nav>
             </div>
         </>
     );
