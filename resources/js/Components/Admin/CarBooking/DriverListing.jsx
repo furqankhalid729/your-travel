@@ -107,9 +107,9 @@ const DriverListing = ({ drivers }) => {
                     <Link href={route('driver.edit', driver.id)} className="text-green-500">
                       <FaEdit />
                     </Link>
-                    <button className="text-blue-500 px-1">
+                    <Link href={route('driver.show', driver.id)} className="text-blue-500 px-1">
                       <FaEye />
-                    </button>
+                    </Link>
                     <button onClick={() => openModal(driver.id)} className="text-red-500">
                       <FaTrash />
                     </button>

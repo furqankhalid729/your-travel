@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use App\Enums\InertiaViews;
 use Carbon\Carbon;
 use App\Models\Booking;
+use App\Models\BookingItem;
+use App\Models\User;
 
 class AdminDashboardController extends Controller
 {
@@ -43,6 +46,30 @@ class AdminDashboardController extends Controller
             'totalBookingsYearly' => $totalBookingsYearly,
             'activeBookingsTotal' => $activeBookingsTotal,
             'cancelBookingsTotal' => $cancelBookingsTotal
+        ]);
+    }
+
+    public function customerIndex(Request $request)
+    {
+        //$customers = User::all();
+        $customers = User::all()->map(function ($user) {
+            $bookings = Booking::where('email', $user->email)->get();
+            Log::info("Bookings for user: {$user->email}", $bookings->toArray());
+            $totalSpending = $bookings->sum(function ($booking) {
+                return BookingItem::where('booking_id', $booking->id)->sum('price');
+            });
+
+            return [
+                'id'   => $user->id,
+                'email' => $user->email,
+                'name' => $user->name,
+                'created_at' => $user->created_at,
+                'role' => $user->role,
+                'spending' => $totalSpending,
+            ];
+        });
+        return Inertia::render(InertiaViews::AdminCustomer->value, [
+            'customers' => $customers
         ]);
     }
 }

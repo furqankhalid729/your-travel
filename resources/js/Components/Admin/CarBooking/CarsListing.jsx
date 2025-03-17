@@ -37,18 +37,6 @@ const CarsListing = ({ cars }) => {
           <h2 className="text-3xl font-semibold text-[#808080]">Car List</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:flex gap-2">
             <Link
-              href="/dashboard/car-booking/cars-collection"
-              className="bg-[#bb8dd9] text-white px-2 py-2 rounded-lg "
-            >
-              Cars Collection
-            </Link>
-            <Link
-              href="/dashboard/car-booking/view-car"
-              className="bg-[#bb8dd9] text-white px-2 py-2 rounded-lg "
-            >
-              View Car
-            </Link>
-            <Link
               href="/dashboard/car-booking/driver-profile"
               className="bg-[#bb8dd9] text-white px-2 py-2 rounded-lg "
             >
@@ -155,9 +143,9 @@ const CarsListing = ({ cars }) => {
                       <Link href={route('car.edit', car.id)} className="text-green-500">
                         <FaEdit />
                       </Link>
-                      <button className="text-blue-500 px-1">
+                      <Link href={route('car.view', car.id)} className="text-blue-500 px-1">
                         <FaEye />
-                      </button>
+                      </Link>
                       <button className="text-red-500" onClick={() => openModal(car.id)}>
                         <FaTrash />
                       </button>

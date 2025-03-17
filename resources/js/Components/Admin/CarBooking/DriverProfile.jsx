@@ -1,12 +1,9 @@
 import { Link } from "@inertiajs/react";
 import { FaSnowflake, FaCarSide, FaLanguage, FaUser } from "react-icons/fa";
-// import user from "../../assets/user.png";
-// import car from "../../assets/car.png";
 import { MdOutlineArrowBackIos } from "react-icons/md";
-// import { useNavigate } from "react-router-dom";
 
-const DriverProfile = () => {
-  // const navigate = useNavigate();
+const DriverProfile = ({driver}) => {
+  console.log(driver)
   const fakeData = [
     {
       transaction: "TXN123456",
@@ -60,15 +57,16 @@ const DriverProfile = () => {
           </p>
           <div className="flex flex-col items-center p-4">
             <img
-              src="/storage/images/user.png"
+              src={`/storage/${driver.profile_image}`}
               alt="User"
               className="w-32 h-32 rounded-full object-cover mb-4"
             />
             <h2 className="text-xl font-semibold text-gray-800">
-              Muhammad Aadlan
+              {driver.name}
             </h2>
             <p className="text-gray-600">A101</p>
-            <p className="text-white rounded-full px-1 bg-[#7077f2]">Male</p>
+            <p className="text-white rounded-full px-1 bg-[#7077f2]">{driver.gender}
+            </p>
           </div>
           <img src="/storage/images/car.png" className="my-2" alt="car" />
           <div className="flex justify-between items-center">
@@ -108,39 +106,31 @@ const DriverProfile = () => {
           <div className="grid grid-cols-2 gap-4 mb-6">
             <div>
               <h1 className="block text-sm font-medium">Name</h1>
-              <p className="text-gray-500 mt-2">Muhammad Aadlan</p>
+              <p className="text-gray-500 mt-2">{driver.name}</p>
             </div>
             <div>
               <h1 className="block text-sm font-medium">Identity Number</h1>
-              <p className="text-gray-500 mt-2">3520294317803</p>
+              <p className="text-gray-500 mt-2">{driver.identity_no}</p>
             </div>
             <div>
               <h1 className="block text-sm font-medium">Email</h1>
-              <p className="text-gray-500 mt-2">john.doe@example.com</p>
+              <p className="text-gray-500 mt-2">{driver.email}</p>
             </div>
             <div>
               <h1 className="block text-sm font-medium">Contact No</h1>
-              <p className="text-gray-500 mt-2">+1 234 567 890</p>
+              <p className="text-gray-500 mt-2">{driver.contact_no}</p>
             </div>
             <div>
               <h1 className="block text-sm font-medium">License No.</h1>
-              <p className="text-gray-500 mt-2">3520294317803</p>
+              <p className="text-gray-500 mt-2">{driver.license_no}</p>
             </div>
             <div>
               <h1 className="block text-sm font-medium">License Category</h1>
-              <select
-                id="booking"
-                className="border border-gray-300 rounded-lg focus:outline-none"
-              >
-                <option value="" disabled selected>
-                  Passenger Transport
-                </option>
-                <option value="Transport">Transport</option>
-              </select>
+              <p className="text-gray-500 mt-2">{driver.license_category}</p>
             </div>
             <div>
               <h1 className="block text-sm font-medium">Experience</h1>
-              <p className="text-gray-500 mt-2">02 Years</p>
+              <p className="text-gray-500 mt-2">{driver.experience} Years</p>
             </div>
           </div>
           <div className="bg-white shadow rounded-lg">

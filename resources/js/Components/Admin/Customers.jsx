@@ -1,41 +1,42 @@
-const Customers = () => {
-  const customers = [
-    {
-      id: "A102",
-      name: "John Doe",
-      email: "john@example.com",
-      contact: "123-456-7890",
-      spending: "$302.00",
-    },
-    {
-      id: "A103",
-      name: "Jane Smith",
-      email: "jane@example.com",
-      contact: "987-654-3210",
-      spending: "$2781.00",
-    },
-    {
-      id: "A104",
-      name: "Alice Brown",
-      email: "alice@example.com",
-      contact: "555-123-4567",
-      spending: "$560.00",
-    },
-    {
-      id: "A105",
-      name: "Bob White",
-      email: "bob@example.com",
-      contact: "666-789-0123",
-      spending: "$1345.00",
-    },
-    {
-      id: "A106",
-      name: "Charlie Green",
-      email: "charlie@example.com",
-      contact: "777-654-9870",
-      spending: "$890.00",
-    },
-  ];
+const Customers = ({customers}) => {
+  console.log(customers)
+  // const customers = [
+  //   {
+  //     id: "A102",
+  //     name: "John Doe",
+  //     email: "john@example.com",
+  //     contact: "123-456-7890",
+  //     spending: "$302.00",
+  //   },
+  //   {
+  //     id: "A103",
+  //     name: "Jane Smith",
+  //     email: "jane@example.com",
+  //     contact: "987-654-3210",
+  //     spending: "$2781.00",
+  //   },
+  //   {
+  //     id: "A104",
+  //     name: "Alice Brown",
+  //     email: "alice@example.com",
+  //     contact: "555-123-4567",
+  //     spending: "$560.00",
+  //   },
+  //   {
+  //     id: "A105",
+  //     name: "Bob White",
+  //     email: "bob@example.com",
+  //     contact: "666-789-0123",
+  //     spending: "$1345.00",
+  //   },
+  //   {
+  //     id: "A106",
+  //     name: "Charlie Green",
+  //     email: "charlie@example.com",
+  //     contact: "777-654-9870",
+  //     spending: "$890.00",
+  //   },
+  // ];
 
   return (
       <div className="m-3 lg:m-9 p-4 border border-gray-300 bg-white min-h-screen">
@@ -81,7 +82,7 @@ const Customers = () => {
                     </div>
                   </td>
                   <td className="px-4 py-2 border-b">{customer.email}</td>
-                  <td className="px-4 py-2 border-b">{customer.contact}</td>
+                  <td className="px-4 py-2 border-b">{customer.phone_number}</td>
                   <td className="px-4 py-2 border-b">{customer.spending}</td>
                   <td className="px-4 py-2 border-b">
                     <button className="text-black underline">View</button>

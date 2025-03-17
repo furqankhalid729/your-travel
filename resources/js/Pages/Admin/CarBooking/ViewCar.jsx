@@ -1,10 +1,12 @@
 import React from 'react'
 import ViewCarCom from '../../../Components/Admin/CarBooking/ViewCar';
 import AdminLayout from "../../../Layout/AdminLayout";
-const ViewCar = () => {
+const ViewCar = ({car}) => {
     return (
         <div>
-            <ViewCarCom />
+            <ViewCarCom 
+                car={car}
+            />
         </div>
     )
 }

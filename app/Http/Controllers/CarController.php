@@ -14,6 +14,7 @@ use App\Models\Car\CarFuel;
 use App\Models\Car\CarModel;
 use App\Models\Car\CarTransmission;
 use App\Models\Booking;
+use Illuminate\Http\Response;
 
 class CarController extends Controller
 {
@@ -26,6 +27,10 @@ class CarController extends Controller
     {
         $car = Car::findOrFail($id);
         $car->car_images = json_decode($car->car_images, true);
+
+        if (!$car) {
+            return response()->json(['error' => 'Car not found'], Response::HTTP_BAD_REQUEST);
+        }
 
         return Inertia::render(InertiaViews::CarDetail->value, [
             'car' => $car,
@@ -68,6 +73,15 @@ class CarController extends Controller
         return response()->json($cars);
     }
 
+    public function view($id){
+        $car = Car::where("id", $id)->first();
+        if (!$car) {
+            return response()->json(['error' => 'Car not found'], Response::HTTP_BAD_REQUEST);
+        }
+        return Inertia::render(InertiaViews::AdminViewCar->value, [
+            'car' => $car,
+        ]);
+    }
 
     // Admin
 

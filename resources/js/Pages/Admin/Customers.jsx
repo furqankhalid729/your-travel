@@ -1,10 +1,12 @@
 import React from 'react';
 import AdminLayout from "../../Layout/AdminLayout";
 import CustomersCom from '../../Components/Admin/Customers';
-const Customers = () => {
+const Customers = ({customers}) => {
   return (
     <div>
-      <CustomersCom />
+      <CustomersCom 
+        customers={customers}
+      />
     </div>
   )
 }

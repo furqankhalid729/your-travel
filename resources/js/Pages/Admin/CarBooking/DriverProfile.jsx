@@ -3,10 +3,10 @@ import AdminLayout from "../../../Layout/AdminLayout";
 import DriverProfieCom from "../../../Components/Admin/CarBooking/DriverProfile";
 
 
-const DriverProfile = () => {
+const DriverProfile = ({driver}) => {
     return (
         <div>
-            <DriverProfieCom />
+            <DriverProfieCom driver={driver} />
         </div>
     )
 }

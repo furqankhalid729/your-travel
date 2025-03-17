@@ -88,11 +88,13 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/dashboard/car-booking', [CarController::class, 'index']);
     Route::get('/dashboard/car-booking/add-car', [CarController::class, 'create']);
     Route::get('/dashboard/car/edit/{id}', [CarController::class, 'edit'])->name('car.edit');
+    Route::get('/dashboard/car/view/{id}', [CarController::class, 'view'])->name('car.view');
     Route::get('/dashboard/car-booking/orders', [CarController::class, 'carBooking'] )->name('car.booking');
     Route::get('/dashboard/car-booking/driver-listing', [DriverController::class, 'index'])->name('driver.index');
     Route::get('/dashboard/car-booking/add-driver', [DriverController::class, 'create'])->name('driver.create');
     Route::get('/dashboard/car-booking/driver/edit/{id}', [DriverController::class, 'edit'])->name('driver.edit');
     Route::put('/dashboard/car-booking/driver/update/{id}', [DriverController::class, 'update'])->name('driver.update');
+    Route::get('/dashboard/car-booking/driver/{id}', [DriverController::class, 'show'])->name('driver.show');
     Route::get('/dashboard/hotel-booking', [HotelBookingController::class, 'index'])->name('hotelbooking.index');
     Route::get('/dashboard/hotel-booking/all-hotel-booking', [HotelBookingController::class, 'allHotelBooking'])->name('hotelbooking.all');
     Route::get('/dashboard/hotel/add-hotel', [HotelRoomController::class, 'create'])->name('hotel.create');
@@ -106,6 +108,7 @@ Route::middleware(['auth', 'role'])->group(function () {
     })->name("tour.create");
     Route::get('/dashboard/enquiries', [EnquiryController::class, 'index'])->name('enquiry.index');
     Route::get('/dashboard/enquiries/details/{id}',[EnquiryController::class, 'show'] )->name('enquiry.detail');
+    Route::get('/dashboard/customers', [AdminDashboardController::class, 'customerIndex'])->name('customer.index');
 });
 
 Route::get('/dashlayout', function () {
@@ -120,16 +123,8 @@ Route::get('/dashboard/car-booking/special-offers', function () {
 });
 
 
-Route::get('/dashboard/car-booking/view-car', function () {
-    return Inertia::render('Admin/CarBooking/ViewCar');
-});
-
 Route::get('/dashboard/car-booking/cars-collection', function () {
     return Inertia::render('Admin/CarBooking/CarsCollection');
-});
-
-Route::get('/dashboard/car-booking/driver-profile', function () {
-    return Inertia::render('Admin/CarBooking/DriverProfile');
 });
 
 Route::get('/dashboard/car-booking/assign-drivers', function () {
@@ -202,10 +197,6 @@ Route::get('/dashboard/tour-booking/steps/pricing', function () {
 
 Route::get('/dashboard/drafts', function () {
     return Inertia::render('Admin/Drafts');
-});
-
-Route::get('/dashboard/customers', function () {
-    return Inertia::render('Admin/Customers');
 });
 
 Route::get('/dashboard/payments', function () {

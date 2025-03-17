@@ -10,10 +10,12 @@ enum InertiaViews: string
     case CarIndex = 'Admin/CarBooking/CarBookDash';
     case EditCar = 'Admin/CarBooking/EditCar';
     case CarBooking = 'Admin/CarBooking/Orders';
+    case AdminViewCar = "Admin/CarBooking/ViewCar";
 
     // drivers
     case AddDriver = 'Admin/CarBooking/AddDriver';
     case HotelBookingIndex = 'Admin/HotelBooking/HotelBooking';
+    case ViewDriver = 'Admin/CarBooking/DriverProfile';
 
     //case HotelCreate = 'Admin/HotelBooking/AddHotelRoom';
     case DriverIndex = 'Admin/CarBooking/DriverListing';
@@ -30,9 +32,9 @@ enum InertiaViews: string
     case TourDashboard = 'Admin/TourBooking/ViewTourBooking';
 
     case AdminPayment = 'Admin/Payments';
-
     case AdminEnquiry = 'Admin/Enquiries';
     case AdminEnquiryDetail = 'Admin/EnquiriesDetails';
+    case AdminCustomer = 'Admin/Customers';
 
     // Frontend
     // cars

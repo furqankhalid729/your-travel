@@ -6,6 +6,7 @@ use App\Enums\InertiaViews;
 use App\Models\Driver;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Http\Response;
 
 class DriverController extends Controller
 {
@@ -127,5 +128,15 @@ class DriverController extends Controller
 
         $driver->delete();
         return redirect()->route('drivers.index')->with('success', 'Driver deleted successfully!');
+    }
+
+    public function show($id){
+        $driver = Driver::findOrFail($id);
+        if (!$driver) {
+            return response()->json(['error' => 'driver not found'], Response::HTTP_BAD_REQUEST);
+        }
+        return Inertia::render(InertiaViews::ViewDriver->value, [
+            'driver' => $driver,
+        ]);
     }
 }
