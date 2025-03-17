@@ -156,7 +156,7 @@ function TourCards({ tours }) {
 
               <div className='w-full md:w-[33.33%]'>
                 {/* Left - tour Image and Favorite Icon */}
-                <div className="relative h-[200px]  md:block">
+                <div className="relative h-[200px] overflow-hidden  md:block">
                   <img src={`/storage/${JSON.parse(tour.tour_images)[0]}`} className="w-full md:h-full rounded-lg" />
                   <div onClick={() => handleFavorite(tour.id, tour.name, JSON.parse(tour.tour_images)[0])} className={`absolute top-2 right-2 rounded-full p-1 shadow cursor-pointer transition ${isFavorited ? "bg-red-500 text-white" : "bg-white text-gray-500"
                     }`}>
@@ -197,7 +197,7 @@ function TourCards({ tours }) {
                   </div>
                   {/* Details Button */}
 
-                  <Link href={route('tour.show', { id: tour.id })} className="mt-4 px-4 lg:px-8 py-2 bg-red-500 text-white f rounded-full hover:bg-red-600 text-xs sm:text-sm ">
+                  <Link href={route('tour.show', { id: tour.id })} className="mt-4 px-4 w-full text-center lg:px-8 py-2 bg-red-500 text-white f rounded-full hover:bg-red-600 text-xs sm:text-sm ">
                     See Details
                   </Link>
                 </div>

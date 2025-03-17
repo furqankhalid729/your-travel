@@ -77,8 +77,8 @@ function HotelCards({ hotels }) {
           <div key={hotel.id} className="flex flex-col lg:flex-row gap-6 bg-white shadow-md rounded-lg p-2 border md:border-gray-200 mt-6">
 
             {/* Left - Hotel Image and Favorite Icon */}
-            <div className="object-cover relative md:block max-w-[33%] min-h-[250px]">
-              <img src={`/storage/${JSON.parse(hotel.images)[0]}`} alt='' className="w-full md:h-full rounded-lg" />
+            <div className="object-cover relative w-full h-auto md:block md:max-w-[33%] md:min-h-[250px]">
+              <img src={`/storage/${JSON.parse(hotel.images)[0]}`} alt='' className="object-cover w-full md:h-full rounded-lg" />
 
               <div onClick={() => handleFavorite(hotel.id,hotel.name, JSON.parse(hotel.images)[0])} className={`absolute top-2 right-2 rounded-full p-1 shadow cursor-pointer transition ${isFavorited ? "bg-red-500 text-white" : "bg-white text-gray-500"
                 }`}>

@@ -51,39 +51,7 @@ const EnquiriesDetails = ({enquiry}) => {
             className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#bb8dd9]"
           />
         </div>
-        <div>
-          <label
-            htmlFor="contact"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Contact Number<span className="text-red-500">*</span>
-          </label>
-          <input
-            type="text"
-            id="contact"
-            placeholder="+923072632736"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#bb8dd9]"
-          />
-        </div>
-        <div>
-          <label
-            htmlFor="booking"
-            className="block text-sm font-medium text-gray-700 mb-1"
-          >
-            Booking<span className="text-red-500">*</span>
-          </label>
-          <select
-            id="booking"
-            className="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#bb8dd9]"
-          >
-            <option value="" disabled selected>
-              Select Booking Option
-            </option>
-            <option value="Booking1">Booking 1</option>
-            <option value="Booking2">Booking 2</option>
-            <option value="Booking3">Booking 3</option>
-          </select>
-        </div>
+        
       </div>
       <div className="mb-6">
         <label
@@ -102,13 +70,7 @@ const EnquiriesDetails = ({enquiry}) => {
         ></textarea>
       </div>
       <div className="border-t border-gray-300 my-6"></div>
-      <div className="items-center ">
-        <textarea
-          placeholder="Reply"
-          rows="2"
-          className="w-full mb-2 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#bb8dd9]"
-        ></textarea>
-      </div>
+      
       <div className="flex justify-end">
         <button className="px-8 py-2 bg-[#2e2532] text-white rounded-md">
           Send
