@@ -2,7 +2,7 @@ import React from "react";
 import { FaApple, FaFacebook } from "react-icons/fa";
 import { useForm } from "@inertiajs/react";
 
-const Login = ({ onSwitchToSignup }) => {
+const Login = ({ onSwitchToSignup, setShowLogin }) => {
   const { data, setData, post, processing, errors } = useForm({
     email: "",
     password: "",
@@ -10,7 +10,15 @@ const Login = ({ onSwitchToSignup }) => {
 
   const submit = (e) => {
     e.preventDefault();
-    post(route("login"));
+    post(route("login"),{
+      preserveScroll: true,
+      onSuccess: () => {
+        setShowLogin(false);
+      },
+      onError: (errors) => {
+        console.error(errors);
+      }
+    });
   };
 
   return (
@@ -57,7 +65,7 @@ const Login = ({ onSwitchToSignup }) => {
 
       <div className="w-full text-right">
         <a href="#" className="text-red-500 text-sm hover:underline">
-         Forgotten Password?
+          Forgotten Password?
         </a>
       </div>
       <p className="text-base text-black">

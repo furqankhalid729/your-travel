@@ -11,13 +11,14 @@ const Header = () => {
   const searchRef = useRef(null);
   const dropdownRef = useRef(null);
   const modalRef = useRef(null);
+  const [openDropdownIndex, setOpenDropdownIndex] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [showLogin, setShowLogin] = useState(false);
   const [showSignup, setShowSignup] = useState(false);
   const [isSearchActive, setIsSearchActive] = useState(false);
 
-  const { auth } = usePage().props; // Access the user authentication info
+  const { auth } = usePage().props;
   const user = auth.user;
 
   const searchHandler = () => {
@@ -34,7 +35,10 @@ const Header = () => {
     setShowLogin(false);
   };
 
-  const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+  //const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
+  const toggleDropdown = (index) => {
+    setOpenDropdownIndex((prevIndex) => (prevIndex === index ? null : index));
+  };
   const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
   const closeModal = () => {
@@ -107,12 +111,12 @@ const Header = () => {
               {link.dropdown ? (
                 <div ref={dropdownRef}>
                   <button
-                    onClick={toggleDropdown}
+                    onClick={() => toggleDropdown(index)}
                     className="flex items-center hover:text-gray-200 focus:outline-none"
                   >
                     {link.name} <IoIosArrowDown className="mt-1" />
                   </button>
-                  {isDropdownOpen && (
+                  {openDropdownIndex === index && (
                     <ul className="absolute top-full left-0 bg-white text-black mt-2 rounded-md shadow-lg w-40">
                       {link.items.map((item, index) => (
                         <li key={index}>
@@ -138,7 +142,7 @@ const Header = () => {
 
         {/* Right-side Icons */}
         <div className="flex items-center space-x-4 relative z-50">
-          <FaSearch
+          {/* <FaSearch
             className="text-white hover:text-gray-200 cursor-pointer w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
             onClick={searchHandler}
           />
@@ -154,7 +158,7 @@ const Header = () => {
                 className="w-full h-full text-black text-sm p-[1rem] capitalize focus:outline-none"
               />
             </div>
-          )}
+          )} */}
 
             {user ? (
             <Link
@@ -183,52 +187,6 @@ const Header = () => {
           </button>
         </div>
       </div>
-
-      {/* Mobile Menu Dropdown */}
-      {/* {isMobileMenuOpen && (
-        <div className="lg:hidden bg-red-600 text-white space-y-4 mt-4 px-6 pb-6 ">
-          <ul className="space-y-2 ">
-            {links.map((link, index) => (
-              <li
-                key={index}
-                className={`relative ${link.dropdown ? "dropdown" : ""}`}
-              >
-                {link.dropdown ? (
-                  <>
-                    <button
-                      onClick={toggleDropdown}
-                      className="flex items-center w-full hover:text-gray-200 focus:outline-none"
-                    >
-                      {link.name} <IoIosArrowDown className="ml-1" />
-                    </button>
-                    {isDropdownOpen && (
-                      <ul className="bg-white text-black mt-2 rounded-md shadow-lg w-40 ml-4">
-                        {link.items.map((item, index) => (
-                          <li key={index}>
-                            <Link
-                              to={item.to}
-                              className="block px-4 py-2 hover:bg-gray-100"
-                            >
-                              {item.name}
-                            </Link>
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </>
-                ) : (
-                  <Link
-                    to={link.to}
-                    className="block hover:text-gray-200"
-                  >
-                    {link.name}
-                  </Link>
-                )}
-              </li>
-            ))}
-          </ul>
-        </div>
-      )} */}
       <div
         className={`fixed top-0 left-0 w-52 h-full bg-red-600 text-white z-50 transform ${isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
           } transition-transform duration-300`}
@@ -245,18 +203,19 @@ const Header = () => {
               {link.dropdown ? (
                 <>
                   <button
-                    onClick={toggleDropdown}
+                    onClick={() => toggleDropdown(index)}
                     className="flex items-center w-full hover:text-gray-200"
                   >
                     {link.name} <IoIosArrowDown className="ml-1" />
                   </button>
-                  {isDropdownOpen && (
+                  {openDropdownIndex === index && (
                     <ul className="ml-4">
                       {link.items.map((item, index) => (
                         <li key={index}>
                           <Link
                             href={item.to}
                             className="block px-4 py-2 hover:bg-red-700"
+                            onClick={() => setOpenDropdownIndex(null)}
                           >
                             {item.name}
                           </Link>
@@ -279,7 +238,10 @@ const Header = () => {
       {(showLogin || showSignup) && (
         <div className="fixed inset-0 z-40 flex justify-center items-center bg-black bg-opacity-50 px-5">
           <div ref={modalRef}>
-            {showLogin && <Login onSwitchToSignup={toggleSignup} />}
+            {showLogin && <Login 
+              onSwitchToSignup={toggleSignup}
+              setShowLogin={setShowLogin}
+            />}
             {showSignup && <Signup onSwitchToLogin={toggleLogin} />}
           </div>
         </div>

@@ -22,7 +22,7 @@ use Inertia\Inertia;
 
 Route::get('/', function () {
     return Inertia::render('User/Home');
-});
+})->name('home');
 Route::get('/car', [CarFrontendController::class, 'frontendIndex'])->name('car.frontendIndex');
 Route::get('/hotel', [HotelFrontendController::class, 'frontendIndex'])->name('hotel.frontendIndex');
 Route::get('/hotel/hotel-details/{id}', [HotelRoomController::class, 'show'])->name('hotel.show');
@@ -82,7 +82,7 @@ Route::get('/test-1', function () {
 //     return Inertia::render('Admin/Login');
 // });
 
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
     Route::get('/dashboard/car-booking', [CarController::class, 'index']);
