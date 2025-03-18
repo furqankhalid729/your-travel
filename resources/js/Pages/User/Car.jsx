@@ -19,10 +19,10 @@ const Car = ({ cars, filters, modelsFilter, brandFilter }) => {
     <div>
       <CarBanner />
       <div className='flex flex-row justify-between mx-4 md:mx-16 '>
-        <div className='hidden md:block md:w-[30%] lg:w-1/4 mt-24'>
+        <div className='hidden md:block md:w-[30%] lg:w-1/4 mt:10 lg:mt-24'>
           <CarCategory onFilter={handleFilter} filters={filters} modelsFilter={modelsFilter} brandFilter={brandFilter}/>
         </div>
-        <div className='w-full md:w-3/4 mt-24'>
+        <div className='w-full md:w-3/4 mt:10 lg:mt-24'>
           <CarTab  cars={filteredCars} />
         </div>
       </div>

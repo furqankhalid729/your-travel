@@ -43,13 +43,13 @@ const CarTab = ({ cars }) => {
   return (
     <div className=''>
       <div className="flex justify-between items-center p-4 ">
-        <h2 className="text-sm md:text-xl font-semibold">{cars.length} Cars Available</h2>
-        <div className="flex items-center space-x-1 text-gray-700 text-[8px] md:text-sm cursor-pointer">
+        <h2 className="text-[12px] md:text-xl font-semibold">{cars.length} Cars Available</h2>
+        <div className="flex items-center space-x-1 text-gray-700 text-[12px] md:text-xl cursor-pointer">
           <span>Sort By:</span>
           <select
             value={sortOption}
             onChange={handleSortChange}
-            className="font-semibold bg-transparent border-none outline-none cursor-pointer"
+            className="font-semibold bg-transparent border-none outline-none cursor-pointer text-[12px] md:text-xl"
           >
             <option value="Best Matches">Best Matches</option>
             <option value="Price: Low to High">Price: Low to High</option>
