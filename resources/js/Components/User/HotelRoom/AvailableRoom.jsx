@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { FaCalendarAlt, FaUser, FaWifi, FaTv, FaSwimmer, FaUtensils, FaSpa, FaSwimmingPool, FaParking, FaTimes } from 'react-icons/fa';
 import { FaCheck } from "react-icons/fa6";
 import { useDispatch } from 'react-redux';
@@ -19,11 +19,12 @@ const TypeIconMapping = {
 };
 
 const AvailableRoom = ({ hotel, hotelRooms }) => {
-
+  const [bookingDate, setBookingDate] = useState("");
+  const [selectedPeople, setSelectedPeople] = useState("2 persons");
   const { auth } = usePage().props;
   const dispatch = useDispatch();
 
-  const handleBookNow = (id,price) => {
+  const handleBookNow = (id, price) => {
     if (!auth.user) {
       console.log(router)
       router.visit('/login');
@@ -33,10 +34,10 @@ const AvailableRoom = ({ hotel, hotelRooms }) => {
       type: 'hotel',
       id: hotel.id,
       name: hotel.name,
-      price:price,
+      price: price,
       additional_info: {
         hotel_location: hotel.location,
-        room_id:id
+        room_id: id
       },
     };
     dispatch(addBooking(bookingData));
@@ -51,17 +52,31 @@ const AvailableRoom = ({ hotel, hotelRooms }) => {
         <div className="flex  rounded-lg overflow-hidden border border-red-500 text-[8px] md:text-lg">
           {/* Date Picker Section */}
           <div className="flex items-center px-4 py-3  flex-grow ">
-            <div className='flex'>
-              <FaCalendarAlt className="text-gray-500 mr-2" />
-              <span className="text-gray-600">Tue 17 Sept — Fri 20 Sept</span></div>
+            <div className='flex items-center'>
+              <FaCalendarAlt className="text-gray-500 mr-2 text-[15px]" />
+              <input
+                type="date"
+                className="text-gray-400 text-sm border-0 p-2 rounded"
+                value={bookingDate}
+                onChange={(e) => setBookingDate(e.target.value)}
+              />
+            </div>
           </div>
 
           {/* Guests Section */}
           <div className="flex items-center justify-between px-4 py-3 flex-grow border border-l-red-600 ">
-            <div className='flex'> <FaUser className="text-gray-500 mr-2 mt-1" />
-              <span className="text-gray-600 ">02 adult . 01 children . 01 room</span></div>
-
-            <span className=" text-gray-500">&#9662;</span>
+            <div className='flex items-center'>
+              <FaUser className="text-gray-500 mr-2 mt-1 text-[15px]" />
+              <select
+                className="border-none outline-none bg-transparent text-gray-600"
+                value={selectedPeople}
+                onChange={(e) => setSelectedPeople(e.target.value)}
+              >
+                <option value="2 persons">2 persons</option>
+                <option value="3 persons">3 persons</option>
+                <option value="4 persons">4 persons</option>
+              </select>
+            </div>
           </div>
 
           {/* Search Button */}
@@ -70,9 +85,6 @@ const AvailableRoom = ({ hotel, hotelRooms }) => {
           </button>
         </div>
       </div>
-
-
-      {/* Available Rooms */}
       <div>
         {hotelRooms.map((room) => (
           <div key={room.id} className="min-h-[250px] flex lg:flex-row flex-col px-3 py-4 gap-5  border border-gray-400 rounded-lg shadow-sm my-4 ">
@@ -108,7 +120,7 @@ const AvailableRoom = ({ hotel, hotelRooms }) => {
                   <p className="text-red-500 text-base lg:text-sm">Total: ${room.price}</p>
 
                 </div>
-                <button onClick={() => handleBookNow(room.id,room.price)} className=" bg-red-500 text-[16px] leading-[19px] text-white font-[500] px-2 py-1 rounded-full w-32 h-[30px] lg:w-[130px] hover:bg-red-600 ">
+                <button onClick={() => handleBookNow(room.id, room.price)} className=" bg-red-500 text-[16px] leading-[19px] text-white font-[500] px-2 py-1 rounded-full w-32 h-[30px] lg:w-[130px] hover:bg-red-600 ">
                   Book Now
                 </button>
               </div>

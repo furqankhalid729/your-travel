@@ -36,6 +36,11 @@ const TourProfile = ({ tour }) => {
     { label: "Persons", value: `${tour.persons} persons` },
     { label: "Price", value: `$${tour.price}` },
   ];
+  const openInMaps = () => {
+    const encodedLocation = encodeURIComponent(tour.location);
+    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedLocation}`;
+    window.open(googleMapsUrl, "_blank");
+  }
   return (
     <div className="">
       {/* Breadcrumb */}
@@ -53,7 +58,7 @@ const TourProfile = ({ tour }) => {
           <div className="flex items-center space-x-2 lg:space-x-6">
             <span className='text-lg md:text-xl lg:text-4xl text-red-500 md:mt-4'><CiHeart /></span>
             <div className='flex flex-col'><p className='text-xs md:text-sm text-gray-500 text-right'>from</p> <p className="text-base md:text-2xl font-semibold text-gray-800">${tour.price}</p></div>
-            <button onClick={handleBookNow} className="px-2 lg:px-6 py-1 mt-1 lg:mt-0 lg:py-2  bg-red-500 text-white text-[10px] md:text-sm rounded-full">Book Now</button>
+            <button onClick={handleBookNow} className="px-2 lg:px-6 py-1 mt-1 lg:mt-0 lg:py-2  bg-red-500 text-white text-[12px] md:text-sm rounded-full">Book Now</button>
           </div>
         </div>
         <div>
@@ -79,15 +84,15 @@ const TourProfile = ({ tour }) => {
           <div className="h-32 lg:h-72 relative bg-gray-300 mb-4 rounded-md overflow-hidden">
             <div
               className="absolute inset-0 bg-cover bg-center rounded-md"
-              style={{ backgroundImage: `url('storage/images/map.jpg')` }}
+              style={{ backgroundImage: `url('/storage/images/map.jpg')` }}
             >
               <span className="absolute inset-0 flex items-center justify-center text-white">
-                <div className="py-1 px-2 bg-gray-500 opacity-50 rounded-xl max-[320px]:text-[6px] text-[8px] md:text-lg">Show on map</div>
+                <button onClick={openInMaps} className="py-1 px-2 bg-gray-500 opacity-50 rounded-xl text-[14px] md:text-[12px]">Show on map</button>
               </span>
             </div>
           </div>
-          <div className='max-[320px]:text-[5px] text-[8px] lg:text-sm' >
-            <h2 className="text-sm lg:text-lg font-semibold my-4 lg:my-8">Details</h2>
+          <div className='text-[14px]' >
+            <h2 className="text-[14px] md:text-[12px] font-semibold my-4 lg:my-8">Details</h2>
             {tourData.map((item, index) => (
               <div key={index} className="flex justify-between text-black">
                 <div className="py-2 font-medium ">{item.label}</div>

@@ -19,30 +19,13 @@ const TypeIconMapping = {
 };
 
 const TourSummary = ({ tour }) => {
-  // const includedItems = [
-  //   "Specialized bilingual guide",
-  //   "Entrance fees (Cable and car and Moon Valley)",
-  //   "Private Transport",
-  //   "Box lunch water, banana apple and chocolate",
-  // ];
-
-  // const excludedItems = [
-  //   "Additional Services",
-  //   "Drink",
-  //   "Insurance",
-  //   "Tickets",
-  // ];
 
   const facilities = [
     { name: "Free Wifi", icon: <FaWifi /> },
     { name: "Restaurant", icon: <FaUtensils /> },
-
     { name: "TV", icon: <FaTv /> },
-
     { name: "Shuttle", icon: <LiaShuttleVanSolid /> },
-
     { name: "Good Breakfast", icon: <MdEmojiFoodBeverage /> },
-
   ];
 
   return (

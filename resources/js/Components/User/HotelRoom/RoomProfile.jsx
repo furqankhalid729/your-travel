@@ -8,7 +8,7 @@ import { FaMapMarkerAlt, FaCity } from 'react-icons/fa';
 import ImageGallery from '../snippets/ImageGallery';
 import { Link, usePage, router } from '@inertiajs/react';
 const RoomProfile = ({ hotel, hotelRooms }) => {
-  console.log(JSON.parse(hotel.images))
+  console.log(hotel)
   const images = JSON.parse(hotel.images).map(image => '/storage/' + image);
   const { auth } = usePage().props;
   const dispatch = useDispatch();
@@ -32,6 +32,12 @@ const RoomProfile = ({ hotel, hotelRooms }) => {
     dispatch(addBooking(bookingData));
     router.visit("/car-booking");
   };
+
+  const openInMaps = () => {
+    const encodedLocation = encodeURIComponent(hotel.location);
+    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedLocation}`;
+    window.open(googleMapsUrl, "_blank");
+  }
 
   return (
     <div className="">
@@ -58,13 +64,13 @@ const RoomProfile = ({ hotel, hotelRooms }) => {
 
           <div className="items-center mt-2 md:mt-0 space-x-2 mb-1">
 
-            <span className=" bg-red-500 text-white text-[10px] md:text-sm px-2  rounded-lg">4.2</span>
-            <span className='text-gray-600 text-[10px] md:text-sm'>Good</span>
-            <span className="text-gray-500 text-[8px] md:text-sm">(2365 reviews) | #02 of 102 hotels in Lahore</span>
+            <span className=" bg-red-500 text-white text-[14px] md:text-[10px] md:text-sm px-2  rounded-lg">4.2</span>
+            <span className='text-gray-600 text-[14px] md:text-[10px] md:text-sm'>Good</span>
+            <span className="text-gray-500 text-[14px] md:text-[10px] md:text-sm">(2365 reviews) | #02 of 102 hotels in Lahore</span>
           </div>
           <div className="items-center space-x-2 mb-1">
-            <span className='text-red-500 text-[10px] md:text-sm inline-block'><MdLocationPin /></span>
-            <span className="text-gray-500 text-[8px] md:text-sm"> {hotel.location}</span>
+            <span className='text-red-500 text-[14px] md:text-[10px] md:text-sm inline-block'><MdLocationPin /></span>
+            <span className="text-gray-500 text-[14px] md:text-[10px] md:text-sm"> {hotel.location}</span>
           </div>
         </div>
       </div>
@@ -78,10 +84,10 @@ const RoomProfile = ({ hotel, hotelRooms }) => {
           <div className="h-44 lg:h-64 relative bg-gray-300 mb-4 rounded-md overflow-hidden">
             <div
               className="absolute inset-0 bg-cover bg-center rounded-md "
-              style={{ backgroundImage: `url('storage/images/map.jpg')` }}
+              style={{ backgroundImage: `url('/storage/images/map.jpg')` }}
             >
               <span className="absolute inset-0 flex items-center justify-center text-white">
-                <div className="py-1 px-2 bg-gray-500 opacity-50 rounded-xl text-[6px] sm:text-sm lg:text-lg">Show on map</div>
+                <button onClick={openInMaps} className="py-1 px-2 bg-gray-500 opacity-50 rounded-xl text-[6px] sm:text-sm lg:text-lg">Show on map</button>
               </span>
             </div>
           </div>
