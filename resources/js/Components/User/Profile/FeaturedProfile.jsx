@@ -1,74 +1,43 @@
-import React from "react";
-import ProfileCard from "../snippets/ProfileCard";
+import React, { useState } from "react";
+import { usePage } from "@inertiajs/react";
+import BookingHistory from "./BookingHistory";
+import NewBooking from "./NewBooking";
+import Favorites from "./Favorites";
+import AccountSettings from "./AccountSettings";
 function FeaturedProfile() {
-  const cardData = [
-    {
-      image: " storage/images/hotel.png",
-      name: "Avari Hotel Lahore",
-      rating: 4.2,
-      reviews: "Good (2365 reviews)",
-      price: "    717.94",
-      location: "gulberg",
-    },
-    {
-      image: " storage/images/hotel4.png",
-      name: "Belvedere Hotel",
-      rating: 4.8,
-      reviews: "Good (2365 reviews)",
-      price: "402.37",
-      location: "gulberg",
-    },
-    {
-      image: " storage/images/hotel.png",
-      name: "Dolder Grand Hotel",
-      rating: 4,
-      reviews: "Good (2365 reviews)",
-      price: "    1085.57",
-      location: "gulberg",
-    },
-    {
-      image: " storage/images/hotel4.png",
-      name: "Des Alpes Hotel",
-      rating: 4.5,
-      reviews: "Good (2365 reviews)",
-      price: "550.15",
-      location: "gulberg",
-    },
-  ];
+  const { auth } = usePage().props;
+  const orders = auth.orders;
+  console.log(orders)
+  const [activeTab, setActiveTab] = useState("history");
 
   return (
     <>
       <div className="bg-red-600 mx-4 rounded-lg sm:mx-20 mt-12">
-        <div className="flex flex-col sm:grid sm:grid-cols-3 sm:gap-4 lg:grid-cols-5 items-center py-4 text-center">
-          {/* Headings */}
-          <h1 className="text-white text-lg font-semibold">Time Line</h1>
-          <h1 className="text-white  text-lg font-semibold">
-            Booking History (2)
-          </h1>
-          <h1 className="text-white text-lg font-semibold">New Booking (1)</h1>
-
-          {/* Button */}
-          <button className="bg-white text-red-600  py-2 px-4 lg:px-2   rounded-lg  font-medium hover:bg-gray-100">
-            My Favourites (7)
-          </button>
-
-          <h1 className="text-white text-lg font-semibold">Account Setting</h1>
+        <div className="flex flex-col sm:grid sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 items-center py-4 text-center px-10 justify-center">
+          {[
+            { id: "history", label: "Booking History" },
+            { id: "new", label: "New Booking" },
+            { id: "favorites", label: "My Favourites" },
+            { id: "settings", label: "Account Setting" },
+          ].map((tab) => (
+            <button
+              key={tab.id}
+              className={`py-2 px-4 lg:px-2 font-medium rounded-lg 
+                ${activeTab === tab.id ? "bg-white text-red-600" : "hover:bg-gray-100 text-white hover:text-red-600"}`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+            </button>
+          ))}
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 p-4 sm:p-20 ">
-        {cardData.map((card, index) => (
-          <ProfileCard
-            key={index}
-            image={card.image}
-            name={card.name}
-            location={card.location}
-            rating={card.rating}
-            reviews={card.reviews}
-            price={card.price}
-          />
-        ))}
-      </div> 
+      <div className="block max-w-[1250px] mx-auto my-10">
+        {activeTab === "history" && <BookingHistory orders={orders} />}
+        {activeTab === "new" && <NewBooking orders={orders} />}
+        {activeTab === "favorites" && <Favorites />}
+        {activeTab === "settings" && <AccountSettings />}
+      </div>
     </>
   );
 }

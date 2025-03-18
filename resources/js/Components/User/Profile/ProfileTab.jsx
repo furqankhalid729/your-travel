@@ -1,7 +1,8 @@
 import React from "react";
-import { FaCamera,  FaPlus, FaRegEdit } from "react-icons/fa";
-
+import { FaCamera, FaPlus, FaRegEdit } from "react-icons/fa";
+import { usePage } from '@inertiajs/react';
 const ProfileTab = () => {
+  const { auth } = usePage().props;
   return (
     <>
       {/* Profile Cover Section */}
@@ -39,19 +40,19 @@ const ProfileTab = () => {
         <div>
           <div className="flex items-center space-y-2 space-x-2">
             <h2 className="text-2xl md:text-3xl font-semibold text-gray-800">
-              Username
+            {auth.user.name}
             </h2>
-            <FaRegEdit className="text-red-600 cursor-pointer hover:text-gray-800" />
+            {/* <FaRegEdit className="text-red-600 cursor-pointer hover:text-gray-800" /> */}
           </div>
-                  </div>
+        </div>
 
         {/* Add Button */}
-        <div className="flex items-center space-x-2 py-2">
+        {/* <div className="flex items-center space-x-2 py-2">
           <button className="w-8 h-4 bg-red-600 text-white flex items-center justify-center  shadow-md hover:bg-red-700">
             <FaPlus />
           </button>
           <h4 className="text-gray-700 font-medium text-sm">Lausanne city of Switzerland</h4>
-        </div>
+        </div> */}
       </div>
     </>
   );

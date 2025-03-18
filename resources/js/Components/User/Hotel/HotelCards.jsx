@@ -30,8 +30,8 @@ function HotelCards({ hotels }) {
   return (
     <div className=''>
       <div className="flex justify-between py-6">
-        <h2 className="text-[10px] sm:text-xl font-semibold text-black ">{hotels.length} Hotel available</h2>
-        <div className="relative flex gap-2 text-gray-900 text-[10px] sm:text-xl">
+        <h2 className="text-[13px] sm:text-xl font-semibold text-black ">{hotels.length} Hotel available</h2>
+        <div className="relative flex gap-2 text-gray-900 text-[13px] sm:text-xl">
           <span className="font-semibold">Sort by:</span>
           <button
             onClick={toggleDropdown}
@@ -40,7 +40,7 @@ function HotelCards({ hotels }) {
             Services <IoIosArrowDown className="mt-1" />
           </button>
           {isDropdownOpen && (
-            <ul className="text-[10px] sm:text-xl absolute top-4 bg-white text-black mt-2 rounded-md shadow-lg w-[4.5rem] md:w-32 z-10">
+            <ul className="text-[13px] sm:text-xl absolute top-4 bg-white text-black mt-2 rounded-md shadow-lg w-[4.5rem] md:w-32 z-10">
               <li>
                 <a
                   href="/hotel"
