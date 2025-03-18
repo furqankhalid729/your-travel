@@ -20,7 +20,6 @@ use Inertia\Inertia;
 
 
 // User Routes
-
 Route::get('/', function () {
     return Inertia::render('User/Home');
 })->name('home');
@@ -35,7 +34,9 @@ Route::get('/contact', function () {
     return Inertia::render('User/Contact');
 });
 
-Route::get('/profile', [ProfileController::class, 'show'])->name('user.profile');
+Route::middleware(['auth'])->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('user.profile');
+});
 
 Route::get('/about', function () {
     return Inertia::render('User/About');
@@ -55,12 +56,9 @@ Route::get('/blog', function () {
 Route::get('/blog/:id', function () {
     return Inertia::render('User/BlogDetail');
 });
-
-
 Route::get('/career', function () {
     return Inertia::render('User/Career');
 });
-
 Route::get('/car-booking', function () {
     return Inertia::render('User/CarBook');
 });
@@ -114,12 +112,9 @@ Route::get('/dashlayout', function () {
 
 
 // Car booking
-
 Route::get('/dashboard/car-booking/special-offers', function () {
     return Inertia::render('Admin/CarBooking/Specialoffers');
 });
-
-
 Route::get('/dashboard/car-booking/cars-collection', function () {
     return Inertia::render('Admin/CarBooking/CarsCollection');
 });
