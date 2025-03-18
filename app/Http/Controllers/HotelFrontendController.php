@@ -10,9 +10,15 @@ use Illuminate\Support\Facades\Log;
 
 class HotelFrontendController extends Controller
 {
-    public function frontendIndex()
+    public function frontendIndex(Request $request)
     {
-        $hotels = Hotel::with('rooms')->get();
+        //$hotels = Hotel::with('rooms')->get();
+        $query = Hotel::query();
+
+        if ($request->filled('location')) {
+            $query->where('location', 'LIKE', '%' . $request->location . '%');
+        }
+        $hotels = $query->with('rooms')->get();
         return Inertia::render(InertiaViews::HotelIndex->value, [
             'hotels' => $hotels,
         ]);

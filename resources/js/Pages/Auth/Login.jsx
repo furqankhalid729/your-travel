@@ -1,6 +1,6 @@
 import React from "react";
 import { FaApple, FaFacebook } from "react-icons/fa";
-import { useForm } from "@inertiajs/react";
+import { useForm, Link } from "@inertiajs/react";
 
 const Login = ({ onSwitchToSignup, setShowLogin }) => {
   const { data, setData, post, processing, errors } = useForm({
@@ -71,12 +71,13 @@ const Login = ({ onSwitchToSignup, setShowLogin }) => {
       <p className="text-base text-black">
         Don't have an account?
         <span className="mr-2"></span>
-        <button
+        <Link
+          href="/register"
           onClick={onSwitchToSignup}
           className="text-red-500 font-semibold hover:underline"
         >
           Sign up
-        </button>
+        </Link>
       </p>
 
       {/* Social Login */}

@@ -45,5 +45,6 @@ enum InertiaViews: string
     case TourDetail = 'User/TourPKG';
     case TourIndexFrontend = 'User/Tour';
     case Checkout = 'User/CarBook';
+    case UserProfile = 'User/Profile';
 
 }

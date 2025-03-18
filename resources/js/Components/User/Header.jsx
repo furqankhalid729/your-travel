@@ -4,7 +4,7 @@ import { IoIosArrowDown } from "react-icons/io";
 // import Login from "./Utils/Login";
 import Login from "../../Pages/Auth/Login";
 import Signup from "../../Pages/Auth/register";
-import { Link , usePage} from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 // import Signup from "./Utils/SignUp";
 
 const Header = () => {
@@ -20,7 +20,11 @@ const Header = () => {
 
   const { auth } = usePage().props;
   const user = auth.user;
-
+  const dashboardRoute = auth.user
+    ? auth.user.role === "admin"
+      ? "/dashboard"
+      : "/profile"
+    : "/login";
   const searchHandler = () => {
     setIsSearchActive((prev) => !prev);
   };
@@ -142,39 +146,22 @@ const Header = () => {
 
         {/* Right-side Icons */}
         <div className="flex items-center space-x-4 relative z-50">
-          {/* <FaSearch
-            className="text-white hover:text-gray-200 cursor-pointer w-4 h-4 sm:w-5 sm:h-5 lg:w-6 lg:h-6"
-            onClick={searchHandler}
-          />
-          {isSearchActive && (
-            <div
-              className="search-form absolute top-[250%] md:top-[200%] right-2 lg:right-[7%] bg-white w-[10rem] md:w-[20rem] h-[2rem] md:h-[3rem] flex items-center"
-              ref={searchRef}
-            >
-              <input
-                type="search"
-                placeholder="Search here.."
-                id="search-box"
-                className="w-full h-full text-black text-sm p-[1rem] capitalize focus:outline-none"
-              />
-            </div>
-          )} */}
 
-            {user ? (
+          {user ? (
             <Link
-                href="/dashboard" // Replace with the correct route for your dashboard
-                className="bg-white text-red-600 px-3 py-1 rounded text-[8px] md:text-base md:px-4 lg:py-2 hover:bg-gray-200"
+              href={dashboardRoute}
+              className="bg-white text-red-600 px-3 py-1 rounded text-[8px] md:text-base md:px-4 lg:py-2 hover:bg-gray-200"
             >
-                Dashboard
+              Dashboard
             </Link>
-            ) : (
+          ) : (
             <button
-                onClick={toggleLogin}
-                className="bg-white text-red-600 px-3 py-1 rounded text-[8px] md:text-base md:px-4 lg:py-2 hover:bg-gray-200"
+              onClick={toggleLogin}
+              className="bg-white text-red-600 px-3 py-1 rounded text-[8px] md:text-base md:px-4 lg:py-2 hover:bg-gray-200"
             >
-                Login / Register
+              Login / Register
             </button>
-            )}
+          )}
         </div>
 
         {/* Mobile Hamburger Icon */}
@@ -238,7 +225,7 @@ const Header = () => {
       {(showLogin || showSignup) && (
         <div className="fixed inset-0 z-40 flex justify-center items-center bg-black bg-opacity-50 px-5">
           <div ref={modalRef}>
-            {showLogin && <Login 
+            {showLogin && <Login
               onSwitchToSignup={toggleSignup}
               setShowLogin={setShowLogin}
             />}

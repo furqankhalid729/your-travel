@@ -2,13 +2,13 @@
 import React from "react";
 import { TbArrowsLeftRight } from "react-icons/tb";
 
-const FormField = ({ icon: Icon, label, type,description, isLast, showCenterIcon }) => (
+const FormField = ({ icon: Icon, label, type,description, isLast, showCenterIcon, name }) => (
     <div className="relative flex text-gray-700 flex-grow space-x-2 mb-4 md:mb-0">
         <Icon className="text-red-600 text-sm md:text-2xl mt-1 md:mt-0 ml-2 md:ml-0" />
         <div className="flex-col place-items-start ">
             <h3 className="text-sm md:text-base font-semibold">{label}</h3>
-            <input 
-                name={label} 
+            <input
+                name={name} 
                 id={label} 
                 type={type}
                 placeholder={description}

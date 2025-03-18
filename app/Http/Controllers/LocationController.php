@@ -24,6 +24,7 @@ class LocationController extends Controller
                 'key' => $apiKey,
                 //'types' => 'geocode'
             ]);
+            Log::info("Suesstion response",[$response]);
 
             if ($response->successful()) {
                 $data = $response->json();

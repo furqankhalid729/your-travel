@@ -17,7 +17,7 @@ use App\Models\Car\CarBrand;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Middleware\AdminMiddleware;
+
 
 // User Routes
 
@@ -34,6 +34,8 @@ Route::get('/tour/tour-details/{id}', [TourFrontendController::class, 'show'])->
 Route::get('/contact', function () {
     return Inertia::render('User/Contact');
 });
+
+Route::get('/profile', [ProfileController::class, 'show'])->name('user.profile');
 
 Route::get('/about', function () {
     return Inertia::render('User/About');
@@ -59,18 +61,12 @@ Route::get('/career', function () {
     return Inertia::render('User/Career');
 });
 
-Route::get('/profile', function () {
-    return Inertia::render('User/Profile');
-});
-
 Route::get('/car-booking', function () {
     return Inertia::render('User/CarBook');
 });
-
 Route::get('/tour-pkg', function () {
     return Inertia::render('User/TourPKG');
 });
-
 Route::get('/test-1', function () {
     return Inertia::render('Test1');
 });
@@ -237,11 +233,11 @@ Route::get('/welcome', function () {
     ]);
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
+// Route::middleware('auth')->group(function () {
+//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+// });
 
 //Resource Admin
 Route::resource('cars', CarController::class);

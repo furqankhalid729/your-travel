@@ -9,10 +9,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
 use Inertia\Inertia;
+use App\Enums\InertiaViews;
 use Inertia\Response;
 
 class ProfileController extends Controller
 {
+    public function show(Request $request){
+        return Inertia::render(InertiaViews::UserProfile->value);
+    }
     /**
      * Display the user's profile form.
      */

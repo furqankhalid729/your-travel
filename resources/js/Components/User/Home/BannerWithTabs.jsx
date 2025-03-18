@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CiSearch } from "react-icons/ci";
 import FormField from "./FormField";
 import { formFields, formFieldsForTour, formFieldsForCar } from "../../../Constants/Home"
@@ -7,6 +7,7 @@ import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 const BannerWithTabs = () => {
     const [activeButton, setActiveButton] = useState(0);
     const [isOpen, setIsOpen] = useState(false);
+    const [searchURL, setSearchURL] = useState("/hotel")
 
     const handleButtonClick = (index) => {
         setActiveButton(index);
@@ -27,6 +28,20 @@ const BannerWithTabs = () => {
                 return [];
         }
     };
+
+    useEffect(() => {
+        switch (activeButton) {
+            case 0:
+                setSearchURL("/hotel");
+                break;
+            case 1:
+                setSearchURL("/tour");
+                break;
+            case 2:
+                setSearchURL("/car");
+                break;
+        }
+    }, [activeButton]);
 
     return (
         <div
@@ -94,6 +109,7 @@ const BannerWithTabs = () => {
                                         description={field.description}
                                         isLast={index === formFields.length - 1}
                                         showCenterIcon={field.showCenterIcon}
+                                        name={field.name}
                                     />
                                 ))}
 
@@ -108,10 +124,10 @@ const BannerWithTabs = () => {
 
                     {/* Normal Div (visible on lg and above) */}
                     <div className="hidden lg:block">
-                    <form action="/search" method="get">
-                        <div
-                            className={`grid grid-cols-2 items-start sm:items-center py-2 bg-white rounded-lg sm:p-6 mt-4 mb-10 w-full max-w-5xl lg:space-y-0 lg:flex`}
-                        >
+                        <form action={searchURL} method="get">
+                            <div
+                                className={`grid grid-cols-2 items-start sm:items-center py-2 bg-white rounded-lg sm:p-6 mt-4 mb-10 w-full max-w-5xl lg:space-y-0 lg:flex`}
+                            >
 
                                 {renderFormFields().map((field, index) => (
                                     <FormField
@@ -122,16 +138,17 @@ const BannerWithTabs = () => {
                                         description={field.description}
                                         isLast={index === formFields.length - 1}
                                         showCenterIcon={field.showCenterIcon}
+                                        name={field.name}
                                     />
                                 ))}
 
 
-                            {/* Search Button */}
-                            <button className="bg-red-600 px-2 md:px-6 py-1 md:py-3 rounded-lg font-semibold flex items-center w-24 md:w-32 space-x-2 mt-2 ml-2 lg:mt-0">
-                                <CiSearch className="text-white text-sm md:text-lg" />
-                                <span>Search</span>
-                            </button>
-                        </div>
+                                {/* Search Button */}
+                                <button className="bg-red-600 px-2 md:px-6 py-1 md:py-3 rounded-lg font-semibold flex items-center w-24 md:w-32 space-x-2 mt-2 ml-2 lg:mt-0">
+                                    <CiSearch className="text-white text-sm md:text-lg" />
+                                    <span>Search</span>
+                                </button>
+                            </div>
                         </form>
                     </div>
                 </div>

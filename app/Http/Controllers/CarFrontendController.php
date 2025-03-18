@@ -43,6 +43,10 @@ class CarFrontendController extends Controller
             $query->whereIn('category', $categories);
         }
 
+        if ($request->filled('passengers')) {
+            $query->where('capacity', '>=', $request->passengers);
+        }
+
         $cars = $query->get()->map(function ($car) {
             $car->car_images = json_decode($car->car_images, true);
             return $car;

@@ -3,26 +3,28 @@ import { useForm } from "@inertiajs/react";
 // import Slider from "@material-ui/core/Slider";
 
 const CarCategory = ({ filters, modelsFilter, brandFilter }) => {
-  console.log(brandFilter)
+  console.log(filters)
   const { data, setData, get } = useForm({
     brands: filters.brands || [],
     models: filters.models || [],
     categories: filters.categories || [],
     ratings: filters.ratings || [],
-    price: filters.price || 150,
+    price: filters.price,
+    from: filters.from,
+    to: filters.to,
+    passengers: filters.passengers,
+    start_date: filters.start_date
   });
 
   // Handles checkbox selection for filters
   const handleCheckboxChange = (e) => {
     const { name, value, checked } = e.target;
-
     setData((prevData) => {
       const updatedValues = checked
         ? [...prevData[name], value]
         : prevData[name].filter((item) => item !== value);
 
       const updatedData = { ...prevData, [name]: updatedValues };
-      // setTimeout(() => applyFilters(updatedData), 1000);
       return updatedData;
     });
 
