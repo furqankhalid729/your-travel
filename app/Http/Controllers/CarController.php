@@ -8,13 +8,17 @@ use Inertia\Inertia;
 use App\Enums\InertiaViews;
 use Illuminate\Support\Facades\Log;
 use App\Models\Car;
+use App\Models\Driver;
 use App\Models\Car\CarBrand;
 use App\Models\Car\CarFeature;
 use App\Models\Car\CarFuel;
 use App\Models\Car\CarModel;
 use App\Models\Car\CarTransmission;
 use App\Models\Booking;
+use App\Models\BookingItem;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\DB;
+use Exception;
 
 class CarController extends Controller
 {
@@ -73,7 +77,8 @@ class CarController extends Controller
         return response()->json($cars);
     }
 
-    public function view($id){
+    public function view($id)
+    {
         $car = Car::where("id", $id)->first();
         if (!$car) {
             return response()->json(['error' => 'Car not found'], Response::HTTP_BAD_REQUEST);
@@ -81,6 +86,64 @@ class CarController extends Controller
         return Inertia::render(InertiaViews::AdminViewCar->value, [
             'car' => $car,
         ]);
+    }
+
+    public function assignRider($id)
+    {
+        $order = Booking::where("id", $id)->with("items")->first();
+        $carItem = $order->items->firstWhere('type', 'car');
+        $additionalInfo = json_decode($carItem->additional_info, true);
+        $carId = $additionalInfo['car_id'] ?? null;
+
+        if ($carId) {
+            $carDetails = Car::find($carId);
+        }
+        $car = Car::where("id", $carId)->first();
+        $drivers = Driver::where("car_id", $carId)->get();
+        if (!$order) {
+            abort(404);
+        }
+        return Inertia::render(InertiaViews::CarAssignRider->value, [
+            "order" => $order,
+            "car" => $car,
+            "drivers" => $drivers
+        ]);
+    }
+
+    public function saveRider(Request $request)
+    {
+        try {
+            // Validate input
+            $validatedData = $request->validate([
+                'driver_id' => 'required|exists:drivers,id',
+                'order_id' => 'required|exists:bookings,id',
+            ]);
+
+            DB::beginTransaction();
+            $bookingItem = BookingItem::where('booking_id', $validatedData['order_id'])->first();
+            if (!$bookingItem) {
+                return response()->json(['error' => 'No booking item found for this order.'], 404);
+            }
+            $additionalInfo = json_decode($bookingItem->additional_info, true);
+            $additionalInfo['driver_id'] = $validatedData['driver_id'];
+
+            $bookingItem->additional_info = json_encode($additionalInfo);
+            $bookingItem->save();
+            $booking = Booking::findOrFail($validatedData['order_id']);
+            $booking->status = "fulfilled";
+            $booking->save();
+            DB::commit();
+
+            return response()->json(['message' => 'Driver assigned successfully!'], 200);
+        } catch (Exception $e) {
+            // Rollback in case of an error
+            DB::rollBack();
+
+            return response()->json([
+                'error' => 'Something went wrong!',
+                'details' => $e->getMessage()
+            ], 500);
+        }
     }
 
     // Admin
@@ -270,6 +333,7 @@ class CarController extends Controller
         $activeBookingsTotal = Booking::where('status', 'active')
             ->join('booking_items', 'bookings.id', '=', 'booking_items.booking_id')
             ->where('booking_items.type', 'car')
+            ->select('bookings.id as mainID', 'bookings.*', 'booking_items.*')
             ->get();
 
         return Inertia::render(InertiaViews::CarBooking->value, [

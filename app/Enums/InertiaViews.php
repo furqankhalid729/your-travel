@@ -11,6 +11,7 @@ enum InertiaViews: string
     case EditCar = 'Admin/CarBooking/EditCar';
     case CarBooking = 'Admin/CarBooking/Orders';
     case AdminViewCar = "Admin/CarBooking/ViewCar";
+    case CarAssignRider = "Admin/CarBooking/BookCarAssignDrivers";
 
     // drivers
     case AddDriver = 'Admin/CarBooking/AddDriver';

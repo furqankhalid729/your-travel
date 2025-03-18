@@ -2,8 +2,10 @@ import { Link } from "@inertiajs/react";
 import { FaSnowflake, FaCarSide, FaLanguage, FaUser } from "react-icons/fa";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 
-const DriverProfile = ({driver}) => {
-  console.log(driver)
+const DriverProfile = ({driver, car}) => {
+
+  const images = JSON.parse(car.car_images);
+  console.log(images)
   const fakeData = [
     {
       transaction: "TXN123456",
@@ -64,14 +66,14 @@ const DriverProfile = ({driver}) => {
             <h2 className="text-xl font-semibold text-gray-800">
               {driver.name}
             </h2>
-            <p className="text-gray-600">A101</p>
+            <p className="text-gray-600">{driver.id}</p>
             <p className="text-white rounded-full px-1 bg-[#7077f2]">{driver.gender}
             </p>
           </div>
-          <img src="/storage/images/car.png" className="my-2" alt="car" />
+          <img src={`/storage/${images[0]}`} className="my-2" alt="car" />
           <div className="flex justify-between items-center">
-            <h1 className="text-xl font-semibold">Audi E-tron GT XR</h1>
-            <p className="text-sm text-gray-500">UK23AJ403</p>
+            <h1 className="text-xl font-semibold">{car.car_name}</h1>
+            <p className="text-sm text-gray-500">{car.car_number}</p>
           </div>
           <p className="mt-4 font-semibold">Economy</p>
           <div className="mt-4 grid grid-cols-3 gap-4">

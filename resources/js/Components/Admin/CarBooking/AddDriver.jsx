@@ -4,7 +4,8 @@ import { useForm } from "@inertiajs/react"; // Correct import
 import { FaSave } from "react-icons/fa";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 
-const AddDriver = () => {
+const AddDriver = ({ cars }) => {
+    console.log(cars)
     const [profileImage, setProfileImage] = useState(null);
 
     const { data, setData, post, processing, errors } = useForm({
@@ -17,7 +18,8 @@ const AddDriver = () => {
         license_no: "",
         license_category: "",
         experience: "",
-        status:"active"
+        status: "active",
+        car_id: cars[0].id
     });
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -53,6 +55,7 @@ const AddDriver = () => {
         formData.append("license_category", data.license_category);
         formData.append("experience", data.experience);
         formData.append("profile_image", profileImage);
+        formData.append("car_id", data.car_id);
 
         try {
             await post(route('driver.store'), formData, {
@@ -231,6 +234,19 @@ const AddDriver = () => {
                                 >
                                     <option value="active">Active</option>
                                     <option value="disabled">Disabled</option>
+                                </select>
+                            </div>
+                            <div>
+                                <h1 className="block text-sm font-medium">Cars</h1>
+                                <select
+                                    name="car_id"
+                                    value={data.car_id || ""}
+                                    onChange={handleInputChange}
+                                    className="border border-gray-300 rounded-lg w-full focus:outline-none"
+                                >
+                                    {cars.map((car) => {
+                                        return <option key={car.id} value={car.id}>{car.car_name}</option>;
+                                    })}
                                 </select>
                             </div>
                         </div>

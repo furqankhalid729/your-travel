@@ -1,9 +1,5 @@
 import {
   FaArrowLeft,
-  FaBuilding,
-  FaCarSide,
-  FaEnvelope,
-  FaLanguage,
   FaPen,
   FaPhone,
   FaRegIdCard,
@@ -11,25 +7,45 @@ import {
   FaSnowflake,
   FaUser,
 } from "react-icons/fa6";
-// import { useNavigate } from "react-router-dom";
-// import car from "../../assets/car.png";
-// import map from "../../assets/map.png";
-// import user from "../../assets/user.png";
-import { FaCalendarAlt } from "react-icons/fa";
 import { Link } from "@inertiajs/react";
+import { useState } from "react";
 
-const BookCarAssignDrivers = () => {
-  // const navigate = useNavigate();
+const BookCarAssignDrivers = ({ order, car, drivers }) => {
+
+  const carItems = order.items.filter(item => item.type === "car");
+  const additionalInfo = JSON.parse(carItems[0].additional_info);
+  console.log(additionalInfo)
+  const [driverId, setDriverId] = useState(additionalInfo.driver_id || drivers[0].id);
+
+  const openInMaps = () => {
+    const encodedLocation = encodeURIComponent(additionalInfo.dropout_location);
+    const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedLocation}`;
+    window.open(googleMapsUrl, "_blank");
+  }
+  const assignRider = async() => {
+    try {
+      const response = await axios.post(route("driver.assign"), {
+        driver_id: driverId,
+        order_id: order.id,
+      });
+
+      if (response.status === 200) {
+        alert("Driver assigned successfully!");
+      }
+    } catch (error) {
+      console.error("Error assigning driver:", error.response?.data || error);
+      alert("Failed to assign driver");
+    }
+  };
   return (
     <div className="mx-4 lg:mx-10 my-3 lg:my-5">
       <div className="flex justify-between items-center p-2">
         <Link
           href="/dashboard/car-booking"
-          // onClick={() => navigate(-1)}
           className="flex items-center text-gray-600 hover:text-gray-800"
         >
           <FaArrowLeft className="mr-2" />
-          <span className="text-black">#A102</span>
+          <span className="text-black">#{order.id}</span>
         </Link>
         <div className="flex items-center gap-5">
           <button className="bg-[#d9d9d9] px-2 py-1 rounded-md">Edit</button>
@@ -51,12 +67,12 @@ const BookCarAssignDrivers = () => {
             <div className="border rounded-md">
               <div className="p-4 border-b">
                 <p className="font-semibold">Order</p>
-                <p className="text-gray-500">September 26, 2024</p>
+                <p className="text-gray-500">{new Date(order.created_at).toLocaleDateString()}</p>
               </div>
               <div className="flex flex-col lg:flex-row justify-between px-4 pt-2">
                 <div className="flex items-center gap-5">
                   <img src="/storage/images/car.png" className="w-16" alt="" />
-                  <p>Audi A6 2022 </p>
+                  <p>{carItems[0].name} </p>
                 </div>
                 <div className="flex flex-col lg:flex-row items-center">
                   <p>From :</p>
@@ -72,7 +88,7 @@ const BookCarAssignDrivers = () => {
               <div className="flex justify-center lg:justify-end px-4 pb-2">
                 <p>Price: </p>
                 <p className="text-gray-500 border px-1 rounded-lg ml-2">
-                  $300.00
+                  ${carItems[0].price}
                 </p>
               </div>
             </div>
@@ -86,6 +102,8 @@ const BookCarAssignDrivers = () => {
                     type="text"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
                     placeholder="Los Angles Airport"
+                    value={additionalInfo.pickup_location}
+                    disabled
                   />
                 </div>
                 <div>
@@ -94,6 +112,8 @@ const BookCarAssignDrivers = () => {
                     type="text"
                     className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
                     placeholder="California Airport"
+                    value={additionalInfo.dropout_location}
+                    disabled
                   />
                 </div>
               </div>
@@ -103,6 +123,8 @@ const BookCarAssignDrivers = () => {
                   type="text"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
                   placeholder="$ 300.00 "
+                  value={carItems[0].price}
+                  dsiabled
                 />
               </div>
               <button className="bg-[#e1baf9] w-full text-white px-4 py-2 rounded-md">
@@ -111,16 +133,16 @@ const BookCarAssignDrivers = () => {
             </div>
             <div className="lg:w-1/2 relative">
               <img
-                src="/storage/images/map.png"
+                src="/storage/images/map.jpg"
                 alt="Map"
                 className="w-full rounded-md mb-3 shadow"
               />
-              <button className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center gap-1 bg-[#e0bafb] rounded-lg text-white px-4 py-2">
+              <button onClick={openInMaps} className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex items-center gap-1 bg-[#e0bafb] rounded-lg text-white px-4 py-2">
                 <FaRegMap /> Show on map
               </button>
             </div>
           </div>
-          <div className="flex flex-col lg:flex-row gap-6">
+          {/* <div className="flex flex-col lg:flex-row gap-6">
             <div className="lg:w-1/2 flex flex-col items-center p-2 bg-white">
               <img
                 src="/storage/images/user.png"
@@ -189,7 +211,7 @@ const BookCarAssignDrivers = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="lg:w-[30%] space-y-4">
           <div className="border p-4 rounded-md bg-white">
@@ -216,31 +238,23 @@ const BookCarAssignDrivers = () => {
               </div>
               <div>
                 <div className="text-sm font-medium">First Name</div>
-                <div className="text-sm text-gray-600">Muheeb</div>
+                <div className="text-sm text-gray-600">{order.first_name}</div>
               </div>
               <div>
                 <div className="text-sm font-medium">Last Name</div>
-                <div className="text-sm text-gray-600">Rahman</div>
-              </div>
-              <div>
-                <div className="text-sm font-medium">Phone Number</div>
-                <div className="text-sm text-gray-600">+923728939</div>
+                <div className="text-sm text-gray-600">{order.last_name}</div>
               </div>
               <div>
                 <div className="text-sm font-medium">Address</div>
-                <div className="text-sm text-gray-600">Lahore</div>
+                <div className="text-sm text-gray-600">{order.address}</div>
               </div>
               <div>
                 <div className="text-sm font-medium">City</div>
-                <div className="text-sm text-gray-600">Lahore</div>
+                <div className="text-sm text-gray-600">{order.city}</div>
               </div>
               <div>
                 <div className="text-sm font-medium">Email</div>
-                <div className="text-sm text-gray-600">akhasha@gmail.com</div>
-              </div>
-              <div>
-                <div className="text-sm font-medium">IP Address</div>
-                <div className="text-sm text-gray-600">192.168.0.100</div>
+                <div className="text-sm text-gray-600">{order.email}</div>
               </div>
             </div>
           </div>
@@ -272,87 +286,34 @@ const BookCarAssignDrivers = () => {
       </div>
       <div className="mt-7 p-4 bg-white">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:space-x-14">
-          <div className="text-center border rounded-lg p-3">
-            <img
-              src="/storage/images/user.png"
-              alt="User"
-              className="w-16 h-16 mx-auto rounded-full object-cover mb-4"
-            />
-            <h2 className="font-semibold text-gray-800">Muhammad Aadlan</h2>
-            <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
-              <FaRegIdCard className="text-gray-500" />
-              <p>3520294317803</p>
-            </div>
-            <div className="flex my-1 items-center justify-center gap-2 text-sm text-gray-500">
-              <FaPhone className="text-gray-500" />
-              <p>+13 337 95 65 335</p>
-            </div>
-            <button className="bg-[#e1baf9] rounded-xl text-white px-3">
-              Select
-            </button>
-          </div>
-          <div className="text-center border rounded-lg p-3">
-            <img
-              src="/storage/images/user.png"
-              alt="User"
-              className="w-16 h-16 mx-auto rounded-full object-cover mb-4"
-            />
-            <h2 className="font-semibold text-gray-800">Muhammad Aadlan</h2>
-            <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
-              <FaRegIdCard className="text-gray-500" />
-              <p>3520294317803</p>
-            </div>
-            <div className="flex my-1 items-center justify-center gap-2 text-sm text-gray-500">
-              <FaPhone className="text-gray-500" />
-              <p>+13 337 95 65 335</p>
-            </div>
-            <button className="bg-[#808080] rounded-xl text-white px-3">
-              Select
-            </button>
-          </div>
-          <div className="text-center border rounded-lg p-3">
-            <img
-              src="/storage/images/user.png"
-              alt="User"
-              className="w-16 h-16 mx-auto rounded-full object-cover mb-4"
-            />
-            <h2 className="font-semibold text-gray-800">Muhammad Aadlan</h2>
-            <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
-              <FaRegIdCard className="text-gray-500" />
-              <p>3520294317803</p>
-            </div>
-            <div className="flex my-1 items-center justify-center gap-2 text-sm text-gray-500">
-              <FaPhone className="text-gray-500" />
-              <p>+13 337 95 65 335</p>
-            </div>
-            <button className="bg-[#808080] rounded-xl text-white px-3">
-              Select
-            </button>
-          </div>
-          <div className="text-center border rounded-lg p-3">
-            <img
-              src="/storage/images/user.png"
-              alt="User"
-              className="w-16 h-16 mx-auto rounded-full object-cover mb-4"
-            />
-            <h2 className="font-semibold text-gray-800">Muhammad Aadlan</h2>
-            <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
-              <FaRegIdCard className="text-gray-500" />
-              <p>3520294317803</p>
-            </div>
-            <div className="flex my-1 items-center justify-center gap-2 text-sm text-gray-500">
-              <FaPhone className="text-gray-500" />
-              <p>+13 337 95 65 335</p>
-            </div>
-            <button className="bg-[#808080] rounded-xl text-white px-3">
-              Select
-            </button>
-          </div>
+          {
+            drivers.map((driver) => (
+              <div className="text-center border rounded-lg p-3">
+                <img
+                  src={`/storage/${driver.profile_image}`}
+                  alt="User"
+                  className="w-16 h-16 mx-auto rounded-full object-cover mb-4"
+                />
+                <h2 className="font-semibold text-gray-800">{driver.name}</h2>
+                <div className="flex items-center justify-center gap-2 text-sm text-gray-500">
+                  <FaRegIdCard className="text-gray-500" />
+                  <p>{driver.license_no}</p>
+                </div>
+                <div className="flex my-1 items-center justify-center gap-2 text-sm text-gray-500">
+                  <FaPhone className="text-gray-500" />
+                  <p>{driver.contact_no}</p>
+                </div>
+                <button onClick={() => setDriverId(driver.id)} className={`${driverId === driver.id ? 'bg-[#e1baf9]' : 'bg-[#151516]'} rounded-xl text-white px-3`}>
+                  Select
+                </button>
+              </div>
+            ))
+          }
         </div>
       </div>
       <div className="flex justify-end my-5">
-        <button className="bg-[#e1baf9] px-3 py-1 text-white rounded-full">
-          Booked
+        <button onClick={assignRider} className="bg-[#e1baf9] px-3 py-1 text-white rounded-full">
+          Save
         </button>
       </div>
     </div>

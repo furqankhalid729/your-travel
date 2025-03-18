@@ -86,6 +86,7 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/dashboard/car/edit/{id}', [CarController::class, 'edit'])->name('car.edit');
     Route::get('/dashboard/car/view/{id}', [CarController::class, 'view'])->name('car.view');
     Route::get('/dashboard/car-booking/orders', [CarController::class, 'carBooking'] )->name('car.booking');
+    Route::get('/dashboard/car-booking/book-car-assign-drivers/{id}',[CarController::class, 'assignRider'] )->name("order.assignrider");
     Route::get('/dashboard/car-booking/driver-listing', [DriverController::class, 'index'])->name('driver.index');
     Route::get('/dashboard/car-booking/add-driver', [DriverController::class, 'create'])->name('driver.create');
     Route::get('/dashboard/car-booking/driver/edit/{id}', [DriverController::class, 'edit'])->name('driver.edit');
@@ -129,10 +130,6 @@ Route::get('/dashboard/car-booking/assign-drivers', function () {
 
 Route::get('/dashboard/car-booking/book-ride-assign-drivers', function () {
     return Inertia::render('Admin/CarBooking/BookRideAssignDrivers');
-});
-
-Route::get('/dashboard/car-booking/book-car-assign-drivers', function () {
-    return Inertia::render('Admin/CarBooking/BookCarAssignDrivers');
 });
 
 // hotel booking

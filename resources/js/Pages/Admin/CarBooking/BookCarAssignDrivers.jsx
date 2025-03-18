@@ -1,10 +1,14 @@
 import React from 'react';
 import AdminLayout from "../../../Layout/AdminLayout";
 import BookCarAssignDriversCom from "../../../Components/Admin/CarBooking/BookCarAssignDrivers";
-const BookCarAssignDrivers = () => {
+const BookCarAssignDrivers = ({order, car,drivers}) => {
     return (
         <div>
-            <BookCarAssignDriversCom />
+            <BookCarAssignDriversCom 
+                order = {order}
+                car = {car}
+                drivers = {drivers}
+            />
         </div>
     )
 }

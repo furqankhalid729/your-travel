@@ -20,6 +20,6 @@ class Driver extends Model
         'experience',
         'profile_image',
         'status',
-        'card_id',
+        'car_id',
     ];
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Inertia\Inertia;
 use App\Enums\InertiaViews;
 use App\Models\Driver;
+use App\Models\Car;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Response;
@@ -20,7 +21,10 @@ class DriverController extends Controller
 
     public function create(Request $request)
     {
-        return Inertia::render(InertiaViews::AddDriver->value);
+        $cars = Car::all();
+        return Inertia::render(InertiaViews::AddDriver->value,[
+            'cars' => $cars
+        ]);
     }
 
     public function store(Request $request)
@@ -36,6 +40,7 @@ class DriverController extends Controller
             'experience' => 'required|string|max:255',
             'profile_image.file' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'status' => 'required|in:active,disabled',
+            'car_id' => 'nullable'
         ]);
 
         // Handle file upload
@@ -132,11 +137,14 @@ class DriverController extends Controller
 
     public function show($id){
         $driver = Driver::findOrFail($id);
+        
         if (!$driver) {
             return response()->json(['error' => 'driver not found'], Response::HTTP_BAD_REQUEST);
         }
+        $car = Car::where("id",$driver->car_id)->first();
         return Inertia::render(InertiaViews::ViewDriver->value, [
             'driver' => $driver,
+            'car'    => $car
         ]);
     }
 }

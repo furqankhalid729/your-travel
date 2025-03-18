@@ -27,6 +27,7 @@ const CarProfile = (car) => {
         dropout_location: "Islamabad, Pakistan",
         pickup_date: '02-02-2024',
         dropout_date: '03-03-2024',
+        car_id : car.car.id
       },
     };
     dispatch(addBooking(bookingData));

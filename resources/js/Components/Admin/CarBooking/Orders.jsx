@@ -58,13 +58,6 @@ const Orders = ({ activeBooking }) => {
     <div className="md:min-h-screen p-10">
       <div className="flex justify-between items-center my-2">
         <h2 className="text-3xl font-semibold text-[#808080]">Orders</h2>
-        <Link
-          to="/dashboard/drafts"
-          className="flex items-center gap-1 bg-[#e0b0ff] text-white px-4 py-2 rounded-md"
-        >
-          <FaPlus />
-          Add New Orders
-        </Link>
       </div>
       <div className="p-3 bg-white rounded-lg shadow overflow-x-auto">
         <table className="min-w-full divide-y divide-gray-200">
@@ -96,7 +89,7 @@ const Orders = ({ activeBooking }) => {
               return (
                 <tr key={index}>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
-                    {order.id}
+                    {order.mainID}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
                     <span className="inline-block px-2 py-1 bg-[#e0b0ff] text-[#808080]">
@@ -125,9 +118,9 @@ const Orders = ({ activeBooking }) => {
                     <button className="text-green-500">
                       <FaEdit />
                     </button>
-                    <button className="text-blue-500 px-1">
+                    <Link href={route('order.assignrider',order.mainID)} className="text-blue-500 px-1">
                       <FaEye />
-                    </button>
+                    </Link>
                     <button className="text-red-500">
                       <FaTrash />
                     </button>

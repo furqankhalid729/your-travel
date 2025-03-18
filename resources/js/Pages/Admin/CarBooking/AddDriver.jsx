@@ -1,10 +1,12 @@
 import React from 'react'
 import AdminLayout from "../../../Layout/AdminLayout";
 import AddDriverCom from '@/Components/Admin/CarBooking/AddDriver'
-const AddDriver = () => {
+const AddDriver = ({cars}) => {
     return (
         <div>
-            <AddDriverCom />
+            <AddDriverCom 
+                cars={cars}
+            />
         </div>
     )
 }

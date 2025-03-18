@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/car/add-car', [CarController::class, 'store'])->name('car.add');
     Route::delete('/car/delete/{id}', [CarController::class, 'destroy'])->name('car.delete');
     Route::post('/driver/add-driver', [DriverController::class, 'store'])->name('driver.store');
+    Route::post('/driver/assign-driver', [CarController::class, 'saveRider'])->name('driver.assign');
     Route::delete('/driver/delete/{id}', [DriverController::class, 'destroy'])->name('driver.delete');
     Route::post('/hotel/add-hotel-room', [HotelRoomController::class, 'store'])->name('hotelRoom.store');
     Route::delete('/hotel/delete/{id}', [HotelRoomController::class, 'destroy'])->name('hotelRoom.delete');

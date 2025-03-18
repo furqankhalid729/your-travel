@@ -37,12 +37,6 @@ const CarsListing = ({ cars }) => {
           <h2 className="text-3xl font-semibold text-[#808080]">Car List</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:flex gap-2">
             <Link
-              href="/dashboard/car-booking/driver-profile"
-              className="bg-[#bb8dd9] text-white px-2 py-2 rounded-lg "
-            >
-              Driver Profile
-            </Link>
-            <Link
               href="/dashboard/car-booking/book-ride-assign-drivers"
               className="bg-[#bb8dd9] text-white px-2 py-2 rounded-lg "
             >
