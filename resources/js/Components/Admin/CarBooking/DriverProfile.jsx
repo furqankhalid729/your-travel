@@ -3,7 +3,7 @@ import { FaSnowflake, FaCarSide, FaLanguage, FaUser } from "react-icons/fa";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 
 const DriverProfile = ({driver, car}) => {
-
+  console.log(car)
   const images = JSON.parse(car.car_images);
   console.log(images)
   const fakeData = [

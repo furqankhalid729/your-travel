@@ -36,7 +36,7 @@ const CarsListing = ({ cars }) => {
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-3xl font-semibold text-[#808080]">Car List</h2>
           <div className="grid grid-cols-2 md:grid-cols-3 lg:flex gap-2">
-            <Link
+            {/* <Link
               href="/dashboard/car-booking/book-ride-assign-drivers"
               className="bg-[#bb8dd9] text-white px-2 py-2 rounded-lg "
             >
@@ -47,7 +47,7 @@ const CarsListing = ({ cars }) => {
               className="bg-[#bb8dd9] text-white px-2 py-2 rounded-lg "
             >
               BookCar Assign Drivers
-            </Link>
+            </Link> */}
             <Link
               href="/dashboard/car-booking/add-car"
               className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 py-2 rounded-lg "

@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useForm } from "@inertiajs/react";
 import { FaArrowLeft, FaSave } from 'react-icons/fa';
 
-const EditDriver = ({ driver }) => {
-  const [profileImage, setProfileImage] = useState(driver?.profile_image || null);
+const EditDriver = ({ driver, cars }) => {
+  const [profileImage, setProfileImage] = useState(null);
 
-  const { data, setData, put, processing, errors } = useForm({
+  const { data, setData, put,post, processing, errors } = useForm({
     profile_image: driver?.profile_image || null,
     name: driver?.name || "",
     identity_no: driver?.identity_no || "",
@@ -16,7 +16,12 @@ const EditDriver = ({ driver }) => {
     license_category: driver?.license_category || "",
     experience: driver?.experience || "",
     status: driver?.status || "active",
+    car_id: driver.car_id,
   });
+
+  useEffect(() => {
+    console.log(data)
+  }, [data])
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -26,14 +31,24 @@ const EditDriver = ({ driver }) => {
   const handleFileChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setData("profile_image", file);
+      // setData((data) => ({
+      //     ...data,
+      //     profile_image: file,
+      // }));
+      setData("profile_image", file)
       setProfileImage(URL.createObjectURL(file));
     }
   };
 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    put(route("driver.update", {driver: driver.id}));
+    post(route("driver.update", driver.id), {
+      onError: (errors) => {
+        console.log("Validation Errors:", errors);
+        console.log("data is",data)
+      },
+    });
   };
 
   return (
@@ -60,7 +75,7 @@ const EditDriver = ({ driver }) => {
           <div className="flex flex-col items-center p-4">
             <div className="relative w-32 h-32 rounded-full mb-4 flex items-center justify-center bg-gray-200 text-gray-500">
               {profileImage || data.profile_image ? (
-                <img src={profileImage || data.profile_image} alt="User" className="w-32 h-32 rounded-full object-cover" />
+                <img src={profileImage || `/storage/${data.profile_image}`} alt="User" className="w-32 h-32 rounded-full object-cover" />
               ) : (
                 <span className="text-sm">Choose Profile Pic</span>
               )}
@@ -174,6 +189,19 @@ const EditDriver = ({ driver }) => {
                 >
                   <option value="active">Active</option>
                   <option value="disabled">Disabled</option>
+                </select>
+              </div>
+              <div>
+                <h1 className="block text-sm font-medium">Cars</h1>
+                <select
+                  name="car_id"
+                  value={data.car_id}
+                  onChange={handleInputChange}
+                  className="border border-gray-300 rounded-lg w-full focus:outline-none"
+                >
+                  {cars.map((car) => {
+                    return <option key={car.id} value={car.id}>{car.car_name}</option>;
+                  })}
                 </select>
               </div>
             </div>

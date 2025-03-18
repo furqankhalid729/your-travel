@@ -88,7 +88,7 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/dashboard/car-booking/driver-listing', [DriverController::class, 'index'])->name('driver.index');
     Route::get('/dashboard/car-booking/add-driver', [DriverController::class, 'create'])->name('driver.create');
     Route::get('/dashboard/car-booking/driver/edit/{id}', [DriverController::class, 'edit'])->name('driver.edit');
-    Route::put('/dashboard/car-booking/driver/update/{id}', [DriverController::class, 'update'])->name('driver.update');
+    Route::post('/dashboard/car-booking/driver/update/{id}', [DriverController::class, 'update'])->name('driver.update');
     Route::get('/dashboard/car-booking/driver/{id}', [DriverController::class, 'show'])->name('driver.show');
     Route::get('/dashboard/hotel-booking', [HotelBookingController::class, 'index'])->name('hotelbooking.index');
     Route::get('/dashboard/hotel-booking/all-hotel-booking', [HotelBookingController::class, 'allHotelBooking'])->name('hotelbooking.all');

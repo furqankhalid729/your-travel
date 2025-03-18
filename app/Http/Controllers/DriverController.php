@@ -5,6 +5,7 @@ use Inertia\Inertia;
 use App\Enums\InertiaViews;
 use App\Models\Driver;
 use App\Models\Car;
+use App\Models\Booking;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Response;
@@ -13,9 +14,19 @@ class DriverController extends Controller
 {
     public function index(Request $request)
     {
+        $carCount = Car::count();
+        $driverCount = Driver::count();
+        $activeBookingsTotal = Booking::where('status', 'active')
+            ->whereHas('items', function ($query) {
+                $query->where('type', 'car');
+            })
+            ->count();
         $drivers = Driver::all();
         return Inertia::render(InertiaViews::DriverIndex->value, [
             'drivers' => $drivers,
+            'carCount' => $carCount,
+            'driverCount' => $driverCount,
+            'activeBookingsTotal' => $activeBookingsTotal
         ]);
     }
 
@@ -64,16 +75,19 @@ class DriverController extends Controller
         $driver = Driver::find($id);
 
         if (!$driver) {
-            return redirect()->back()->withErrors(['error' => 'Car not found!']);
+            return redirect()->back()->withErrors(['error' => 'Driver not found!']);
         }
+        $cars = Car::all();
         return Inertia::render(InertiaViews::EditDriver->value, [
             'driver' => $driver,
+            'cars' => $cars
         ]);
 
     }
 
     public function update(Request $request, string $id)
     {
+        Log::info($request->all());
         // Find the driver by ID
         $driver = Driver::find($id);
 
@@ -92,8 +106,9 @@ class DriverController extends Controller
             'license_no' => 'required|string|max:255',
             'license_category' => 'required|string|max:255',
             'experience' => 'required|string|max:255',
-            'profile_image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'profile_image.file' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'status' => 'required|in:active,disabled',
+            'car_id' => 'nullable'
         ]);
 
         // Handle profile image upload
@@ -115,11 +130,12 @@ class DriverController extends Controller
             'experience' => $validatedData['experience'],
             'profile_image' => $profileImagePath,
             'status' => $validatedData['status'],
+            'car_id' => $validatedData['car_id'],
         ]);
 
         
         // Redirect with success message
-        return redirect()->route('drivers.index')->with('success', 'Driver updated successfully!');
+        return redirect()->route('driver.index')->with('success', 'Driver updated successfully!');
     }
     /**
      * Remove the specified resource from storage.

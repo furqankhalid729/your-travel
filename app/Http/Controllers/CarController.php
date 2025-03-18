@@ -158,8 +158,18 @@ class CarController extends Controller
             $car->car_images = json_decode($car->car_images, true);
             return $car;
         });
+        $carCount = Car::count();
+        $driverCount = Driver::count();
+        $activeBookingsTotal = Booking::where('status', 'active')
+            ->whereHas('items', function ($query) {
+                $query->where('type', 'car');
+            })
+            ->count();
         return Inertia::render(InertiaViews::CarIndex->value, [
             'cars' => $cars,
+            'carCount' => $carCount,
+            'driverCount' => $driverCount,
+            'activeBookingsTotal' => $activeBookingsTotal
         ]);
     }
 

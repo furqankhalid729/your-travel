@@ -5,44 +5,34 @@ import { Link } from "@inertiajs/react";
 // import { Outlet } from "react-router-dom";
 
 
-const topMenuItems = [
-  {
-    name: "Car Listing",
-    icon: <FaCar />,
-    bgColor: "#bceaff",
-    count: 5,
-    text: "View Details",
-    link: "/dashboard/car-booking",
-    textColor: "#38738D",
-  },
-  {
-    name: "Driver Listing",
-    icon: <FaUserTie />,
-    bgColor: "#e0b0ff",
-    count: 5,
-    text: "View Details",
-    link:  route('driver.index'),
-  },
-  {
-    name: "Orders",
-    icon: <LiaDirectionsSolid />,
-    bgColor: "#c66060",
-    count: 30,
-    text: "View Details",
-    link: "/dashboard/car-booking/orders",
-  },
-  // {
-  //   name: "Special Offers",
-  //   icon: <LuAlarmClock />,
-  //   bgColor: "#522864",
-  //   count: 10,
-  //   text: "Special Offers",
-  //   link: "/dashboard/car-booking/special-offers",
-  // },
-];
-
-const CarDash = () => {
-  // console.log(topMenuItems)
+const CarDash = ({ carCount, driverCount, activeBookingsTotal }) => {
+  const topMenuItems = [
+    {
+      name: "Car Listing",
+      icon: <FaCar />,
+      bgColor: "#bceaff",
+      count: carCount,
+      text: "View Details",
+      link: "/dashboard/car-booking",
+      textColor: "#38738D",
+    },
+    {
+      name: "Driver Listing",
+      icon: <FaUserTie />,
+      bgColor: "#e0b0ff",
+      count: driverCount,
+      text: "View Details",
+      link: route('driver.index'),
+    },
+    {
+      name: "Orders",
+      icon: <LiaDirectionsSolid />,
+      bgColor: "#c66060",
+      count: activeBookingsTotal,
+      text: "View Details",
+      link: "/dashboard/car-booking/orders",
+    },
+  ];
   return (
     <div className="p-2 md:p-4 m-2 md:m-6 bg-white">
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-5">
@@ -58,28 +48,25 @@ const CarDash = () => {
             >
               <div className="flex items-center justify-between w-full px-2">
                 <span
-                  className={`text-4xl ${
-                    item.name === "Car Listing"
+                  className={`text-4xl ${item.name === "Car Listing"
                       ? "text-[#808080]"
                       : "text-white"
-                  }`}
+                    }`}
                 >
                   {item.icon}
                 </span>
                 <span
-                  className={`font-medium text-4xl ${
-                    item.name === "Car Listing"
+                  className={`font-medium text-4xl ${item.name === "Car Listing"
                       ? "text-[#808080]"
                       : "text-white"
-                  }`}
+                    }`}
                 >
                   {item.count}
                 </span>
               </div>
               <p
-                className={`mt-4 text-sm w-full text-right font-normal ${
-                  item.name === "Car Listing" ? "text-[#808080]" : "text-white"
-                }`}
+                className={`mt-4 text-sm w-full text-right font-normal ${item.name === "Car Listing" ? "text-[#808080]" : "text-white"
+                  }`}
               >
                 {item.name}
               </p>
