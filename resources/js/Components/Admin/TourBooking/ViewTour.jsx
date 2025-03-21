@@ -113,26 +113,7 @@ const ViewTour = ({ tours }) => {
           <div className="flex justify-between items-center mb-4">
             <h2 className="text-4xl text-[#808080]">Tours</h2>
             <div className="grid grid-cols-2 lg:grid-cols-3 lg:flex items-center gap-1">
-              <Link
-                href="/dashboard/tour-booking/view-location"
-                className="bg-[#bb8dd9] text-white px-2 py-2 rounded-lg"
-              >
-                View Location
-              </Link>
-              <Link
-                href="/dashboard/tour-booking/View-tour-booking"
-                className="bg-[#bb8dd9] text-white px-2 py-2 rounded-lg"
-              >
-                View Tour Booking
-              </Link>
-              <Link
-                href="/dashboard/tour-booking/add-tour-booking"
-                className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 py-2 rounded-lg"
-              >
-                <FaPlus />
-                Add Tour Booking
-              </Link>
-              <Link
+              {/* <Link
                 href="/dashboard/tour-booking/profile"
                 className="bg-[#bb8dd9] text-white px-2 py-2 rounded-lg"
               >
@@ -143,7 +124,7 @@ const ViewTour = ({ tours }) => {
                 className="bg-[#bb8dd9] text-white px-2 py-2 rounded-lg"
               >
                 Tour Draft
-              </Link>
+              </Link> */}
               <Link
                 href={route('tour.create')}
                 className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 py-2 rounded-lg"
@@ -211,6 +192,10 @@ const ViewTour = ({ tours }) => {
                         </td>
                         <td className="px-2 py-4 whitespace-nowrap text-sm">
                           <div className="flex space-x-2">
+                            <Link href={route('tour.show', tour.id)} target="_blank"
+                              rel="noopener noreferrer" className="text-red-500">
+                              <FaEye />
+                            </Link>
                             <Link href={route('car.edit', tour.id)} className="text-green-500">
                               <FaEdit />
                             </Link>

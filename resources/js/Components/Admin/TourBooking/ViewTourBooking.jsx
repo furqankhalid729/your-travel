@@ -2,40 +2,6 @@ import { FaArrowLeft, FaEdit } from "react-icons/fa";
 import { FaEye, FaPlus, FaTrash } from "react-icons/fa6";
 import { MdDateRange } from "react-icons/md";
 import { Link } from "@inertiajs/react";
-// import { useNavigate } from "react-router-dom";
-
-const tourData = [
-  {
-    id: "A101",
-    name: "John Doe",
-    email: "johndoe@example.com",
-    contact: "+1234567890",
-    type: "Luxury",
-    members: 4,
-    price: "$4800",
-    status: "Booked",
-  },
-  {
-    id: "A102",
-    name: "Jane Smith",
-    email: "janesmith@example.com",
-    contact: "+9876543210",
-    type: "Standard",
-    members: 2,
-    price: "$2500",
-    status: "Pending",
-  },
-  {
-    id: "A103",
-    name: "Alex Johnson",
-    email: "alexj@example.com",
-    contact: "+1122334455",
-    type: "Deluxe",
-    members: 6,
-    price: "$9000",
-    status: "Booked",
-  },
-];
 
 const ViewTourBooking = ({allBooking}) => {
   console.log(allBooking)
@@ -43,14 +9,6 @@ const ViewTourBooking = ({allBooking}) => {
   return (
     <div className="my-5">
       <div className="mx-6 p-5 bg-white min-h-screen">
-        {/* <div className="breadcrumbs text-sm">
-          <ul>
-            <li>
-              <a>Tours</a>
-            </li>
-            <li>View Tour Bookings</li>
-          </ul>
-        </div> */}
         <div className="flex justify-between items-center mb-4">
           <h2 className="text-2xl lg:text-4xl text-[#808080]">
             View Tour Bookings
@@ -135,9 +93,9 @@ const ViewTourBooking = ({allBooking}) => {
                     </span>
                   </td>
                   <td className="px-4 py-4 whitespace-nowrap text-sm flex gap-2">
-                    <button className="text-red-500">
+                    <Link className="text-red-500">
                       <FaEye />
-                    </button>
+                    </Link>
                     <button className="text-blue-500">
                       <FaEdit />
                     </button>
