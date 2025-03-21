@@ -3,9 +3,6 @@ import { Link } from "@inertiajs/react";
 import { FaCog, FaLock } from "react-icons/fa";
 
 const Settings = () => {
-  // const location = useLocation();
-
-  // const isActive = (path) => location.pathname === path;
 
   return (
     <div className="m-5 lg:m-10 flex flex-col lg:flex-row min-h-screen border border-[#afafaf]">

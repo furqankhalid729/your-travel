@@ -340,8 +340,7 @@ class CarController extends Controller
 
     public function carBooking(Request $request)
     {
-        $activeBookingsTotal = Booking::where('status', 'active')
-            ->join('booking_items', 'bookings.id', '=', 'booking_items.booking_id')
+        $activeBookingsTotal = Booking::join('booking_items', 'bookings.id', '=', 'booking_items.booking_id')
             ->where('booking_items.type', 'car')
             ->select('bookings.id as mainID', 'bookings.*', 'booking_items.*')
             ->get();

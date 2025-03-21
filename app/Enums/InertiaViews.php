@@ -27,6 +27,7 @@ enum InertiaViews: string
     case RoomIndex = 'Admin/HotelBooking/AllHotels';
     case EditHotel = 'Admin/HotelBooking/EditHotelBooking';
     case AllHotelBooking = 'Admin/HotelBooking/AllHotelBooking';
+    case ViewHotelBooking = "Admin/HotelBooking/HotelBookingProfile";
 
     //Tour Index
     case TourIndex = 'Admin/TourBooking/ViewTour';
@@ -36,6 +37,9 @@ enum InertiaViews: string
     case AdminEnquiry = 'Admin/Enquiries';
     case AdminEnquiryDetail = 'Admin/EnquiriesDetails';
     case AdminCustomer = 'Admin/Customers';
+
+    case SettingGeneral = 'Admin/Settings/General';
+    case SettingSecurity = 'Admin/Settings/Security';
 
     // Frontend
     // cars

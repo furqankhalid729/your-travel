@@ -72,6 +72,7 @@ const Orders = ({ activeBooking }) => {
                 "First Name",
                 "Last Name",
                 "Email",
+                "Status",
                 "Action",
               ].map((header, index) => (
                 <th
@@ -113,6 +114,9 @@ const Orders = ({ activeBooking }) => {
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080]">
                     {order.email}
+                  </td>
+                  <td className="px-2 py-4 whitespace-nowrap text-sm text-[#808080] capitalize">
+                    {order.status}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm flex space-x-2">
                     <button className="text-green-500">

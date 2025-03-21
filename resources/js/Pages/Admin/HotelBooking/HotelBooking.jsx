@@ -2,11 +2,13 @@ import React from 'react';
 import AdminLayout from "../../../Layout/AdminLayout";
 import HotelBookingCom from "../../../Components/Admin/HotelBooking/HotelBooking";
 
-const HotelBooking = ({latestBooking}) => {
+const HotelBooking = ({latestBooking, hotelRoomsCount, bookingCount}) => {
   return (
     <div>
       <HotelBookingCom
         latestBooking={latestBooking}
+        hotelRoomsCount={hotelRoomsCount}
+        bookingCount= {bookingCount}
       />
     </div>
   )

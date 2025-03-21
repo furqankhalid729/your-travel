@@ -46,7 +46,7 @@ const AdminLayout = ({ title, children }) => {
         { to: "/dashboard/payments", icon: <FaCreditCard />, name: "Payments" },
         { to: "/dashboard/transaction", icon: <FaExchangeAlt />, name: "Transaction" },
         { to: "/dashboard/reports", icon: <FaChartBar />, name: "Reports" },
-        { to: "/dashboard/settings", icon: <FaCog />, name: "Settings" },
+        { to: "/dashboard/settings/general", icon: <FaCog />, name: "Settings" },
     ];
     return (
         <>
@@ -102,7 +102,7 @@ const AdminLayout = ({ title, children }) => {
                         </div>
 
                     </div>
-                    <div className="w-full bg-[#f3f3f3]">
+                    <div className="w-full bg-[#f3f3f3] min-h-[100vh]">
                         {children}
                     </div>
                 </div>

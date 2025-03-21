@@ -2,75 +2,38 @@ import { FaEdit, FaEye, FaTrash } from "react-icons/fa";
 import { FaPlus } from "react-icons/fa6";
 import { AiOutlineLike } from "react-icons/ai";
 import { GoKey } from "react-icons/go";
-// import { LuAlarmClock } from "react-icons/lu";
 import { MdOutlinePayment } from "react-icons/md";
 import { Link } from "@inertiajs/react";
 
-const bookingData = [
-  {
-    id: 1,
-    room: "Deluxe Suite",
-    checkIn: "2024-11-21",
-    checkOut: "2024-11-25",
-    price: "$200",
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@mail.com",
-    phone: "+123456789",
-  },
-  {
-    id: 2,
-    room: "Standard Room",
-    checkIn: "2024-11-20",
-    checkOut: "2024-11-23",
-    price: "$150",
-    firstName: "Jane",
-    lastName: "Smith",
-    email: "jane.smith@mail.com",
-    phone: "+987654321",
-  },
-  {
-    id: 3,
-    room: "Single Room",
-    checkIn: "2024-11-22",
-    checkOut: "2024-11-24",
-    price: "$100",
-    firstName: "Alice",
-    lastName: "Johnson",
-    email: "alice.johnson@mail.com",
-    phone: "+1122334455",
-  },
-];
 
-const topMenuItems = [
-  {
-    name: "Available Rooms",
-    icon: <GoKey />,
-    bgColor: "#bceaff",
-    count: 5,
-    text: "View Rooms",
-    link: route('hotel.index'),
-  },
-  {
-    name: "Confirmed Bookings",
-    icon: <AiOutlineLike />,
-    bgColor: "#e0b0ff",
-    count: 5,
-    text: "View Details",
-    link: "/dashboard/hotel-booking/all-hotel-booking",
-  },
-  {
-    name: "Payments",
-    icon: <MdOutlinePayment />,
-    bgColor: "#c66060",
-    count: 5,
-    text: "View Details",
-    link: "/dashboard/hotel-booking",
-  },
-];
 
-const HotelBooking = ({latestBooking}) => {
-  console.log(latestBooking)
+const HotelBooking = ({ latestBooking, hotelRoomsCount, bookingCount }) => {
+  const topMenuItems = [
+    {
+      name: "Available Rooms",
+      icon: <GoKey />,
+      bgColor: "#bceaff",
+      count: hotelRoomsCount,
+      text: "View Rooms",
+      link: route('hotel.index'),
+    },
+    {
+      name: "Confirmed Bookings",
+      icon: <AiOutlineLike />,
+      bgColor: "#e0b0ff",
+      count: bookingCount,
+      text: "View Details",
+      link: "/dashboard/hotel-booking/all-hotel-booking",
+    },
+    {
+      name: "Payments",
+      icon: <MdOutlinePayment />,
+      bgColor: "#c66060",
+      count: 5,
+      text: "View Details",
+      link: "/dashboard/hotel-booking",
+    },
+  ];
   return (
     <div className="p-2 md:p-4 m-2 md:m-6 bg-white">
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-5">
@@ -130,13 +93,13 @@ const HotelBooking = ({latestBooking}) => {
             <FaPlus />
             Add New Hotel
           </Link>
-          <Link
+          {/* <Link
             href="/dashboard/drafts"
             className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 md:px-3 py-1 md:py-2 rounded-lg"
           >
             <FaPlus />
             Create New Bookings
-          </Link>
+          </Link> */}
         </div>
       </div>
       <div className="rounded-lg border-t overflow-x-auto">
@@ -200,7 +163,7 @@ const HotelBooking = ({latestBooking}) => {
                     <FaEdit />
                   </Link>
                   <Link
-                    href="/dashboard/hotel-booking/hotel-booking-profile"
+                    href={route('hotelbooking.show',booking.booking_id)}
                     className="text-blue-500 px-1"
                   >
                     <FaEye />
