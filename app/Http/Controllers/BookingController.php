@@ -7,8 +7,11 @@ use Inertia\Inertia;
 use App\Enums\InertiaViews;
 use App\Models\Booking;
 use App\Models\BookingItem;
+use App\Models\Payment;
+use App\Models\Transaction;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
@@ -44,28 +47,62 @@ class BookingController extends Controller
             ], 422);
         }
 
-        // Create a new booking
-        $booking = Booking::create([
-            'first_name'            => $request->first_name,
-            'last_name'             => $request->last_name,
-            'email'                 => $request->email,
-            'gender'                => $request->gender,
-            'identification_number' => $request->identification_number,
-            'address'               => $request->address,
-            'city'                  => $request->city,
-            'postal_code'           => $request->postal_code,
-            'country'               => $request->country,
-            'payment_id'            => $request->payment_id,
-        ]);
+        DB::beginTransaction();
 
-        foreach ($request->bookings as $item) {
-            BookingItem::create([
-                'booking_id'      => $booking->id,
-                'name'            => $item['name'],
-                'price'           => $item['price'],
-                'type'            => $item['type'],
-                'additional_info' => json_encode($item['additional_info'] ?? []),
+        try {
+            // Create Booking
+            $booking = Booking::create([
+                'first_name'            => $request->first_name,
+                'last_name'             => $request->last_name,
+                'email'                 => $request->email,
+                'gender'                => $request->gender,
+                'identification_number' => $request->identification_number,
+                'address'               => $request->address,
+                'city'                  => $request->city,
+                'postal_code'           => $request->postal_code,
+                'country'               => $request->country,
+                'payment_id'            => $request->payment_id,
             ]);
+
+            $totalAmount = 0;
+
+            foreach ($request->bookings as $item) {
+                BookingItem::create([
+                    'booking_id'      => $booking->id,
+                    'name'            => $item['name'],
+                    'price'           => $item['price'],
+                    'type'            => $item['type'],
+                    'additional_info' => json_encode($item['additional_info'] ?? []),
+                ]);
+
+                $totalAmount += $item['price']; // Calculate total price
+            }
+
+            $payment = Payment::create([
+                'booking_id' => $booking->id,
+                'amount'     => $totalAmount,
+                'status'     => 'received',
+                'note'       => ['payment_method' => $request->payment_method ?? 'unknown'],
+            ]);
+
+            Transaction::create([
+                'payment_id' => $payment->id,
+                'type'       => 'received',
+                'amount'     => $totalAmount,
+                'note'       => ['received_from' => $request->email],
+            ]);
+
+            DB::commit();
+
+            return response()->json([
+                'message'  => 'Booking successfully created.',
+                'booking'  => $booking,
+                'payment'  => $payment,
+                'transactions' => $payment->transactions,
+            ], 201);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json(['error' => $e->getMessage()], 500);
         }
 
         return response()->json([

@@ -24,4 +24,9 @@ class Booking extends Model {
     public function items() {
         return $this->hasMany(BookingItem::class);
     }
+
+    public function payment()
+    {
+        return $this->hasOne(Payment::class);
+    }
 }

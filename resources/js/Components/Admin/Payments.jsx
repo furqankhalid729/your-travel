@@ -7,58 +7,8 @@ import {
 } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
 
-const paymentsData = [
-  {
-    paymentNo: "8FBF88-2F1",
-    name: "John Doe",
-    status: "Paid",
-    date: "2024-11-20",
-    booking: "Car",
-    amount: "150.00",
-  },
-  {
-    paymentNo: "8FBF88-2F2",
-    name: "Jane Smith",
-    status: "Pending",
-    date: "2024-11-19",
-    booking: "Hotel",
-    amount: "200.00",
-  },
-  {
-    paymentNo: "8FBF88-2F3",
-    name: "Jane Smith",
-    status: "Unpaid",
-    date: "2024-11-19",
-    booking: "Tour",
-    amount: "200.00",
-  },
-  {
-    paymentNo: "8FBF88-2F4",
-    name: "John Doe",
-    status: "Unpaid",
-    date: "2024-11-20",
-    booking: "Car",
-    amount: "150.00",
-  },
-  {
-    paymentNo: "8FBF88-2F5",
-    name: "Jane Smith",
-    status: "Pending",
-    date: "2024-11-19",
-    booking: "Hotel",
-    amount: "200.00",
-  },
-  {
-    paymentNo: "8FBF88-2F6",
-    name: "Jane Smith",
-    status: "paid",
-    date: "2024-11-19",
-    booking: "Tour",
-    amount: "200.00",
-  },
-];
-
-const Payments = () => {
+const Payments = ({payments,current_month, previous_month, percentage_change}) => {
+  console.log(payments)
   return (
     <div className="mb-10">
       <div className="flex justify-between items-center mb-4 bg-white py-3 px-4">
@@ -83,9 +33,9 @@ const Payments = () => {
                     Total Invoices
                   </span>
                 </div>
-                <h4 className="text-2xl font-semibold">$152.9k</h4>
+                <h4 className="text-2xl font-semibold">${current_month}</h4>
                 <p className="text-sm">
-                  <span className="text-green-600">+1.50</span> /month
+                  <span className="text-green-600">{percentage_change}</span> /month
                 </p>
               </div>
             </div>
@@ -97,9 +47,9 @@ const Payments = () => {
                     Total Payments
                   </span>
                 </div>
-                <h4 className="text-2xl font-semibold">$109.9k</h4>
+                <h4 className="text-2xl font-semibold">${current_month}</h4>
                 <p className="text-sm">
-                  <span className="text-red-600">+0.49</span> /month
+                  <span className="text-red-600">{percentage_change}</span> /month
                 </p>
               </div>
             </div>
@@ -146,10 +96,6 @@ const Payments = () => {
       <div className="border-2 rounded-lg p-6 mx-6 bg-white">
         <div className="flex justify-between items-center mb-5">
           <h2 className="text-xl font-semibold">All Payments</h2>
-          <button className="bg-[#2e2532] flex items-center gap-1 text-white p-2 rounded-lg ">
-            <FaPlus />
-            New Invoice
-          </button>
         </div>
         <div className="bg-white rounded-lg overflow-x-auto">
           <table className="min-w-full divide-y divide-gray-200">
@@ -181,26 +127,26 @@ const Payments = () => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {paymentsData.map((payment, index) => (
+              {payments.map((payment, index) => (
                 <tr key={index}>
                   <td className="px-2 py-4 whitespace-nowrap text-sm">
                     <input
                       type="checkbox"
                       className="form-checkbox text-[#bb8dd9]"
-                      aria-label={`Select Payment ${payment.paymentNo}`}
+                      aria-label={`Select Payment ${payment.booking.payment_id}`}
                     />
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-[#c46aff]">
-                    {payment.paymentNo}
+                    {payment.booking.payment_id}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {payment.name}
+                    {payment.booking.first_name} {payment.booking.last_name}
                   </td>
                   <td
                     className={`px-2 py-4 font-semibold whitespace-nowrap text-sm ${
-                      payment.status === "Paid"
+                      payment.status === "received"
                         ? "text-green-600"
-                        : payment.status === "Pending"
+                        : payment.status === "pending"
                         ? "text-[#ff9320]"
                         : "text-[#810000]"
                     }`}
@@ -208,10 +154,10 @@ const Payments = () => {
                     {payment.status}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {payment.date}
+                    {new Date(payment.created_at).toDateString()}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {payment.booking}
+                    {payment.booking.id}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
                     ${payment.amount}

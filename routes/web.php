@@ -13,6 +13,8 @@ use App\Http\Controllers\TourController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\EnquiryController;
+use App\Http\Controllers\AdminPaymentController;
+use App\Http\Controllers\AdminTransactionController;
 use App\Models\Car\CarBrand;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
@@ -108,6 +110,9 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/dashboard/enquiries/details/{id}', [EnquiryController::class, 'show'])->name('enquiry.detail');
     Route::get('/dashboard/customers', [AdminDashboardController::class, 'customerIndex'])->name('customer.index');
 
+    Route::get('/dashboard/payments', [AdminPaymentController::class, 'index'])->name('payment.index');
+    Route::get('/dashboard/transaction', [AdminTransactionController::class, 'index'])->name('transaction.index');
+
     Route::get('/dashboard/settings/general', function () {
         return Inertia::render('Admin/Settings/General');
     })->name('settings.general');
@@ -195,13 +200,6 @@ Route::get('/dashboard/drafts', function () {
     return Inertia::render('Admin/Drafts');
 });
 
-Route::get('/dashboard/payments', function () {
-    return Inertia::render('Admin/Payments');
-});
-
-Route::get('/dashboard/transaction', function () {
-    return Inertia::render('Admin/Transaction');
-});
 
 
 Route::get('/dashboard/reports', function () {
