@@ -10,7 +10,7 @@ class Transaction extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['payment_id', 'type', 'amount', 'note'];
+    protected $fillable = ['payment_id', 'type', 'amount', 'note','status'];
 
     protected $casts = [
         'note' => AsArrayObject::class, // Cast JSON field as an array object

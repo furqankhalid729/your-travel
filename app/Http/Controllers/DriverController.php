@@ -63,11 +63,8 @@ class DriverController extends Controller
         Log::info($validatedData);
 
         $driver = Driver::create($validatedData);
-
-        return response()->json([
-            'message' => 'Driver added successfully!',
-            'driver' => $driver,
-        ], 201);
+        return redirect()->route('driver.index')
+        ->with('success', 'Driver added successfully!');
     }
 
     public function edit(string $id)

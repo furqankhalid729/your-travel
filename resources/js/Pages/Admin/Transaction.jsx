@@ -2,10 +2,12 @@ import React from 'react';
 import AdminLayout from "../../Layout/AdminLayout";
 import TransactionCom from "../../Components/Admin/Transaction";
 
-const Transaction = () => {
+const Transaction = ({transactions}) => {
   return (
     <div>
-      <TransactionCom />
+      <TransactionCom 
+        transactions={transactions}
+      />
     </div>
   )
 }

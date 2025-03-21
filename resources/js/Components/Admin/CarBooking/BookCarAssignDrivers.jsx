@@ -13,6 +13,7 @@ import { useState } from "react";
 const BookCarAssignDrivers = ({ order, car, drivers }) => {
 
   const carItems = order.items.filter(item => item.type === "car");
+  const [price, setPrice] = useState(carItems[0].price);
   const additionalInfo = JSON.parse(carItems[0].additional_info);
   console.log(additionalInfo)
   const [driverId, setDriverId] = useState(additionalInfo.driver_id || drivers[0].id);
@@ -27,6 +28,7 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
       const response = await axios.post(route("driver.assign"), {
         driver_id: driverId,
         order_id: order.id,
+        price: price,
       });
 
       if (response.status === 200) {
@@ -123,8 +125,8 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
                   type="text"
                   className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none"
                   placeholder="$ 300.00 "
-                  value={carItems[0].price}
-                  dsiabled
+                  value={price}
+                  onChange={(e) => setPrice(e.target.value)}
                 />
               </div>
               <button className="bg-[#e1baf9] w-full text-white px-4 py-2 rounded-md">

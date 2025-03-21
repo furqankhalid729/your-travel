@@ -16,6 +16,7 @@ use App\Models\Car\CarModel;
 use App\Models\Car\CarTransmission;
 use App\Models\Booking;
 use App\Models\BookingItem;
+use App\Models\Transaction;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Exception;
@@ -113,13 +114,17 @@ class CarController extends Controller
     public function saveRider(Request $request)
     {
         try {
-            // Validate input
             $validatedData = $request->validate([
                 'driver_id' => 'required|exists:drivers,id',
                 'order_id' => 'required|exists:bookings,id',
+                'price' => 'required|numeric',
             ]);
 
             DB::beginTransaction();
+            $booking = Booking::with('payment')->find($validatedData['order_id']);
+            if(!$booking) {
+                return response()->json(['error' => 'No booking found for this order.'], 404);
+            }
             $bookingItem = BookingItem::where('booking_id', $validatedData['order_id'])->first();
             if (!$bookingItem) {
                 return response()->json(['error' => 'No booking item found for this order.'], 404);
@@ -132,6 +137,18 @@ class CarController extends Controller
             $booking = Booking::findOrFail($validatedData['order_id']);
             $booking->status = "fulfilled";
             $booking->save();
+
+            $transaction = Transaction::create([
+                'payment_id' => $booking->payment->id,
+                'amount' => $validatedData['price'],
+                'status' => 'pending',
+                'type' => 'car',
+                'note' => [
+                    'driver_id' => $validatedData['driver_id'],
+                    'car_id' => $additionalInfo['car_id'],
+                    'booking_id' => $validatedData['order_id'],
+                ],
+            ]);
             DB::commit();
 
             return response()->json(['message' => 'Driver assigned successfully!'], 200);

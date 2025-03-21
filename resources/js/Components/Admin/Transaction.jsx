@@ -34,7 +34,8 @@ const paymentsData = [
   },
 ];
 
-const Transaction = () => {
+const Transaction = ({ transactions }) => {
+  console.log(transactions)
   return (
     <div>
       <div className="flex justify-between items-center mb-4 py-3 px-4 bg-white">
@@ -49,7 +50,7 @@ const Transaction = () => {
         </select>
       </div>
       <div className="m-3 lg:m-5">
-        <div className="flex flex-col lg:flex-row gap-3 lg:gap-6">
+        {/* <div className="flex flex-col lg:flex-row gap-3 lg:gap-6">
           <div className="lg:w-2/3 border-2 bg-white rounded-lg p-4">
             <div className="grid md:grid-cols-3 gap-4">
               <div className="p-3 flex items-center justify-center gap-4 rounded-md shadow">
@@ -113,14 +114,10 @@ const Transaction = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="bg-white border-2 rounded-lg p-6 mt-4">
           <div className="flex justify-between items-center mb-5">
             <h2 className="text-xl font-semibold">All Transaction</h2>
-            <button className="bg-[#2e2532] flex items-center gap-1 text-white p-2 rounded-lg ">
-              <FaPlus />
-              New Invoice
-            </button>
           </div>
           <div className="rounded-lg overflow-x-auto">
             <table className="min-w-full divide-y divide-gray-200">
@@ -138,7 +135,7 @@ const Transaction = () => {
                     "Name",
                     "Status",
                     "Date",
-                    "Booking",
+                    "Reason",
                     "Amount",
                     "Download",
                   ].map((header, index) => (
@@ -152,51 +149,64 @@ const Transaction = () => {
                 </tr>
               </thead>
               <tbody className="divide-y divide-gray-200">
-                {paymentsData.map((payment, index) => (
-                  <tr key={index}>
-                    <td className="px-2 py-4 whitespace-nowrap text-sm">
-                      <input
-                        type="checkbox"
-                        className="form-checkbox text-[#bb8dd9]"
-                        aria-label={`Select Payment ${payment.paymentNo}`}
-                      />
-                    </td>
-                    <td className="px-2 py-4 whitespace-nowrap text-sm text-[#c46aff]">
-                      {payment.paymentNo}
-                    </td>
-                    <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {payment.name}
-                    </td>
-                    <td
-                      className={`px-2 py-4 font-semibold whitespace-nowrap text-sm ${
-                        payment.status === "Paid"
+                {transactions.map((transaction, index) => {
+
+                  console.log(transaction.note)
+                  return (
+                    <tr key={index}>
+                      <td className="px-2 py-4 whitespace-nowrap text-sm">
+                        <input
+                          type="checkbox"
+                          className="form-checkbox text-[#bb8dd9]"
+                          aria-label={`Select Payment ${transaction.payment.booking.payment_id}`}
+                        />
+                      </td>
+                      <td className="px-2 py-4 whitespace-nowrap text-sm text-[#c46aff]">
+                        {transaction.payment.booking.payment_id}
+                      </td>
+                      <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {transaction.payment.booking.first_name} {transaction.payment.booking.last_name}
+                      </td>
+                      <td
+                        className={`px-2 py-4 font-semibold whitespace-nowrap text-sm ${transaction.status === "paid"
                           ? "text-green-600"
-                          : payment.status === "Pending"
-                          ? "text-[#ff9320]"
-                          : "text-[#810000]"
-                      }`}
-                    >
-                      {payment.status}
-                    </td>
-                    <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {payment.date}
-                    </td>
-                    <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {payment.booking}
-                    </td>
-                    <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                      ${payment.amount}
-                    </td>
-                    <td className="px-6 space-x-2 py-4 whitespace-nowrap text-sm">
-                      <button className="text-blue-500 hover:text-blue-700">
-                        <FaArrowDown />
-                      </button>
-                      <button>
-                        <RiDeleteBinLine />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+                          : transaction.status === "pending"
+                            ? "text-[#ff9320]"
+                            : "text-[#810000]"
+                          }`}
+                      >
+                        {transaction.status}
+                      </td>
+                      <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {new Date(transaction.created_at).toDateString()}
+                      </td>
+                      <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {
+                          transaction.note
+                            ? "car_id" in transaction.note
+                              ? "Car"
+                              : "hotel_id" in transaction.note
+                                ? "Hotel"
+                                : "tour_id" in transaction.note
+                                  ? "Tour"
+                                  : "--"
+                            : "No Note"
+                        }
+                      </td>
+                      <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
+                        ${transaction.amount}
+                      </td>
+                      <td className="px-6 space-x-2 py-4 whitespace-nowrap text-sm">
+                        <button className="text-blue-500 hover:text-blue-700">
+                          <FaArrowDown />
+                        </button>
+                        <button>
+                          <RiDeleteBinLine />
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                })}
               </tbody>
             </table>
           </div>

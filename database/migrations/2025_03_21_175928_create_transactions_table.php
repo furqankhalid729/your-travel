@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('payment_id')->constrained()->onDelete('cascade');
-            $table->enum('type', ['received', 'sent']);
+            $table->enum('type', ['received', 'sent', ' pending']);
             $table->decimal('amount', 10, 2);
             $table->json('note')->nullable();
             $table->timestamps();

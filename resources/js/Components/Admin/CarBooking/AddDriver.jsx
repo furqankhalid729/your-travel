@@ -60,7 +60,7 @@ const AddDriver = ({ cars }) => {
         try {
             await post(route('driver.store'), formData, {
                 onSuccess: () => {
-                    alert("Driver added successfully!");
+                    router.visit(route('driver.index'));
                 },
             });
         } catch (error) {
