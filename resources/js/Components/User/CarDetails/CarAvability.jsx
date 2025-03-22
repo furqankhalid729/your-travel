@@ -64,7 +64,7 @@ const CarAvability = ({ car }) => {
     <>
       <div className="max-w-6xl  my-8 ">
         <h2 className="text-2xl font-bold mb-4">Availability</h2>
-        <div className="flex  rounded-lg overflow-hidden border border-red-500 text-[8px] md:text-lg">
+        <div className="flex overflow-visible rounded-lg border border-red-500 text-[8px] md:text-lg">
           {/* Date Picker Section */}
           <div className="flex items-center px-4 py-3  flex-grow ">
             <FaCalendarAlt className="text-gray-400 mr-2" />
@@ -77,49 +77,62 @@ const CarAvability = ({ car }) => {
           </div>
 
           {/* Guests Section */}
-          <div className="flex items-center justify-between px-4 py-3 flex-grow border border-l-red-600 ">
-            <div className='flex items-center'>
+          <div className="relative flex items-center justify-between px-4 py-3 flex-grow border border-l-red-600">
+            <div className="flex items-center w-full relative">
               <CiLocationOn className="text-gray-500 mr-2 mt-1" />
               <input
                 type="text"
                 placeholder="Enter Pickup location"
-                className="border-0 p-2 w-full rounded"
+                className="border-0 p-2 w-full rounded focus:outline-none"
                 value={pickupLocation}
                 onChange={(e) => handleLocationChange(e, "pickup")}
                 onFocus={() => setActiveField("pickup")}
               />
+              {suggestions.length > 0 && activeField == "pickup" && (
+                <ul className="absolute left-0 top-full w-full bg-white border border-gray-300 shadow-lg rounded-md mt-1 z-50">
+                  {suggestions.map((suggestion, index) => (
+                    <li
+                      key={index}
+                      className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                      onClick={() => handleSelectLocation(suggestion.description)}
+                    >
+                      {suggestion.description}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
-
           </div>
 
-          <div className="flex items-center justify-between px-4 py-3 flex-grow border border-l-red-600 ">
+          <div className="relative flex items-center justify-between px-4 py-3 flex-grow border border-l-red-600 ">
             <div className='flex items-center'>
               <CiLocationOn className="text-gray-500 mr-2 mt-1" />
               <input
                 type="text"
                 placeholder="Enter Drop location"
                 className="border-0 p-2 w-full rounded"
-                value={pickupLocation}
+                value={dropoffLocation}
                 onChange={(e) => handleLocationChange(e, "dropoff")}
                 onFocus={() => setActiveField("dropoff")}
               />
+              {suggestions.length > 0 && activeField == "dropoff" && (
+                <ul className="absolute left-0 top-full w-full bg-white border border-gray-300 shadow-lg rounded-md mt-1 z-50">
+                  {suggestions.map((suggestion, index) => (
+                    <li
+                      key={index}
+                      className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
+                      onClick={() => handleSelectLocation(suggestion.description)}
+                    >
+                      {suggestion.description}
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
 
           </div>
 
-          {suggestions.length > 0 && (
-            <ul className="absolute left-0 w-full bg-white border border-gray-300 shadow-lg rounded-md mt-1 z-10">
-              {suggestions.map((suggestion, index) => (
-                <li
-                  key={index}
-                  className="px-4 py-2 hover:bg-gray-200 cursor-pointer"
-                  onClick={() => handleSelectLocation(suggestion)}
-                >
-                  {suggestion}
-                </li>
-              ))}
-            </ul>
-          )}
+
 
           {/* Search Button */}
           <button className="bg-red-500 text-white font-semibold px-6 py-3  hover:bg-red-600 rounded-md rounded-l-none">

@@ -74,6 +74,7 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/dashboard/car/edit/{id}', [CarController::class, 'edit'])->name('car.edit');
     Route::get('/dashboard/car/view/{id}', [CarController::class, 'view'])->name('car.view');
     // Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
+    Route::get('/cars/{car}', [CarController::class, 'show'])->name('cars.show');
     Route::post('/cars/{car}', [CarController::class, 'update'])->name('cars.update');
     Route::delete('/cars/{car}', [CarController::class, 'destroy'])->name('cars.destroy');
     Route::get('/dashboard/car-booking/orders', [CarController::class, 'carBooking'])->name('car.booking');
