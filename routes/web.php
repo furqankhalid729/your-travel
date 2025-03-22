@@ -47,11 +47,9 @@ Route::get('/about', function () {
 Route::get('/carprimary', function () {
     return Inertia::render('User/CarPrimary');
 });
-
 Route::get('/signup', function () {
     return Inertia::render('User/SignUp');
 });
-
 Route::get('/blog', function () {
     return Inertia::render('User/Blog');
 });
@@ -67,24 +65,17 @@ Route::get('/car-booking', function () {
 Route::get('/tour-pkg', function () {
     return Inertia::render('User/TourPKG');
 });
-Route::get('/test-1', function () {
-    return Inertia::render('Test1');
-});
-
-
 
 // Admin Routes
-
-// Route::get('/login', function () {
-//     return Inertia::render('Admin/Login');
-// });
-
 Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/car-booking', [CarController::class, 'index']);
     Route::get('/dashboard/car-booking/add-car', [CarController::class, 'create']);
     Route::get('/dashboard/car/edit/{id}', [CarController::class, 'edit'])->name('car.edit');
     Route::get('/dashboard/car/view/{id}', [CarController::class, 'view'])->name('car.view');
+    // Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
+    Route::post('/cars/{car}', [CarController::class, 'update'])->name('cars.update');
+    Route::delete('/cars/{car}', [CarController::class, 'destroy'])->name('cars.destroy');
     Route::get('/dashboard/car-booking/orders', [CarController::class, 'carBooking'])->name('car.booking');
     Route::get('/dashboard/car-booking/book-car-assign-drivers/{id}', [CarController::class, 'assignRider'])->name("order.assignrider");
     Route::get('/dashboard/car-booking/driver-listing', [DriverController::class, 'index'])->name('driver.index');
@@ -226,5 +217,5 @@ Route::get('/welcome', function () {
 // });
 
 //Resource Admin
-Route::resource('cars', CarController::class);
+//Route::resource('cars', CarController::class);
 require __DIR__ . '/auth.php';

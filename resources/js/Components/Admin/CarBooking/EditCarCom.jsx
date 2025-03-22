@@ -18,7 +18,7 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
     };
     const carImages = car.car_images ? JSON.parse(car.car_images) : [];
 
-    const { data, setData, put, processing, errors } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         car_name: car.car_name || "",
         brand: car.brand || "",
         model: car.model || "",
@@ -29,10 +29,10 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
         status: car.status || "",
         price: car.price || "",
         tags: car.tags || "",
-        car_images: carImages,
+        car_images: carImages.map((image) => ({url:image})) || [],
         features: features,
     });
-    console.log(car)
+    console.log(data)
 
     // Handle file change
     const handleFileChange = (e) => {
@@ -79,7 +79,7 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        put(route("cars.update", car.id));
+        post(route("cars.update", car.id));
     };
 
     return (
@@ -110,9 +110,12 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                         {data.car_images.length > 0 ? (
                             <div className="relative w-full h-full">
                                 <img
-                                    src={`/storage/${data.car_images[0]}`}
+                                    //src={`/storage/${data.car_images[0].url}`}
                                     alt="Main Car Preview"
                                     className="w-full h-[300px] object-cover rounded-md"
+                                    src={data.car_images[0]?.url?.startsWith('blob:') || data.car_images[0]?.url?.startsWith('http')
+                                        ? data.car_images[0].url
+                                        : `/storage/${data.car_images[0].url}`}
                                 />
                                 <button
                                     onClick={(e) => {
@@ -159,14 +162,14 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                     <div className="grid grid-cols-3 gap-2">
                         {data.car_images.slice(1).map((image, index) => (
                             <div key={index + 1} className="relative w-[100px] h-[80px]">
-                                {image.url ?
+                                {image.url.startsWith('blob:') || image.url.startsWith('http') ?
                                     <img
-                                        src={image.url}
+                                        src={`${image.url}`}
                                         alt={`Additional Car Preview ${index}`}
                                         className="w-full h-full object-cover rounded-lg"
                                     /> :
                                     <img
-                                        src={`/storage/${image}`}
+                                        src={`/storage/${image.url}`}
                                         alt={`Additional Car Preview ${index}`}
                                         className="w-full h-full object-cover rounded-lg"
                                     />
