@@ -62,14 +62,12 @@ const CarBooking = ({setDisabled}) => {
             <div className="flex justify-between items-start pt-4">
               <div className="pr-4">
                 <h3 className="font-medium text-gray-600 text-xs">Start Date</h3>
-                <p className="text-gray-800 mt-1 text-sm">{booking.additional_info.pickup_date}</p>
-                <p className="text-gray-600 mt-1 text-sm">From 11:00 PM</p>
+                <p className="text-gray-800 mt-1 text-sm">{new Date(booking.additional_info.pickup_date).toLocaleString()}</p>
               </div>
               <div className="border-l border-gray-500 h-auto self-stretch mx-4"></div>
               <div className="pl-4">
                 <h3 className="font-medium text-gray-600 text-xs">End Date</h3>
-                <p className="text-gray-800 mt-1 text-sm">{booking.additional_info.dropout_date}</p>
-                <p className="text-gray-600 mt-1 text-sm">To 12:00 PM</p>
+                <p className="text-gray-800 mt-1 text-sm">{new Date(booking.additional_info.pickup_date).toLocaleString()}</p>
               </div>
             </div>
           </div>

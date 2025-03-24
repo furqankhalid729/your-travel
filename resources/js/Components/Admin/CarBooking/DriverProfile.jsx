@@ -1,43 +1,34 @@
 import { Link } from "@inertiajs/react";
 import { FaSnowflake, FaCarSide, FaLanguage, FaUser } from "react-icons/fa";
 import { MdOutlineArrowBackIos } from "react-icons/md";
+import { router } from "@inertiajs/react";
 
-const DriverProfile = ({driver, car}) => {
-  console.log(car)
+const DriverProfile = ({ driver, car, transactions }) => {
+  console.log(transactions)
   const images = JSON.parse(car.car_images);
   console.log(images)
-  const fakeData = [
-    {
-      transaction: "TXN123456",
-      amount: "$120.00",
-      date: "23-11-2024",
-      status: "Approved",
-    },
-    {
-      transaction: "TXN654321",
-      amount: "$85.00",
-      date: "22-11-2024",
-      status: "Pending",
-    },
-    {
-      transaction: "TXN987654",
-      amount: "$250.00",
-      date: "21-11-2024",
-      status: "Approved",
-    },
-    {
-      transaction: "TXN321987",
-      amount: "$50.00",
-      date: "20-11-2024",
-      status: "Pending",
-    },
-    {
-      transaction: "TXN456789",
-      amount: "$400.00",
-      date: "19-11-2024",
-      status: "Approved",
-    },
-  ];
+
+  const updateStatus = async (transactionId, newStatus) => {
+    try {
+      const response = await fetch(route('transaction.updateStatus',transactionId), {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": document.querySelector('meta[name="csrf-token"]').content,
+        },
+        body: JSON.stringify({ status: newStatus }),
+      });
+
+      if (response.ok) {
+        router.reload({ only: ["transactions"] }); 
+      } else {
+        console.error("Failed to update status");
+      }
+    } catch (error) {
+      console.error("Error updating status:", error);
+    }
+  };
+
 
   return (
     <div>
@@ -148,6 +139,9 @@ const DriverProfile = ({driver, car}) => {
                       Amount
                     </th>
                     <th className="border border-gray-300 px-4 py-2 text-center">
+                      Booking ID
+                    </th>
+                    <th className="border border-gray-300 px-4 py-2 text-center">
                       Date
                     </th>
                     <th className="border border-gray-300 px-4 py-2 text-center">
@@ -156,27 +150,31 @@ const DriverProfile = ({driver, car}) => {
                   </tr>
                 </thead>
                 <tbody>
-                  {fakeData.map((data, index) => (
+                  {transactions.map((data, index) => (
                     <tr key={index} className="hover:bg-gray-50">
                       <td className="border border-gray-300 px-4 py-2">
-                        {data.transaction}
+                        {data.id}
                       </td>
                       <td className="border border-gray-300 text-center px-4 py-2">
-                        {data.amount}
+                        CHF {data.amount}
                       </td>
                       <td className="border border-gray-300 text-center px-4 py-2">
-                        {data.date}
+                        <Link href={route('order.assignrider', data.note.booking_id)} className="text-green-500">
+                          View Booking
+                        </Link>
+                      </td>
+                      <td className="border border-gray-300 text-center px-4 py-2">
+                        {new Date(data.created_at).toLocaleDateString()}
                       </td>
                       <td className="border border-gray-300 text-center px-2 py-3 font-medium">
-                        <span
-                          className={`rounded-lg px-2 py-[3px] ${
-                            data.status === "Approved"
-                              ? "bg-[#a6c3a6] text-[#005500]"
-                              : "bg-[#d5a7a7] text-[#870305]"
-                          }`}
+                        <select
+                          value={data.status}
+                          onChange={(e) => updateStatus(data.id, e.target.value)}
+                          className="cursor-pointer rounded-lg px-2 py-[3px] text-sm bg-transparent border-none outline-none"
                         >
-                          {data.status}
-                        </span>
+                          <option value="pending" className="bg-white text-black">Pending</option>
+                          <option value="paid" className="bg-white text-black">Paid</option>
+                        </select>
                       </td>
                     </tr>
                   ))}

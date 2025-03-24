@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { FaCalendarAlt, FaUser, FaWifi, FaTv, FaSwimmer, FaUtensils, FaSpa, FaSwimmingPool, FaParking, FaTimes } from 'react-icons/fa';
 import { FaCheck } from "react-icons/fa6";
 import { useDispatch } from 'react-redux';
@@ -24,6 +24,11 @@ const AvailableRoom = ({ hotel, hotelRooms }) => {
   const [selectedPeople, setSelectedPeople] = useState("2 persons");
   const { auth } = usePage().props;
   const dispatch = useDispatch();
+
+  const date = new Date();
+  date.setDate(date.getDate() + 2);
+  const options = { day: "numeric", month: "long", year: "numeric" };
+  const newDateString = date.toLocaleDateString("en-US", options);
 
   const handleBookNow = (id, price) => {
     if (!auth.user) {
@@ -102,7 +107,7 @@ const AvailableRoom = ({ hotel, hotelRooms }) => {
               <div className=' w-[60%] mt-4 md:mt-0 flex flex-col gap-5  '>
                 <h3 className="text-base sm:text-[24px] font-[600] leading-[28px] flex gap-4">{room.room_type} <spn className="text-red-500 flex text-lg mt-1"><FaUser /><FaUser /></spn></h3>
                 <p className="text-gray-500 text-sm flex gap-2"><span className='text-red-500 mt-1'><FaCheck />
-                </span> Free cancellation before 15 September 2024</p>
+                </span> Free cancellation before {newDateString}</p>
                 <ul className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 text-sm gap-4">
                   {hotel.facilities.map((facility, index) => (
                     <li key={index} className="text-gray-800 flex items-center mb-4 opacity-60">

@@ -1,11 +1,13 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Inertia\Inertia;
 use App\Enums\InertiaViews;
 use App\Models\Driver;
 use App\Models\Car;
 use App\Models\Booking;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Http\Response;
@@ -33,7 +35,7 @@ class DriverController extends Controller
     public function create(Request $request)
     {
         $cars = Car::all();
-        return Inertia::render(InertiaViews::AddDriver->value,[
+        return Inertia::render(InertiaViews::AddDriver->value, [
             'cars' => $cars
         ]);
     }
@@ -64,7 +66,7 @@ class DriverController extends Controller
 
         $driver = Driver::create($validatedData);
         return redirect()->route('driver.index')
-        ->with('success', 'Driver added successfully!');
+            ->with('success', 'Driver added successfully!');
     }
 
     public function edit(string $id)
@@ -79,7 +81,6 @@ class DriverController extends Controller
             'driver' => $driver,
             'cars' => $cars
         ]);
-
     }
 
     public function update(Request $request, string $id)
@@ -130,7 +131,7 @@ class DriverController extends Controller
             'car_id' => $validatedData['car_id'],
         ]);
 
-        
+
         // Redirect with success message
         return redirect()->route('driver.index')->with('success', 'Driver updated successfully!');
     }
@@ -148,16 +149,20 @@ class DriverController extends Controller
         return redirect()->route('drivers.index')->with('success', 'Driver deleted successfully!');
     }
 
-    public function show($id){
+    public function show($id)
+    {
         $driver = Driver::findOrFail($id);
-        
+
         if (!$driver) {
             return response()->json(['error' => 'driver not found'], Response::HTTP_BAD_REQUEST);
         }
-        $car = Car::where("id",$driver->car_id)->first();
+        $car = Car::where("id", $driver->car_id)->first();
+        $transactions = Transaction::whereJsonContains('note->driver_id', $driver->id)
+            ->get();
         return Inertia::render(InertiaViews::ViewDriver->value, [
             'driver' => $driver,
-            'car'    => $car
+            'car'    => $car,
+            'transactions' => $transactions
         ]);
     }
 }

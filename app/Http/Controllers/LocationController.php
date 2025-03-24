@@ -24,7 +24,7 @@ class LocationController extends Controller
                 'key' => $apiKey,
                 //'types' => 'geocode'
             ]);
-            Log::info("Suesstion response",[$response]);
+            Log::info("Suesstion response", [$response]);
 
             if ($response->successful()) {
                 $data = $response->json();
@@ -50,7 +50,7 @@ class LocationController extends Controller
     {
         $placeId = $request->query('placeId');
 
-        if($placeId == null){
+        if ($placeId == null) {
             return response()->json(['photos' => []]);
         }
 
@@ -63,7 +63,7 @@ class LocationController extends Controller
         ]);
 
         $data = $response->json();
-        Log::info("Images",[$data, $placeId]);
+        Log::info("Images", [$data, $placeId]);
         if (isset($data['result']['photos'])) {
             $photos = $data['result']['photos'];
             $photoUrls = array_map(function ($photo) use ($apiKey) {
@@ -73,5 +73,20 @@ class LocationController extends Controller
             return response()->json(['photos' => $photoUrls]);
         }
         return response()->json(['photos' => []]);
+    }
+
+    public function getDistance(Request $request)
+    {
+        $origin = $request->input('origin', 'Lahore, Pakistan');
+        $destination = $request->input('destination', 'Murree, Pakistan');
+        $apiKey = env('GOOGLE_MAPS_API_KEY');
+
+        $response = Http::get("https://maps.googleapis.com/maps/api/distancematrix/json", [
+            'origins' => $origin,
+            'destinations' => $destination,
+            'key' => $apiKey,
+        ]);
+
+        return response()->json($response->json());
     }
 }

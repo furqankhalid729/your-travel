@@ -1,8 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from "@inertiajs/react";
 import { company, services, support } from '../../Constants/FooterData';
 
 function Footer() {
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+  const validateEmail = (email) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  };
+
+  const handleSubscribe = async () => {
+    setError("");
+    setSuccess("");
+
+    if (!validateEmail(email)) {
+      setError("Please enter a valid email address.");
+      return;
+    }
+    const csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+
+    try {
+      const response = await fetch(route('subscription.store'), {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "X-CSRF-TOKEN": csrfToken,
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      const result = await response.json();
+
+      if (response.ok) {
+        setSuccess("Subscription successful!");
+        setEmail("");
+      } else {
+        setError(result.message || "Something went wrong!");
+      }
+    } catch (error) {
+      setError("Failed to connect. Please try again.");
+    }
+  };
   return (
     <div className="flex flex-col items-center">
       {/* Subscription Section */}
@@ -17,14 +56,17 @@ function Footer() {
         <div className="flex items-center">
           <input
             type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your Email"
             className="p-4 rounded-l-xl border-none focus:outline-none w-36 sm:w-44 md:w-72 text-black text-sm md:text-base"
           />
-          <button className="bg-white p-4 text-red-600 rounded-r-xl text-sm md:text-base font-semibold hover:bg-gray-300">
-          Subscribe 
+          <button onClick={handleSubscribe} className="bg-white p-4 text-red-600 rounded-r-xl text-sm md:text-base font-semibold hover:bg-gray-300">
+            Subscribe
           </button>
-
         </div>
+        {error && <p className="text-white mt-2">{error}</p>}
+        {success && <p className="text-green-500 mt-2">{success}</p>}
       </div>
 
       {/* Footer Section */}
@@ -71,10 +113,10 @@ function Footer() {
             <div className='mt-4 md:mt-0'>
               <h3 className="text-lg font-bold my-2">Contact Us</h3>
               <div className='text-xs lg:text-base'>
-              <p className="text-gray-600">Toll Free Customer Care</p>
-              <p className="text-red-600 font-bold">+44 123 456 7890</p>
-              <p className="text-gray-600 mt-2">Need live support?</p>
-              <p className="text-red-600 font-semibold">hr@yourtrip24.com</p></div>
+                <p className="text-gray-600">Toll Free Customer Care</p>
+                <p className="text-red-600 font-bold">+44 123 456 7890</p>
+                <p className="text-gray-600 mt-2">Need live support?</p>
+                <p className="text-red-600 font-semibold">hr@yourtrip24.com</p></div>
               <div className="mt-4">
                 <div className="flex">
                   <a href="#" className="mr-2">

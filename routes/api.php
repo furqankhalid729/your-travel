@@ -12,6 +12,8 @@ use App\Http\Controllers\HotelFrontendController;
 use App\Http\Controllers\TourFrontendController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\EnquiryController;
+use App\Http\Controllers\SubscriptionController;
+use App\Http\Controllers\AdminTransactionController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -30,6 +32,7 @@ Route::middleware('auth')->group(function () {
 });
 Route::get('/locations', [LocationController::class, 'getGoogleMapSuggestions']);
 Route::get('/location-images', [LocationController::class, 'getLocationImages']);
+Route::post('/api/get-distance', [LocationController::class, 'getDistance'])->name('getDistance');
 Route::post('/hotel/hotel-booking-form', [HotelController::class, 'store'])->name('hotel.store');
 Route::get('/cars/home/featured', [CarController::class, 'featured'])->name('cars.featured');
 Route::get('/cars/filter', [CarController::class, 'filter'])->name('cars.filter');
@@ -38,3 +41,5 @@ Route::get('/hotel/home/featured', [HotelFrontendController::class, 'featured'])
 Route::get('/tour/home/featured', [TourFrontendController::class, 'featured'])->name('tour.featured');
 Route::post('/add/booking', [BookingController::class, 'booking'])->name('booking');
 Route::post('/contact', [EnquiryController::class , 'store'])->name('contact.store');
+Route::post('/api/subscribe', [SubscriptionController::class, 'store'])->name('subscription.store');
+Route::put('/api/transactions/{id}/update-status',[AdminTransactionController::class, 'updateStatus'])->name('transaction.updateStatus');
