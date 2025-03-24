@@ -135,7 +135,7 @@ const CarAvability = ({ car }) => {
       type: 'car',
       id: car.id,
       name: car.car_name,
-      price: totalPrice,
+      price: Math.round(totalPrice),
       additional_info: {
         pickup_location: pickupLocation,
         dropout_location: dropoffLocation,
