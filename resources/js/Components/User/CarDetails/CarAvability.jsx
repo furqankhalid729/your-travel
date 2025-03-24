@@ -112,6 +112,9 @@ const CarAvability = ({ car }) => {
         ratePerKm = 4.5;
       }
       const totalKmRate = (ratePerKm * updatedDistance) + car.price;
+      console.log(totalKmRate);
+      console.log(car);
+      console.log(updatedDistance)
       setWithOutTaxPrice(totalKmRate);
       const rateWithTax = totalKmRate + (totalKmRate * 0.17);
 
