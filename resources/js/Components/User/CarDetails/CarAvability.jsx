@@ -111,7 +111,7 @@ const CarAvability = ({ car }) => {
       } else {
         ratePerKm = 4.5;
       }
-      const totalKmRate = (ratePerKm * updatedDistance) + car.price;
+      const totalKmRate = (parseFloat(ratePerKm) * parseFloat(updatedDistance)) + car.price;
       console.log(totalKmRate);
       console.log(car);
       console.log(updatedDistance)
