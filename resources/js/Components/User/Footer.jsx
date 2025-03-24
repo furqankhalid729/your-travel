@@ -21,7 +21,7 @@ function Footer() {
             className="p-4 rounded-l-xl border-none focus:outline-none w-36 sm:w-44 md:w-72 text-black text-sm md:text-base"
           />
           <button className="bg-white p-4 text-red-600 rounded-r-xl text-sm md:text-base font-semibold hover:bg-gray-300">
-            Sign up
+          Subscribe 
           </button>
 
         </div>

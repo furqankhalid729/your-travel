@@ -11,7 +11,7 @@ const HotelRoom = ({ hotel, hotelRooms }) => {
             <RoomProfile hotel={hotel} hotelRooms={hotelRooms} />
             <RoomSummary hotel={hotel} hotelRooms={hotelRooms} />
             <AvailableRoom hotel={hotel} hotelRooms={hotelRooms} />
-            <GuestReview hotel={hotel} hotelRooms={hotelRooms} />
+            {/* <GuestReview hotel={hotel} hotelRooms={hotelRooms} /> */}
             <RulesPolicy hotel={hotel} hotelRooms={hotelRooms} />
         </div>
     )

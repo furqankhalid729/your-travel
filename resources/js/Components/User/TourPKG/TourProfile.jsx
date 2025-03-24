@@ -26,7 +26,7 @@ const TourProfile = ({ tour }) => {
       },
     };
     dispatch(addBooking(bookingData));
-    router.visit("/car-booking");
+    router.visit(route('checkout'));
   };
   const tourData = [
     { label: "Duration", value: tour.duration },

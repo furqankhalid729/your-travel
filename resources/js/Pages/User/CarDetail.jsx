@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { usePage } from '@inertiajs/react';
+import React from 'react';
 import CarProfile from '../../Components/User/CarDetails/CarProfile';
 import Summary from '../../Components/User/CarDetails/Summary';
 import CarAvability from '../../Components/User/CarDetails/CarAvability';
@@ -12,7 +11,7 @@ const CarDetail = ({ car }) => {
       <CarProfile car={car} />
       <Summary car={car} />
       <CarAvability car={car} />
-      <GuestReviews car={car} />
+      {/* <GuestReviews car={car} /> */}
     </div>
   );
 };

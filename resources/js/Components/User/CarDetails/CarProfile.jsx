@@ -1,38 +1,44 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
-import { addBooking } from '../../../store/bookingSlice';
+import React, { useState, useEffect } from 'react';
 import { CiHeart } from 'react-icons/ci';
 import { MdLocationPin } from "react-icons/md";
 import ImageGallery from '../snippets/ImageGallery';
 import { Link, usePage, router } from '@inertiajs/react';
+import Cookies from "js-cookie";
 
 const CarProfile = (car) => {
   const { auth } = usePage().props;
-
+  const [wishList, setWishList] = useState(false);
   const images = car.car.car_images.map(image => '/storage/' + image);
-  const dispatch = useDispatch();
-  const handleBookNow = () => {
+  const [favorites, setFavorites] = useState(() => {
+    return JSON.parse(Cookies.get("favorites") || "[]");
+  });
+  useEffect(() => {
+    setWishList(favorites.some((fav) => fav.id === car.car.id));
+  }, [favorites]);
+  const ScrollTo = () => {
     if (!auth.user) {
       console.log(router)
       router.visit('/login');
       return;
     }
-    const bookingData = {
-      type: 'car',
-      id: car.car.id,
-      name: car.car.car_name,
-      price: car.car.price,
-      additional_info: {
-        pickup_location: 'Lahore, Punjab, Pakistan',
-        dropout_location: "Islamabad, Pakistan",
-        pickup_date: '02-02-2024',
-        dropout_date: '03-03-2024',
-        car_id : car.car.id
-      },
-    };
-    dispatch(addBooking(bookingData));
-    router.visit("/car-booking");
+    const section = document.getElementById("car-availablity");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
   };
+
+
+  const handleFavorite = () => {
+    const isFavorited = favorites.some((fav) => fav.id === car.car.id );
+    let updatedFavorites = [...favorites];
+    if (isFavorited) {
+      updatedFavorites = updatedFavorites.filter((item) => item.id !== car.car.id);
+    } else {
+      updatedFavorites.push({ id:car.car.id, name: car.car.car_name, image: car.car.car_images[0], type: "car" });
+    }
+    Cookies.set("favorites", JSON.stringify(updatedFavorites), { expires: 30 });
+    setFavorites(updatedFavorites);
+  }
 
   return (
     <>
@@ -47,23 +53,18 @@ const CarProfile = (car) => {
       <div className="flex flex-col md:flex-row items-start md:items-center justify-between my-6 space-y-4 md:space-y-0">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold"> {car.car.car_name}</h1>
-          <div className="flex items-center space-x-2 mb-2">
-            <span className="bg-red-500 text-white text-xs sm:text-sm px-2 rounded-lg">4.2</span>
-            <span className="text-gray-600 text-xs sm:text-sm">Good</span>
-            <span className="text-gray-500 text-xs sm:text-sm">(2365 reviews)</span>
-          </div>
           <div className="flex items-center text-gray-500 text-xs sm:text-sm">
             <MdLocationPin className="text-red-500 text-xl" />
             <p>Lahore, Punjab, Pakistan</p>
           </div>
         </div>
         <div className="flex flex-row items-center space-x-3 justify-between">
-          <CiHeart className="text-3xl sm:text-4xl text-red-500" />
+          <CiHeart onClick={handleFavorite} className={`text-3xl sm:text-4xl text-red-500 ${wishList ? 'bg-red-500 text-white rounded-[50%]' : ''}`} />
           <div className="text-center sm:text-right">
             <p className="text-[8px] sm:text-sm text-gray-500">from</p>
             <p className="text-sm sm:text-2xl font-semibold text-gray-800">${car.car.price}</p>
           </div>
-          <button onClick={handleBookNow} className="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-600">
+          <button onClick={ScrollTo} className="px-6 py-2 bg-red-500 text-white rounded-full hover:bg-red-600">
             Book Now
           </button>
 

@@ -87,7 +87,6 @@ const Header = () => {
       ],
     },
     { name: "Blog", to: "/blog" },
-    { name: "Feature", to: "#feature" },
     { name: "Contact", to: "/contact" },
   ];
 

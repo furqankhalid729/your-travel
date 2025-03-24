@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import { FaCalendarAlt, FaUser, FaWifi, FaTv, FaSwimmer, FaUtensils, FaSpa, FaSwimmingPool, FaParking, FaTimes } from 'react-icons/fa';
 import { FaCheck } from "react-icons/fa6";
 import { useDispatch } from 'react-redux';
 import { addBooking } from '../../../store/bookingSlice';
 import { Link, usePage, router } from '@inertiajs/react';
-
+import Cookies from "js-cookie";
 const iconMapping = {
   FaWifi: <FaWifi />,
   FaUtensils: <FaUtensils />,
@@ -19,6 +19,7 @@ const TypeIconMapping = {
 };
 
 const AvailableRoom = ({ hotel, hotelRooms }) => {
+  console.log(hotel)
   const [bookingDate, setBookingDate] = useState("");
   const [selectedPeople, setSelectedPeople] = useState("2 persons");
   const { auth } = usePage().props;
@@ -41,12 +42,12 @@ const AvailableRoom = ({ hotel, hotelRooms }) => {
       },
     };
     dispatch(addBooking(bookingData));
-    router.visit("/car-booking");
+    router.visit(route('checkout'));
   };
   const defaultImage = '/storage/images/hotel.jpg';
 
   return (
-    <div>
+    <div id="availablity">
       <div className="max-w-4xl  my-8 ">
         <h2 className="text-2xl font-bold mb-4">Availability</h2>
         <div className="flex  rounded-lg overflow-hidden border border-red-500 text-[8px] md:text-lg">

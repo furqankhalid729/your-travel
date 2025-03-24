@@ -22,18 +22,7 @@ const FilterSidebar = () => {
       >
         <div className="h-full overflow-y-auto p-4">
           <h2 className="text-lg font-semibold mb-4">Filters</h2>
-          <div className="h-32 relative bg-gray-300 mb-4 rounded-md overflow-hidden">
-            <div
-              className="absolute inset-0 bg-cover bg-center rounded-md"
-              style={{ backgroundImage: `url('storage/images/map.jpg')` }}
-            >
-              <span className="absolute inset-0 flex items-center justify-center text-white">
-                <div className="py-1 px-2 bg-gray-500 opacity-50 text-xs md:text-base rounded-xl">Show on map</div>
-              </span>
-            </div>
-          </div>
-
-
+          
           {/* Price Range */}
           <div className="mb-4 border rounded-md border-gray-400 p-4 ">
             <h3 className="font-semibold text-xs md:text-base">Price<span className='font-light'>(per night)</span></h3>
@@ -51,7 +40,7 @@ const FilterSidebar = () => {
           </div>
           <div className='border border-gray-400 rounded-md '>
             {/* Hotel Star */}
-            <div className=" border border-b-gray-400 p-1 md:p-4 ">
+            {/* <div className=" border border-b-gray-400 p-1 md:p-4 ">
               <h3 className="font-semibold">Hotel Star</h3>
               {[5, 4, 3, 2, 1].map((star) => (
                 <div key={star} className="flex items-center">
@@ -63,8 +52,6 @@ const FilterSidebar = () => {
                 </div>
               ))}
             </div>
-
-            {/* Hotel Rating */}
             <div className="border border-b-gray-400 p-1 md:p-2 lg:p-4">
               <h3 className="font-semibold text-sm sm:text-lg">Hotel Rating</h3>
               {[
@@ -82,9 +69,7 @@ const FilterSidebar = () => {
                   <span className="text-gray-500 text-[8px] md:text-sm">{item.count}</span>
                 </div>
               ))}
-            </div>
-
-
+            </div> */}
             {/* Top Filters */}
             <div className=" border border-b-gray-400 p-1 md:p-2 lg:p-4 ">
               <h3 className="font-semibold">Top Filters</h3>

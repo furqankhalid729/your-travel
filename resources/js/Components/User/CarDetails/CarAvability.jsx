@@ -9,10 +9,10 @@ const CarAvability = ({ car }) => {
   const [suggestions, setSuggestions] = useState([]);
   const [query, setQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
-  const [dropoffDate, setDropoffDate] = useState("");
   const [pickupLocation, setPickupLocation] = useState("");
   const [dropoffLocation, setDropoffLocation] = useState("");
   const [distance, setDistance] = useState(0);
+  const [showAvailData , setShowAvailData] = useState(false);
   const [totalPrice, setTotalPrice] = useState(car.price);
 
   useEffect(() => {
@@ -40,7 +40,6 @@ const CarAvability = ({ car }) => {
     setQuery(value);
   };
 
-  // Fetch API (only runs when `debouncedQuery` updates)
   const fetchLocationSuggestions = async (query) => {
     try {
       const response = await fetch(`/api/locations?q=${query}`);
@@ -62,9 +61,9 @@ const CarAvability = ({ car }) => {
 
   return (
     <>
-      <div className="max-w-6xl  my-8 ">
+      <div id="car-availablity" className="max-w-6xl  my-8 ">
         <h2 className="text-2xl font-bold mb-4">Availability</h2>
-        <div className="flex overflow-visible rounded-lg border border-red-500 text-[8px] md:text-lg">
+        <div className="flex flex-col md:flex-row overflow-visible rounded-lg border border-red-500 text-[8px] md:text-lg">
           {/* Date Picker Section */}
           <div className="flex items-center px-4 py-3  flex-grow ">
             <FaCalendarAlt className="text-gray-400 mr-2" />
@@ -140,6 +139,8 @@ const CarAvability = ({ car }) => {
           </button>
         </div>
       </div>
+
+      {showAvailData && (
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 p-6">
         {/* First Card */}
         <div className="bg-white shadow-lg rounded-lg p-6 space-y-4 border border-black">
@@ -198,13 +199,15 @@ const CarAvability = ({ car }) => {
           </div>
         </div>
       </div>
+      )}
+
       <div className=' flex flex-col sm:flex-row  justify-between p-6'>
         <div >
           <input type="checkbox" className="mr-2 accent-red-500" />
           <span>  I read at all  <span className="text-red-500"> terms and conditions</span> </span>
         </div>
         <div className='flex items-center'>
-          <Link to='/car-booking'>
+          <Link to={route('checkout')}>
             <button className='bg-red-500 rounded-md text-white py-2 px-3'>Book Now</button>
           </Link>
         </div>

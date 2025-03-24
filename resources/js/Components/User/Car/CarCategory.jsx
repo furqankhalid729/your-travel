@@ -74,7 +74,7 @@ const CarCategory = ({ filters, modelsFilter, brandFilter }) => {
       </div>
 
       {/* Ratings Filter */}
-      <div className="border-b border-gray-400 p-4">
+      {/* <div className="border-b border-gray-400 p-4">
         <h3 className="font-semibold">Rating</h3>
         {[5, 4, 3, 2, 1].map((star) => (
           <div key={star} className="flex items-center mb-1">
@@ -92,7 +92,7 @@ const CarCategory = ({ filters, modelsFilter, brandFilter }) => {
             </span>
           </div>
         ))}
-      </div>
+      </div> */}
 
       {/* Top Cars Filter */}
       <div className="border-b border-gray-400 p-4">

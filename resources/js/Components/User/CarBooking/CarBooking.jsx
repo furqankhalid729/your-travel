@@ -100,7 +100,7 @@ const CarBooking = ({setDisabled}) => {
           <p className="text-gray-800">${totalPrice}</p>
         </div>
       </div>
-      <div className="bg-white rounded-lg p-6 border border-gray-300 mt-2">
+      {/* <div className="bg-white rounded-lg p-6 border border-gray-300 mt-2">
         <div className="text-lg font-semibold text-gray-800 mb-4">
           <h1>Do you have a promo code?</h1>
           <p className="text-sm my-1">Enter promo code</p>
@@ -112,7 +112,7 @@ const CarBooking = ({setDisabled}) => {
             Apply
           </button>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
