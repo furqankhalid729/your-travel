@@ -45,7 +45,8 @@ const CarAvability = ({ car }) => {
 
   useEffect(() => {
     if(showWidget === "km"){
-      getRate();
+      if(pickupLocation != "" && dropoffLocation != "")
+        getRate();
     }
     else{
       setTotalPrice((parseInt(additionalHours) + selectedHours) * car.price)
