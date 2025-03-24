@@ -103,7 +103,7 @@ const CarAvability = ({ car }) => {
 
   const getRate = () => {
     getDistance().then(updatedDistance => {
-      let ratePerKm;
+      let ratePerKm = 3.5;
       if (car.price >= 0 && car.price <= 80) {
         ratePerKm = 3.5;
       } else if (car.price > 80 && car.price <= 120) {
