@@ -286,13 +286,13 @@ const CarAvability = ({ car }) => {
             </div>
             <div className="flex justify-between items-center text-sm text-gray-500">
               <p>GST tax</p>
-              <p className="font-medium">CHF {(withOutTaxPrice * 0.17).toPrecision(4)}</p>
+              <p className="font-medium">CHF {(withOutTaxPrice * 0.17)}</p>
             </div>
             <hr className='text-gray-400' />
 
             <div className="flex justify-between items-center text-sm text-black font-semibold">
               <p>Total Price:</p>
-              <p className="font-medium">${totalPrice.toPrecision(4)}</p>
+              <p className="font-medium">${totalPrice}</p>
             </div>
           </div>
         </div>
