@@ -19,7 +19,7 @@ const CarAvability = ({ car }) => {
   const [pickupLocation, setPickupLocation] = useState("");
   const [dropoffLocation, setDropoffLocation] = useState("");
   const [distance, setDistance] = useState(0);
-  const [showAvailData, setShowAvailData] = useState(true);
+  const [showAvailData, setShowAvailData] = useState(false);
   const [totalPrice, setTotalPrice] = useState(car.price);
   const [withOutTaxPrice, setWithOutTaxPrice] = useState(0);
 
@@ -103,6 +103,7 @@ const CarAvability = ({ car }) => {
       else
         setTotalPrice(rateWithTax);
 
+      setShowAvailData(true)
     });
   };
 
@@ -285,13 +286,13 @@ const CarAvability = ({ car }) => {
             </div>
             <div className="flex justify-between items-center text-sm text-gray-500">
               <p>GST tax</p>
-              <p className="font-medium">CHF {withOutTaxPrice + (withOutTaxPrice * 0.17)}</p>
+              <p className="font-medium">CHF {(withOutTaxPrice * 0.17).toPrecision(4)}</p>
             </div>
             <hr className='text-gray-400' />
 
             <div className="flex justify-between items-center text-sm text-black font-semibold">
               <p>Total Price:</p>
-              <p className="font-medium">${totalPrice}</p>
+              <p className="font-medium">${totalPrice.toPrecision(4)}</p>
             </div>
           </div>
         </div>
