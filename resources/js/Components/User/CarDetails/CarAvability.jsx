@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react'
 import { CiLocationOn } from 'react-icons/ci'
 import { FaCalendarAlt, FaRegCircle } from 'react-icons/fa'
 import { useDispatch } from 'react-redux';
- import { addBooking } from '../../../store/bookingSlice';
- import { Link, usePage, router } from '@inertiajs/react';
+import { addBooking } from '../../../store/bookingSlice';
+import { Link, usePage, router } from '@inertiajs/react';
 import axios from "axios"
 
 const CarAvability = ({ car }) => {
@@ -23,6 +23,10 @@ const CarAvability = ({ car }) => {
   const [totalPrice, setTotalPrice] = useState(car.price);
   const [withOutTaxPrice, setWithOutTaxPrice] = useState(0);
 
+  const [showWidget, setShowWidget] = useState("km");
+  const [selectedHours, setSelectedHours] = useState(4);
+  const [additionalHours, setAdditionalHours] = useState(0);
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedQuery(query);
@@ -39,6 +43,15 @@ const CarAvability = ({ car }) => {
     }
   }, [debouncedQuery]);
 
+  useEffect(() => {
+    if(showWidget === "km"){
+      getRate();
+    }
+    else{
+      setTotalPrice((parseInt(additionalHours) + selectedHours) * car.price)
+    }
+    
+  },[selectedHours,additionalHours,showWidget])
 
   const handleLocationChange = (e, field) => {
     const value = e.target.value;
@@ -66,6 +79,10 @@ const CarAvability = ({ car }) => {
     setSuggestions([]);
     setQuery("");
   };
+
+  const switchRate = (type) => {
+    setShowWidget(type);
+  }
 
   const getDistance = () => {
     return axios.post(route("getDistance"), {
@@ -201,8 +218,6 @@ const CarAvability = ({ car }) => {
 
           </div>
 
-
-
           {/* Search Button */}
           <button onClick={getRate} className="bg-red-500 text-white font-semibold px-6 py-3  hover:bg-red-600 rounded-md rounded-l-none">
             Search Availability
@@ -276,25 +291,87 @@ const CarAvability = ({ car }) => {
 
 
           {/* Second Card */}
-          <div className="bg-white shadow-lg rounded-lg p-6 space-y-4 border border-black">
-            {/* Car Price Details */}
-            <h3 className="font-semibold text-lg">Car Price</h3>
+          {showWidget === "km" && (
+            <div className="bg-white shadow-lg rounded-lg p-6 space-y-4 border border-black">
+              {/* Car Price Details */}
+              <div className='flex justify-between items-center'>
+                <h3 className="font-semibold text-lg">Car Price</h3>
 
-            <div className="flex justify-between items-center text-sm text-gray-500">
-              <p>Car hire charges</p>
-              <p className="font-medium">CHF {withOutTaxPrice}</p>
-            </div>
-            <div className="flex justify-between items-center text-sm text-gray-500">
-              <p>GST tax</p>
-              <p className="font-medium">CHF {(withOutTaxPrice * 0.17)}</p>
-            </div>
-            <hr className='text-gray-400' />
+                <button onClick={() => switchRate("hourly")} className='bg-red-500 text-white  px-6 py-3  hover:bg-red-600 rounded-md rounded-l-none'>
+                  Switch To Hourly Rate
+                </button>
+              </div>
 
-            <div className="flex justify-between items-center text-sm text-black font-semibold">
-              <p>Total Price:</p>
-              <p className="font-medium">${totalPrice}</p>
+              <div className="flex justify-between items-center text-sm text-gray-500">
+                <p>Car hire charges</p>
+                <p className="font-medium">CHF {Math.round(withOutTaxPrice)}</p>
+              </div>
+              <div className="flex justify-between items-center text-sm text-gray-500">
+                <p>GST tax</p>
+                <p className="font-medium">CHF {Math.round(withOutTaxPrice * 0.17)}</p>
+              </div>
+              <hr className='text-gray-400' />
+
+              <div className="flex justify-between items-center text-sm text-black font-semibold">
+                <p>Total Price:</p>
+                <p className="font-medium">${Math.round(totalPrice)}</p>
+              </div>
             </div>
-          </div>
+          )}
+          {showWidget === "hourly" && (
+            <div className="bg-white shadow-lg rounded-lg p-6 space-y-4 border border-black">
+              {/* Car Price Details */}
+              <div className='flex justify-between items-center'>
+                <h3 className="font-semibold text-lg">Car Price</h3>
+
+                <button onClick={() => switchRate("km")} className='bg-red-500 text-white  px-6 py-3  hover:bg-red-600 rounded-md rounded-l-none'>
+                  Switch To Km Rate
+                </button>
+              </div>
+
+              <div className="flex flex-col space-y-2">
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    name="duration"
+                    value={4}
+                    checked={selectedHours === 4}
+                    onChange={() => setSelectedHours(4)}
+                    className="form-radio text-blue-600"
+                  />
+                  <span>4 Hours</span>
+                </label>
+
+                <label className="flex items-center space-x-2">
+                  <input
+                    type="radio"
+                    name="duration"
+                    value={8}
+                    checked={selectedHours === 8}
+                    onChange={() => setSelectedHours(8)}
+                    className="form-radio text-blue-600"
+                  />
+                  <span>8 Hours</span>
+                </label>
+
+                <div className='flex items-center space-x-2'>
+                  <p>Addtional Hours</p>
+                  <input
+                    type="number"
+                    value={additionalHours}
+                    onChange={(e) => setAdditionalHours(e.target.value)}
+                    className="border border-gray-300 p-1 rounded-md" />
+                </div>
+              </div>
+              <hr className='text-gray-400' />
+              <p className="text-gray-600 mt-2">Selected Duration: {selectedHours + parseInt(additionalHours)} Hours</p>
+              <div className="flex justify-between items-center text-sm text-black font-semibold">
+                <p>Total Price:</p>
+                <p className="font-medium">${totalPrice}</p>
+              </div>
+            </div>
+          )}
+
         </div>
       )}
 
