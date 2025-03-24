@@ -7,7 +7,6 @@ import { Link, usePage, router } from '@inertiajs/react';
 import axios from "axios"
 
 const CarAvability = ({ car }) => {
-  console.log(car)
   const { auth } = usePage().props;
   const dispatch = useDispatch();
   const [pickupDate, setPickupDate] = useState(new Date());
@@ -105,14 +104,14 @@ const CarAvability = ({ car }) => {
   const getRate = () => {
     getDistance().then(updatedDistance => {
       let ratePerKm;
-      if (totalPrice >= 0 && totalPrice <= 80) {
+      if (car.price >= 0 && car.price <= 80) {
         ratePerKm = 3.5;
-      } else if (totalPrice > 80 && totalPrice <= 120) {
+      } else if (car.price > 80 && car.price <= 120) {
         ratePerKm = 4;
       } else {
         ratePerKm = 4.5;
       }
-      const totalKmRate = (ratePerKm * updatedDistance) + totalPrice;
+      const totalKmRate = (ratePerKm * updatedDistance) + car.price;
       setWithOutTaxPrice(totalKmRate);
       const rateWithTax = totalKmRate + (totalKmRate * 0.17);
 
@@ -120,7 +119,6 @@ const CarAvability = ({ car }) => {
         setTotalPrice(rateWithTax * 0.90);
       else
         setTotalPrice(rateWithTax);
-
       setShowAvailData(true)
     });
   };
@@ -135,7 +133,7 @@ const CarAvability = ({ car }) => {
       type: 'car',
       id: car.id,
       name: car.car_name,
-      price: Math.round(totalPrice),
+      price: parseFloat(totalPrice.toFixed(2)),
       additional_info: {
         pickup_location: pickupLocation,
         dropout_location: dropoffLocation,
@@ -220,7 +218,7 @@ const CarAvability = ({ car }) => {
           </div>
 
           {/* Search Button */}
-          <button onClick={getRate} className="bg-red-500 text-white font-semibold px-6 py-3  hover:bg-red-600 rounded-md rounded-l-none">
+          <button onClick={() => getRate()} className="bg-red-500 text-white font-semibold px-6 py-3  hover:bg-red-600 rounded-md rounded-l-none">
             Search Availability
           </button>
         </div>
@@ -305,17 +303,17 @@ const CarAvability = ({ car }) => {
 
               <div className="flex justify-between items-center text-sm text-gray-500">
                 <p>Car hire charges</p>
-                <p className="font-medium">CHF {Math.round(withOutTaxPrice)}</p>
+                <p className="font-medium">CHF {parseFloat(withOutTaxPrice.toFixed(2))}</p>
               </div>
               <div className="flex justify-between items-center text-sm text-gray-500">
                 <p>GST tax</p>
-                <p className="font-medium">CHF {Math.round(withOutTaxPrice * 0.17)}</p>
+                <p className="font-medium">CHF {parseFloat((withOutTaxPrice * 0.17).toFixed(2))}</p>
               </div>
               <hr className='text-gray-400' />
 
               <div className="flex justify-between items-center text-sm text-black font-semibold">
                 <p>Total Price:</p>
-                <p className="font-medium">${Math.round(totalPrice)}</p>
+                <p className="font-medium">${parseFloat(totalPrice.toFixed(2))}</p>
               </div>
             </div>
           )}
