@@ -111,11 +111,8 @@ const CarAvability = ({ car }) => {
       } else {
         ratePerKm = 4.5;
       }
-      const totalKmRate = (parseFloat(ratePerKm) * parseFloat(updatedDistance)) + car.price;
-      console.log(totalKmRate);
-      console.log(car);
-      console.log(updatedDistance)
-      setWithOutTaxPrice(totalKmRate);
+      const totalKmRate = (parseFloat(ratePerKm) * parseFloat(updatedDistance)) + parseFloat(car.price);
+      setWithOutTaxPrice(parseFloat(totalKmRate).toFixed(2));
       const rateWithTax = totalKmRate + (totalKmRate * 0.17);
 
       if (updatedDistance > 100)
