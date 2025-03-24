@@ -107,8 +107,8 @@ function TourCards({ tours }) {
   return (
     <div className=''>
       <div className="flex justify-between py-6">
-        <h2 className="text-[14px] md:text-[12px] sm:text-xl font-semibold text-black ">{tours.length} Tour available</h2>
-        <div className="relative flex gap-2 text-gray-900 text-[14px] md:text-[12px] md:text-sm">
+        <h2 className="text-[14px] md:text-[16px] font-semibold text-black ">{tours.length} Tour available</h2>
+        <div className="relative flex gap-2 text-gray-900 text-[14px]  md:text-[16px]">
           <span className="font-semibold">Sort by:</span>
           <button
             onClick={toggleDropdown}

@@ -18,7 +18,7 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 Route::middleware('auth')->group(function () {
-    Route::post('/car/add-car', [CarController::class, 'store'])->name('car.add');
+    Route::post('/car/add-car', [CarController::class, 'store'])->name('cars.store');
     Route::delete('/car/delete/{id}', [CarController::class, 'destroy'])->name('car.delete');
     Route::post('/driver/add-driver', [DriverController::class, 'store'])->name('driver.store');
     Route::post('/driver/assign-driver', [CarController::class, 'saveRider'])->name('driver.assign');

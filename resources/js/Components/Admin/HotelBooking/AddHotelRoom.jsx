@@ -274,7 +274,7 @@ const AddHotelRoom = () => {
       <div className="space-y-3 mb-5 bg-white p-4">
         <div className="flex justify-between items-center">
           <Link
-            href="/dashboard/tour-booking"
+            href={route('hotelbooking.index')}
             // onClick={() => navigate(-1)}
             className="flex items-center text-gray-600 hover:text-gray-800"
           >

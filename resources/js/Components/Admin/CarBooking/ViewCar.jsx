@@ -7,8 +7,7 @@ import {
   FaUser,
 } from "react-icons/fa";
 
-const ViewCar = ({ car }) => {
-  console.log(car)
+const ViewCar = ({ car, drivers }) => {
   const images = JSON.parse(car.car_images);
   return (
     <div className="m-3 lg:m-6">
@@ -46,7 +45,7 @@ const ViewCar = ({ car }) => {
                 </div>
 
               ))}
-              
+
             </div>
           </div>
           <div className="lg:w-3/5 bg-white p-6 rounded-lg shadow text-gray-800">
@@ -101,6 +100,30 @@ const ViewCar = ({ car }) => {
           </div>
         </div>
       </div>
+
+      {drivers.length > 0 && (
+        <div>
+          <h2>Drivers</h2>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {drivers.map((driver, index) => {
+              return (
+                <div key={index} className="flex flex-col justify-center items-center gap-4 p-4 bg-white rounded-lg shadow mt-4">
+                  <img src={`/storage/${driver.profile_image}`} className="max-w-[100px] max-h-[100px] rounded-[50%]"/>
+                  <div className="flex items-center gap-4">
+                    <FaUser className="text-[#bb8dd9]" />
+                    <span>{driver.name}</span>
+                  </div>
+                  <div>
+                    <p>{driver.license_no}</p>
+                    <p>{driver.contact_no}</p>
+                  </div> 
+                  
+                </div>
+              )
+            })}
+          </div>
+        </div>
+      )}
     </div>
   );
 };

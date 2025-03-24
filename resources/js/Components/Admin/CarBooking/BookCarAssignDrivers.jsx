@@ -11,7 +11,6 @@ import { Link } from "@inertiajs/react";
 import { useState } from "react";
 
 const BookCarAssignDrivers = ({ order, car, drivers }) => {
-
   const carItems = order.items.filter(item => item.type === "car");
   const [price, setPrice] = useState(carItems[0].price);
   const additionalInfo = JSON.parse(carItems[0].additional_info);
@@ -50,9 +49,7 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
           <span className="text-black">#{order.id}</span>
         </Link>
         <div className="flex items-center gap-5">
-          <button className="bg-[#d9d9d9] px-2 py-1 rounded-md">Edit</button>
-          <button className="bg-[#d9d9d9] px-2 py-1 rounded-md">Refund</button>
-          <select
+          {/* <select
             id="booking"
             className="w-full px-2 py-1 border border-gray-300 bg-[#d9d9d9] rounded-lg focus:outline-none"
           >
@@ -60,7 +57,7 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
               More Action
             </option>
             <option value="Booking1">Booking 1</option>
-          </select>
+          </select> */}
         </div>
       </div>
       <div className="flex flex-col lg:flex-row gap-6 mt-5">
@@ -217,7 +214,7 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
         </div>
         <div className="lg:w-[30%] space-y-4">
           <div className="border p-4 rounded-md bg-white">
-            <div>
+            {/* <div>
               <div className="font-semibold flex items-center justify-between">
                 <p>Notes</p>
                 <FaPen className="text-gray-500 cursor-pointer" />
@@ -225,14 +222,14 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
               <div className="text-sm text-gray-500">
                 No notes from customer
               </div>
-            </div>
-            <div>
+            </div> */}
+            {/* <div>
               <div className="font-semibold flex items-center justify-between">
                 <p>Additional Details</p>
                 <FaPen className="text-gray-500 cursor-pointer" />
               </div>
               <div className="text-sm text-gray-500">N/A</div>
-            </div>
+            </div> */}
             <div className="space-y-2">
               <div>
                 <div className="text-sm font-medium">Country Code</div>

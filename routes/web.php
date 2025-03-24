@@ -70,11 +70,10 @@ Route::get('/tour-pkg', function () {
 // Admin Routes
 Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
-    Route::get('/dashboard/car-booking', [CarController::class, 'index']);
+    Route::get('/dashboard/car-booking', [CarController::class, 'index'])->name('car.index');
     Route::get('/dashboard/car-booking/add-car', [CarController::class, 'create']);
     Route::get('/dashboard/car/edit/{id}', [CarController::class, 'edit'])->name('car.edit');
     Route::get('/dashboard/car/view/{id}', [CarController::class, 'view'])->name('car.view');
-    // Route::get('/cars', [CarController::class, 'index'])->name('cars.index');
     Route::post('/cars/{car}', [CarController::class, 'update'])->name('cars.update');
     Route::delete('/cars/{car}', [CarController::class, 'destroy'])->name('cars.destroy');
     Route::get('/dashboard/car-booking/orders', [CarController::class, 'carBooking'])->name('car.booking');
@@ -210,12 +209,4 @@ Route::get('/welcome', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-
-// Route::middleware('auth')->group(function () {
-//     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-//     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-//     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-// });
-
-
 require __DIR__ . '/auth.php';

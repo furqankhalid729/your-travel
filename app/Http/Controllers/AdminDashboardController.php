@@ -10,6 +10,7 @@ use Carbon\Carbon;
 use App\Models\Booking;
 use App\Models\BookingItem;
 use App\Models\User;
+use Illuminate\Support\Facades\DB;
 
 class AdminDashboardController extends Controller
 {
@@ -37,6 +38,74 @@ class AdminDashboardController extends Controller
             ->join('booking_items', 'bookings.id', '=', 'booking_items.booking_id')
             ->sum('booking_items.price');
 
+
+        $currentYear = Carbon::now()->year;
+        $currentMonth = Carbon::now()->month;
+
+        $salesReportData = collect(range(0, 11))->map(function ($i) {
+            $date = Carbon::now()->subMonths($i);
+            $monthName = $date->format('M');
+            $year = $date->year;
+
+            $totalSales = Booking::whereYear('bookings.created_at', $year)
+                ->whereMonth('bookings.created_at', $date->month)
+                ->join('booking_items', 'bookings.id', '=', 'booking_items.booking_id')
+                ->sum('booking_items.price');
+
+            $totalOrders = Booking::whereYear('created_at', $year)
+                ->whereMonth('created_at', $date->month)
+                ->count();
+
+            $totalVisitors = 40;
+
+            return [$monthName, $totalSales, $totalVisitors, $totalOrders];
+        })->reverse()->toArray();
+        array_unshift($salesReportData, ["Month", "Total Sales", "Total Visitors", "Total Orders"]);
+
+        $userData = collect(range(0, 5))->map(function ($i) {
+            $date = Carbon::now()->subMonths($i);
+            $monthName = $date->format('M');
+        
+            $visitorCount = DB::table('users')
+                ->whereYear('created_at', $date->year)
+                ->whereMonth('created_at', $date->month)
+                ->count();
+        
+            return [$monthName, $visitorCount];
+        })->reverse()->toArray();
+
+        array_unshift($userData, ["Month", "Customers"]);
+
+        $customerData = [
+            ["Customer Type", "Percentage"]
+        ];
+        
+        // Count users who have exactly 1 booking using their email
+        $singleOrderCustomers = DB::table('bookings')
+            ->select('email') // Using email instead of customer_id
+            ->groupBy('email')
+            ->havingRaw('COUNT(id) = 1')
+            ->count();
+        
+        // Count users who have more than 1 booking using their email
+        $multipleOrderCustomers = DB::table('bookings')
+            ->select('email') // Using email instead of customer_id
+            ->groupBy('email')
+            ->havingRaw('COUNT(id) > 1')
+            ->count();
+        
+        // Total unique customers
+        $totalCustomers = $singleOrderCustomers + $multipleOrderCustomers;
+        
+        // Avoid division by zero
+        if ($totalCustomers > 0) {
+            $customerData[] = ["Single Order", round(($singleOrderCustomers / $totalCustomers) * 100, 2)];
+            $customerData[] = ["Multiple Orders", round(($multipleOrderCustomers / $totalCustomers) * 100, 2)];
+        } else {
+            $customerData[] = ["Single Order", 0];
+            $customerData[] = ["Multiple Orders", 0];
+        }
+
         return Inertia::render(InertiaViews::AdminDashboard->value, [
             'totalValueYearly' => $totalValueYearly,
             'totalValueMonthly' => $totalValueMonthly,
@@ -45,7 +114,10 @@ class AdminDashboardController extends Controller
             'currentMonth' => $currentMonth,
             'totalBookingsYearly' => $totalBookingsYearly,
             'activeBookingsTotal' => $activeBookingsTotal,
-            'cancelBookingsTotal' => $cancelBookingsTotal
+            'cancelBookingsTotal' => $cancelBookingsTotal,
+            'salesReportData' => $salesReportData,
+            'userData' => $userData,
+            'customerData' => $customerData
         ]);
     }
 

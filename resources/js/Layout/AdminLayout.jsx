@@ -64,7 +64,6 @@ const AdminLayout = ({ title, children }) => {
                     </div>
                     <h1 className="text-xl font-bold hidden lg:block">YOURTRIP24</h1>
                     <div className="flex items-center gap-6">
-                        <FaBell className="text-lg cursor-pointer" />
                         <div className="flex items-center gap-2">
                             <FaUserCircle className="text-2xl" />
                             <span>{user.name}</span>

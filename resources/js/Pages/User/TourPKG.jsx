@@ -12,7 +12,7 @@ const TourPKG = ({ tour }) => {
       <TourProfile tour={tour} />
       <TourSummary tour={tour} />
       <TourItinerary tour={tour} />
-      <TouristReview tour={tour} />
+      {/* <TouristReview tour={tour} /> */}
     </div>
   )
 }

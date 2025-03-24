@@ -1,18 +1,17 @@
-// import { Chart } from "react-google-charts";
+import { Chart } from "react-google-charts";
 import AdminLayout from "../../Layout/AdminLayout";
 
-const Dashboard = ({totalValueYearly,totalValueMonthly,currentYear,currentMonth,totalBookingsYearly, activeBookingsTotal, cancelBookingsTotal}) => {
-
-  const salesReportData = [
-    ["Month", "Total Sales", "Total Visitors", "Total Orders"],
-    ["Jan", 100, 200, 300],
-    ["Feb", 150, 250, 350],
-    ["Mar", 200, 300, 400],
-    ["Apr", 250, 350, 450],
-    ["May", 300, 400, 500],
-    ["Jun", 400, 500, 600],
-    ["Jul", 500, 600, 700],
-  ];
+const Dashboard = ({
+  totalValueYearly,
+  totalValueMonthly,
+  currentYear,
+  currentMonth,
+  totalBookingsYearly,
+  activeBookingsTotal,
+  cancelBookingsTotal,
+  salesReportData,
+  userData,
+  customerData }) => {
 
   const salesReportOptions = {
     title: "",
@@ -21,18 +20,12 @@ const Dashboard = ({totalValueYearly,totalValueMonthly,currentYear,currentMonth,
     vAxis: {
       title: "Values",
       textStyle: { color: "#000" },
-      ticks: [100, 200, 300, 400, 500, 600, 700, 800],
+
     },
     colors: ["#000000", "#2ecc71", "#e0b0ff"],
     chartArea: { width: "80%", height: "70%" },
   };
 
-  const customerData = [
-    ["Customer Type", "Percentage"],
-    ["Active", 55],
-    ["New", 30],
-    ["Retarget", 15],
-  ];
 
   const customerOptions = {
     title: "Customer Breakdown",
@@ -43,6 +36,11 @@ const Dashboard = ({totalValueYearly,totalValueMonthly,currentYear,currentMonth,
     pieSliceText: "percentage",
   };
 
+  const currencyFormatter = new Intl.NumberFormat("en-US", {
+    style: "currency",
+    currency: "CHF",
+    minimumFractionDigits: 2,
+  });
   const statsData = [
     { title: "Draft", value: 36987, date: "2023-2024" },
     { title: "Booking", value: activeBookingsTotal, date: "2023-2024" },
@@ -52,7 +50,13 @@ const Dashboard = ({totalValueYearly,totalValueMonthly,currentYear,currentMonth,
     { title: "Total Orders", value: totalBookingsYearly, date: "2023-2024" },
     { title: "Total Visitors", value: 785230, date: "2023-2024" },
     { title: "Total Revenue Monthly", value: totalValueMonthly, date: "2023-2024" },
-  ];
+  ].map((item) => ({
+    ...item,
+    value:
+      ["Booking", "Total Sales Yearly", "Total Revenue Monthly", "Cancellation"].includes(item.title)
+        ? currencyFormatter.format(item.value)
+        : item.value,
+  }));
 
   return (
     <div className="min-h-screen p-4 lg:p-8">
@@ -69,13 +73,7 @@ const Dashboard = ({totalValueYearly,totalValueMonthly,currentYear,currentMonth,
               </h3>
               <p className="text-2xl mt-2">{stat.value.toLocaleString()}</p>
             </div>
-            <div className="flex justify-between items-center mt-2">
-              <p className="text-sm">
-                <span className="text-gray-500">+20% </span>
-                Since Last Year
-              </p>
-              {index < 4 && <button className="text-sm">View Details</button>}
-            </div>
+            
           </div>
         ))}
       </div>
@@ -83,48 +81,33 @@ const Dashboard = ({totalValueYearly,totalValueMonthly,currentYear,currentMonth,
         <div className="lg:col-span-3 bg-white border rounded-lg shadow p-6">
           <div className="flex justify-between items-center">
             <h3 className="text-lg font-semibold">Sales Report</h3>
-            <select
-              className="border border-gray-300 rounded px-3 py-1 text-sm"
-              defaultValue="Last 1 Year"
-            >
-              <option value="Last 1 Year">Last 1 Year</option>
-              <option value="Jan - Jul">Jan - Jul</option>
-            </select>
           </div>
-          {/* <Chart
+          <Chart
             chartType="ColumnChart"
             data={salesReportData}
             options={salesReportOptions}
             width="100%"
             height="400px"
-          /> */}
+          />
         </div>
         <div className="space-y-6">
           <div className="bg-white rounded-lg border shadow p-4">
             <h3 className="text-lg font-semibold">Customer Breakdown</h3>
-            {/* <Chart
+            <Chart
               chartType="PieChart"
               data={customerData}
               options={customerOptions}
               width="100%"
               height="200px"
-            /> */}
+            />
           </div>
           <div className="bg-white rounded-lg border shadow p-2">
             <div className="flex justify-between items-center">
               <h3 className="text-lg font-semibold">Real-Time Growth</h3>
             </div>
-            {/* <Chart
+            <Chart
               chartType="AreaChart"
-              data={[
-                ["Month", "Customers"],
-                ["Jan", 50],
-                ["Feb", 100],
-                ["Mar", 150],
-                ["Apr", 250],
-                ["May", 350],
-                ["Jun", 450],
-              ]}
+              data={userData}
               options={{
                 legend: { position: "top", alignment: "center" },
                 hAxis: {
@@ -135,7 +118,7 @@ const Dashboard = ({totalValueYearly,totalValueMonthly,currentYear,currentMonth,
                 vAxis: {
                   title: "Customers",
                   textStyle: { color: "#6b7280" },
-                  ticks: [50, 150, 250, 350, 450],
+                  minValue: 0,
                 },
                 colors: ["#9b59b6"],
                 chartArea: { width: "85%", height: "70%" },
@@ -144,7 +127,7 @@ const Dashboard = ({totalValueYearly,totalValueMonthly,currentYear,currentMonth,
               }}
               width="100%"
               height="300px"
-            /> */}
+            />;
           </div>
         </div>
       </div>

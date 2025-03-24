@@ -93,13 +93,6 @@ const HotelBooking = ({ latestBooking, hotelRoomsCount, bookingCount }) => {
             <FaPlus />
             Add New Hotel
           </Link>
-          {/* <Link
-            href="/dashboard/drafts"
-            className="flex items-center gap-1 bg-[#bb8dd9] text-white px-2 md:px-3 py-1 md:py-2 rounded-lg"
-          >
-            <FaPlus />
-            Create New Bookings
-          </Link> */}
         </div>
       </div>
       <div className="rounded-lg border-t overflow-x-auto">
@@ -156,12 +149,12 @@ const HotelBooking = ({ latestBooking, hotelRoomsCount, bookingCount }) => {
                   {booking.email}
                 </td>
                 <td className="px-2 py-4 whitespace-nowrap text-base flex space-x-2">
-                  <Link
+                  {/* <Link
                     href="/dashboard/hotel-booking/hotel-booking-form"
                     className="text-green-500"
                   >
                     <FaEdit />
-                  </Link>
+                  </Link> */}
                   <Link
                     href={route('hotelbooking.show',booking.booking_id)}
                     className="text-blue-500 px-1"

@@ -119,15 +119,11 @@ const Orders = ({ activeBooking }) => {
                     {order.status}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm flex space-x-2">
-                    <button className="text-green-500">
-                      <FaEdit />
-                    </button>
+                   
                     <Link href={route('order.assignrider',order.mainID)} className="text-blue-500 px-1">
                       <FaEye />
                     </Link>
-                    <button className="text-red-500">
-                      <FaTrash />
-                    </button>
+                    
                   </td>
                 </tr>
               )

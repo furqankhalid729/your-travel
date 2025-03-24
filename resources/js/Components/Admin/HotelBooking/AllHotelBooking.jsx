@@ -173,21 +173,13 @@ const AllHotelBooking = ({allBooking}) => {
                     {booking.email}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-base flex space-x-2">
+                   
                     <Link
-                      href="/dashboard/hotel-booking/hotel-booking-form"
-                      className="text-green-500"
-                    >
-                      <FaEdit />
-                    </Link>
-                    <Link
-                      href="/dashboard/hotel-booking/hotel-booking-profile"
+                      href={route('hotelbooking.show',booking.booking_id)}
                       className="text-blue-500 px-1"
                     >
                       <FaEye />
                     </Link>
-                    <button className="text-red-500">
-                      <FaTrash />
-                    </button>
                   </td>
                 </tr>
               ))}

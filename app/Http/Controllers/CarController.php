@@ -84,8 +84,10 @@ class CarController extends Controller
         if (!$car) {
             return response()->json(['error' => 'Car not found'], Response::HTTP_BAD_REQUEST);
         }
+        $drivers = Driver::where("car_id", $id)->get();
         return Inertia::render(InertiaViews::AdminViewCar->value, [
             'car' => $car,
+            'drivers' => $drivers
         ]);
     }
 
@@ -213,7 +215,6 @@ class CarController extends Controller
      */
     public function store(Request $request)
     {
-        Log::info($request->all());
         $validatedData = $request->validate([
             'car_name' => 'required|string|max:255',
             'brand' => 'required|string|max:255',
@@ -306,11 +307,7 @@ class CarController extends Controller
             'car_images' => 'nullable|array',
             'car_images.*.file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-
-        // Handle features
         $features = $validatedData['features'] ?? [];
-
-        // Handle car_images
         $carImages = json_decode($car->car_images, true) ?? [];
         if ($request->has('car_images') && !empty($request->file('car_images'))) {
             foreach ($request->file('car_images') as $carImage) {
@@ -339,7 +336,7 @@ class CarController extends Controller
             'car_images' => json_encode($carImages),
         ]);
 
-        return redirect()->route('cars.index')->with('success', 'Car updated successfully');
+        return redirect()->route('car.index')->with('success', 'Car updated successfully');
     }
 
     /**
