@@ -306,7 +306,7 @@ const CarAvability = ({ car }) => {
 
               <div className="flex justify-between items-center text-sm text-gray-500">
                 <p>Car hire charges</p>
-                <p className="font-medium">CHF {parseFloat(withOutTaxPrice.toFixed(2))}</p>
+                <p className="font-medium">CHF {parseFloat(withOutTaxPrice).toFixed(2)}</p>
               </div>
               <div className="flex justify-between items-center text-sm text-gray-500">
                 <p>GST tax</p>
