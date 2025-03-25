@@ -9,12 +9,17 @@ use App\Models\Booking;
 use App\Models\BookingItem;
 use App\Models\Payment;
 use App\Models\Transaction;
-use Illuminate\Http\JsonResponse;
+use App\Http\Controllers\EmailController;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\DB;
 
 class BookingController extends Controller
 {
+    protected $emailController;
+    public function __construct(EmailController $emailController)
+    {
+        $this->emailController = $emailController;
+    }
     public function index(Request $request)
     {
         return Inertia::render(InertiaViews::Checkout->value);
@@ -38,8 +43,6 @@ class BookingController extends Controller
             'items.*.price'         => 'required|numeric|min:0',
             'items.*.additional_info' => 'nullable|array',
         ]);
-
-        // If validation fails, return errors
         if ($validator->fails()) {
             return response()->json([
                 'message' => 'Validation failed',
@@ -50,7 +53,6 @@ class BookingController extends Controller
         DB::beginTransaction();
 
         try {
-            // Create Booking
             $booking = Booking::create([
                 'first_name'            => $request->first_name,
                 'last_name'             => $request->last_name,
@@ -77,22 +79,21 @@ class BookingController extends Controller
 
                 $totalAmount += $item['price']; // Calculate total price
             }
-
             $payment = Payment::create([
                 'booking_id' => $booking->id,
                 'amount'     => $totalAmount,
                 'status'     => 'received',
                 'note'       => ['payment_method' => $request->payment_method ?? 'unknown'],
             ]);
-
             Transaction::create([
                 'payment_id' => $payment->id,
                 'type'       => 'received',
                 'amount'     => $totalAmount,
                 'note'       => ['received_from' => $request->email],
             ]);
-
             DB::commit();
+
+            $this->emailController->sendOrderConformationMail($booking);
 
             return response()->json([
                 'message'  => 'Booking successfully created.',

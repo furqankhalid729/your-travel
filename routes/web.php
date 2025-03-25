@@ -16,6 +16,7 @@ use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\AdminPaymentController;
 use App\Http\Controllers\AdminTransactionController;
 use App\Models\Car\CarBrand;
+use App\Http\Controllers\EmailController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -197,12 +198,11 @@ Route::get('/dashboard/drafts', function () {
     return Inertia::render('Admin/Drafts');
 });
 
-
-
 Route::get('/dashboard/reports', function () {
     return Inertia::render('Admin/Reports');
 });
 
+Route::get('/send-test-email', [EmailController::class, 'sendOrderConformationMail']);
 // Settings
 
 // User Routes
