@@ -6,7 +6,7 @@ import { AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 
 const BannerWithTabs = () => {
     const [activeButton, setActiveButton] = useState(0);
-    const [isOpen, setIsOpen] = useState(false);
+    const [isOpen, setIsOpen] = useState(true);
     const [searchURL, setSearchURL] = useState("/hotel")
 
     const handleButtonClick = (index) => {
@@ -80,7 +80,7 @@ const BannerWithTabs = () => {
                     {/* Accordion (visible below lg) */}
                     <div className="lg:hidden">
                         {/* Accordion Header */}
-                        <button
+                        {/* <button
                             className="w-full flex justify-between items-center text-sm bg-gray-200 text-black text-left px-4 py-2 md:py-3 rounded-lg font-semibold"
                             onClick={() => setIsOpen(!isOpen)}
                         >
@@ -90,7 +90,7 @@ const BannerWithTabs = () => {
                             ) : (
                                 <AiOutlinePlus className="text-lg" /> // Plus icon
                             )}
-                        </button>
+                        </button> */}
 
                         {/* Accordion Content */}
                         <div

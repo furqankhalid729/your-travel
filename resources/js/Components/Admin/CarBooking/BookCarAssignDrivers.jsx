@@ -15,14 +15,22 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
   const [price, setPrice] = useState(carItems[0].price);
   const additionalInfo = JSON.parse(carItems[0].additional_info);
   console.log(additionalInfo)
-  const [driverId, setDriverId] = useState(additionalInfo.driver_id || drivers[0].id);
+  const [driverId, setDriverId] = useState(() => {
+    if (additionalInfo?.driver_id) {
+      return additionalInfo.driver_id;
+    } else if (drivers.length > 0 && drivers[0]?.id) {
+      return drivers[0].id;
+    } else {
+      return null;
+    }
+  });
 
   const openInMaps = () => {
     const encodedLocation = encodeURIComponent(additionalInfo.dropout_location);
     const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedLocation}`;
     window.open(googleMapsUrl, "_blank");
   }
-  const assignRider = async() => {
+  const assignRider = async () => {
     try {
       const response = await axios.post(route("driver.assign"), {
         driver_id: driverId,

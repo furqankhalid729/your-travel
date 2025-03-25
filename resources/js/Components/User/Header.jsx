@@ -82,7 +82,7 @@ const Header = () => {
       dropdown: true,
       items: [
         { name: "Hotel", to: "/hotel" },
-        { name: "Car", to: "/car" },
+        { name: "Transfer", to: "/car" },
         { name: "Trip", to: "/tour" },
       ],
     },
@@ -164,7 +164,7 @@ const Header = () => {
         </div>
 
         {/* Mobile Hamburger Icon */}
-        <div className="lg:hidden flex items-center">
+        <div className="lg:hidden flex items-center ml-4">
           <button
             onClick={toggleMobileMenu}
             className="text-white focus:outline-none"

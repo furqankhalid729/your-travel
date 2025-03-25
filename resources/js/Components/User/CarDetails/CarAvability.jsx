@@ -119,7 +119,8 @@ const CarAvability = ({ car }) => {
         setTotalPrice(rateWithTax * 0.90);
       else
         setTotalPrice(rateWithTax);
-      setShowAvailData(true)
+      setShowAvailData(true);
+      setShowWidget("km");
     });
   };
 
