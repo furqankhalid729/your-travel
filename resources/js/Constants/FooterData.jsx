@@ -21,7 +21,7 @@ const support = [
     { name: "Contact", url: "/contact" },
     { name: "Legal Notice", url: "/legal-notice" },
     { name: "Privacy Policy", url: "/privacy-policy" },
-    { name: "Terms and Conditions", url: "/terms-and-conditions" },
+    { name: "Terms and Conditions", url: "/terms-condition" },
     { name: "Sitemap", url: "/sitemap" }
 ];
 

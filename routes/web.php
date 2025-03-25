@@ -36,6 +36,12 @@ Route::get('/tour/tour-details/{id}', [TourFrontendController::class, 'show'])->
 Route::get('/contact', function () {
     return Inertia::render('User/Contact');
 });
+Route::get('/legal-notice', function () {
+    return Inertia::render('User/LegalNotice');
+});
+Route::get('/terms-condition', function () {
+    return Inertia::render('User/TermsAndCondition');
+});
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('user.profile');
