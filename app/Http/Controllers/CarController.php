@@ -357,6 +357,7 @@ class CarController extends Controller
         $activeBookingsTotal = Booking::join('booking_items', 'bookings.id', '=', 'booking_items.booking_id')
             ->where('booking_items.type', 'car')
             ->select('bookings.id as mainID', 'bookings.*', 'booking_items.*')
+            ->latest('bookings.created_at')
             ->get();
 
         return Inertia::render(InertiaViews::CarBooking->value, [

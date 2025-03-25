@@ -84,12 +84,12 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
                 <div className="flex flex-col lg:flex-row items-center">
                   <p>From :</p>
                   <p className="text-gray-500 border px-1 rounded-lg ml-2">
-                    September 27, 2024
+                    {new Date(additionalInfo.pickup_date).toLocaleString()}
                   </p>
-                  <p>To :</p>
+                  {/* <p>To :</p>
                   <p className="text-gray-500 border px-1 rounded-lg ml-2">
                     September 28, 2024
-                  </p>
+                  </p> */}
                 </div>
               </div>
               <div className="flex justify-center lg:justify-end px-4 pb-2">
@@ -135,7 +135,15 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
                 />
               </div>
               <button className="bg-[#e1baf9] w-full text-white px-4 py-2 rounded-md">
-                Travel time - 2 hours, 200km
+                {additionalInfo?.pricingType === "km" ? (
+                  <p>
+                    Distance: {additionalInfo?.distance} km
+                  </p>
+                ):(
+                  <p>
+                    Time Duration: {additionalInfo?.time}
+                  </p>
+                )}
               </button>
             </div>
             <div className="lg:w-1/2 relative">
@@ -271,20 +279,18 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
               <div className="border rounded-md">
                 <div className="font-semibold p-3 space-y-2">
                   <div className="flex justify-between">
-                    <p>Car Rent</p> <span>$300.00</span>
+                    <p>Car Rent</p> <span>{parseFloat(carItems[0].price * 0.83)}</span>
                   </div>
                   <div className="flex justify-between">
-                    <p>Tax</p> <span>$10.00</span>
+                    <p>Tax</p> <span>{parseFloat(carItems[0].price * 0.17).toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between">
-                    <p>Charges</p> <span>$5.00</span>
-                  </div>
+                 
                   <p className="font-normal text-gray-500 text-sm text-center">
-                    16% Taxes are included now
+                    17% Taxes are included now
                   </p>
                 </div>
                 <div className="border-t p-3 flex justify-between">
-                  <p>Total</p> <span>$315.00</span>
+                  <p>Total</p> <span>${carItems[0].price}</span>
                 </div>
               </div>
             </div>
