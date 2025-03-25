@@ -279,7 +279,7 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
               <div className="border rounded-md">
                 <div className="font-semibold p-3 space-y-2">
                   <div className="flex justify-between">
-                    <p>Car Rent</p> <span>{parseFloat(carItems[0].price * 0.83)}</span>
+                    <p>Car Rent</p> <span>{parseFloat(carItems[0].price * 0.83).toFixed(2)}</span>
                   </div>
                   <div className="flex justify-between">
                     <p>Tax</p> <span>{parseFloat(carItems[0].price * 0.17).toFixed(2)}</span>

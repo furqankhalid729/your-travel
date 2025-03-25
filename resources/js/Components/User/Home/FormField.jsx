@@ -15,7 +15,7 @@ const FormField = ({ icon: Icon, label, type, description, isLast, showCenterIco
 
         const delayDebounce = setTimeout(() => {
             fetchLocationSuggestions(inputValue);
-        }, 500); // Fetch data after 500ms
+        }, 500);
 
         return () => clearTimeout(delayDebounce); // Cleanup on unmount or value change
     }, [inputValue, name]);
