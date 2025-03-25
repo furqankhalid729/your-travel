@@ -111,4 +111,14 @@ class BookingController extends Controller
             'booking' => $booking->load('items'),
         ], 201);
     }
+
+    public function destroy(string $id)
+    {
+        $booking = Booking::find($id);
+        if (!$booking) {
+            return response()->json(['message' => 'Booking not found.'], 404);
+        }
+        $booking->delete();
+        return response()->json(['message' => 'Booking deleted successfully.'], 200);
+    }
 }

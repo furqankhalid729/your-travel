@@ -1,59 +1,36 @@
-import { FaEdit, FaEye, FaPlus, FaTrash } from "react-icons/fa";
-import { Link } from "@inertiajs/react";
-
-const ordersData = [
-  {
-    id: "A101",
-    car: "Toyota Corolla",
-    from: "2024-11-20",
-    to: "2024-11-22",
-    price: "$100",
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com",
-    phone: "+1234567890",
-    action: "View",
-  },
-  {
-    id: "A102",
-    car: "Honda Civic",
-    from: "2024-11-22",
-    to: "2024-11-24",
-    price: "$90",
-    firstName: "Jane",
-    lastName: "Smith",
-    email: "jane.smith@example.com",
-    phone: "+1987654321",
-    action: "View",
-  },
-  {
-    id: "A103",
-    car: "Toyota Corolla",
-    from: "2024-11-20",
-    to: "2024-11-22",
-    price: "$100",
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com",
-    phone: "+1234567890",
-    action: "View",
-  },
-  {
-    id: "A104",
-    car: "Honda Civic",
-    from: "2024-11-22",
-    to: "2024-11-24",
-    price: "$90",
-    firstName: "Jane",
-    lastName: "Smith",
-    email: "jane.smith@example.com",
-    phone: "+1987654321",
-    action: "View",
-  },
-];
+import {FaEye } from "react-icons/fa";
+import { useState } from "react";
+import { Link, router } from "@inertiajs/react";
+import { RiDeleteBinLine } from "react-icons/ri";
+import DeleteModal from "../../../Components/deleteModal";
 
 const Orders = ({ activeBooking }) => {
-  console.log(activeBooking)
+  console.log(activeBooking);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [bookings,setBooking] = useState(activeBooking);
+
+  const openModal = (id) => {
+    setItemToDelete(id);
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+    setItemToDelete(null);
+  };
+
+  const deleteItem = async (id) => {
+    console.log(`Deleting item with ID: ${id}`);
+    try {
+      const response = await axios.delete(route('booking.delete', { id }));
+      setBooking((prevItems) => prevItems.filter((item) => item.id !== id));
+      closeModal();
+    } catch (error) {
+      console.error("Error deleting item:", error.response?.data?.message || error.message);
+    }
+    closeModal();
+  };
+
   return (
     <div className="md:min-h-screen p-10">
       <div className="flex justify-between items-center my-2">
@@ -85,7 +62,7 @@ const Orders = ({ activeBooking }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {activeBooking.map((order, index) => {
+            {bookings.map((order, index) => {
               const additionalInfo = JSON.parse(JSON.parse(order.additional_info));
               return (
                 <tr key={index}>
@@ -119,11 +96,14 @@ const Orders = ({ activeBooking }) => {
                     {order.status}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-sm flex space-x-2">
-                   
-                    <Link href={route('order.assignrider',order.mainID)} className="text-blue-500 px-1">
+
+                    <Link href={route('order.assignrider', order.mainID)} className="text-blue-500 px-1">
                       <FaEye />
                     </Link>
-                    
+
+                    <button onClick={() => openModal(order.mainID)}>
+                      <RiDeleteBinLine />
+                    </button>
                   </td>
                 </tr>
               )
@@ -131,6 +111,12 @@ const Orders = ({ activeBooking }) => {
           </tbody>
         </table>
       </div>
+      <DeleteModal
+        isOpen={modalOpen}
+        onClose={closeModal}
+        onSubmit={deleteItem}
+        itemId={itemToDelete}
+      />
     </div>
   );
 };

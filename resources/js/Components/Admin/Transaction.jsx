@@ -137,7 +137,6 @@ const Transaction = ({ transactions }) => {
                     "Date",
                     "Reason",
                     "Amount",
-                    "Download",
                   ].map((header, index) => (
                     <th
                       key={index}
@@ -150,19 +149,17 @@ const Transaction = ({ transactions }) => {
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {transactions.map((transaction, index) => {
-
-                  console.log(transaction.note)
                   return (
                     <tr key={index}>
                       <td className="px-2 py-4 whitespace-nowrap text-sm">
                         <input
                           type="checkbox"
                           className="form-checkbox text-[#bb8dd9]"
-                          aria-label={`Select Payment ${transaction.payment.booking.payment_id}`}
+                          aria-label={`Select Payment ${transaction.payment.booking.id}`}
                         />
                       </td>
                       <td className="px-2 py-4 whitespace-nowrap text-sm text-[#c46aff]">
-                        {transaction.payment.booking.payment_id}
+                        {transaction.payment.booking.id}
                       </td>
                       <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
                         {transaction.payment.booking.first_name} {transaction.payment.booking.last_name}
@@ -196,14 +193,14 @@ const Transaction = ({ transactions }) => {
                       <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
                         ${transaction.amount}
                       </td>
-                      <td className="px-6 space-x-2 py-4 whitespace-nowrap text-sm">
+                      {/* <td className="px-6 space-x-2 py-4 whitespace-nowrap text-sm">
                         <button className="text-blue-500 hover:text-blue-700">
                           <FaArrowDown />
                         </button>
                         <button>
                           <RiDeleteBinLine />
                         </button>
-                      </td>
+                      </td> */}
                     </tr>
                   )
                 })}

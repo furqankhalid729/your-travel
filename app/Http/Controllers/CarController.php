@@ -20,9 +20,16 @@ use App\Models\Transaction;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\DB;
 use Exception;
+use App\Http\Controllers\WhatsAppController;
 
 class CarController extends Controller
 {
+
+    protected $whatsAppController;
+    public function __construct(WhatsAppController $whatsAppController)
+    {
+        $this->whatsAppController = $whatsAppController;
+    }
 
     /**
      * Display the specified resource.
@@ -152,7 +159,7 @@ class CarController extends Controller
                 ],
             ]);
             DB::commit();
-
+            $this->whatsAppController->sendRiderMessage($booking,$validatedData['driver_id'],$validatedData['price']);
             return response()->json(['message' => 'Driver assigned successfully!'], 200);
         } catch (Exception $e) {
             // Rollback in case of an error

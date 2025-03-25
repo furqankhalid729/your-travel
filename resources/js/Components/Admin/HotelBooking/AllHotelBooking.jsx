@@ -1,111 +1,36 @@
-import { FaArrowLeft, FaEdit, FaEye, FaTrash } from "react-icons/fa";
+import { FaArrowLeft, FaEye, FaTrash } from "react-icons/fa";
 import { Link } from "@inertiajs/react";
-// import { useNavigate  } from "react-router-dom";
+import DeleteModal from "../../../Components/deleteModal";
+import { useState } from "react";
 
-const AllHotelBooking = ({allBooking}) => {
+const AllHotelBooking = ({ allBooking }) => {
   // const navigate = useNavigate();
   console.log(allBooking)
-  const bookingData = [
-    {
-      id: 1,
-      room: "Deluxe Suite",
-      checkIn: "2024-11-21",
-      checkOut: "2024-11-25",
-      price: "$200",
-      firstName: "John",
-      lastName: "Doe",
-      email: "john.doe@mail.com",
-      phone: "+123456789",
-    },
-    {
-      id: 2,
-      room: "Standard Room",
-      checkIn: "2024-11-20",
-      checkOut: "2024-11-23",
-      price: "$150",
-      firstName: "Jane",
-      lastName: "Smith",
-      email: "jane.smith@mail.com",
-      phone: "+987654321",
-    },
-    {
-      id: 3,
-      room: "Single Room",
-      checkIn: "2024-11-22",
-      checkOut: "2024-11-24",
-      price: "$100",
-      firstName: "Alice",
-      lastName: "Johnson",
-      email: "alice.johnson@mail.com",
-      phone: "+1122334455",
-    },
-    {
-      id: 4,
-      room: "Deluxe Suite",
-      checkIn: "2024-11-21",
-      checkOut: "2024-11-25",
-      price: "$200",
-      firstName: "John",
-      lastName: "Doe",
-      email: "john.doe@mail.com",
-      phone: "+123456789",
-    },
-    {
-      id: 5,
-      room: "Standard Room",
-      checkIn: "2024-11-20",
-      checkOut: "2024-11-23",
-      price: "$150",
-      firstName: "Jane",
-      lastName: "Smith",
-      email: "jane.smith@mail.com",
-      phone: "+987654321",
-    },
-    {
-      id: 6,
-      room: "Single Room",
-      checkIn: "2024-11-22",
-      checkOut: "2024-11-24",
-      price: "$100",
-      firstName: "Alice",
-      lastName: "Johnson",
-      email: "alice.johnson@mail.com",
-      phone: "+1122334455",
-    },
-    {
-      id: 7,
-      room: "Deluxe Suite",
-      checkIn: "2024-11-21",
-      checkOut: "2024-11-25",
-      price: "$200",
-      firstName: "John",
-      lastName: "Doe",
-      email: "john.doe@mail.com",
-      phone: "+123456789",
-    },
-    {
-      id: 8,
-      room: "Standard Room",
-      checkIn: "2024-11-20",
-      checkOut: "2024-11-23",
-      price: "$150",
-      firstName: "Jane",
-      lastName: "Smith",
-      email: "jane.smith@mail.com",
-      phone: "+987654321",
-    },
-    {
-      id: 9,
-      room: "Single Room",
-      checkIn: "2024-11-22",
-      checkOut: "2024-11-24",
-      price: "$100",
-      firstName: "Alice",
-      lastName: "Johnson",
-      email: "alice.johnson@mail.com",
-      phone: "+1122334455",
-    },
-  ];
+  const [modalOpen, setModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [allBookings, setAllBookings] = useState(allBooking);
+
+  const openModal = (id) => {
+    setItemToDelete(id);
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+    setItemToDelete(null);
+  };
+
+  const deleteItem = async (id) => {
+    console.log(`Deleting item with ID: ${id}`);
+    try {
+      const response = await axios.delete(route('booking.delete', { id }));
+      console.log(response.data.message);
+      setAllBookings((prevItems) => prevItems.filter((item) => item.id !== id));
+      closeModal();
+    } catch (error) {
+      console.error("Error deleting item:", error.response?.data?.message || error.message);
+    }
+    closeModal();
+  };
 
   return (
     <div>
@@ -144,7 +69,7 @@ const AllHotelBooking = ({allBooking}) => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {allBooking.map((booking, index) => (
+              {allBookings.map((booking, index) => (
                 <tr key={index}>
                   <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
                     {booking.id}
@@ -173,13 +98,16 @@ const AllHotelBooking = ({allBooking}) => {
                     {booking.email}
                   </td>
                   <td className="px-2 py-4 whitespace-nowrap text-base flex space-x-2">
-                   
+
                     <Link
-                      href={route('hotelbooking.show',booking.booking_id)}
+                      href={route('hotelbooking.show', booking.booking_id)}
                       className="text-blue-500 px-1"
                     >
                       <FaEye />
                     </Link>
+                    <button onClick={() => openModal(booking.booking_id)} className="text-red-500">
+                      <FaTrash />
+                    </button>
                   </td>
                 </tr>
               ))}
@@ -187,6 +115,12 @@ const AllHotelBooking = ({allBooking}) => {
           </table>
         </div>
       </div>
+      <DeleteModal
+        isOpen={modalOpen}
+        onClose={closeModal}
+        onSubmit={deleteItem}
+        itemId={itemToDelete}
+      />
     </div>
   );
 };

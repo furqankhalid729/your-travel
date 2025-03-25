@@ -46,16 +46,6 @@ const CarCategory = ({ filters, modelsFilter, brandFilter }) => {
     return () => clearTimeout(timeoutId);
 }, [data]);
 
-  // useEffect(() => {
-  //   const applyFilters = () => {
-  //     get(route("car.frontendIndex"), {
-  //       replace: true,
-  //       preserveState: true,
-  //       data
-  //     });
-  //   };
-  //   applyFilters(data);
-  // }, [data]);
 
   return (
     <div className="bg-white p-4 rounded-lg">

@@ -4,7 +4,8 @@ import { AiOutlineLike } from "react-icons/ai";
 import { GoKey } from "react-icons/go";
 import { MdOutlinePayment } from "react-icons/md";
 import { Link } from "@inertiajs/react";
-
+import DeleteModal from "../../../Components/deleteModal";
+import { useState } from "react";
 
 
 const HotelBooking = ({ latestBooking, hotelRoomsCount, bookingCount }) => {
@@ -34,6 +35,31 @@ const HotelBooking = ({ latestBooking, hotelRoomsCount, bookingCount }) => {
       link: "/dashboard/hotel-booking",
     },
   ];
+  const [modalOpen, setModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  const [latestBookings, setLatestBookings] = useState(latestBooking);
+
+  const openModal = (id) => {
+    setItemToDelete(id);
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+    setItemToDelete(null);
+  };
+
+  const deleteItem = async (id) => {
+    console.log(`Deleting item with ID: ${id}`);
+    try {
+      const response = await axios.delete(route('booking.delete', { id }));
+      console.log(response.data.message);
+      setLatestBookings((prevItems) => prevItems.filter((item) => item.id !== id));
+      closeModal();
+    } catch (error) {
+      console.error("Error deleting item:", error.response?.data?.message || error.message);
+    }
+    closeModal();
+  };
   return (
     <div className="p-2 md:p-4 m-2 md:m-6 bg-white">
       <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-5">
@@ -120,7 +146,7 @@ const HotelBooking = ({ latestBooking, hotelRoomsCount, bookingCount }) => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-200">
-            {latestBooking.map((booking, index) => (
+            {latestBookings.map((booking, index) => (
               <tr key={index}>
                 <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
                   {booking.id}
@@ -149,19 +175,14 @@ const HotelBooking = ({ latestBooking, hotelRoomsCount, bookingCount }) => {
                   {booking.email}
                 </td>
                 <td className="px-2 py-4 whitespace-nowrap text-base flex space-x-2">
-                  {/* <Link
-                    href="/dashboard/hotel-booking/hotel-booking-form"
-                    className="text-green-500"
-                  >
-                    <FaEdit />
-                  </Link> */}
+
                   <Link
-                    href={route('hotelbooking.show',booking.booking_id)}
+                    href={route('hotelbooking.show', booking.booking_id)}
                     className="text-blue-500 px-1"
                   >
                     <FaEye />
                   </Link>
-                  <button className="text-red-500">
+                  <button onClick={() => openModal(booking.booking_id)} className="text-red-500">
                     <FaTrash />
                   </button>
                 </td>
@@ -170,6 +191,12 @@ const HotelBooking = ({ latestBooking, hotelRoomsCount, bookingCount }) => {
           </tbody>
         </table>
       </div>
+      <DeleteModal
+        isOpen={modalOpen}
+        onClose={closeModal}
+        onSubmit={deleteItem}
+        itemId={itemToDelete}
+      />
     </div>
   );
 };

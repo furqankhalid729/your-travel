@@ -29,6 +29,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/hotel/delete/{id}', [HotelRoomController::class, 'destroy'])->name('hotelRoom.delete');
     Route::post('/tour/add-tour', [TourController::class, 'store']);
     Route::delete('/tour/delete/{id}', [TourController::class, 'destroy'])->name('tour.delete');
+
+    Route::delete('/booking/delete/{id}', [BookingController::class, 'destroy'])->name('booking.delete');
 });
 Route::get('/locations', [LocationController::class, 'getGoogleMapSuggestions']);
 Route::get('/location-images', [LocationController::class, 'getLocationImages']);
