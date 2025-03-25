@@ -142,7 +142,8 @@ const CarAvability = ({ car }) => {
         dropout_date: '',
         pricingType: showWidget,
         distance: distance,
-        time: parseInt(selectedHours) + parseInt(additionalHours)
+        time: parseInt(selectedHours) + parseInt(additionalHours),
+        car_id: car.id
       },
     };
     dispatch(addBooking(bookingData));

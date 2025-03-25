@@ -14,7 +14,7 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
   const carItems = order.items.filter(item => item.type === "car");
   const [price, setPrice] = useState(carItems[0].price);
   const additionalInfo = JSON.parse(carItems[0].additional_info);
-  console.log(additionalInfo)
+  console.log(drivers)
   const [driverId, setDriverId] = useState(() => {
     if (additionalInfo?.driver_id) {
       return additionalInfo.driver_id;

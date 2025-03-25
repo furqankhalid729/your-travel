@@ -142,7 +142,10 @@ const DriverProfile = ({ driver, car, transactions }) => {
                       Booking ID
                     </th>
                     <th className="border border-gray-300 px-4 py-2 text-center">
-                      Date
+                      Init. Date
+                    </th>
+                    <th className="border border-gray-300 px-4 py-2 text-center">
+                      Paid Date
                     </th>
                     <th className="border border-gray-300 px-4 py-2 text-center">
                       Status
@@ -165,6 +168,11 @@ const DriverProfile = ({ driver, car, transactions }) => {
                       </td>
                       <td className="border border-gray-300 text-center px-4 py-2">
                         {new Date(data.created_at).toLocaleDateString()}
+                      </td>
+                      <td className="border border-gray-300 text-center px-4 py-2">
+                        {
+                          data.status == "paid" ? new Date(data.created_at).toLocaleDateString() : "--"
+                        }
                       </td>
                       <td className="border border-gray-300 text-center px-2 py-3 font-medium">
                         <select
