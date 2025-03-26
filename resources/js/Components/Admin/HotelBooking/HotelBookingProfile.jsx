@@ -4,9 +4,12 @@ import { BsFillCupHotFill } from "react-icons/bs";
 import { LiaStarOfLifeSolid } from "react-icons/lia";
 import { Link } from "@inertiajs/react";
 
-const HotelBookingProfile = ({booking, hotelItem}) => {
+const HotelBookingProfile = ({booking, hotelItem, hotelRoom}) => {
   console.log(booking)
   console.log(hotelItem)
+  console.log(hotelRoom)
+  const additionalInfo = JSON.parse(hotelItem.additional_info);
+  console.log(additionalInfo)
   return (
     <div className="bg-white">
       <Link
@@ -27,8 +30,8 @@ const HotelBookingProfile = ({booking, hotelItem}) => {
           <h2 className="text-xl font-semibold text-gray-800">
             {booking.first_name} {booking.last_name}
           </h2>
-          <p className="text-gray-600">A101</p>
-          <p className="text-white rounded-full px-1 bg-[#8288fc]">Male</p>
+          <p className="text-gray-600">{booking.id}</p>
+          <p className="text-white rounded-full px-1 bg-[#8288fc]">{booking.gender}</p>
         </div>
         <div className="lg:w-2/3 p-6">
           <h3 className="text-xl border-b pb-2 font-semibold text-gray-800 mb-4">
@@ -58,11 +61,11 @@ const HotelBookingProfile = ({booking, hotelItem}) => {
           <div className="grid grid-cols-2 gap-4">
             <div>
               <h1 className="block text-sm font-medium">Check-In</h1>
-              <p className="text-gray-500 mt-2">12 Dept 2024</p>
+              <p className="text-gray-500 mt-2">{additionalInfo.checkInDate}</p>
             </div>
             <div>
               <h1 className="block text-sm font-medium">Check-Out</h1>
-              <p className="text-gray-500 mt-2">12 Dept 2024</p>
+              <p className="text-gray-500 mt-2">{additionalInfo.checkOutDate}</p>
             </div>
             <div>
               <h1 className="block text-sm font-medium">No. of Guests</h1>
@@ -74,7 +77,7 @@ const HotelBookingProfile = ({booking, hotelItem}) => {
             </div>
             <div>
               <h1 className="block text-sm font-medium">Room Type</h1>
-              <p className="text-gray-500 mt-2">Deluxe</p>
+              <p className="text-gray-500 mt-2">{hotelRoom.room_type}</p>
             </div>
             <div>
               <h1 className="block text-sm font-medium">Facilities</h1>

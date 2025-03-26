@@ -65,7 +65,7 @@ const ViewTourBooking = ({allBooking}) => {
               {allBooking.map((tour, index) => (
                 <tr key={index}>
                   <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
-                    {tour.id}
+                    {tour.MainID}
                   </td>
                   <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500 font-semibold">
                     {tour.name}
@@ -93,7 +93,7 @@ const ViewTourBooking = ({allBooking}) => {
                     </span>
                   </td>
                   <td className="px-4 py-4 whitespace-nowrap text-sm flex gap-2">
-                    <Link className="text-red-500">
+                    <Link href={route('tour.booking.show',tour.MainID)} className="text-red-500">
                       <FaEye />
                     </Link>
                     <button className="text-blue-500">

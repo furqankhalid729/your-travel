@@ -1,16 +1,13 @@
-// import { useNavigate } from "react-router-dom";
-// import user from "../../assets/user.png";
 import { Link } from "@inertiajs/react";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 
-const TourBookingProfile = () => {
-  // const navigate = useNavigate();
+const TourBookingProfile = ({booking,tour}) => {
+  console.log(booking, tour)
   return (
     <div>
       <div className="bg-white flex justify-between items-center mb-6">
         <Link
-          href="/dashboard/tour-booking"
-          // onClick={() => navigate(-1)}
+          href={route('tour.dashboard')}
           className="text-gray-500 hover:text-gray-700 p-3"
         >
           <MdOutlineArrowBackIos size={20} />
@@ -30,10 +27,10 @@ const TourBookingProfile = () => {
               className="w-32 h-32 rounded-full object-cover mb-4"
             />
             <h2 className="text-xl font-semibold text-gray-800">
-              Muhammad Aadlan
+              {booking.first_name} {booking.last_name}
             </h2>
-            <p className="text-gray-600">A101</p>
-            <p className="text-white rounded-full px-1 bg-[#8288fc]">Male</p>
+            <p className="text-gray-600">{booking.id}</p>
+            <p className="text-white rounded-full px-1 bg-[#8288fc]">{booking.gender}</p>
           </div>
           <div className="my-3">
             <h1 className="pb-3 border-b font-semibold text-lg">
@@ -50,27 +47,19 @@ const TourBookingProfile = () => {
               </p>
               <p>
                 <p className="font-semibold">No. of members</p>
-                <span className="text-gray-500">2</span>
+                <span className="text-gray-500">{tour.persons}</span>
               </p>
               <p>
                 <p className="font-semibold">Price</p>
-                <span className="text-gray-500">$200</span>
+                <span className="text-gray-500">$ {tour.price}</span>
               </p>
               <p>
                 <p className="font-semibold">Tour Location</p>
-                <span className="text-gray-500">Lakhna</span>
+                <span className="text-gray-500">{tour.location}</span>
               </p>
             </div>
             <div className="mt-6">
-              <select
-                id="booking"
-                className="w-full p-3 font-semibold border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#bb8dd9]"
-              >
-                <option value="" disabled selected>
-                  Tour Detail
-                </option>
-                <option value="Booking1">Booking 1</option>
-              </select>
+              
             </div>
           </div>
         </div>
@@ -81,15 +70,15 @@ const TourBookingProfile = () => {
           <div className="grid grid-cols-2 gap-4 mb-6">
             <div>
               <h1 className="block text-sm font-medium">Name</h1>
-              <p className="text-gray-500 mt-2">Muhammad Aadlan</p>
+              <p className="text-gray-500 mt-2">{booking.first_name} {booking.last_name}</p>
             </div>
             <div>
               <h1 className="block text-sm font-medium">Identity Number</h1>
-              <p className="text-gray-500 mt-2">3520294317803</p>
+              <p className="text-gray-500 mt-2">{booking.identification_number}</p>
             </div>
             <div>
               <h1 className="block text-sm font-medium">Email</h1>
-              <p className="text-gray-500 mt-2">john.doe@example.com</p>
+              <p className="text-gray-500 mt-2">{booking.email}</p>
             </div>
             <div>
               <h1 className="block text-sm font-medium">Contact No</h1>

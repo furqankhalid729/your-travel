@@ -2,10 +2,13 @@ import React from 'react';
 import AdminLayout from "../../../Layout/AdminLayout";
 import TourBookingProfileCom from "../../../Components/Admin/TourBooking/TourBookingProfile";
 
-const TourBookingProfile = () => {
+const TourBookingProfile = ({booking,tour}) => {
   return (
     <div>
-      <TourBookingProfileCom />
+      <TourBookingProfileCom 
+        booking={booking}
+        tour={tour}
+      />
     </div>
   )
 }

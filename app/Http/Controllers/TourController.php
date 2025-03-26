@@ -24,6 +24,7 @@ class TourController extends Controller
         $allBooking = Booking::where('status', 'active')
             ->join('booking_items', 'bookings.id', '=', 'booking_items.booking_id')
             ->where('booking_items.type', 'tour')
+            ->select('bookings.id as MainID', 'bookings.*', 'booking_items.*')
             ->get();
         return Inertia::render(InertiaViews::TourDashboard->value, [
             'allBooking' => $allBooking
@@ -67,7 +68,7 @@ class TourController extends Controller
         $tourItinerary = [];
         foreach ($request->tour_itinerary as $index => $itinerary) {
             $imagePath = null;
-            Log::info("image check",[$itinerary]);
+            Log::info("image check", [$itinerary]);
             if ($request->hasFile("tour_itinerary.$index.image")) {
                 $imagePath = $request->file("tour_itinerary.$index.image")->store('images/TourItinerary');
             }
@@ -86,6 +87,36 @@ class TourController extends Controller
         ]);
         return response()->json("Success");
         //return redirect()->route('tour.index')->with('success', 'Tour Added successfully');
+    }
+
+    public function tourBooking(Request $request, $id)
+    {
+        $booking = Booking::where("id", $id)
+            ->with("items")
+            
+            ->first();
+        
+        if (!$booking)
+            return;
+
+        $tour_id = 0;
+        foreach ($booking->items as $item) {
+            $note = json_decode($item->additional_info, true);
+
+            if($item->type == "tour")
+                if (isset($note['tour_id'])) {
+                    $tour_id = $note['tour_id'];
+                }
+        }
+        Log::info("tour_id", [$tour_id]);
+        $tour = Tour::where("id", $tour_id)->first();
+        if (!$tour)
+            return;
+
+        return Inertia::render(InertiaViews::TourBookingDetail->value, [
+            'booking' => $booking,
+            'tour' => $tour
+        ]);
     }
 
     public function destroy(string $id)

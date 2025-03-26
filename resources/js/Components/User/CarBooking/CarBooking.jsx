@@ -2,10 +2,10 @@ import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeBooking } from "../../../store/bookingSlice";
 
-const CarBooking = ({setDisabled}) => {
+const CarBooking = ({ setDisabled }) => {
   const bookings = useSelector((state) => state.booking.bookings);
   const dispatch = useDispatch();
-
+  console.log(bookings)
   useEffect(() => {
     setDisabled(bookings.length === 0);
   }, [bookings]);
@@ -53,6 +53,12 @@ const CarBooking = ({setDisabled}) => {
             {booking.additional_info.dropout_location}
           </p>
           <p className="text-red-500 items-start text-md font-bold">Price : ${booking.price}</p>
+          {booking.type === 'hotel' && (
+              <p className="text-gray-500">
+                Check In Date : {booking.additional_info.checkInDate} <br></br>
+                Check Out Date : {booking.additional_info.checkOutDate}
+              </p>
+           )}
         </div>
         {booking.type === 'car' && (
           <div className="bg-white rounded-lg p-6 mt-2 border border-gray-300">

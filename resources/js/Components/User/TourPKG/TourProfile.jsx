@@ -31,6 +31,7 @@ const TourProfile = ({ tour }) => {
       price: tour.price,
       additional_info: {
         tour_location: tour.location,
+        tour_id: tour.id
       },
     };
     dispatch(addBooking(bookingData));

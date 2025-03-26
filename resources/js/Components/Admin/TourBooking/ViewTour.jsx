@@ -192,7 +192,7 @@ const ViewTour = ({ tours }) => {
                         </td>
                         <td className="px-2 py-4 whitespace-nowrap text-sm">
                           <div className="flex space-x-2">
-                            <Link href={route('tour.show', tour.id)} target="_blank"
+                            <Link href={route('tour.booking.show', tour.id)} target="_blank"
                               rel="noopener noreferrer" className="text-red-500">
                               <FaEye />
                             </Link>

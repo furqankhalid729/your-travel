@@ -12,6 +12,7 @@ use App\Models\BookingItem;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 
+
 class AdminDashboardController extends Controller
 {
     public function index(Request $request)
@@ -142,6 +143,14 @@ class AdminDashboardController extends Controller
         });
         return Inertia::render(InertiaViews::AdminCustomer->value, [
             'customers' => $customers
+        ]);
+    }
+    public function customerOrder($id){
+        $user = User::where("id",$id)->first();
+        $bookings = Booking::where("email",$user->email)->with("items")->get();
+        Log::info("bookings", [$bookings]);
+        return Inertia::render(InertiaViews::AdminCustomerOrder->value, [
+            'bookings' => $bookings
         ]);
     }
 }

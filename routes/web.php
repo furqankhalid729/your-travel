@@ -97,16 +97,16 @@ Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/dashboard/hotel/edit/{id}', [HotelRoomController::class, 'edit'])->name('hotel.edit');
     Route::put('/dashboard/hotel/update/{id}', [HotelRoomController::class, 'update'])->name('hotel.update');
     Route::get('/dashboard/hotel-booking/hotel-booking-profile/{id}', [HotelBookingController::class, 'show'])->name('hotelbooking.show');
-
-
     Route::get('/dashboard/tour-booking/view-tour', [TourController::class, 'index'])->name('tour.index');
     Route::get('/dashboard/tour-booking', [TourController::class, 'tourDashboard'])->name('tour.dashboard');
+    Route::get('/dashboard/tour-booking/profile/{id}',[TourController::class, 'tourBooking'])->name('tour.booking.show');
     Route::get('/dashboard/tour-booking/add-tour', function () {
         return Inertia::render('Admin/TourBooking/AddTour');
     })->name("tour.create");
     Route::get('/dashboard/enquiries', [EnquiryController::class, 'index'])->name('enquiry.index');
     Route::get('/dashboard/enquiries/details/{id}', [EnquiryController::class, 'show'])->name('enquiry.detail');
     Route::get('/dashboard/customers', [AdminDashboardController::class, 'customerIndex'])->name('customer.index');
+    Route::get('/dashboard/customers/orders/{id}', [AdminDashboardController::class, 'customerOrder'])->name('customer.order.index');
 
     Route::get('/dashboard/payments', [AdminPaymentController::class, 'index'])->name('payment.index');
     Route::get('/dashboard/transaction', [AdminTransactionController::class, 'index'])->name('transaction.index');
@@ -161,9 +161,6 @@ Route::get('/dashboard/tour-booking/add-tour-booking', function () {
     return Inertia::render('Admin/TourBooking/AddTourBooking');
 });
 
-Route::get('/dashboard/tour-booking/profile', function () {
-    return Inertia::render('Admin/TourBooking/TourBookingProfile');
-});
 
 Route::get('/dashboard/tour-booking/tour-draft', function () {
     return Inertia::renader('Admin/TourBooking/TourDraftPage');

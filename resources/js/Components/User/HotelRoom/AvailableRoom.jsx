@@ -20,13 +20,15 @@ const TypeIconMapping = {
 
 const AvailableRoom = ({ hotel, hotelRooms }) => {
   console.log(hotel)
-  const [bookingDate, setBookingDate] = useState("");
+  const date = new Date();
+  date.setDate(date.getDate() + 2);
+  const [checkInDate, setCheckInDate] = useState( new Date().toISOString().split("T")[0]);
+  const [checkOutDate, setCheckOutDate] = useState(date.toISOString().split("T")[0]);
   const [selectedPeople, setSelectedPeople] = useState("2 persons");
   const { auth } = usePage().props;
   const dispatch = useDispatch();
 
-  const date = new Date();
-  date.setDate(date.getDate() + 2);
+
   const options = { day: "numeric", month: "long", year: "numeric" };
   const newDateString = date.toLocaleDateString("en-US", options);
 
@@ -43,7 +45,9 @@ const AvailableRoom = ({ hotel, hotelRooms }) => {
       price: price,
       additional_info: {
         hotel_location: hotel.location,
-        room_id: id
+        room_id: id,
+        checkInDate:checkInDate,
+        checkOutDate:checkOutDate
       },
     };
     dispatch(addBooking(bookingData));
@@ -55,7 +59,7 @@ const AvailableRoom = ({ hotel, hotelRooms }) => {
     <div id="availablity">
       <div className="max-w-4xl  my-8 ">
         <h2 className="text-2xl font-bold mb-4">Availability</h2>
-        <div className="flex  rounded-lg overflow-hidden border border-red-500 text-[8px] md:text-lg">
+        <div className="flex flex-col md:flex-row rounded-lg overflow-hidden border border-red-500 text-[8px] md:text-lg">
           {/* Date Picker Section */}
           <div className="flex items-center px-4 py-3  flex-grow ">
             <div className='flex items-center'>
@@ -63,10 +67,24 @@ const AvailableRoom = ({ hotel, hotelRooms }) => {
               <input
                 type="date"
                 className="text-gray-400 text-sm border-0 p-2 rounded"
-                value={bookingDate}
-                onChange={(e) => setBookingDate(e.target.value)}
+                value={checkInDate}
+                onChange={(e) => setCheckInDate(e.target.value)}
               />
             </div>
+            
+          </div>
+
+           <div className="flex items-center px-4 py-3  flex-grow border border-l-red-600 ">
+            <div className='flex items-center'>
+              <FaCalendarAlt className="text-gray-500 mr-2 text-[15px]" />
+              <input
+                type="date"
+                className="text-gray-400 text-sm border-0 p-2 rounded"
+                value={checkOutDate}
+                onChange={(e) => setCheckOutDate(e.target.value)}
+              />
+            </div>
+            
           </div>
 
           {/* Guests Section */}
