@@ -3,7 +3,7 @@ import { useForm } from "@inertiajs/react";
 import { useSelector, useDispatch } from "react-redux";
 import { clearBookings } from "../../../store/bookingSlice";
 
-const BookingForm = ({disabled}) => {
+const BookingForm = ({ disabled }) => {
   const dispatch = useDispatch();
   const bookings = useSelector((state) => state.booking.bookings);
 
@@ -30,7 +30,7 @@ const BookingForm = ({disabled}) => {
   });
   console.log(data)
   const [csrfToken, setCsrfToken] = useState("");
-  
+
   // useEffect(() => {
   //   const token = document.querySelector('meta[name="csrf-token"]')?.content;
   //   if (token) {
@@ -91,17 +91,24 @@ const BookingForm = ({disabled}) => {
             </div>
             <div>
               <label className="block text-gray-600 text-sm mb-2">Identification Number</label>
-              <input required type="text" name="id_number" value={data.id_number} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500" />
+              <input required type="text" name="identification_number" value={data.identification_number} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500" />
             </div>
           </div>
 
           {/* Email */}
-          <div className="mb-4">
-            <label className="block text-gray-600 text-sm mb-2">Email</label>
-            <input required type="email" name="email" value={data.email} onChange={handleChange} className="w-full md:w-1/2 border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500" />
+          <div className="grid md:grid-cols-2 gap-4 mb-4">
+            <div>
+              <div className="mb-4">
+                <label className="block text-gray-600 text-sm mb-2">Email</label>
+                <input required type="email" name="email" value={data.email} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500" />
+              </div>
+              <p className="text-sm text-gray-600 mb-4">Email verification is sent to this address.</p>
+            </div>
+            <div>
+              <label className="block text-gray-600 text-sm mb-2">Phone Number</label>
+              <input required type="text" name="phone_number" value={data.phone_number} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500" />
+            </div>
           </div>
-
-          <p className="text-sm text-gray-600 mb-4">Email verification is sent to this address.</p>
           <hr className="border-gray-300 mb-4" />
 
           {/* Address Details */}

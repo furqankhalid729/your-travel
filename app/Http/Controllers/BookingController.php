@@ -42,6 +42,7 @@ class BookingController extends Controller
             'items.*.name'          => 'required|string|max:255',
             'items.*.price'         => 'required|numeric|min:0',
             'items.*.additional_info' => 'nullable|array',
+            'phone_number' => 'required|string'
         ]);
         if ($validator->fails()) {
             return response()->json([
@@ -64,6 +65,7 @@ class BookingController extends Controller
                 'postal_code'           => $request->postal_code,
                 'country'               => $request->country,
                 'payment_id'            => $request->payment_id,
+                'phone_number'          => $request->phone_number
             ]);
 
             $totalAmount = 0;

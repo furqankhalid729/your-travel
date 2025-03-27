@@ -272,6 +272,10 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
                 <div className="text-sm text-gray-600">{order.email}</div>
               </div>
             </div>
+            <div>
+                <div className="text-sm font-medium">Phone Number</div>
+                <div className="text-sm text-gray-600">{order?.phone_number}</div>
+              </div>
           </div>
           <div>
             <div className="bg-white border p-5 rounded-md">

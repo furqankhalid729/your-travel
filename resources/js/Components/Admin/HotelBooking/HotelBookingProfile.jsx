@@ -52,7 +52,7 @@ const HotelBookingProfile = ({booking, hotelItem, hotelRoom}) => {
             </div>
             <div>
               <h1 className="block text-sm font-medium">Contact No</h1>
-              <p className="text-gray-500 mt-2">+1 234 567 890</p>
+              <p className="text-gray-500 mt-2">{booking?.phone_number}</p>
             </div>
           </div>
           <h3 className="text-xl border-b pb-2 font-semibold text-gray-800 mb-4">

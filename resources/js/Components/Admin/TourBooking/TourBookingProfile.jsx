@@ -82,7 +82,7 @@ const TourBookingProfile = ({booking,tour}) => {
             </div>
             <div>
               <h1 className="block text-sm font-medium">Contact No</h1>
-              <p className="text-gray-500 mt-2">+1 234 567 890</p>
+              <p className="text-gray-500 mt-2">{booking.phone_number}</p>
             </div>
           </div>
           <div>
