@@ -26,17 +26,10 @@ const BookingForm = ({ disabled }) => {
     cvc: "",
     terms_agreed: false,
     payment_id: "37864837434",
-    bookings: bookings
+    bookings: bookings,
+    additional_members: []
   });
   console.log(data)
-  const [csrfToken, setCsrfToken] = useState("");
-
-  // useEffect(() => {
-  //   const token = document.querySelector('meta[name="csrf-token"]')?.content;
-  //   if (token) {
-  //     setCsrfToken(token);
-  //   }
-  // }, []);
 
   const handleChange = (e) => {
     setData({
@@ -45,6 +38,35 @@ const BookingForm = ({ disabled }) => {
         e.target.type === "checkbox" ? e.target.checked : e.target.value,
     });
   };
+
+  const handleAddMember = () => {
+    setData("additional_members", [
+      ...data.additional_members,
+      {
+        first_name: "",
+        last_name: "",
+        gender: "",
+        identification_number: "",
+        email: "",
+        phone_number: ""
+      }
+    ]);
+  };
+
+  const handleRemoveMember = (index) => {
+    setData(
+      "additional_members",
+      data.additional_members.filter((_, i) => i !== index)
+    );
+  };
+
+  const handleMemberChange = (index, event) => {
+    const { name, value } = event.target;
+    const updatedMembers = [...data.additional_members];
+    updatedMembers[index][name] = value;
+    setData("additional_members", updatedMembers);
+  };
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -109,6 +131,106 @@ const BookingForm = ({ disabled }) => {
               <input required type="text" name="phone_number" value={data.phone_number} onChange={handleChange} className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500" />
             </div>
           </div>
+          <hr className="border-gray-300 mb-4" />
+
+          <div className="mb-4">
+            {data.additional_members.map((member, index) => (
+              <div key={index} className="border p-4 rounded-lg mb-4">
+                <h3 className="text-lg font-semibold mb-2">Additional Member {index + 1}</h3>
+                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-gray-600 text-sm mb-2">First Name</label>
+                    <input
+                      required
+                      type="text"
+                      name="first_name"
+                      value={member.first_name}
+                      onChange={(e) => handleMemberChange(index, e)}
+                      className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-gray-600 text-sm mb-2">Last Name</label>
+                    <input
+                      required
+                      type="text"
+                      name="last_name"
+                      value={member.last_name}
+                      onChange={(e) => handleMemberChange(index, e)}
+                      className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500"
+                    />
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-gray-600 text-sm mb-2">Gender</label>
+                    <select
+                      name="gender"
+                      value={member.gender}
+                      onChange={(e) => handleMemberChange(index, e)}
+                      className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500"
+                    >
+                      <option value="">Select Gender</option>
+                      <option value="male">Male</option>
+                      <option value="female">Female</option>
+                      <option value="other">Other</option>
+                    </select>
+                  </div>
+                  <div>
+                    <label className="block text-gray-600 text-sm mb-2">Identification Number</label>
+                    <input
+                      required
+                      type="text"
+                      name="identification_number"
+                      value={member.identification_number}
+                      onChange={(e) => handleMemberChange(index, e)}
+                      className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500"
+                    />
+                  </div>
+                </div>
+                <div className="grid md:grid-cols-2 gap-4 mb-4">
+                  <div>
+                    <label className="block text-gray-600 text-sm mb-2">Email</label>
+                    <input
+                      required
+                      type="email"
+                      name="email"
+                      value={member.email}
+                      onChange={(e) => handleMemberChange(index, e)}
+                      className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-gray-600 text-sm mb-2">Phone Number</label>
+                    <input
+                      required
+                      type="text"
+                      name="phone_number"
+                      value={member.phone_number}
+                      onChange={(e) => handleMemberChange(index, e)}
+                      className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring-2 focus:ring-red-500"
+                    />
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => handleRemoveMember(index)}
+                  className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600"
+                >
+                  Remove Member
+                </button>
+              </div>
+            ))}
+
+            <button
+              type="button"
+              onClick={handleAddMember}
+              className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600"
+            >
+              Add Additional Member
+            </button>
+          </div>
+
           <hr className="border-gray-300 mb-4" />
 
           {/* Address Details */}

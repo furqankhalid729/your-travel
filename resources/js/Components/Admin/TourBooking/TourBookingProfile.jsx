@@ -1,7 +1,7 @@
 import { Link } from "@inertiajs/react";
 import { MdOutlineArrowBackIos } from "react-icons/md";
 
-const TourBookingProfile = ({booking,tour}) => {
+const TourBookingProfile = ({ booking, tour }) => {
   console.log(booking, tour)
   return (
     <div>
@@ -59,7 +59,7 @@ const TourBookingProfile = ({booking,tour}) => {
               </p>
             </div>
             <div className="mt-6">
-              
+
             </div>
           </div>
         </div>
@@ -89,45 +89,42 @@ const TourBookingProfile = ({booking,tour}) => {
             <h3 className="text-lg border-b pb-2 font-semibold text-gray-800 mb-4">
               Members
             </h3>
-            {["01", "02", "03"].map((member) => (
-              <div key={member} className="mb-6">
+            {booking.customer_data?.map((customer, index) => (
+              <div key={index} className="mb-6">
                 <h4 className="text-2xl font-semibold text-gray-700 mb-4">
-                  Member {member}
+                  Member {index +1}
                 </h4>
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <h1 className="block text-lg font-medium">Name</h1>
-                    <p className="text-gray-500 mt-2">John Doe {member}</p>
+                    <p className="text-gray-500 mt-2">{customer.first_name} {customer.last_name}</p>
                   </div>
                   <div>
                     <h1 className="block text-lg font-medium">
                       Identity Number
                     </h1>
-                    <p className="text-gray-500 mt-2">1234567890{member}</p>
+                    <p className="text-gray-500 mt-2">{customer.identification_number}</p>
                   </div>
                   <div>
                     <h1 className="block text-lg font-medium">Email</h1>
                     <p className="text-gray-500 mt-2">
-                      member{member}@example.com
+                    {customer.email}
                     </p>
                   </div>
                   <div>
                     <h1 className="block text-lg font-medium">Contact No</h1>
-                    <p className="text-gray-500 mt-2">+1 987 654 32{member}</p>
+                    <p className="text-gray-500 mt-2">{customer.phone_number}</p>
                   </div>
                   <div>
                     <h1 className="block text-lg font-medium">Gender</h1>
-                    <p className="text-gray-500 mt-2">Male</p>
+                    <p className="text-gray-500 mt-2">{customer.gender}</p>
                   </div>
-                  <div>
-                    <h1 className="block text-lg font-medium">Age</h1>
-                    <p className="text-gray-500 mt-2">
-                      {20 + parseInt(member)}
-                    </p>
-                  </div>
+                  
                 </div>
               </div>
-            ))}
+            )
+            )}
+           
           </div>
         </div>
       </div>
