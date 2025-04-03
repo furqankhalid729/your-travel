@@ -25,7 +25,7 @@ export default function BookingHistory({ orders }) {
                                 {new Date(order.created_at).toLocaleDateString()}
                             </td>
                             <td className="border border-gray-300 px-4 py-2">
-                                {order.items.reduce((sum, item) => sum + (item.price || 0), 0)}
+                                {order.items.reduce((sum, item) => parseFloat(sum) + (parseFloat(item.price) || 0), 0)}
                             </td>
                             <td className="border border-gray-300 px-4 py-2">
                                 {order.items[0]?.name}
