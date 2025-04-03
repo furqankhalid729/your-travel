@@ -119,7 +119,7 @@ const Transaction = ({ transactions }) => {
           <div className="flex justify-between items-center mb-5">
             <h2 className="text-xl font-semibold">All Transaction</h2>
           </div>
-          <div className="rounded-lg overflow-x-auto">
+          <div className="rounded-lg overflow-x-auto  max-w-[1200px]">
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="border-t">
                 <tr>

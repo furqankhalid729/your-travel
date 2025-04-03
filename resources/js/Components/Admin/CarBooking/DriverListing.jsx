@@ -39,7 +39,7 @@ const DriverListing = ({ drivers }) => {
             Add New Driver
           </Link>
         </div>
-        <div className="p-3 bg-white rounded-lg shadow overflow-x-auto">
+        <div className="p-3 bg-white rounded-lg shadow overflow-x-auto  max-w-[1200px]">
           <table className="min-w-full divide-y divide-gray-200">
             <thead>
               <tr>

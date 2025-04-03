@@ -97,7 +97,7 @@ const Payments = ({payments,current_month, previous_month, percentage_change}) =
         <div className="flex justify-between items-center mb-5">
           <h2 className="text-xl font-semibold">All Payments</h2>
         </div>
-        <div className="bg-white rounded-lg overflow-x-auto">
+        <div className="bg-white rounded-lg overflow-x-auto  max-w-[1200px]">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="border-t">
               <tr>

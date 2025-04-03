@@ -38,7 +38,7 @@ const ViewTourBooking = ({allBooking}) => {
             </div>
           </div>
         </div>
-        <div className="bg-white rounded-lg overflow-x-auto">
+        <div className="bg-white rounded-lg overflow-x-auto  max-w-[1200px]">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="border-t">
               <tr>

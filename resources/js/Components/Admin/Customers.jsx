@@ -7,7 +7,7 @@ const Customers = ({customers}) => {
         <h2 className="text-2xl md:text-3xl font-semibold text-left mb-4">
           Customers
         </h2>
-        <div className="overflow-x-auto">
+        <div className="overflow-x-auto  max-w-[1200px]">
           <table className="min-w-full border-collapse border-t border-gray-300">
             <thead>
               <tr>

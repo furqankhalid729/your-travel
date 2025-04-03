@@ -7,6 +7,7 @@ import AccountSettings from "./AccountSettings";
 function FeaturedProfile() {
   const { auth } = usePage().props;
   const orders = auth.orders;
+  const activeOrders = orders.filter(order => order.status === "active");
   console.log(orders)
   const [activeTab, setActiveTab] = useState("history");
 
@@ -15,10 +16,10 @@ function FeaturedProfile() {
       <div className="bg-red-600 mx-4 rounded-lg sm:mx-20 mt-12">
         <div className="flex flex-col sm:grid sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 items-center py-4 text-center px-10 justify-center">
           {[
-            { id: "history", label: "Booking History" },
+            { id: "history", label: "Overview" },
             { id: "new", label: "New Booking" },
-            { id: "favorites", label: "My Favourites" },
-            { id: "settings", label: "Account Setting" },
+            { id: "favorites", label: "Wishlist" },
+            { id: "settings", label: "Setting" },
           ].map((tab) => (
             <button
               key={tab.id}
@@ -33,8 +34,8 @@ function FeaturedProfile() {
       </div>
 
       <div className="block max-w-[1250px] mx-auto my-10">
-        {activeTab === "history" && <BookingHistory orders={orders} />}
-        {activeTab === "new" && <NewBooking orders={orders} />}
+        {activeTab === "history" && <BookingHistory orders={activeOrders} />}
+        {activeTab === "new" && <BookingHistory orders={orders} />}
         {activeTab === "favorites" && <Favorites />}
         {activeTab === "settings" && <AccountSettings />}
       </div>

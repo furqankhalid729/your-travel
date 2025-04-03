@@ -289,7 +289,7 @@ const ViewRooms = () => {
             Add More Rooms
           </Link>
         </div>
-        <div className="rounded-lg overflow-x-auto">
+        <div className="rounded-lg overflow-x-auto  max-w-[1200px]">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-gray-100">
               <tr>

@@ -15,12 +15,12 @@ const ProfileTab = () => {
         />
 
         {/* Upload Photo Button */}
-        <div className="absolute right-4 bottom-4 flex items-center space-x-2">
+        {/* <div className="absolute right-4 bottom-4 flex items-center space-x-2">
           <FaCamera className="text-white text-lg" />
           <button className="bg-red-600 text-white text-xs px-4 py-1 rounded-md shadow-md hover:bg-red-700">
             Upload Cover Photo
           </button>
-        </div>
+        </div> */}
 
         {/* Profile Photo */}
         <div className="absolute left-8 bottom-[-62px]">

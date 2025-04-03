@@ -43,7 +43,7 @@ const AllHotels = ({ hotels }) => {
           <span>Back</span>
         </Link>
         <h1 className="text-2xl text-[#808080] mb-4">All Hotels</h1>
-        <div className="rounded-lg border-t overflow-x-auto">
+        <div className="rounded-lg border-t overflow-x-auto  max-w-[1200px]">
           <table className="min-w-full divide-y divide-gray-200">
             <thead>
               <tr>

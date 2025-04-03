@@ -128,7 +128,7 @@ const DriverProfile = ({ driver, car, transactions }) => {
           </div>
           <div className="bg-white shadow rounded-lg">
             <h2 className="text-2xl font-semibold mb-4">Payment Details</h2>
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto  max-w-[1200px]">
               <table className="table-auto w-full border-collapse border border-gray-200">
                 <thead>
                   <tr className="bg-gray-100">

@@ -44,7 +44,7 @@ const AllHotelBooking = ({ allBooking }) => {
       </Link>
       <div className="p-2 md:p-4 mx-2 md:mx-6 bg-white">
         <h1 className="text-2xl text-[#808080] mb-4">All Hotel Bookings</h1>
-        <div className="rounded-lg border-t overflow-x-auto">
+        <div className="rounded-lg border-t overflow-x-auto  max-w-[1200px]">
           <table className="min-w-full divide-y divide-gray-200">
             <thead>
               <tr>

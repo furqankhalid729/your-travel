@@ -22,12 +22,14 @@ import {
     FaArrowRight,
     FaBars,
     FaTimes,
+    FaChevronDown,
+    FaChevronUp
 } from "react-icons/fa";
 
 const AdminLayout = ({ title, children }) => {
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const user = usePage().props.auth.user;
-
+    const [openDropdown, setOpenDropdown] = useState(null);
     const { url } = usePage();
     const isActive = (path) => {
         return url.replace("/dashboard") === path.replace("/dashboard")
@@ -36,6 +38,9 @@ const AdminLayout = ({ title, children }) => {
     const handleRouteChange = () => {
         setSidebarOpen(false);
     };
+    const toggleDropdown = (name) => {
+        setOpenDropdown(openDropdown === name ? null : name);
+      };
     const links = [
         { to: "/dashboard", icon: <FaHome />, name: "Dashboard" },
         { to: "/dashboard/car-booking", icon: <FaCar />, name: "Car Booking" },
@@ -43,11 +48,18 @@ const AdminLayout = ({ title, children }) => {
         { to: "/dashboard/tour-booking", icon: <FaSuitcase />, name: "Tour Booking" },
         { to: "/dashboard/customers", icon: <FaUsers />, name: "Customers" },
         { to: "/dashboard/enquiries", icon: <FaEnvelope />, name: "Enquiries" },
-        { to: "/dashboard/payments", icon: <FaCreditCard />, name: "Payments" },
-        { to: "/dashboard/transaction", icon: <FaExchangeAlt />, name: "Transaction" },
-        { to: "/dashboard/reports", icon: <FaChartBar />, name: "Reports" },
+        {
+          name: "Finance",
+          icon: <FaChartBar />,
+          isDropdown: true, // Indicate it's an accordion
+          subLinks: [
+            { to: "/dashboard/payments", icon: <FaCreditCard />, name: "Payments" },
+            { to: "/dashboard/transaction", icon: <FaExchangeAlt />, name: "Transaction" },
+          ],
+        },
+        // { to: "/dashboard/reports", icon: <FaChartBar />, name: "Reports" },
         { to: "/dashboard/settings/general", icon: <FaCog />, name: "Settings" },
-    ];
+      ];
     return (
         <>
             <Head title={title} />
@@ -81,22 +93,59 @@ const AdminLayout = ({ title, children }) => {
                     <div className="flex-1">
                         <div className="bg-[#2e2532] w-64 h-full text-white lg:flex flex-col hidden">
                             <nav className="flex-1 p-4 space-y-4">
-                                {links.map((item) => (
-                                    <Link
-                                        key={item.to}
-                                        href={item.to}
-                                        onClick={handleRouteChange}
-                                        className={`relative flex items-center gap-4 px-4 py-2 rounded hover:bg-gray-700 transition ${isActive(item.to) ? "text-white" : "text-gray-400"
-                                            }`}
-                                    >
-                                        {isActive(item.to) && (
-                                            <span className="absolute left-0 top-1/2 -translate-y-1/2 bg-[#e0b0ff] h-full w-1 p-1 rounded" />
-                                        )}
-                                        {item.icon}
-                                        <span>{item.name}</span>
-                                        <FaArrowRight className="ml-auto" />
-                                    </Link>
-                                ))}
+                            {links.map((item) => (
+        <div key={item.name || item.to}>
+          {/* If it's a dropdown */}
+          {item.isDropdown ? (
+            <div>
+              <button
+                onClick={() => toggleDropdown(item.name)}
+                className="w-full flex items-center justify-between px-4 py-2 rounded hover:bg-gray-700 transition text-gray-400"
+              >
+                <div className="flex items-center gap-4">
+                  {item.icon}
+                  <span>{item.name}</span>
+                </div>
+                {openDropdown === item.name ? <FaChevronUp /> : <FaChevronDown />}
+              </button>
+
+              {/* Render Sub-links */}
+              {openDropdown === item.name && (
+                <div className="ml-6 mt-2 space-y-2">
+                  {item.subLinks.map((subItem) => (
+                    <Link
+                      key={subItem.to}
+                      href={subItem.to}
+                      className={`flex items-center gap-4 px-4 py-2 rounded hover:bg-gray-700 transition ${
+                        isActive(subItem.to) ? "text-white" : "text-gray-400"
+                      }`}
+                    >
+                      {subItem.icon}
+                      <span>{subItem.name}</span>
+                      <FaArrowRight className="ml-auto" />
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
+          ) : (
+            // Regular links
+            <Link
+              href={item.to}
+              className={`relative flex items-center gap-4 px-4 py-2 rounded hover:bg-gray-700 transition ${
+                isActive(item.to) ? "text-white" : "text-gray-400"
+              }`}
+            >
+              {isActive(item.to) && (
+                <span className="absolute left-0 top-1/2 -translate-y-1/2 bg-[#e0b0ff] h-full w-1 p-1 rounded" />
+              )}
+              {item.icon}
+              <span>{item.name}</span>
+              <FaArrowRight className="ml-auto" />
+            </Link>
+          )}
+        </div>
+      ))}
                             </nav>
                         </div>
 

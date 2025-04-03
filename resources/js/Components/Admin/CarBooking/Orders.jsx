@@ -36,7 +36,7 @@ const Orders = ({ activeBooking }) => {
       <div className="flex justify-between items-center my-2">
         <h2 className="text-3xl font-semibold text-[#808080]">Orders</h2>
       </div>
-      <div className="p-3 bg-white rounded-lg shadow overflow-x-auto">
+      <div className="p-3 bg-white rounded-lg shadow overflow-x-auto  max-w-[1200px]">
         <table className="min-w-full divide-y divide-gray-200">
           <thead>
             <tr>
