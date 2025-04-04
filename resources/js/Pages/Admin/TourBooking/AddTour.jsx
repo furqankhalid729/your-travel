@@ -1,11 +1,13 @@
 import React from 'react';
 import AdminLayout from "../../../Layout/AdminLayout";
-import AddTourCom from "../../../Components/Admin/TourBooking/AddTour";
+// import AddTourCom from "../../../Components/Admin/TourBooking/AddTour";
+import TabsTour from '../../../Components/Admin/TourBooking/TabsTours';
 
 const AddTour = () => {
   return (
     <div>
-      <AddTourCom />
+      {/* <AddTourCom /> */}
+      <TabsTour />
     </div>
   )
 }
