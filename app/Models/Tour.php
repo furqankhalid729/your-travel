@@ -21,6 +21,24 @@ class Tour extends Model
         'includedExcludedTypes',
         'condition',
         'tour_itinerary',
+        
+        'slots',
+        'keywords',
+        'transport_time',
+        'transport_provider',
+        'start_location',
+        'end_location',
+        'start_date',
+        'end_date',
+        'estimated_time',
+        'adults',
+        'adult_cost',
+        'adult_margin',
+        'adult_total_price',
+        'children',
+        'child_cost',
+        'child_margin',
+        'child_total_price',
     ];
 
     protected $casts = [

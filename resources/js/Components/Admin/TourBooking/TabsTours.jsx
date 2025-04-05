@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useForm } from "@inertiajs/react";
+import { useForm, router } from "@inertiajs/react";
 import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6';
 import DetailsTab from './Tabs/DetailsTab';
 import AddRouteDetails from './Tabs/AddRouteDetails';
@@ -81,65 +81,68 @@ const TabsTours = () => {
         child_cost: 0,
         child_margin: 0,
         child_total_price: 0,
+
+        food: "food",
+        tour_type: "tour_type",
+        condition: "condition"
     });
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-
         formData.append("duration", data.duration);
         formData.append("persons", data.persons);
         formData.append("slots", data.slots);
         formData.append("price", data.price);
         formData.append("name", data.name);
         formData.append("keywords", data.keywords);
-        formData.append("description", data.description);
+        formData.append("summary", data.description);
         formData.append("transport_time", data.transport_time);
         formData.append("transport_provider", data.transport_provider);
+        formData.append("location", data.start_location);
+
         formData.append("start_location", data.start_location);
         formData.append("end_location", data.end_location);
         formData.append("start_date", data.start_date);
         formData.append("end_date", data.end_date);
         formData.append("trip_duration", data.trip_duration);
         formData.append("estimated_time", data.estimated_time);
-        formData.append("adult", data.adult);
+        formData.append("adults", data.adult);
         formData.append("adult_cost", data.adult_cost);
         formData.append("adult_margin", data.adult_margin);
         formData.append("adult_total_price", data.adult_total_price);
-        formData.append("child", data.child);
+        formData.append("children", data.child);
         formData.append("child_cost", data.child_cost);
         formData.append("child_margin", data.child_margin);
         formData.append("child_total_price", data.child_total_price);
-
-
         const facilitiesArray = (data.facilities || "")
             .split(",")
             .map((facility) => facility.trim())
-            .filter((facility) => facility !== ""); // Remove empty values
+            .filter((facility) => facility !== "");
         formData.append("facilities", JSON.stringify(facilitiesArray));
-
-
-        // Convert tour_images to an array of file names or metadata
         const imageArray = data.tour_images.map((imageObj) => ({
-            name: imageObj.file?.name || null, // Store file name
-            size: imageObj.file?.size || null, // Store file size (optional)
-            type: imageObj.file?.type || null, // Store file type (optional)
+            name: imageObj.file?.name || null,
+            size: imageObj.file?.size || null,
+            type: imageObj.file?.type || null,
         }));
-        formData.append("tour_images", JSON.stringify(imageArray));
 
-        formData.append("tour_itinerary", JSON.stringify(data.tour_itinerary)); // Send features as JSON string
-        // data.tour_itinerary.forEach((item, index) => {
-        //     formData.append(`tour_itinerary[${index}][day]`, item.day);
-        //     if (item.image instanceof File) {
-        //         formData.append(`tour_itinerary[${index}][image]`, item.image);
-        //     }
-        // });
+        //formData.append("tour_images", JSON.stringify(imageArray));
+        const files = data.tour_images;  // This should be an array of file objects
+
+        data.tour_images.forEach((imageFile) => {
+            formData.append("tour_images[]", imageFile.file);
+        });
+        formData.append("tour_itinerary", JSON.stringify(data.tour_itinerary));
+
+        formData.append("food", "food");
+        formData.append("tour_type", "tour_type");
+        formData.append("condition", "condition");
 
         for (let [key, value] of formData.entries()) {
             console.log(`${key}: ${value}`);
         }
-
         try {
-            await post("/api/tour/add-tour", formData, {
+            router.post("/api/tour/add-tour", formData, {
+                forceFormData: true,
                 onSuccess: () => {
                     setMessage("tour added successfully!");
                 },
@@ -152,7 +155,6 @@ const TabsTours = () => {
 
     return (
         <div className=" p-5 bg-white m-5">
-
             {/* Step Number div */}
             <div className='w-full mb-7 sm:w-[70%] mx-auto '>
                 <div className='flex justify-between items-center gap-2 font-[600] text-[24px] leading-[29px]'>

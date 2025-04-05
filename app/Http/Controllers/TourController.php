@@ -33,12 +33,23 @@ class TourController extends Controller
 
     public function store(Request $request)
     {
+        Log::info("Tour Request", [$request->all()]);
+        $facilities = json_decode($request->facilities, true);
+        $request->merge(['facilities' => $facilities]);
+
+        // $tourImages = json_decode($request->tour_images, true);
+        // $request->merge(['tour_images' => $tourImages]);
+
+        $tour_itinerary = json_decode($request->tour_itinerary, true);
+        $request->merge(['tour_itinerary' => $tour_itinerary]);
+
+        $request->merge(['includedExcludedTypes' => ["includedExcludedTypes"]]);
         $validated = $request->validate([
             'name' => 'required|string',
             'duration' => 'required|string',
-            'location' => 'required|string',
-            'food' => 'required|string',
-            'tour_type' => 'required|string',
+            'location' => 'nullable|string',
+            'food' => 'nullable|string',
+            'tour_type' => 'nullable|string',
             'persons' => 'required|integer',
             'price' => 'required|numeric',
 
@@ -51,13 +62,33 @@ class TourController extends Controller
             'condition' => 'required|string',
             'tour_itinerary' => 'required|array',
             'tour_itinerary.*.file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
+            'slots' => 'nullable|string',
+            'keywords' => 'nullable|string',
+            'transport_time' => 'nullable|string',
+            'transport_provider' => 'nullable|string',
+            'start_location' => 'nullable|string',
+            'end_location' => 'nullable|string',
+            'start_date' => 'nullable|date',
+            'end_date' => 'nullable|date',
+            'estimated_time' => 'nullable|string',
+
+            'adults' => 'nullable|integer',
+            'adult_cost' => 'nullable|numeric',
+            'adult_margin' => 'nullable|numeric',
+            'adult_total_price' => 'nullable|numeric',
+
+            'children' => 'nullable|integer',
+            'child_cost' => 'nullable|numeric',
+            'child_margin' => 'nullable|numeric',
+            'child_total_price' => 'nullable|numeric',
         ]);
 
         $tourImages = [];
         if ($request->has('tour_images') && !empty($request->file('tour_images'))) {
             foreach ($request->file('tour_images') as $tourImage) {
-                if (isset($tourImage['file']) && $tourImage['file'] instanceof \Illuminate\Http\UploadedFile) {
-                    $path = $tourImage['file']->store('images/Tour');
+                if ($tourImage instanceof \Illuminate\Http\UploadedFile) {
+                    $path = $tourImage->store('images/Tour');
                     $tourImages[] = $path;
                 } else {
                     Log::error('Not an instance of UploadedFile:', ['file' => $tourImage['file']]);
@@ -68,7 +99,6 @@ class TourController extends Controller
         $tourItinerary = [];
         foreach ($request->tour_itinerary as $index => $itinerary) {
             $imagePath = null;
-            Log::info("image check", [$itinerary]);
             if ($request->hasFile("tour_itinerary.$index.image")) {
                 $imagePath = $request->file("tour_itinerary.$index.image")->store('images/TourItinerary');
             }
@@ -93,9 +123,9 @@ class TourController extends Controller
     {
         $booking = Booking::where("id", $id)
             ->with("items")
-            
+
             ->first();
-        
+
         if (!$booking)
             return;
 
@@ -103,7 +133,7 @@ class TourController extends Controller
         foreach ($booking->items as $item) {
             $note = json_decode($item->additional_info, true);
 
-            if($item->type == "tour")
+            if ($item->type == "tour")
                 if (isset($note['tour_id'])) {
                     $tour_id = $note['tour_id'];
                 }

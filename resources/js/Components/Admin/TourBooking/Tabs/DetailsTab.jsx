@@ -7,11 +7,11 @@ const DetailsTab = ({ data, setData, handleInputChange }) => {
 
     const IMAGES_PER_PAGE = 5; // Number of images to show per page
 
-    // Function to handle adding a new image
     const handleAddImage = (event) => {
         const file = event.target.files[0];
+        const imagePreview = URL.createObjectURL(file);
         if (file) {
-            setData("tour_images", [...data.tour_images, { file }]);
+            setData("tour_images", [...data.tour_images, { file, preview: imagePreview }]);
         }
     };
 
@@ -115,6 +115,7 @@ const DetailsTab = ({ data, setData, handleInputChange }) => {
                         ref={fileInputRef}
                         onChange={handleAddImage}
                         className="hidden"
+                        multiple
                     />
                 </div>
 
@@ -127,7 +128,7 @@ const DetailsTab = ({ data, setData, handleInputChange }) => {
                         >
                             {imageObj.file ? (
                                 <img
-                                    src={URL.createObjectURL(imageObj.file)}
+                                    src={imageObj.preview}
                                     alt={`Tour Image ${index + 1}`}
                                     className="w-full h-full object-cover"
                                 />
