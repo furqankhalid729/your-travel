@@ -122,6 +122,11 @@ class TourController extends Controller
 
             $tourItinerary[] = [
                 'day' => $itinerary['day'],
+                'location' => $itinerary['location'],
+                'hotel' => $itinerary['hotel'],
+                'arrivalTime' => $itinerary['arrivalTime'],
+                'departureTime' => $itinerary['departureTime'],
+                'description' => $itinerary['description'],
                 'image' => $imagePath,
             ];
         }

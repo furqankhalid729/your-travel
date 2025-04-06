@@ -49,8 +49,8 @@ const TabsTours = ({tour,cars}) => {
         transport_provider: tour.transport_provider,
         start_location: tour.start_location,
         end_location: tour.end_location,
-        start_date: new Date(tour.start_date),
-        end_date: new Date(tour.end_date),
+        start_date: new Date(tour.start_date).toISOString().split("T")[0],
+        end_date: new Date(tour.end_date).toISOString().split("T")[0],
         trip_duration: tour.trip_duration,
         estimated_time: tour.estimated_time,
 
@@ -69,65 +69,65 @@ const TabsTours = ({tour,cars}) => {
         tour_type: "tour_type",
         condition: "condition"
     });
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
-    //     const formData = new FormData();
-    //     formData.append("duration", data.duration);
-    //     formData.append("persons", data.persons);
-    //     formData.append("slots", data.slots);
-    //     formData.append("price", data.price);
-    //     formData.append("name", data.name);
-    //     formData.append("keywords", data.keywords);
-    //     formData.append("summary", data.description);
-    //     formData.append("transport_time", data.transport_time);
-    //     formData.append("transport_provider", data.transport_provider);
-    //     formData.append("location", data.start_location);
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append("duration", data.duration);
+        formData.append("persons", data.persons);
+        formData.append("slots", data.slots);
+        formData.append("price", data.price);
+        formData.append("name", data.name);
+        formData.append("keywords", data.keywords);
+        formData.append("summary", data.description);
+        formData.append("transport_time", data.transport_time);
+        formData.append("transport_provider", data.transport_provider);
+        formData.append("location", data.start_location);
 
-    //     formData.append("start_location", data.start_location);
-    //     formData.append("end_location", data.end_location);
-    //     formData.append("start_date", data.start_date);
-    //     formData.append("end_date", data.end_date);
-    //     formData.append("trip_duration", data.trip_duration);
-    //     formData.append("estimated_time", data.estimated_time);
-    //     formData.append("adults", data.adult);
-    //     formData.append("adult_cost", data.adult_cost);
-    //     formData.append("adult_margin", data.adult_margin);
-    //     formData.append("adult_total_price", data.adult_total_price);
-    //     formData.append("children", data.child);
-    //     formData.append("child_cost", data.child_cost);
-    //     formData.append("child_margin", data.child_margin);
-    //     formData.append("child_total_price", data.child_total_price);
-    //     // const facilitiesArray = (data.facilities || "")
-    //     //     .split(",")
-    //     //     .map((facility) => facility.trim())
-    //     //     .filter((facility) => facility !== "");
-    //     formData.append("facilities", JSON.stringify(data.facilities));
-    //     formData.append("includedExcludedTypes", JSON.stringify(data.includedExcludedTypes));
+        formData.append("start_location", data.start_location);
+        formData.append("end_location", data.end_location);
+        formData.append("start_date", data.start_date);
+        formData.append("end_date", data.end_date);
+        formData.append("trip_duration", data.trip_duration);
+        formData.append("estimated_time", data.estimated_time);
+        formData.append("adults", data.adult);
+        formData.append("adult_cost", data.adult_cost);
+        formData.append("adult_margin", data.adult_margin);
+        formData.append("adult_total_price", data.adult_total_price);
+        formData.append("children", data.child);
+        formData.append("child_cost", data.child_cost);
+        formData.append("child_margin", data.child_margin);
+        formData.append("child_total_price", data.child_total_price);
+        // const facilitiesArray = (data.facilities || "")
+        //     .split(",")
+        //     .map((facility) => facility.trim())
+        //     .filter((facility) => facility !== "");
+        formData.append("facilities", JSON.stringify(data.facilities));
+        formData.append("includedExcludedTypes", JSON.stringify(data.includedExcludedTypes));
 
-    //     data.tour_images.forEach((imageFile) => {
-    //         formData.append("tour_images[]", imageFile.file);
-    //     });
-    //     formData.append("tour_itinerary", JSON.stringify(data.tour_itinerary));
+        data.tour_images.forEach((imageFile) => {
+            formData.append("tour_images[]", imageFile.file);
+        });
+        formData.append("tour_itinerary", JSON.stringify(data.tour_itinerary));
 
-    //     formData.append("food", "food");
-    //     formData.append("tour_type", "tour_type");
-    //     formData.append("condition", "condition");
+        formData.append("food", "food");
+        formData.append("tour_type", "tour_type");
+        formData.append("condition", "condition");
 
-    //     for (let [key, value] of formData.entries()) {
-    //         console.log(`${key}: ${value}`);
-    //     }
-    //     try {
-    //         router.post("/api/tour/add-tour", formData, {
-    //             forceFormData: true,
-    //             onSuccess: () => {
-    //                 setMessage("tour added successfully!");
-    //             },
-    //         });
-    //     } catch (error) {
-    //         console.error("Error while adding tour:", error);
-    //         setMessage("An error occurred while adding the tour.");
-    //     }
-    // };
+        for (let [key, value] of formData.entries()) {
+            console.log(`${key}: ${value}`);
+        }
+        try {
+            router.post("/api/tour/add-tour", formData, {
+                forceFormData: true,
+                onSuccess: () => {
+                    setMessage("tour added successfully!");
+                },
+            });
+        } catch (error) {
+            console.error("Error while adding tour:", error);
+            setMessage("An error occurred while adding the tour.");
+        }
+    };
 
     return (
         <div className=" p-5 bg-white m-5">

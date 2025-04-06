@@ -30,7 +30,7 @@ const TimeLine = ({ data, setData }) => {
         const updatedDays = [...days];
         updatedDays[index][field] = value;
         setDays(updatedDays);
-        setData('tour_itinerary', updatedDays); // Update parent state
+        setData('tour_itinerary', updatedDays); 
     };
 
     return (
