@@ -8,6 +8,7 @@ use Inertia\Inertia;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use App\Models\Booking;
+use App\Models\Car;
 
 class TourController extends Controller
 {
@@ -31,6 +32,14 @@ class TourController extends Controller
         ]);
     }
 
+    public function create()
+    {
+        $cars = Car::all();
+        return Inertia::render(InertiaViews::AddTour->value, [
+            'cars' => $cars,
+        ]);
+    }
+
     public function store(Request $request)
     {
         Log::info("Tour Request", [$request->all()]);
@@ -42,8 +51,6 @@ class TourController extends Controller
 
         $tour_itinerary = json_decode($request->tour_itinerary, true);
         $request->merge(['tour_itinerary' => $tour_itinerary]);
-
-        $request->merge(['includedExcludedTypes' => ["includedExcludedTypes"]]);
         $validated = $request->validate([
             'name' => 'required|string',
             'duration' => 'required|string',
@@ -58,7 +65,7 @@ class TourController extends Controller
 
             'summary' => 'required|string',
             'facilities' => 'required|array',
-            'includedExcludedTypes' => 'required|array',
+            'includedExcludedTypes' => 'required',
             'condition' => 'required|string',
             'tour_itinerary' => 'required|array',
             'tour_itinerary.*.file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',

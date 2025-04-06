@@ -3,11 +3,11 @@ import AdminLayout from "../../../Layout/AdminLayout";
 // import AddTourCom from "../../../Components/Admin/TourBooking/AddTour";
 import TabsTour from '../../../Components/Admin/TourBooking/TabsTours';
 
-const AddTour = () => {
+const AddTour = ({cars}) => {
   return (
     <div>
       {/* <AddTourCom /> */}
-      <TabsTour />
+      <TabsTour cars={cars}/>
     </div>
   )
 }

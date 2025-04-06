@@ -13,7 +13,7 @@ const steps = [
     { number: 4, label: "Pricing" },
 ];
 
-const TabsTours = () => {
+const TabsTours = ({cars}) => {
     const [currentPage, setCurrentPage] = useState(1);
 
     // Handel input change
@@ -52,13 +52,14 @@ const TabsTours = () => {
 
     const { data, setData, post, processing, errors } = useForm({
         duration: "",
-        persons: "",
+        persons: 5,
         slots: "",
         price: 0,
 
         name: "",
         keywords: "",
-        facilities: "",
+        facilities: [],
+        includedExcludedTypes: [],
         description: "",
         tour_images: [],
 
@@ -114,19 +115,12 @@ const TabsTours = () => {
         formData.append("child_cost", data.child_cost);
         formData.append("child_margin", data.child_margin);
         formData.append("child_total_price", data.child_total_price);
-        const facilitiesArray = (data.facilities || "")
-            .split(",")
-            .map((facility) => facility.trim())
-            .filter((facility) => facility !== "");
-        formData.append("facilities", JSON.stringify(facilitiesArray));
-        const imageArray = data.tour_images.map((imageObj) => ({
-            name: imageObj.file?.name || null,
-            size: imageObj.file?.size || null,
-            type: imageObj.file?.type || null,
-        }));
-
-        //formData.append("tour_images", JSON.stringify(imageArray));
-        const files = data.tour_images;  // This should be an array of file objects
+        // const facilitiesArray = (data.facilities || "")
+        //     .split(",")
+        //     .map((facility) => facility.trim())
+        //     .filter((facility) => facility !== "");
+        formData.append("facilities", JSON.stringify(data.facilities));
+        formData.append("includedExcludedTypes", JSON.stringify(data.includedExcludedTypes));
 
         data.tour_images.forEach((imageFile) => {
             formData.append("tour_images[]", imageFile.file);
@@ -205,7 +199,7 @@ const TabsTours = () => {
             {/* Tabs */}
             <div>
                 {currentPage === 1 && <DetailsTab data={data} setData={setData} handleInputChange={handleInputChange} />}
-                {currentPage === 2 && <AddRouteDetails data={data} setData={setData} handleInputChange={handleInputChange} />}
+                {currentPage === 2 && <AddRouteDetails cars={cars} data={data} setData={setData} handleInputChange={handleInputChange} />}
                 {currentPage === 3 && <TimeLine data={data} setData={setData} handleInputChange={handleInputChange} />}
                 {currentPage === 4 && <PricingTab data={data} setData={setData} handleInputChange={handleInputChange} />}
             </div>
