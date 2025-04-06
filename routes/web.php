@@ -101,6 +101,7 @@ Route::get('/tour-pkg', function () {
     Route::get('/dashboard/tour-booking', [TourController::class, 'tourDashboard'])->name('tour.dashboard');
     Route::get('/dashboard/tour-booking/profile/{id}',[TourController::class, 'tourBooking'])->name('tour.booking.show');
     Route::get('/dashboard/tour-booking/add-tour', [TourController::class, 'create'])->name("tour.create");
+    Route::get('/dashboard/tour-booking/edit/{id}', [TourController::class, 'edit'])->name("tour.edit");
     Route::get('/dashboard/enquiries', [EnquiryController::class, 'index'])->name('enquiry.index');
     Route::get('/dashboard/enquiries/details/{id}', [EnquiryController::class, 'show'])->name('enquiry.detail');
     Route::get('/dashboard/customers', [AdminDashboardController::class, 'customerIndex'])->name('customer.index');

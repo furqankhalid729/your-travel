@@ -31,6 +31,7 @@ enum InertiaViews: string
 
     //Tour Index
     case AddTour = 'Admin/TourBooking/AddTour';
+    case EditTour = 'Admin/TourBooking/EditTour';
     case TourIndex = 'Admin/TourBooking/ViewTour';
     case TourDashboard = 'Admin/TourBooking/ViewTourBooking';
     case TourBookingDetail = "Admin/TourBooking/TourBookingProfile";

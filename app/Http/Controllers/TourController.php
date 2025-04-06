@@ -40,6 +40,16 @@ class TourController extends Controller
         ]);
     }
 
+    public function edit($id)
+    {
+        $tour = Tour::where("id",$id)->first();
+        $cars = Car::all();
+        return Inertia::render(InertiaViews::EditTour->value, [
+            'tour' => $tour,
+            'cars' => $cars,
+        ]);
+    }
+
     public function store(Request $request)
     {
         Log::info("Tour Request", [$request->all()]);

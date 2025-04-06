@@ -196,7 +196,7 @@ const ViewTour = ({ tours }) => {
                               rel="noopener noreferrer" className="text-red-500">
                               <FaEye />
                             </Link>
-                            <Link href={route('car.edit', tour.id)} className="text-green-500">
+                            <Link href={route('tour.edit', tour.id)} className="text-green-500">
                               <FaEdit />
                             </Link>
                             <button className="text-red-500" onClick={() => openModal(tour.id)}>
