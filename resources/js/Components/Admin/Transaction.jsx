@@ -7,32 +7,6 @@ import {
 } from "react-icons/fa";
 import { RiDeleteBinLine } from "react-icons/ri";
 
-const paymentsData = [
-  {
-    paymentNo: "8FBF88-2F1",
-    name: "John Doe",
-    status: "Paid",
-    date: "2024-11-20",
-    booking: "Car",
-    amount: "150.00",
-  },
-  {
-    paymentNo: "8FBF88-2F2",
-    name: "Jane Smith",
-    status: "Pending",
-    date: "2024-11-19",
-    booking: "Hotel",
-    amount: "200.00",
-  },
-  {
-    paymentNo: "8FBF88-2F3",
-    name: "Jane Smith",
-    status: "Unpaid",
-    date: "2024-11-19",
-    booking: "Tour",
-    amount: "200.00",
-  },
-];
 
 const Transaction = ({ transactions }) => {
   console.log(transactions)
@@ -123,20 +97,18 @@ const Transaction = ({ transactions }) => {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="border-t">
                 <tr>
-                  <th className="px-2 py-3">
-                    <input
-                      type="checkbox"
-                      className="form-checkbox text-[#bb8dd9]"
-                      aria-label="Select All"
-                    />
-                  </th>
+                  
                   {[
-                    "Payment No",
-                    "Name",
-                    "Status",
-                    "Date",
-                    "Reason",
+                    "Transaction ID ",
+                    "Transaction Date",
+                    "Driver Name / Driver ID",
+                    "Trip ID",
+                    "Start Location",
+                    "Trip Date",
+                    "Base Fare",
                     "Amount",
+                    "Status",
+                    "Payment Method"
                   ].map((header, index) => (
                     <th
                       key={index}
@@ -149,20 +121,33 @@ const Transaction = ({ transactions }) => {
               </thead>
               <tbody className="divide-y divide-gray-200">
                 {transactions.map((transaction, index) => {
+
                   return (
                     <tr key={index}>
-                      <td className="px-2 py-4 whitespace-nowrap text-sm">
-                        <input
-                          type="checkbox"
-                          className="form-checkbox text-[#bb8dd9]"
-                          aria-label={`Select Payment ${transaction.payment.booking.id}`}
-                        />
-                      </td>
+                      
                       <td className="px-2 py-4 whitespace-nowrap text-sm text-[#c46aff]">
                         {transaction.payment.booking.id}
                       </td>
                       <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {transaction.payment.booking.first_name} {transaction.payment.booking.last_name}
+                        {transaction.created_at.split("T")[0]}
+                      </td>
+                      <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {transaction.note?.driver_name}
+                      </td>
+                      <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {transaction.note?.booking_id}
+                      </td>
+                      <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {transaction.note?.pickup_location}
+                      </td>
+                      <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {transaction.note?.pickupData}
+                      </td>
+                      <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
+                        ${transaction.note?.baseFare}
+                      </td>
+                      <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
+                        ${transaction.amount}
                       </td>
                       <td
                         className={`px-2 py-4 font-semibold whitespace-nowrap text-sm ${transaction.status === "paid"
@@ -175,24 +160,10 @@ const Transaction = ({ transactions }) => {
                         {transaction.status}
                       </td>
                       <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(transaction.created_at).toDateString()}
+                        {transaction.note?.driver_bank}
                       </td>
-                      <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {
-                          transaction.note
-                            ? "car_id" in transaction.note
-                              ? "Car"
-                              : "hotel_id" in transaction.note
-                                ? "Hotel"
-                                : "tour_id" in transaction.note
-                                  ? "Tour"
-                                  : "--"
-                            : "No Note"
-                        }
-                      </td>
-                      <td className="px-2 py-4 whitespace-nowrap text-sm text-gray-500">
-                        ${transaction.amount}
-                      </td>
+                      
+                      
                       {/* <td className="px-6 space-x-2 py-4 whitespace-nowrap text-sm">
                         <button className="text-blue-500 hover:text-blue-700">
                           <FaArrowDown />

@@ -127,6 +127,11 @@ class CarController extends Controller
                 'driver_id' => 'required|exists:drivers,id',
                 'order_id' => 'required|exists:bookings,id',
                 'price' => 'required|numeric',
+                'driverName' => 'required|string',
+                'driverBank' => 'required|string',
+                'pickupLocation' => 'required|string',
+                'pickupData' => 'required|string',
+                'baseFare' => 'required',
             ]);
 
             DB::beginTransaction();
@@ -154,8 +159,13 @@ class CarController extends Controller
                 'type' => 'car',
                 'note' => [
                     'driver_id' => $validatedData['driver_id'],
-                    'car_id' => $additionalInfo['car_id'],
+                    //'car_id' => $additionalInfo['car_id'],
                     'booking_id' => $validatedData['order_id'],
+                    'pickup_location' => $validatedData['pickupLocation'],
+                    'driver_name' => $validatedData['driverName'],
+                    'driver_bank' => $validatedData['driverBank'],
+                    'pickupData' => $validatedData['pickupData'],
+                    'baseFare' => $validatedData['baseFare'],
                 ],
             ]);
             DB::commit();

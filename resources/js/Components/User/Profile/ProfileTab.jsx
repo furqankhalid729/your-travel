@@ -25,11 +25,20 @@ const ProfileTab = () => {
         {/* Profile Photo */}
         <div className="absolute left-8 bottom-[-62px]">
           <div className="relative">
-            <img
-              src="storage/images/prifilephoto.png"
-              alt="Profile Photo"
-              className="w-32 h-32 md:w-40 md:h-40 object-cover rounded-full border-4 border-white shadow-lg"
-            />
+          {auth.user.profile_url ?
+              <img
+                src={`storage/${auth.user.profile_url}`}
+                alt="Cover Photo"
+                className="w-32 h-32 md:w-40 md:h-40 object-cover rounded-full border-4 border-white shadow-lg"
+              /> :
+              <img
+                src="storage/images/prifilephoto.png"
+                alt="Cover Photo"
+                className="w-32 h-32 md:w-40 md:h-40 object-cover rounded-full border-4 border-white shadow-lg"
+              />
+            }
+
+           
           </div>
         </div>
       </div>

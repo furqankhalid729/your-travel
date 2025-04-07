@@ -15,6 +15,16 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
   const [price, setPrice] = useState(carItems[0].price);
   const additionalInfo = JSON.parse(carItems[0].additional_info);
   console.log(drivers)
+  const [driverName, setDriverName] = useState(() =>{
+    if (additionalInfo?.driverName) {
+      return additionalInfo.driverName;
+    } else if (drivers.length > 0 && drivers[0]?.id) {
+      return drivers[0].name;
+    } else {
+      return null;
+    }
+  });
+  const [driverBank, setDriverBank] = useState("Test");
   const [driverId, setDriverId] = useState(() => {
     if (additionalInfo?.driver_id) {
       return additionalInfo.driver_id;
@@ -36,6 +46,11 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
         driver_id: driverId,
         order_id: order.id,
         price: price,
+        driverName:driverName,
+        driverBank:driverBank,
+        pickupLocation:additionalInfo.pickup_location,
+        pickupData: new Date(additionalInfo.pickup_date).toLocaleString(),
+        baseFare: carItems[0].price,
       });
 
       if (response.status === 200) {
@@ -320,7 +335,7 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
                   <FaPhone className="text-gray-500" />
                   <p>{driver.contact_no}</p>
                 </div>
-                <button onClick={() => setDriverId(driver.id)} className={`${driverId === driver.id ? 'bg-[#e1baf9]' : 'bg-[#151516]'} rounded-xl text-white px-3`}>
+                <button onClick={() => {setDriverId(driver.id);setDriverName(driver.name); setDriverBank("test")} } className={`${driverId === driver.id ? 'bg-[#e1baf9]' : 'bg-[#151516]'} rounded-xl text-white px-3`}>
                   Select
                 </button>
               </div>

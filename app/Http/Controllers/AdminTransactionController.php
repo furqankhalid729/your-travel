@@ -11,7 +11,7 @@ class AdminTransactionController extends Controller
 {
     public function index()
     {
-        $transactions = Transaction::with(['payment.booking'])->get();
+        $transactions = Transaction::with(['payment.booking'])->latest()->get();
         return Inertia::render(InertiaViews::AdminTransaction->value, [
             'transactions' => $transactions
         ]);

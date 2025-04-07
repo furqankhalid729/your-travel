@@ -95,12 +95,12 @@ class BookingController extends Controller
                 'status'     => 'received',
                 'note'       => ['payment_method' => $request->payment_method ?? 'unknown'],
             ]);
-            Transaction::create([
-                'payment_id' => $payment->id,
-                'type'       => 'received',
-                'amount'     => $totalAmount,
-                'note'       => ['received_from' => $request->email],
-            ]);
+            // Transaction::create([
+            //     'payment_id' => $payment->id,
+            //     'type'       => 'received',
+            //     'amount'     => $totalAmount,
+            //     'note'       => ['received_from' => $request->email],
+            // ]);
             DB::commit();
 
             $this->emailController->sendOrderConformationMail($booking);
