@@ -19,6 +19,20 @@ class Car extends Model
         'tags',
         'features',
         'car_images',
+
+        'vehicle_id',
+        'vehicle_type',
+        'vehicle_category',
+        'year_of_manufacture',
+        'color',
+        'chassis_number',
+        'price_per_km',
+        'owner',
+        'trunk_size',
+        'mileage',
+        'allowed_for_rides',
+        'last_use',
+        'note_fuel',
     ];
     protected $casts = [
         'features' => 'array',

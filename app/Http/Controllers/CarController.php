@@ -136,7 +136,7 @@ class CarController extends Controller
 
             DB::beginTransaction();
             $booking = Booking::with('payment')->find($validatedData['order_id']);
-            if(!$booking) {
+            if (!$booking) {
                 return response()->json(['error' => 'No booking found for this order.'], 404);
             }
             $bookingItem = BookingItem::where('booking_id', $validatedData['order_id'])->first();
@@ -169,7 +169,7 @@ class CarController extends Controller
                 ],
             ]);
             DB::commit();
-            $this->whatsAppController->sendRiderMessage($booking,$validatedData['driver_id'],$validatedData['price']);
+            $this->whatsAppController->sendRiderMessage($booking, $validatedData['driver_id'], $validatedData['price']);
             return response()->json(['message' => 'Driver assigned successfully!'], 200);
         } catch (Exception $e) {
             // Rollback in case of an error
@@ -248,6 +248,20 @@ class CarController extends Controller
             'features.*.icon' => 'required|string|max:255',
             'car_images' => 'nullable|array',
             'car_images.*.file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
+            'vehicle_id' => 'required|string|max:255',
+            'vehicle_type' => 'required|string|max:255',
+            'vehicle_category' => 'required|string|max:255',
+            'year_of_manufacture' => 'required|digits:4|integer|min:1900|max:' . date('Y'),
+            'color' => 'required|string|max:50',
+            'chassis_number' => 'nullable|string|max:255',
+            'price_per_km' => 'required|numeric|min:0',
+            'owner' => 'required|string|max:255',
+            'trunk_size' => 'nullable|string|max:255',
+            'mileage' => 'nullable|integer|min:0',
+            'allowed_for_rides' => 'required',
+            'last_use' => 'required|date',
+            'note_fuel' => 'nullable|string|max:255',
         ]);
 
         $carImages = [];
