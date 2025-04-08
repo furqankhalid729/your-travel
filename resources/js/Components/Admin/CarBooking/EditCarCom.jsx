@@ -2,7 +2,22 @@ import React, { useState } from "react";
 import { Link, useForm } from "@inertiajs/react";
 import { FaArrowLeft, FaCarSide, FaLanguage, FaPlus, FaSave, FaSnowflake, FaUser } from "react-icons/fa";
 import Modal from 'react-modal';
-
+const VEHICLE_TYPES = [
+    "Sedan",
+    "SUV",
+    "Bus",
+    "van"
+]
+const VEHICLE_CATEGORY = [
+    "Business",
+    "Economy",
+    "Luxury"
+]
+const ONWER = [
+    "Platform",
+    "Partner Company",
+    "Driver"
+]
 
 const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -29,10 +44,33 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
         status: car.status || "",
         price: car.price || "",
         tags: car.tags || "",
-        car_images: carImages.map((image) => ({url:image})) || [],
+        car_images: carImages.map((image) => ({ url: image })) || [],
         features: features,
+
+        vehicle_id: car.vehicle_id || "",
+        vehicle_type: car.vehicle_type || "",
+        vehicle_category: car.vehicle_category || "",
+        year_of_manufacture: car.year_of_manufacture || "",
+        color: car.color || "",
+        chassis_number: car.chassis_number || "",
+        price_per_km: car.price_per_km || "",
+        owner: car.owner || "",
+        trunk_size: car.trunk_size || "",
+        mileage: car.mileage || "",
+        allowed_for_rides: car.allowed_for_rides ?? false,
+        last_use: car.last_use || "",
+        note_fuel: car.note_fuel || "",
     });
     console.log(data)
+
+    // Handel input change
+    const handleInputChange = (e) => {
+        const { name, value } = e.target;
+        setData((prevDetails) => ({
+            ...prevDetails,
+            [name]: value,
+        }));
+    };
 
     // Handle file change
     const handleFileChange = (e) => {
@@ -78,6 +116,7 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
     };
 
     const handleSubmit = (e) => {
+        console.log("submit")
         e.preventDefault();
         post(route("cars.update", car.id));
     };
@@ -94,6 +133,7 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                     type="submit"
                     form="CarEditForm"
                     disabled={processing}
+                    onClick={handleSubmit}
                     className="flex items-center bg-[#e4baff] text-white px-4 py-2 rounded-md hover:bg-[#d19aed]"
                 >
                     <FaSave className="mr-2" />
@@ -232,18 +272,59 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                 {/* Right Panel */}
                 <div className="w-3/5 bg-white p-6 rounded-lg shadow">
                     <h2 className="text-xl font-semibold text-gray-800 mb-4">Car Details</h2>
-                    <form id="CarEditForm" onSubmit={handleSubmit}>
-                        <div className="grid grid-cols-2 gap-4">
-                            {/* Brand */}
-                            <div>
-                                <label htmlFor="brand" className="block text-sm font-medium text-gray-700">
-                                    Brand
-                                </label>
+                    <form id="carForm" onSubmit={handleSubmit}>
+                        <div className="grid grid-cols-2 gap-4 mb-6">
+                            <DetailField label="Vehicle ID">
+                                <input
+                                    type="text"
+                                    name="vehicle_id"
+                                    value={data.vehicle_id}
+                                    onChange={handleInputChange}
+                                    className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                    placeholder="Vehicle ID"
+                                />
+                            </DetailField>
+
+                            <DetailField label="Vechicle Type">
                                 <select
-                                    id="brand"
+                                    name="vehicle_type"
+                                    value={data.vehicle_type}
+                                    onChange={handleInputChange}
+                                    className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                >
+                                    <option value="">Select a brand</option>
+                                    {VEHICLE_TYPES.map((type, index) => (
+                                        <option key={index} value={type}>
+                                            {type}
+                                        </option>
+                                    ))}
+                                </select>
+
+                            </DetailField>
+
+                            <DetailField label="Vehicle Category">
+                                <select
+                                    name="vehicle_category"
+                                    value={data.vehicle_category}
+                                    onChange={handleInputChange}
+                                    className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                >
+                                    <option value="">Select a Vehicle Cat.</option>
+                                    {VEHICLE_CATEGORY.map((type, index) => (
+                                        <option key={index} value={type}>
+                                            {type}
+                                        </option>
+                                    ))}
+                                </select>
+
+                            </DetailField>
+
+                            <DetailField label="Brand">
+                                <select
+                                    name="brand"
                                     value={data.brand}
-                                    onChange={(e) => setData("brand", e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                    onChange={handleInputChange}
+                                    className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
                                 >
                                     <option value="">Select a brand</option>
                                     {brands.map((brand) => (
@@ -252,19 +333,15 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                                         </option>
                                     ))}
                                 </select>
-                                {errors.brand && <p className="text-sm text-red-600">{errors.brand}</p>}
-                            </div>
 
-                            {/* Model */}
-                            <div>
-                                <label htmlFor="model" className="block text-sm font-medium text-gray-700">
-                                    Model
-                                </label>
+                            </DetailField>
+
+                            <DetailField label="Model">
                                 <select
-                                    id="model"
+                                    name="model"
                                     value={data.model}
-                                    onChange={(e) => setData("model", e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                    onChange={handleInputChange}
+                                    className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
                                 >
                                     <option value="">Select a model</option>
                                     {models.map((model) => (
@@ -273,147 +350,231 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
                                         </option>
                                     ))}
                                 </select>
-                                {errors.model && <p className="text-sm text-red-600">{errors.model}</p>}
-                            </div>
-                            {/* Fuel */}
-                            <div>
-                                <label htmlFor="fuel" className="block text-sm font-medium text-gray-700">
-                                    Fuel Type
-                                </label>
-                                <select
-                                    id="fuel"
-                                    value={data.fuel}
-                                    onChange={(e) => setData("fuel", e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                >
-                                    <option value="">Select a fuel type</option>
-                                    {fuels.map((fuel) => (
-                                        <option key={fuel.id} value={fuel.name}>
-                                            {fuel.type}
-                                        </option>
-                                    ))}
-                                </select>
-                                {errors.fuel && <p className="text-sm text-red-600">{errors.fuel}</p>}
-                            </div>
+                                {errors.model && <p className="text-red-500 text-sm mt-1">{errors.model}</p>}
+                            </DetailField>
 
-                            {/* Car Number */}
-                            <div>
-                                <label htmlFor="car_number" className="block text-sm font-medium text-gray-700">
-                                    Car Number
-                                </label>
+                            <DetailField label="Year of Manufacture">
                                 <input
-                                    id="car_number"
+                                    type="number"
+                                    name="year_of_manufacture"
+                                    value={data.year_of_manufacture}
+                                    onChange={handleInputChange}
+                                    className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                    placeholder="Year of Manufacture"
+                                    min="1900"
+                                    max={new Date().getFullYear()}
+                                />
+                            </DetailField>
+
+                            <DetailField label="Color">
+                                <input
                                     type="text"
+                                    name="color"
+                                    value={data.color}
+                                    onChange={handleInputChange}
+                                    className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                    placeholder="Color"
+                                />
+                            </DetailField>
+
+                            <DetailField label="Car No.">
+                                <input
+                                    type="text"
+                                    name="car_number"
                                     value={data.car_number}
-                                    onChange={(e) => setData("car_number", e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                    onChange={handleInputChange}
+                                    className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                    placeholder="Car Number"
                                 />
-                                {errors.car_number && <p className="text-sm text-red-600">{errors.car_number}</p>}
-                            </div>
+                                {errors.car_number && <p className="text-red-500 text-sm mt-1">{errors.car_number}</p>}
+                            </DetailField>
 
-                            {/* Transmission */}
-                            <div>
-                                <label htmlFor="transmission" className="block text-sm font-medium text-gray-700">
-                                    Transmission
-                                </label>
-                                <select
-                                    id="transmission"
-                                    value={data.transmission}
-                                    onChange={(e) => setData("transmission", e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                >
-                                    <option value="">Select a transmission</option>
-                                    {transmissions.map((transmission) => (
-                                        <option key={transmission.id} value={transmission.type}>
-                                            {transmission.type}
-                                        </option>
-                                    ))}
-                                </select>
-                                {errors.transmission && <p className="text-sm text-red-600">{errors.transmission}</p>}
-                            </div>
-                            {/* Transmission */}
-                            <div>
-                                <label htmlFor="transmission" className="block text-sm font-medium text-gray-700">
-                                    Transmission
-                                </label>
-                                <select
-                                    id="transmission"
-                                    value={data.transmission}
-                                    onChange={(e) => setData("transmission", e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                >
-                                    <option value="">Select a transmission</option>
-                                    {transmissions.map((transmission) => (
-                                        <option key={transmission.id} value={transmission.name}>
-                                            {transmission.type}
-                                        </option>
-                                    ))}
-                                </select>
-                                {errors.transmission && <p className="text-sm text-red-600">{errors.transmission}</p>}
-                            </div>
-
-
-                            {/* Capacity */}
-                            <div>
-                                <label htmlFor="capacity" className="block text-sm font-medium text-gray-700">
-                                    Seating Capacity
-                                </label>
+                            <DetailField label="Chassis Number">
                                 <input
-                                    id="capacity"
-                                    type="number"
-                                    value={data.capacity}
-                                    onChange={(e) => setData("capacity", e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                />
-                                {errors.capacity && <p className="text-sm text-red-600">{errors.capacity}</p>}
-                            </div>
-
-                            {/* Price */}
-                            <div>
-                                <label htmlFor="price" className="block text-sm font-medium text-gray-700">
-                                    Price
-                                </label>
-                                <input
-                                    id="price"
-                                    type="number"
-                                    value={data.price}
-                                    onChange={(e) => setData("price", e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                />
-                                {errors.price && <p className="text-sm text-red-600">{errors.price}</p>}
-                            </div>
-
-                            {/* Tags */}
-                            <div>
-                                <label htmlFor="tags" className="block text-sm font-medium text-gray-700">
-                                    Tags
-                                </label>
-                                <input
-                                    id="tags"
                                     type="text"
+                                    name="chassis_number"
+                                    value={data.chassis_number}
+                                    onChange={handleInputChange}
+                                    className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                    placeholder="Chassis Number"
+                                />
+                                {errors.chassis_number && <p className="text-red-500 text-sm mt-1">{errors.chassis_number}</p>}
+                            </DetailField>
+
+                            <DetailField label="Price (per day)">
+                                <input
+                                    type="text"
+                                    name="price"
+                                    value={data.price}
+                                    onChange={handleInputChange}
+                                    className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                    placeholder="Enter price"
+                                />
+                                {errors.price && <p className="text-red-500 text-sm mt-1">{errors.price}</p>}
+                            </DetailField>
+
+                            <DetailField label="Price Per KM">
+                                <input
+                                    type="text"
+                                    name="price_per_km"
+                                    value={data.price_per_km}
+                                    onChange={handleInputChange}
+                                    className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                    placeholder="Enter price per KM"
+                                />
+                                {errors.price_per_km && <p className="text-red-500 text-sm mt-1">{errors.price_per_km}</p>}
+                            </DetailField>
+
+                            <DetailField label="Onwer">
+                                <select
+                                    name="owner"
+                                    value={data.owner}
+                                    onChange={handleInputChange}
+                                    className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                >
+                                    <option value="">Select Onwer</option>
+                                    {ONWER.map((type, index) => (
+                                        <option key={index} value={type}>
+                                            {type}
+                                        </option>
+                                    ))}
+                                </select>
+
+                            </DetailField>
+
+                            <DetailField label="Tags">
+                                <input
+                                    type="text"
+                                    name="tags"
                                     value={data.tags}
-                                    onChange={(e) => setData("tags", e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
+                                    onChange={handleInputChange}
+                                    className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
                                     placeholder="Enter tags separated by commas"
                                 />
-                                {errors.tags && <p className="text-sm text-red-600">{errors.tags}</p>}
-                            </div>
+                                {errors.tags && <p className="text-red-500 text-sm mt-1">{errors.tags}</p>}
+                            </DetailField>
+                        </div>
+                        <hr></hr>
+                        <div className="mt-6">
+                            <h2 className="text-xl font-semibold text-gray-800 mb-4">Technical Details</h2>
+                            <div className="grid grid-cols-2 gap-4 mb-6">
+                                <DetailField label="Capacity">
+                                    <input
+                                        type="text"
+                                        name="capacity"
+                                        value={data.capacity}
+                                        onChange={handleInputChange}
+                                        className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                        placeholder="Capacity"
+                                    />
+                                    {errors.capacity && <p className="text-red-500 text-sm mt-1">{errors.capacity}</p>}
+                                </DetailField>
+                                <DetailField label="Trunk Size">
+                                    <input
+                                        type="text"
+                                        name="trunk_size"
+                                        value={data.trunk_size}
+                                        onChange={handleInputChange}
+                                        className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                        placeholder="Trunk Size"
+                                    />
+                                    {errors.trunk_size && <p className="text-red-500 text-sm mt-1">{errors.trunk_size}</p>}
+                                </DetailField>
+                                <DetailField label="Transmission">
+                                    <select
+                                        name="transmission"
+                                        value={data.transmission}
+                                        onChange={handleInputChange}
+                                        className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                    >
+                                        <option value="">Select transmission type</option>
+                                        {transmissions.map((transmission) => (
+                                            <option key={transmission.id} value={transmission.type}>
+                                                {transmission.type}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {errors.transmission && <p className="text-red-500 text-sm mt-1">{errors.transmission}</p>}
+                                </DetailField>
+                                <DetailField label="Fuel">
+                                    <select
+                                        name="fuel"
+                                        value={data.fuel}
+                                        onChange={handleInputChange}
+                                        className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                    >
+                                        <option value="">Select fuel type</option>
+                                        {fuels.map((fuel) => (
+                                            <option key={fuel.id} value={fuel.type}>
+                                                {fuel.type}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {errors.fuel && <p className="text-red-500 text-sm mt-1">{errors.fuel}</p>}
+                                </DetailField>
 
-                            {/* Status */}
-                            <div>
-                                <label htmlFor="status" className="block text-sm font-medium text-gray-700">
-                                    Status
-                                </label>
-                                <select
-                                    id="status"
-                                    value={data.status}
-                                    onChange={(e) => setData("status", e.target.value)}
-                                    className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500"
-                                >
-                                    <option value="available">Available</option>
-                                    <option value="unavailable">Unavailable</option>
-                                </select>
-                                {errors.status && <p className="text-sm text-red-600">{errors.status}</p>}
+                                <DetailField label="Milage">
+                                    <input
+                                        type="text"
+                                        name="mileage"
+                                        value={data.mileage}
+                                        onChange={handleInputChange}
+                                        className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                        placeholder="0"
+                                    />
+                                    {errors.mileage && <p className="text-red-500 text-sm mt-1">{errors.mileage}</p>}
+                                </DetailField>
+
+                                <DetailField label="Status">
+                                    <select
+                                        name="status"
+                                        value={data.status}
+                                        onChange={handleInputChange}
+                                        className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                    >
+                                        <option value="available">Available</option>
+                                        <option value="not-available">Not Available</option>
+                                    </select>
+                                    {errors.status && <p className="text-red-500 text-sm mt-1">{errors.status}</p>}
+                                </DetailField>
+
+                                <DetailField label="Allowed for rides">
+                                    <select
+                                        name="allowed_for_rides"
+                                        value={data.allowed_for_rides}
+                                        onChange={handleInputChange}
+                                        className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                    >
+                                        <option value="yes">Yes</option>
+                                        <option value="no">No</option>
+                                    </select>
+                                    {errors.allowed_for_rides && <p className="text-red-500 text-sm mt-1">{errors.allowed_for_rides}</p>}
+                                </DetailField>
+
+                                <DetailField label="Last Use">
+                                    <input
+                                        type="date"
+                                        name="last_use"
+                                        value={data.last_use}
+                                        onChange={handleInputChange}
+                                        className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                        placeholder="0"
+                                    />
+                                    {errors.last_use && <p className="text-red-500 text-sm mt-1">{errors.last_use}</p>}
+                                </DetailField>
+
+                                <DetailField label="Comment ">
+                                    <input
+                                        type="text"
+                                        name="note_fuel"
+                                        value={data.note_fuel}
+                                        onChange={handleInputChange}
+                                        className="mt-2 border p-1 rounded-lg text-gray-500 w-3/4"
+                                        placeholder="Comment "
+                                    />
+                                    {errors.note_fuel && <p className="text-red-500 text-sm mt-1">{errors.note_fuel}</p>}
+                                </DetailField>
+
                             </div>
                         </div>
                     </form>
@@ -479,4 +640,10 @@ const EditCarCom = ({ car, brands, models, fuels, transmissions }) => {
     );
 };
 
+const DetailField = ({ label, children }) => (
+    <div className="text-sm text-gray-600">
+        <strong>{label}</strong>
+        <p>{children}</p>
+    </div>
+);
 export default EditCarCom;

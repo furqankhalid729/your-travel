@@ -337,6 +337,20 @@ class CarController extends Controller
             'features.*.icon' => 'required|string|max:255',
             'car_images' => 'nullable|array',
             'car_images.*.file' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+
+            'vehicle_id' => 'required|string|max:255',
+            'vehicle_type' => 'required|string|max:255',
+            'vehicle_category' => 'required|string|max:255',
+            'year_of_manufacture' => 'required|digits:4|integer|min:1900|max:' . date('Y'),
+            'color' => 'required|string|max:50',
+            'chassis_number' => 'nullable|string|max:255',
+            'price_per_km' => 'required|numeric|min:0',
+            'owner' => 'required|string|max:255',
+            'trunk_size' => 'nullable|string|max:255',
+            'mileage' => 'nullable|integer|min:0',
+            'allowed_for_rides' => 'required',
+            'last_use' => 'required|date',
+            'note_fuel' => 'nullable|string|max:255',
         ]);
         $features = $validatedData['features'] ?? [];
         $carImages = json_decode($car->car_images, true) ?? [];
@@ -365,6 +379,20 @@ class CarController extends Controller
             'tags' => $validatedData['tags'],
             'features' => $features,
             'car_images' => json_encode($carImages),
+
+            'vehicle_id' => $validatedData['vehicle_id'],
+            'vehicle_type' => $validatedData['vehicle_type'],
+            'vehicle_category' => $validatedData['vehicle_category'],
+            'year_of_manufacture' => $validatedData['year_of_manufacture'],
+            'color' => $validatedData['color'],
+            'chassis_number' => $validatedData['chassis_number'],
+            'price_per_km' => $validatedData['price_per_km'],
+            'owner' => $validatedData['owner'],
+            'trunk_size' => $validatedData['trunk_size'],
+            'mileage' => $validatedData['mileage'],
+            'allowed_for_rides' => $validatedData['allowed_for_rides'],
+            'last_use' => $validatedData['last_use'],
+            'note_fuel' => $validatedData['note_fuel'],
         ]);
 
         return redirect()->route('car.index')->with('success', 'Car updated successfully');
