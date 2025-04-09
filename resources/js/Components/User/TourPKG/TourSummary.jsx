@@ -56,7 +56,7 @@ const TourSummary = ({ tour }) => {
           {/* Included List */}
           <div>
             <ul className="space-y-3 text-xs md:text-sm">
-              {JSON.parse(tour.includedExcludedTypes)
+              {tour.includedExcludedTypes
                 .filter(type => type.icon === 'FaCheck')
                 .map((type, index) => (
                   <div key={index} className="text-gray-800 flex mb-4">
@@ -70,7 +70,7 @@ const TourSummary = ({ tour }) => {
           {/* Excluded List */}
           <div className="mt-4 md:mt-0">
             <ul className="space-y-3 text-xs md:text-sm">
-              {JSON.parse(tour.includedExcludedTypes)
+              {tour.includedExcludedTypes
                 .filter(type => type.icon === 'FaTimes')
                 .map((type, index) => (
                   <div key={index} className="text-gray-800 flex mb-4">
