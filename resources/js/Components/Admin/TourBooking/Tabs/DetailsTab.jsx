@@ -239,7 +239,7 @@ const DetailsTab = ({ data, setData, handleInputChange }) => {
                                 />
                             ) : (
                                 <div className="w-full h-full flex items-center justify-center text-[#808080]">
-                                    No Image
+                                    No Image {imageObj.preview}
                                 </div>
                             )}
                             <button

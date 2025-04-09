@@ -12,7 +12,7 @@ const TourItinerary = ({ tour }) => {
           className="md:flex gap-6 mb-8"
         >
           <div className='w-full md:w-7/12 lg:w-10/12'><p className='text-base md:text-lg font-semibold'>Day: {index + 1}</p>
-            <p className="text-xs md:text-sm text-gray-800">{itinerary?.day}</p>
+            <p className="text-xs md:text-sm text-gray-800">{itinerary?.description}</p>
           </div>
           <div className='w-full md:w-5/12 lg:w-2/12 mt-4 md:mt-0'>
             <img

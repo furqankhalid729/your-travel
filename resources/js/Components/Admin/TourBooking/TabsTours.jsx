@@ -126,15 +126,15 @@ const TabsTours = ({ cars }) => {
             formData.append("tour_images[]", imageFile.file);
         });
         const itineraryWithoutImages = data.tour_itinerary.map(({ image, ...rest }) => rest);
-formData.append("tour_itinerary", JSON.stringify(itineraryWithoutImages));
+        formData.append("tour_itinerary", JSON.stringify(itineraryWithoutImages));
 
 
         // Append each itinerary image separately
         data.tour_itinerary.forEach((day, index) => {
             if (day.image && day.image instanceof File) {
-              formData.append(`tour_itinerary_images[${index}]`, day.image);
+                formData.append(`tour_itinerary_images[${index}]`, day.image);
             }
-          });
+        });
 
 
         formData.append("food", "food");

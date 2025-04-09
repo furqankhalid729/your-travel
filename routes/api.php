@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/hotel/add-hotel-room', [HotelRoomController::class, 'store'])->name('hotelRoom.store');
     Route::delete('/hotel/delete/{id}', [HotelRoomController::class, 'destroy'])->name('hotelRoom.delete');
     Route::post('/tour/add-tour', [TourController::class, 'store']);
+    Route::post('/tour/edit/{id}', [TourController::class, 'update'])->name('tour.update');
     Route::delete('/tour/delete/{id}', [TourController::class, 'destroy'])->name('tour.delete');
 
     Route::delete('/booking/delete/{id}', [BookingController::class, 'destroy'])->name('booking.delete');

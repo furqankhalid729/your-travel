@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm, router } from "@inertiajs/react";
 import { FaArrowLeftLong, FaArrowRightLong } from 'react-icons/fa6';
 import DetailsTab from './Tabs/DetailsTab';
@@ -13,7 +13,7 @@ const steps = [
     { number: 4, label: "Pricing" },
 ];
 
-const TabsTours = ({tour,cars}) => {
+const TabsTours = ({ tour, cars }) => {
     console.log(tour)
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -41,7 +41,7 @@ const TabsTours = ({tour,cars}) => {
         name: tour.name,
         keywords: "",
         facilities: tour.facilities,
-        includedExcludedTypes: JSON.parse(tour.includedExcludedTypes),
+        includedExcludedTypes:tour.includedExcludedTypes,
         description: tour.summary,
         tour_images: JSON.parse(tour.tour_images),
 
@@ -69,6 +69,29 @@ const TabsTours = ({tour,cars}) => {
         tour_type: "tour_type",
         condition: "condition"
     });
+
+    const urlToFileWithPreview = async (url, filename) => {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const file = new File([blob], filename, { type: blob.type });
+        return { file, preview: URL.createObjectURL(file) };
+    };
+
+    useEffect(() => {
+        const loadTourImages = async () => {
+            const loadedImages = await Promise.all(
+                JSON.parse(tour.tour_images).map((imagePath, idx) =>
+                    urlToFileWithPreview(`/storage/${imagePath}`, `tour_image_${idx}.jpg`)
+                )
+            );
+            setData("tour_images", loadedImages);
+        };
+
+        if (tour.tour_images) {
+            loadTourImages();
+        }
+    }, []);
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -117,7 +140,7 @@ const TabsTours = ({tour,cars}) => {
             console.log(`${key}: ${value}`);
         }
         try {
-            router.post("/api/tour/add-tour", formData, {
+            router.post(`/api/tour/edit/${tour.id}`, formData, {
                 forceFormData: true,
                 onSuccess: () => {
                     setMessage("tour added successfully!");
