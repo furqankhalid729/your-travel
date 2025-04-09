@@ -16,8 +16,8 @@ const TourItinerary = ({ tour }) => {
           </div>
           <div className='w-full md:w-5/12 lg:w-2/12 mt-4 md:mt-0'>
             <img
-              src={itinerary.image.length>0 ? "/storage/"+itinerary.image : '/storage/images/tour.jpeg'}
-              alt={itinerary.image}
+              src={itinerary?.image.length>0 ? "/storage/"+itinerary.image : '/storage/images/tour.jpeg'}
+              alt={itinerary?.image}
               className="w-full h-[150px] object-cover rounded-lg shadow-lg"
             />
           </div>

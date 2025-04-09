@@ -6,12 +6,12 @@ const TimeLine = ({ data, setData }) => {
 
     // Initialize days from tour_itinerary when the component mounts
     useEffect(() => {
-        setDays(data.tour_itinerary.length > 0 ? data.tour_itinerary : [{ day: 1, location: '', hotel: '', arrivalTime: '', departureTime: '', description: '' }]);
+        setDays(data.tour_itinerary.length > 0 ? data.tour_itinerary : [{ day: 1, location: '', hotel: '', arrivalTime: '', departureTime: '', description: '', image: null }]);
     }, [data.tour_itinerary]);
 
     // Function to add a new day
     const addDay = () => {
-        const newDay = { day: days.length + 1, location: '', hotel: '', arrivalTime: '', departureTime: '', description: '' };
+        const newDay = { day: days.length + 1, location: '', hotel: '', arrivalTime: '', departureTime: '', description: '', image: null };
         const updatedDays = [...days, newDay];
         setDays(updatedDays);
         setData('tour_itinerary', updatedDays); // Update parent state
@@ -30,8 +30,17 @@ const TimeLine = ({ data, setData }) => {
         const updatedDays = [...days];
         updatedDays[index][field] = value;
         setDays(updatedDays);
-        setData('tour_itinerary', updatedDays); 
+        setData('tour_itinerary', updatedDays);
     };
+
+    const handleImageChange = (index, file) => {
+        const updatedDays = [...days];
+        updatedDays[index].image = file;
+        console.log(updatedDays);
+        setDays(updatedDays);
+        setData('tour_itinerary', updatedDays);
+    };
+    
 
     return (
         <div className="w-[96%] mx-auto">
@@ -98,6 +107,24 @@ const TimeLine = ({ data, setData }) => {
                                 onChange={(e) => handleInputChange(index, 'description', e.target.value)}
                             />
                         </div>
+                        <div className="w-full">
+                            <label htmlFor={`image-${index}`} className="pl-1 font-[400] text-[14px]">Upload Image</label>
+                            <input
+                                type="file"
+                                id={`image-${index}`}
+                                accept="image/*"
+                                onChange={(e) => handleImageChange(index, e.target.files[0])}
+                                className="py-1 px-4 rounded-xl outline-none w-full"
+                            />
+                            {day.image && (
+                                <img
+                                    src={typeof day.image === 'string' ? `/storage/${day.image}` : URL.createObjectURL(day.image)}
+                                    alt={`Day ${day.day}`}
+                                    className="mt-2 rounded-xl w-[200px] h-auto object-cover"
+                                />
+                            )}
+                        </div>
+
                         <div className="w-full flex justify-between items-center">
                             <button
                                 onClick={() => removeDay(index)}

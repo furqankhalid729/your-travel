@@ -116,8 +116,8 @@ class TourController extends Controller
         $tourItinerary = [];
         foreach ($request->tour_itinerary as $index => $itinerary) {
             $imagePath = null;
-            if ($request->hasFile("tour_itinerary.$index.image")) {
-                $imagePath = $request->file("tour_itinerary.$index.image")->store('images/TourItinerary');
+            if ($request->hasFile("tour_itinerary_images.$index")) {
+                $imagePath = $request->file("tour_itinerary_images.$index")->store('images/TourItinerary', 'public');
             }
 
             $tourItinerary[] = [

@@ -13,7 +13,7 @@ const steps = [
     { number: 4, label: "Pricing" },
 ];
 
-const TabsTours = ({cars}) => {
+const TabsTours = ({ cars }) => {
     const [currentPage, setCurrentPage] = useState(1);
 
     // Handel input change
@@ -125,7 +125,17 @@ const TabsTours = ({cars}) => {
         data.tour_images.forEach((imageFile) => {
             formData.append("tour_images[]", imageFile.file);
         });
-        formData.append("tour_itinerary", JSON.stringify(data.tour_itinerary));
+        const itineraryWithoutImages = data.tour_itinerary.map(({ image, ...rest }) => rest);
+formData.append("tour_itinerary", JSON.stringify(itineraryWithoutImages));
+
+
+        // Append each itinerary image separately
+        data.tour_itinerary.forEach((day, index) => {
+            if (day.image && day.image instanceof File) {
+              formData.append(`tour_itinerary_images[${index}]`, day.image);
+            }
+          });
+
 
         formData.append("food", "food");
         formData.append("tour_type", "tour_type");
