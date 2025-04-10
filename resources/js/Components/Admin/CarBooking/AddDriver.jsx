@@ -19,7 +19,10 @@ const AddDriver = ({ cars }) => {
         license_category: "",
         experience: "",
         status: "active",
-        car_id: cars[0].id
+        car_id: cars[0].id,
+        bank_name:"",
+        account_number:"",
+        sort_code:""
     });
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -56,6 +59,9 @@ const AddDriver = ({ cars }) => {
         formData.append("experience", data.experience);
         formData.append("profile_image", profileImage);
         formData.append("car_id", data.car_id);
+        formData.append("bank_name", data.bank_name);
+        formData.append("account_number", data.account_number);
+        formData.append("sort_code", data.sort_code);
 
         try {
             await post(route('driver.store'), formData, {
@@ -248,6 +254,39 @@ const AddDriver = ({ cars }) => {
                                         return <option key={car.id} value={car.id}>{car.car_name}</option>;
                                     })}
                                 </select>
+                            </div>
+                            <div>
+                                <h1 className="block text-sm font-medium">Bank Name</h1>
+                                <input
+                                    type="text"
+                                    name="bank_name"
+                                    value={data.bank_name}
+                                    onChange={handleInputChange}
+                                    className="border border-gray-300 rounded-lg w-full focus:outline-none"
+                                />
+                                {errors.bank_name && <p className="text-red-500 text-sm mt-1">{errors.bank_name}</p>}
+                            </div>
+                            <div>
+                                <h1 className="block text-sm font-medium">Account Number</h1>
+                                <input
+                                    type="text"
+                                    name="account_number"
+                                    value={data.account_number}
+                                    onChange={handleInputChange}
+                                    className="border border-gray-300 rounded-lg w-full focus:outline-none"
+                                />
+                                {errors.account_number && <p className="text-red-500 text-sm mt-1">{errors.account_number}</p>}
+                            </div>
+                            <div>
+                                <h1 className="block text-sm font-medium">Sort Code</h1>
+                                <input
+                                    type="text"
+                                    name="sort_code"
+                                    value={data.sort_code}
+                                    onChange={handleInputChange}
+                                    className="border border-gray-300 rounded-lg w-full focus:outline-none"
+                                />
+                                {errors.sort_code && <p className="text-red-500 text-sm mt-1">{errors.sort_code}</p>}
                             </div>
                         </div>
                     </form>

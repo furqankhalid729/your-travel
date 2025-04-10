@@ -5,7 +5,7 @@ import { FaArrowLeft, FaSave } from 'react-icons/fa';
 const EditDriver = ({ driver, cars }) => {
   const [profileImage, setProfileImage] = useState(null);
 
-  const { data, setData, put,post, processing, errors } = useForm({
+  const { data, setData, put, post, processing, errors } = useForm({
     profile_image: driver?.profile_image || null,
     name: driver?.name || "",
     identity_no: driver?.identity_no || "",
@@ -17,6 +17,9 @@ const EditDriver = ({ driver, cars }) => {
     experience: driver?.experience || "",
     status: driver?.status || "active",
     car_id: driver.car_id,
+    bank_name: driver?.bank_name || "",
+    account_number: driver?.account_number || "",
+    sort_code: driver?.sort_code || ""
   });
 
   useEffect(() => {
@@ -46,7 +49,7 @@ const EditDriver = ({ driver, cars }) => {
     post(route("driver.update", driver.id), {
       onError: (errors) => {
         console.log("Validation Errors:", errors);
-        console.log("data is",data)
+        console.log("data is", data)
       },
     });
   };
@@ -203,6 +206,39 @@ const EditDriver = ({ driver, cars }) => {
                     return <option key={car.id} value={car.id}>{car.car_name}</option>;
                   })}
                 </select>
+              </div>
+              <div>
+                <h1 className="block text-sm font-medium">Bank Name</h1>
+                <input
+                  type="text"
+                  name="bank_name"
+                  value={data.bank_name}
+                  onChange={handleInputChange}
+                  className="border border-gray-300 rounded-lg w-full focus:outline-none"
+                />
+                {errors.bank_name && <p className="text-red-500 text-sm mt-1">{errors.bank_name}</p>}
+              </div>
+              <div>
+                <h1 className="block text-sm font-medium">Account Number</h1>
+                <input
+                  type="text"
+                  name="account_number"
+                  value={data.account_number}
+                  onChange={handleInputChange}
+                  className="border border-gray-300 rounded-lg w-full focus:outline-none"
+                />
+                {errors.account_number && <p className="text-red-500 text-sm mt-1">{errors.account_number}</p>}
+              </div>
+              <div>
+                <h1 className="block text-sm font-medium">Sort Code</h1>
+                <input
+                  type="text"
+                  name="sort_code"
+                  value={data.sort_code}
+                  onChange={handleInputChange}
+                  className="border border-gray-300 rounded-lg w-full focus:outline-none"
+                />
+                {errors.sort_code && <p className="text-red-500 text-sm mt-1">{errors.sort_code}</p>}
               </div>
             </div>
           </form>

@@ -21,5 +21,8 @@ class Driver extends Model
         'profile_image',
         'status',
         'car_id',
+        'bank_name', 
+        'account_number', 
+        'sort_code'
     ];
 }

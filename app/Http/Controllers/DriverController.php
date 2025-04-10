@@ -53,7 +53,10 @@ class DriverController extends Controller
             'experience' => 'required|string|max:255',
             'profile_image.file' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'status' => 'required|in:active,disabled',
-            'car_id' => 'nullable'
+            'car_id' => 'nullable',
+            'bank_name' => 'nullable|string',
+            'account_number' => 'nullable|string',
+            'sort_code' => 'nullable|string',
         ]);
 
         // Handle file upload
@@ -106,7 +109,10 @@ class DriverController extends Controller
             'experience' => 'required|string|max:255',
             'profile_image.file' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
             'status' => 'required|in:active,disabled',
-            'car_id' => 'nullable'
+            'car_id' => 'nullable',
+            'bank_name' => 'nullable|string',
+            'account_number' => 'nullable|string',
+            'sort_code' => 'nullable|string',
         ]);
 
         // Handle profile image upload
@@ -129,6 +135,9 @@ class DriverController extends Controller
             'profile_image' => $profileImagePath,
             'status' => $validatedData['status'],
             'car_id' => $validatedData['car_id'],
+            'bank_name' => $validatedData['bank_name'],
+            'account_number' => $validatedData['account_number'],
+            'sort_code' => $validatedData['sort_code'],
         ]);
 
 
