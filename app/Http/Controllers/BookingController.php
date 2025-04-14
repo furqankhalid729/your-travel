@@ -121,7 +121,6 @@ class BookingController extends Controller
             'booking' => $booking->load('items'),
         ], 201);
     }
-
     public function destroy(string $id)
     {
         $booking = Booking::find($id);
@@ -130,5 +129,26 @@ class BookingController extends Controller
         }
         $booking->delete();
         return response()->json(['message' => 'Booking deleted successfully.'], 200);
+    }
+    public function updateStatus(Request $request, $id){
+        $validator = Validator::make($request->all(), [
+            'status' => 'required|in:Booked,Fulfilled,Confirmed,Canceled,Completed',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validation failed',
+                'errors'  => $validator->errors(),
+            ], 422);
+        }
+
+        $booking = Booking::find($id);
+        if (!$booking) {
+            return response()->json(['message' => 'Booking not found.'], 404);
+        }
+
+        $booking->update(['status' => $request->status]);
+
+        return response()->json(['message' => 'Booking status updated successfully.'], 200);
     }
 }

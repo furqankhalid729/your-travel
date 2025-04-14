@@ -22,8 +22,7 @@ class TourController extends Controller
 
     public function tourDashboard()
     {
-        $allBooking = Booking::where('status', 'active')
-            ->join('booking_items', 'bookings.id', '=', 'booking_items.booking_id')
+        $allBooking = Booking::join('booking_items', 'bookings.id', '=', 'booking_items.booking_id')
             ->where('booking_items.type', 'tour')
             ->select('bookings.id as MainID', 'bookings.*', 'booking_items.*')
             ->get();
@@ -248,7 +247,6 @@ class TourController extends Controller
     {
         $booking = Booking::where("id", $id)
             ->with("items")
-
             ->first();
 
         if (!$booking)

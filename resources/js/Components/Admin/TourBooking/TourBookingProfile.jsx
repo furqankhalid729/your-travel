@@ -1,5 +1,6 @@
 import { Link } from "@inertiajs/react";
 import { MdOutlineArrowBackIos } from "react-icons/md";
+import OrderStatusDropdown from "../../../Components/OrderStatus";
 
 const TourBookingProfile = ({ booking, tour }) => {
   console.log(booking, tour)
@@ -57,6 +58,12 @@ const TourBookingProfile = ({ booking, tour }) => {
                 <p className="font-semibold">Tour Location</p>
                 <span className="text-gray-500">{tour.location}</span>
               </p>
+              <div>
+                <OrderStatusDropdown 
+                  orderStatus={booking.status}
+                  orderId={booking.id}
+                />
+              </div>
             </div>
             <div className="mt-6">
 

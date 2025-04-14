@@ -25,12 +25,14 @@ Route::middleware('auth')->group(function () {
     Route::post('/driver/add-driver', [DriverController::class, 'store'])->name('driver.store');
     Route::post('/driver/assign-driver', [CarController::class, 'saveRider'])->name('driver.assign');
     Route::delete('/driver/delete/{id}', [DriverController::class, 'destroy'])->name('driver.delete');
+
+    Route::post('booking/update-status/{id}', [BookingController::class, 'updateStatus'])->name('booking.updateStatus');
+
     Route::post('/hotel/add-hotel-room', [HotelRoomController::class, 'store'])->name('hotelRoom.store');
     Route::delete('/hotel/delete/{id}', [HotelRoomController::class, 'destroy'])->name('hotelRoom.delete');
     Route::post('/tour/add-tour', [TourController::class, 'store']);
     Route::post('/tour/edit/{id}', [TourController::class, 'update'])->name('tour.update');
     Route::delete('/tour/delete/{id}', [TourController::class, 'destroy'])->name('tour.delete');
-
     Route::delete('/booking/delete/{id}', [BookingController::class, 'destroy'])->name('booking.delete');
 });
 Route::get('/locations', [LocationController::class, 'getGoogleMapSuggestions']);

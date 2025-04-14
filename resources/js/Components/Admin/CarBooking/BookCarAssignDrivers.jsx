@@ -1,21 +1,19 @@
 import {
   FaArrowLeft,
-  FaPen,
   FaPhone,
   FaRegIdCard,
   FaRegMap,
-  FaSnowflake,
-  FaUser,
 } from "react-icons/fa6";
 import { Link } from "@inertiajs/react";
 import { useState } from "react";
+import OrderStatusDropdown from "../../OrderStatus";
 
 const BookCarAssignDrivers = ({ order, car, drivers }) => {
   const carItems = order.items.filter(item => item.type === "car");
   const [price, setPrice] = useState(carItems[0].price);
   const additionalInfo = JSON.parse(carItems[0].additional_info);
-  console.log(drivers)
-  const [driverName, setDriverName] = useState(() =>{
+  console.log(order)
+  const [driverName, setDriverName] = useState(() => {
     if (additionalInfo?.driverName) {
       return additionalInfo.driverName;
     } else if (drivers.length > 0 && drivers[0]?.id) {
@@ -46,9 +44,9 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
         driver_id: driverId,
         order_id: order.id,
         price: price,
-        driverName:driverName,
-        driverBank:driverBank,
-        pickupLocation:additionalInfo.pickup_location,
+        driverName: driverName,
+        driverBank: driverBank,
+        pickupLocation: additionalInfo.pickup_location,
         pickupData: new Date(additionalInfo.pickup_date).toLocaleString(),
         baseFare: carItems[0].price,
       });
@@ -101,10 +99,7 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
                   <p className="text-gray-500 border px-1 rounded-lg ml-2">
                     {new Date(additionalInfo.pickup_date).toLocaleString()}
                   </p>
-                  {/* <p>To :</p>
-                  <p className="text-gray-500 border px-1 rounded-lg ml-2">
-                    September 28, 2024
-                  </p> */}
+                  
                 </div>
               </div>
               <div className="flex justify-center lg:justify-end px-4 pb-2">
@@ -154,7 +149,7 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
                   <p>
                     Distance: {additionalInfo?.distance} km
                   </p>
-                ):(
+                ) : (
                   <p>
                     Time Duration: {additionalInfo?.time}
                   </p>
@@ -172,95 +167,10 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
               </button>
             </div>
           </div>
-          {/* <div className="flex flex-col lg:flex-row gap-6">
-            <div className="lg:w-1/2 flex flex-col items-center p-2 bg-white">
-              <img
-                src="/storage/images/user.png"
-                alt="User"
-                className="w-32 h-32 rounded-full object-cover mb-4"
-              />
-              <h2 className="text-xl font-semibold text-gray-800">
-                Muhammad Aadlan
-              </h2>
-              <div className="grid grid-cols-2 gap-2 text-sm mt-2 text-gray-400">
-                <div className="flex items-center gap-2">
-                  <FaRegIdCard className="text-gray-500" />
-                  <p>3520294317803</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaPhone className="text-gray-500" />
-                  <p>+13 337 95 65 335</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaEnvelope className="text-gray-500" />
-                  <p>adlan9@gmail.com</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaUser className="text-gray-500" />
-                  <p>25 years old</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaCalendarAlt className="text-gray-500" />
-                  <p>02 Years</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaBuilding className="text-gray-500" />
-                  <p>PK20219515401</p>
-                </div>
-              </div>
-            </div>
-            <div className="lg:w-1/2 bg-white">
-              <img src="/storage/images/car.png" className="my-2 mx-auto bg-white" alt="car" />
-              <div className="flex justify-between items-center px-5">
-                <h1 className="text-xl font-semibold">Audi E-tron GT XR</h1>
-                <p className="text-sm text-gray-500">UK23AJ403</p>
-              </div>
-              <p className="mt-1 px-5 font-semibold">Economy</p>
-              <div className="mt-4 grid grid-cols-3 gap-2 px-5">
-                <div className="flex items-center gap-1">
-                  <FaSnowflake className="text-[#bb8dd9]" />
-                  <span className="text-gray-500">AC</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <FaCarSide className="text-[#bb8dd9]" />
-                  <span className="text-gray-500">Auto</span>
-                </div>
-                <div className="flex items-center gap-1">
-                  <FaCarSide className="text-[#bb8dd9]" />
-                  <span className="text-gray-500">4 Doors</span>
-                </div>
-              </div>
-              <div className="flex px-5 gap-5 mt-3 pb-3">
-                <div className="flex items-center gap-1">
-                  <FaLanguage className="text-[#bb8dd9]" />
-                  <p className="text-gray-500">2 Laguage</p>
-                </div>
-                <div className="flex items-center gap-2">
-                  <FaUser className="text-[#bb8dd9]" />
-                  <p className="text-gray-500">4 Persons</p>
-                </div>
-              </div>
-            </div>
-          </div> */}
         </div>
         <div className="lg:w-[30%] space-y-4">
           <div className="border p-4 rounded-md bg-white">
-            {/* <div>
-              <div className="font-semibold flex items-center justify-between">
-                <p>Notes</p>
-                <FaPen className="text-gray-500 cursor-pointer" />
-              </div>
-              <div className="text-sm text-gray-500">
-                No notes from customer
-              </div>
-            </div> */}
-            {/* <div>
-              <div className="font-semibold flex items-center justify-between">
-                <p>Additional Details</p>
-                <FaPen className="text-gray-500 cursor-pointer" />
-              </div>
-              <div className="text-sm text-gray-500">N/A</div>
-            </div> */}
+            
             <div className="space-y-2">
               <div>
                 <div className="text-sm font-medium">Country Code</div>
@@ -288,10 +198,17 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
               </div>
             </div>
             <div>
-                <div className="text-sm font-medium">Phone Number</div>
-                <div className="text-sm text-gray-600">{order?.phone_number}</div>
-              </div>
+              <div className="text-sm font-medium">Phone Number</div>
+              <div className="text-sm text-gray-600">{order?.phone_number}</div>
+            </div>
+            <div className="mt-5">
+              <OrderStatusDropdown 
+                orderStatus = {order.status}
+                orderId = {order.id}
+              />
+            </div>
           </div>
+
           <div>
             <div className="bg-white border p-5 rounded-md">
               <p className="font-semibold mb-1">Payment Details</p>
@@ -303,7 +220,7 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
                   <div className="flex justify-between">
                     <p>Tax</p> <span>{parseFloat(carItems[0].price * 0.17).toFixed(2)}</span>
                   </div>
-                 
+
                   <p className="font-normal text-gray-500 text-sm text-center">
                     17% Taxes are included now
                   </p>
@@ -335,7 +252,7 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
                   <FaPhone className="text-gray-500" />
                   <p>{driver.contact_no}</p>
                 </div>
-                <button onClick={() => {setDriverId(driver.id);setDriverName(driver.name); setDriverBank("test")} } className={`${driverId === driver.id ? 'bg-[#e1baf9]' : 'bg-[#151516]'} rounded-xl text-white px-3`}>
+                <button onClick={() => { setDriverId(driver.id); setDriverName(driver.name); setDriverBank("test") }} className={`${driverId === driver.id ? 'bg-[#e1baf9]' : 'bg-[#151516]'} rounded-xl text-white px-3`}>
                   Select
                 </button>
               </div>
