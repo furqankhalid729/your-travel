@@ -1,10 +1,35 @@
-import { FaArrowLeft, FaEdit } from "react-icons/fa";
 import { FaEye, FaPlus, FaTrash } from "react-icons/fa6";
 import { MdDateRange } from "react-icons/md";
 import { Link } from "@inertiajs/react";
+import { useState } from "react";
+import DeleteModal from "../../../Components/deleteModal";
 
-const ViewTourBooking = ({allBooking}) => {
-  console.log(allBooking)
+const ViewTourBooking = ({ allBooking }) => {
+  const [bookings, setBookings] = useState(allBooking);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [itemToDelete, setItemToDelete] = useState(null);
+  console.log(allBooking);
+  const openModal = (id) => {
+    console.log(id)
+    setItemToDelete(id);
+    setModalOpen(true);
+  };
+  const closeModal = () => {
+    setModalOpen(false);
+    setItemToDelete(null);
+  };
+
+  const deleteItem = async (id) => {
+    console.log(`Deleting item with ID: ${id}`);
+    try {
+      const response = await axios.delete(route('booking.delete', { id }));
+      setBookings((prevItems) => prevItems.filter((item) => item.MainID !== id));
+      closeModal();
+    } catch (error) {
+      console.error("Error deleting item:", error.response?.data?.message || error.message);
+    }
+    closeModal();
+  };
   // const navigate = useNavigate();
   return (
     <div className="my-5">
@@ -62,7 +87,7 @@ const ViewTourBooking = ({allBooking}) => {
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-200">
-              {allBooking.map((tour, index) => (
+              {bookings.map((tour, index) => (
                 <tr key={index}>
                   <td className="px-4 py-4 whitespace-nowrap text-sm text-gray-500">
                     {tour.MainID}
@@ -85,21 +110,21 @@ const ViewTourBooking = ({allBooking}) => {
                   <td className="px-4 py-4 whitespace-nowrap text-sm">
                     <span
                       className={`px-2 py-1 rounded-full text-xs font-medium ${tour.status === "Booked"
-                          ? "bg-[#2e2532] text-[#b38dcb]"
-                          : "bg-[#f5a7ab] text-[#ea424a]"
+                        ? "bg-[#2e2532] text-[#b38dcb]"
+                        : "bg-[#f5a7ab] text-[#ea424a]"
                         }`}
                     >
                       {tour.status}
                     </span>
                   </td>
                   <td className="px-4 py-4 whitespace-nowrap text-sm flex gap-2">
-                    <Link href={route('tour.booking.show',tour.MainID)} className="text-red-500">
+                    <Link href={route('tour.booking.show', tour.MainID)} className="text-red-500">
                       <FaEye />
                     </Link>
-                    <button className="text-blue-500">
+                    {/* <button className="text-blue-500">
                       <FaEdit />
-                    </button>
-                    <button className="text-red-500">
+                    </button> */}
+                    <button onClick={() => openModal(tour.MainID)} className="text-red-500">
                       <FaTrash />
                     </button>
                   </td>
@@ -109,6 +134,12 @@ const ViewTourBooking = ({allBooking}) => {
           </table>
         </div>
       </div>
+      <DeleteModal
+        isOpen={modalOpen}
+        onClose={closeModal}
+        onSubmit={deleteItem}
+        itemId={itemToDelete}
+      />
     </div>
   );
 };
