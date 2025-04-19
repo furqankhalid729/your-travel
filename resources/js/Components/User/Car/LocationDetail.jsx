@@ -1,5 +1,6 @@
 import { FaMapMarkerAlt, FaCalendarAlt, FaClock, FaUser, FaCheck } from "react-icons/fa";
-export default function LocationDetail({ from, to, startDate, passengers, distance, duration }) {
+import PinMap from "../../PinMap";
+export default function LocationDetail({ from, to, startDate, passengers, distance, duration,originCoords, destinationCoords }) {
     const items = [
         "Taxes and Tolls",
         "Flight Monitoring",
@@ -58,13 +59,10 @@ export default function LocationDetail({ from, to, startDate, passengers, distan
                 </div>
 
                 <div className="rounded overflow-hidden">
-                    <iframe
-                        className="w-full h-52 rounded"
-                        frameBorder="0"
-                        src="https://www.google.com/maps/embed?pb=!1m28!1m12!1m3!1d55273.26596421353!2d7.57327!3d47.5596!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4791b9d4f67e3cb1%3A0xa710e279c1d23c6c!2sBasel%20SBB!5e0!3m2!1sen!2sch!4v1646400000000"
-                        allowFullScreen
-                        loading="lazy"
-                    ></iframe>
+                    <PinMap 
+                        origin={originCoords}
+                        destination={destinationCoords}
+                    />
                 </div>
             </div>
 

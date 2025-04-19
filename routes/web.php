@@ -75,7 +75,7 @@ Route::get('/tour-pkg', function () {
 });
 
 // Admin Routes
-// Route::middleware(['auth', 'role'])->group(function () {
+Route::middleware(['auth', 'role'])->group(function () {
     Route::get('/dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/car-booking', [CarController::class, 'index'])->name('car.index');
     Route::get('/dashboard/car-booking/add-car', [CarController::class, 'create']);
@@ -117,7 +117,7 @@ Route::get('/tour-pkg', function () {
     Route::get('/dashboard/settings/security', function () {
         return Inertia::render('Admin/Settings/Security');
     })->name('settings.security');
-// });
+});
 
 Route::get('/dashlayout', function () {
     return Inertia::render('Admin/DashLayout');

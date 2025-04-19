@@ -11,7 +11,7 @@ const iconMapping = {
   FaUser: <FaUser />,
 };
 
-const CarTab = ({ cars }) => {
+const CarTab = ({ cars, distance }) => {
   const [sortOption, setSortOption] = useState('Best Matches');
 
   const [favorites, setFavorites] = useState(() => {
@@ -106,7 +106,7 @@ const CarTab = ({ cars }) => {
                   </div>
                   <div className="flex flex-row lg:flex-col gap-6 mt-5">
                     <p className="text-xl font-bold text-gray-800 text-right">
-                      <span className="text-gray-700 text-xs">from</span> ${car.price}
+                      <span className="text-gray-700 text-xs">from</span> ${ parseFloat(car.price) * distance }
                     </p>
                     <Link href={route('cars.show', { id: car.id })}>
                       <button className="w-32 h-10 bg-red-500 text-white rounded-[50px]">See Details</button>

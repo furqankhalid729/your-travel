@@ -13,6 +13,8 @@ const Car = ({ cars, filters, modelsFilter, brandFilter }) => {
   const params = Object.fromEntries(new URLSearchParams(queryString));
   const [distance, setDistance] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [originCoords, setOriginCoords] = useState(null);
+  const [destinationCoords, setDestinationCoords] = useState(null);
 
   const handleFilter = (filteredCars) => {
     setFilteredCars(filteredCars);
@@ -38,10 +40,32 @@ const Car = ({ cars, filters, modelsFilter, brandFilter }) => {
       });
   };
 
+  const getCoordinates = (address) => {
+    return axios.post(route("getCordinates"), {
+      address: address,
+    })
+      .then(response => {
+        const data = response.data;
+        console.log(data)
+        return data
+      })
+      .catch(error => {
+        console.error("Axios error:", error);
+      });
+  }
+
   useEffect(() => {
-    setFilteredCars(cars);
+    if (filteredCars !== cars) {
+      setFilteredCars(cars);
+    }
+  
     getDistance();
-  }, [cars])
+  
+    if (params.from && params.to) {
+      getCoordinates(params.from).then(setOriginCoords);
+      getCoordinates(params.to).then(setDestinationCoords);
+    }
+  }, [cars, params.from, params.to]);
 
 
 
@@ -58,10 +82,12 @@ const Car = ({ cars, filters, modelsFilter, brandFilter }) => {
             passengers={params.passengers}
             distance={distance}
             duration={duration}
+            originCoords={originCoords}
+            destinationCoords={destinationCoords}
           />
         </div>
         <div className='w-full md:w-3/4 mt:10 lg:mt-24'>
-          <CarTab cars={filteredCars} />
+          <CarTab cars={filteredCars} distance={distance} />
         </div>
       </div>
     </div>

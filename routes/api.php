@@ -38,6 +38,7 @@ Route::middleware('auth')->group(function () {
 Route::get('/locations', [LocationController::class, 'getGoogleMapSuggestions']);
 Route::get('/location-images', [LocationController::class, 'getLocationImages']);
 Route::post('/api/get-distance', [LocationController::class, 'getDistance'])->name('getDistance');
+Route::post('/get-cordinates', [LocationController::class, 'getCordinates'])->name('getCordinates');
 Route::post('/hotel/hotel-booking-form', [HotelController::class, 'store'])->name('hotel.store');
 Route::get('/cars/home/featured', [CarController::class, 'featured'])->name('cars.featured');
 Route::get('/cars/filter', [CarController::class, 'filter'])->name('cars.filter');

@@ -88,4 +88,29 @@ class LocationController extends Controller
 
         return response()->json($response->json());
     }
+
+    public function getCordinates(Request $request)
+    {
+        $address = $request->input('address');
+
+        if (!$address) {
+            return response()->json(['error' => 'Address is required'], 400);
+        }
+        $apiKey = env('GOOGLE_MAPS_API_KEY');
+        $response = Http::get("https://maps.googleapis.com/maps/api/geocode/json", [
+            'address' => $address,
+            'key' => $apiKey,
+        ]);
+
+        $data = $response->json();
+        Log::info("Cordinates", [$data]);
+        if (!isset($data['results'][0])) {
+            return response()->json(['error' => 'Location not found'], 404);
+        }
+        $location = $data['results'][0]['geometry']['location'];
+        return response()->json([
+            'lat' => $location['lat'],
+            'lng' => $location['lng'],
+        ]);
+    }
 }
