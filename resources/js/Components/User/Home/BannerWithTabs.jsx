@@ -76,7 +76,7 @@ const BannerWithTabs = () => {
 
 
                 {/* Render fields based on the active button */}
-                <div className="w-full max-w-5xl mx-auto mt-6">
+                <div className="w-full max-w-6xl mx-auto mt-6">
                     {/* Accordion (visible below lg) */}
                     <div className="lg:hidden">
                         {/* Accordion Header */}
@@ -98,7 +98,7 @@ const BannerWithTabs = () => {
                                 } overflow-hidden`}
                         >
                             <div
-                                className={`grid grid-cols-2 items-start sm:items-center py-2 bg-white rounded-lg sm:p-6 mt-4 mb-10 w-full max-w-5xl lg:space-y-0 lg:flex`}
+                                className={`grid grid-cols-2 items-start sm:items-center py-2 bg-white rounded-lg sm:p-6 mt-4 mb-10 w-full max-w-6xl lg:space-y-0 lg:flex`}
                             >
                                 {renderFormFields().map((field, index) => (
                                     <FormField
@@ -116,7 +116,7 @@ const BannerWithTabs = () => {
                                 {/* Search Button */}
                                 <button className="bg-red-600 px-2 md:px-6 py-1 md:py-3 rounded-lg font-semibold flex items-center w-24 md:w-32 space-x-2 mt-2 ml-2 lg:mt-0">
                                     <CiSearch className="text-white text-sm md:text-lg" />
-                                    <span>Search</span>
+                                    <span>See Prices</span>
                                 </button>
                             </div>
                         </div>
@@ -126,7 +126,7 @@ const BannerWithTabs = () => {
                     <div className="hidden lg:block">
                         <form action={searchURL} method="get">
                             <div
-                                className={`grid grid-cols-2 items-start sm:items-center py-2 bg-white rounded-lg sm:p-6 mt-4 mb-10 w-full max-w-5xl lg:space-y-0 lg:flex`}
+                                className={`grid grid-cols-2 items-start sm:items-center py-2 bg-white rounded-lg sm:p-6 mt-4 mb-10 w-full max-w-6xl lg:space-y-0 lg:flex`}
                             >
 
                                 {renderFormFields().map((field, index) => (
@@ -144,9 +144,9 @@ const BannerWithTabs = () => {
 
 
                                 {/* Search Button */}
-                                <button className="bg-red-600 px-2 md:px-6 py-1 md:py-3 rounded-lg font-semibold flex items-center w-24 md:w-32 space-x-2 mt-2 ml-2 lg:mt-0">
+                                <button className="bg-red-600 px-2 md:px-6 py-1 md:py-3 rounded-lg font-semibold flex items-center w-24 md:w-44 space-x-2 mt-2 ml-2 lg:mt-0">
                                     <CiSearch className="text-white text-sm md:text-lg" />
-                                    <span>Search</span>
+                                    <span>See Prices</span>
                                 </button>
                             </div>
                         </form>
