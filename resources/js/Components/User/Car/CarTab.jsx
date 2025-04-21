@@ -12,7 +12,9 @@ const iconMapping = {
 };
 
 const CarTab = ({ cars, distance }) => {
+  console.log(cars)
   const [sortOption, setSortOption] = useState('Best Matches');
+  const [timeEnabled, setTimeEnabled] = useState(false);
 
   const [favorites, setFavorites] = useState(() => {
     return JSON.parse(Cookies.get("favorites") || "[]");
@@ -24,7 +26,7 @@ const CarTab = ({ cars, distance }) => {
     if (isFavorited) {
       updatedFavorites = updatedFavorites.filter((car) => car.id !== id);
     } else {
-      updatedFavorites.push({ id, name: name, image: image, type:"car" });
+      updatedFavorites.push({ id, name: name, image: image, type: "car" });
     }
     Cookies.set("favorites", JSON.stringify(updatedFavorites), { expires: 30 });
     setFavorites(updatedFavorites);
@@ -43,7 +45,27 @@ const CarTab = ({ cars, distance }) => {
   return (
     <div className=''>
       <div className="flex justify-between items-center p-4 ">
-        <h2 className="text-[12px] md:text-xl font-semibold">{cars.length} Cars Available</h2>
+
+        <div className="flex items-center gap-4">
+          {/* Heading */}
+          <h2 className="text-[12px] md:text-xl font-semibold">
+            {cars.length} Cars Available
+          </h2>
+          {/* Toggle with label */}
+          <div className="flex items-center gap-2">
+            <span className="text-xs md:text-sm">By KM</span>
+            <label className="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" className="sr-only peer"
+                checked={timeEnabled}
+                onChange={() => setTimeEnabled(!timeEnabled)}
+              />
+              <div className="w-11 h-6 bg-gray-300 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:bg-blue-600 transition-all duration-300"></div>
+              <div className="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md transform peer-checked:translate-x-full transition-transform duration-300"></div>
+            </label>
+            <span className="text-xs md:text-sm">By Hour</span>
+          </div>
+        </div>
+
         <div className="flex items-center space-x-1 text-gray-700 text-[12px] md:text-xl cursor-pointer">
           <span>Sort By:</span>
           <select
@@ -106,7 +128,11 @@ const CarTab = ({ cars, distance }) => {
                   </div>
                   <div className="flex flex-row lg:flex-col gap-6 mt-5">
                     <p className="text-xl font-bold text-gray-800 text-right">
-                      <span className="text-gray-700 text-xs">from</span> ${ parseFloat(car.price) * distance }
+                      <span className="text-gray-700 text-xs">from</span>
+                      ${timeEnabled
+                        ? ((parseFloat(car.price) || 0) * 8).toFixed(2)
+                        : ((parseFloat(car.price_per_km) || 0) * distance).toFixed(2)}
+
                     </p>
                     <Link href={route('cars.show', { id: car.id })}>
                       <button className="w-32 h-10 bg-red-500 text-white rounded-[50px]">See Details</button>

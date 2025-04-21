@@ -72,8 +72,8 @@ const Car = ({ cars, filters, modelsFilter, brandFilter }) => {
   return (
     <div>
       <CarBanner />
-      <div className='flex flex-row justify-between gap-5 mx-4 md:mx-16 '>
-        <div className='hidden md:block md:w-[30%] lg:w-1/4 mt:10 lg:mt-24'>
+      <div className='flex flex-col-reverse md:flex-row justify-between gap-5 mx-4 md:mx-16 '>
+        <div className='block md:block md:w-[30%] lg:w-1/4 mt:10 lg:mt-24'>
           {/* <CarCategory onFilter={handleFilter} filters={filters} modelsFilter={modelsFilter} brandFilter={brandFilter}/> */}
           <LocationDetail
             from={params.from}
