@@ -5,7 +5,7 @@ import UserLayout from "../../Layout/UserLayout";
 import { useDispatch } from 'react-redux';
 import LocationDetail from '@/Components/User/Car/LocationDetail';
 import { usePage, router } from '@inertiajs/react';
-import { addBooking } from '../../store/BookingSlice';
+import { addBooking } from '../../store/bookingSlice';
 
 const Car = ({ cars, filters, modelsFilter, brandFilter }) => {
   const { auth } = usePage().props;
