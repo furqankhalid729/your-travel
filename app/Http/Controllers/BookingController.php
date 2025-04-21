@@ -73,7 +73,15 @@ class BookingController extends Controller
                 'country'               => $request->country,
                 'payment_id'            => $request->payment_id,
                 'phone_number'          => $request->phone_number,
-                'customer_data'         => $request->additional_members
+                'customer_data'         => $request->additional_members,
+                'extras' => [
+                    'luggage' => $request->luggage,
+                    'baby_seat' => $request->baby_seat,
+                    'child_seat' => $request->child_seat,
+                    'booster_seat' => $request->booster_seat,
+                    'additional_info' => $request->additional_info,
+                ]
+
             ]);
 
             $totalAmount = 0;
@@ -130,7 +138,8 @@ class BookingController extends Controller
         $booking->delete();
         return response()->json(['message' => 'Booking deleted successfully.'], 200);
     }
-    public function updateStatus(Request $request, $id){
+    public function updateStatus(Request $request, $id)
+    {
         $validator = Validator::make($request->all(), [
             'status' => 'required|in:Booked,Fulfilled,Confirmed,Canceled,Completed',
         ]);

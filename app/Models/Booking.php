@@ -19,11 +19,12 @@ class Booking extends Model {
         'country',
         'payment_id',
         'status',
-        'phone_number', 'customer_data'
+        'phone_number', 'customer_data', 'extras',
     ];
 
     protected $casts = [
         'customer_data' => 'array',
+        'extras' => 'array',
     ];
 
     public function items() {

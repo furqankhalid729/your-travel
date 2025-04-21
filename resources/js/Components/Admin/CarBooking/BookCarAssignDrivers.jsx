@@ -99,7 +99,7 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
                   <p className="text-gray-500 border px-1 rounded-lg ml-2">
                     {new Date(additionalInfo.pickup_date).toLocaleString()}
                   </p>
-                  
+
                 </div>
               </div>
               <div className="flex justify-center lg:justify-end px-4 pb-2">
@@ -170,7 +170,7 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
         </div>
         <div className="lg:w-[30%] space-y-4">
           <div className="border p-4 rounded-md bg-white">
-            
+
             <div className="space-y-2">
               <div>
                 <div className="text-sm font-medium">Country Code</div>
@@ -201,10 +201,22 @@ const BookCarAssignDrivers = ({ order, car, drivers }) => {
               <div className="text-sm font-medium">Phone Number</div>
               <div className="text-sm text-gray-600">{order?.phone_number}</div>
             </div>
+            {order?.extras && (
+              <div className="mt-4 space-y-1 border-t pt-4">
+                <div className="text-sm font-medium text-gray-800">Extras</div>
+                <div className="text-sm text-gray-600">Luggage: {order.extras.luggage || 0}</div>
+                <div className="text-sm text-gray-600">Baby Seat: {order.extras.baby_seat || 0}</div>
+                <div className="text-sm text-gray-600">Child Seat: {order.extras.child_seat || 0}</div>
+                <div className="text-sm text-gray-600">Booster Seat: {order.extras.booster_seat || 0}</div>
+                {order.extras.additional_info && (
+                  <div className="text-sm text-gray-600">Notes: {order.extras.additional_info}</div>
+                )}
+              </div>
+            )}
             <div className="mt-5">
-              <OrderStatusDropdown 
-                orderStatus = {order.status}
-                orderId = {order.id}
+              <OrderStatusDropdown
+                orderStatus={order.status}
+                orderId={order.id}
               />
             </div>
           </div>
