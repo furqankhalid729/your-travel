@@ -2,11 +2,14 @@ import React, { useState, useEffect } from 'react';
 import CarBanner from '../../Components/User/Car/CarBanner';
 import CarTab from '../../Components/User/Car/CarTab';
 import UserLayout from "../../Layout/UserLayout";
-import CarCategory from '@/Components/User/Car/CarCategory';
+import { useDispatch } from 'react-redux';
 import LocationDetail from '@/Components/User/Car/LocationDetail';
-import { usePage } from '@inertiajs/react';
+import { usePage, router } from '@inertiajs/react';
+import { addBooking } from '../../store/BookingSlice';
 
 const Car = ({ cars, filters, modelsFilter, brandFilter }) => {
+  const { auth } = usePage().props;
+  const dispatch = useDispatch();
   const [filteredCars, setFilteredCars] = useState(cars);
   const { url } = usePage();
   const queryString = url.split('?')[1] || '';
@@ -16,9 +19,6 @@ const Car = ({ cars, filters, modelsFilter, brandFilter }) => {
   const [originCoords, setOriginCoords] = useState(null);
   const [destinationCoords, setDestinationCoords] = useState(null);
 
-  const handleFilter = (filteredCars) => {
-    setFilteredCars(filteredCars);
-  };
   const getDistance = () => {
     return axios.post(route("getDistance"), {
       origin: params.from,
@@ -58,15 +58,42 @@ const Car = ({ cars, filters, modelsFilter, brandFilter }) => {
     if (filteredCars !== cars) {
       setFilteredCars(cars);
     }
-  
+
     getDistance();
-  
+
     if (params.from && params.to) {
       getCoordinates(params.from).then(setOriginCoords);
       getCoordinates(params.to).then(setDestinationCoords);
     }
   }, [cars, params.from, params.to]);
 
+  const handleSubmit = (carId,carName,price,timeEnabled) => {
+    if (!auth.user) {
+      router.visit('/login');
+      return;
+    }
+    const bookingData = {
+      type: 'car',
+      id: carId,
+      name: carName,
+      price: parseFloat(price),
+      additional_info: {
+        pickup_location: params.from,
+        dropout_location: params.to,
+        pickup_date: params.start_date,
+        dropout_date: '',
+        pricingType: timeEnabled ? "hourly" : "km",
+        distance: distance,
+        duration: duration,
+        passengers: params.passengers,
+        time: 8,
+        car_id: carId
+      },
+    };
+    console.log("Booking Data:", bookingData);
+    dispatch(addBooking(bookingData));
+    router.visit(route('checkout'));
+  }
 
 
   return (
@@ -87,7 +114,7 @@ const Car = ({ cars, filters, modelsFilter, brandFilter }) => {
           />
         </div>
         <div className='w-full md:w-3/4 mt:10 lg:mt-24'>
-          <CarTab cars={filteredCars} distance={distance} />
+          <CarTab cars={filteredCars} distance={distance} handleSubmit={handleSubmit} />
         </div>
       </div>
     </div>

@@ -11,7 +11,7 @@ const iconMapping = {
   FaUser: <FaUser />,
 };
 
-const CarTab = ({ cars, distance }) => {
+const CarTab = ({ cars, distance, handleSubmit }) => {
   console.log(cars)
   const [sortOption, setSortOption] = useState('Best Matches');
   const [timeEnabled, setTimeEnabled] = useState(false);
@@ -84,6 +84,9 @@ const CarTab = ({ cars, distance }) => {
       <div className="grid grid-cols-1 gap-6 py-8">
         {cars.map((car) => {
           const isFavorited = favorites.some((fav) => fav.id === car.id);
+          const price = timeEnabled
+            ? ((parseFloat(car.price) || 0) * 8).toFixed(2)
+            : ((parseFloat(car.price_per_km) || 0) * distance).toFixed(2);
           return (
             <div key={car.id} className="bg-white shadow-md rounded-lg overflow-hidden w-full flex flex-col lg:flex-row p-4">
               {/* car image */}
@@ -128,15 +131,10 @@ const CarTab = ({ cars, distance }) => {
                   </div>
                   <div className="flex flex-row lg:flex-col gap-6 mt-5">
                     <p className="text-xl font-bold text-gray-800 text-right">
-                      <span className="text-gray-700 text-xs">from</span>
-                      ${timeEnabled
-                        ? ((parseFloat(car.price) || 0) * 8).toFixed(2)
-                        : ((parseFloat(car.price_per_km) || 0) * distance).toFixed(2)}
-
+                      <span className="text-gray-700 text-xs">from </span>
+                      ${price}
                     </p>
-                    <Link href={route('cars.show', { id: car.id })}>
-                      <button className="w-32 h-10 bg-red-500 text-white rounded-[50px]">See Details</button>
-                    </Link>
+                      <button onClick={() => handleSubmit(car.id,car.car_name, price, timeEnabled)} className="w-32 h-10 bg-red-500 text-white rounded-[50px]">Book Now</button>
                   </div>
                 </div>
               </div>

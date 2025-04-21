@@ -38,29 +38,55 @@ const CarBooking = ({ setDisabled }) => {
           <h3 className="text-[20px] leading-[24px] font-[700]">{booking.name}</h3>
           <p className="text-gray-500 mt-1">
             {booking.additional_info.pickup_location && (
-              <span className="font-semibold">
-                From : <br />
+              <span className="font-semibold mr-2">
+                From :
               </span>
             )}
             {booking.additional_info.pickup_location || booking.additional_info.hotel_location || booking.additional_info.tour_location}
           </p>
           <p className="text-gray-500 mt-1">
             {booking.additional_info.dropout_location && (
-              <span className="font-semibold">
-                To : <br />
+              <span className="font-semibold mr-2">
+                To :
               </span>
             )}
             {booking.additional_info.dropout_location}
           </p>
-          <p className="text-red-500 items-start text-md font-bold">Price : ${booking.price}</p>
+          <p className="text-gray-500 mt-1">
+            {booking.additional_info.pickup_date && (
+              <span className="font-semibold mr-2">
+                Pick up Date :
+              </span>
+            )}
+            {booking.additional_info.pickup_date}
+          </p>
+          <p className="text-gray-500 mt-1">
+            {booking.additional_info.pickup_date && (
+              <span className="font-semibold mr-2">
+                Duration :
+              </span>
+            )}
+            {booking.additional_info.duration}
+          </p>
+          <hr className="bg-red-500" />
+          <p className="text-gray-500 my-3">
+            {booking.additional_info.passengers && (
+              <span className="font-semibold mr-2">
+                Passengers :
+              </span>
+            )}
+            {booking.additional_info.passengers}
+          </p>
+          <hr className="bg-red-500" />
+          <p className="text-red-500 items-start text-md font-bold text-right">Price : ${booking.price}</p>
           {booking.type === 'hotel' && (
-              <p className="text-gray-500">
-                Check In Date : {booking.additional_info.checkInDate} <br></br>
-                Check Out Date : {booking.additional_info.checkOutDate}
-              </p>
-           )}
+            <p className="text-gray-500">
+              Check In Date : {booking.additional_info.checkInDate} <br></br>
+              Check Out Date : {booking.additional_info.checkOutDate}
+            </p>
+          )}
         </div>
-        {booking.type === 'car' && (
+        {/* {booking.type === 'car' && (
           <div className="bg-white rounded-lg p-6 mt-2 border border-gray-300">
             <div className="text-lg font-semibold text-gray-800 mb-4">
               Your Booking Detail
@@ -77,7 +103,7 @@ const CarBooking = ({ setDisabled }) => {
               </div>
             </div>
           </div>
-        )}
+        )} */}
         <button onClick={() => handleRemoveBooking(booking.id)} className="mt-2 bg-red-500 text-white px-3 py-2 rounded-md">
           Remove Booking
         </button>
