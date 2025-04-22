@@ -11,7 +11,7 @@ const Home = () => {
   return (
     <>
       <BannerWithTabs />
-      <FeaturedFleets />
+      {/* <FeaturedFleets /> */}
       <FeatureOffers/>
       <FeatureDestination/>
       <Blog/>

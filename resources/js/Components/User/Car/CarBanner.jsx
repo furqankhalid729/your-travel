@@ -37,6 +37,7 @@ const CarBanner = () => {
                       key={index}
                       icon={field.icon}
                       label={field.label}
+                      type={field.type}
                       description={field.description}
                       isLast={index === formFieldsForCar.length - 1}
                       showCenterIcon={field.showCenterIcon}
@@ -65,6 +66,7 @@ const CarBanner = () => {
                     key={index}
                     icon={field.icon}
                     label={field.label}
+                    type={field.type}
                     description={field.description}
                     isLast={index === formFieldsForCar.length - 1}
                     showCenterIcon={field.showCenterIcon}

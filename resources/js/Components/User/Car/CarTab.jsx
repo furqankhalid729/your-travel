@@ -15,6 +15,7 @@ const CarTab = ({ cars, distance, handleSubmit }) => {
   console.log(cars)
   const [sortOption, setSortOption] = useState('Best Matches');
   const [timeEnabled, setTimeEnabled] = useState(false);
+  const [hours, setHours] = useState(4);
 
   const [favorites, setFavorites] = useState(() => {
     return JSON.parse(Cookies.get("favorites") || "[]");
@@ -64,6 +65,17 @@ const CarTab = ({ cars, distance, handleSubmit }) => {
             </label>
             <span className="text-xs md:text-sm">By Hour</span>
           </div>
+          {/* Hour Input Field */}
+          {timeEnabled && (
+            <input
+              value={hours}
+              onChange={(e) => setHours(e.target.value)}
+              type="number"
+              min="1"
+              placeholder="Hours"
+              className="w-20 md:w-24 px-2 py-1 text-xs md:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          )}
         </div>
 
         <div className="flex items-center space-x-1 text-gray-700 text-[12px] md:text-xl cursor-pointer">
@@ -85,7 +97,7 @@ const CarTab = ({ cars, distance, handleSubmit }) => {
         {cars.map((car) => {
           const isFavorited = favorites.some((fav) => fav.id === car.id);
           const price = timeEnabled
-            ? ((parseFloat(car.price) || 0) * 8).toFixed(2)
+            ? ((parseFloat(car.price) || 0) * hours).toFixed(2)
             : ((parseFloat(car.price_per_km) || 0) * distance).toFixed(2);
           return (
             <div key={car.id} className="bg-white shadow-md rounded-lg overflow-hidden w-full flex flex-col lg:flex-row p-4">
@@ -134,7 +146,7 @@ const CarTab = ({ cars, distance, handleSubmit }) => {
                       <span className="text-gray-700 text-xs">from </span>
                       ${price}
                     </p>
-                      <button onClick={() => handleSubmit(car.id,car.car_name, price, timeEnabled)} className="w-32 h-10 bg-red-500 text-white rounded-[50px]">Book Now</button>
+                    <button onClick={() => handleSubmit(car.id, car.car_name, price, timeEnabled,hours)} className="w-32 h-10 bg-red-500 text-white rounded-[50px]">Book Now</button>
                   </div>
                 </div>
               </div>

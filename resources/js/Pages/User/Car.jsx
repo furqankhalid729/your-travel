@@ -67,7 +67,7 @@ const Car = ({ cars, filters, modelsFilter, brandFilter }) => {
     }
   }, [cars, params.from, params.to]);
 
-  const handleSubmit = (carId,carName,price,timeEnabled) => {
+  const handleSubmit = (carId,carName,price,timeEnabled, hours) => {
     if (!auth.user) {
       router.visit('/login');
       return;
@@ -86,7 +86,7 @@ const Car = ({ cars, filters, modelsFilter, brandFilter }) => {
         distance: distance,
         duration: duration,
         passengers: params.passengers,
-        time: 8,
+        time: hours,
         car_id: carId
       },
     };
