@@ -46,7 +46,7 @@ const FormField = ({ icon: Icon, label, type, description, isLast, showCenterIco
                     //onBlur={() => setTimeout(() => setShowDropdown(false), 200)}
                     className="w-full border-0 border-solid border-b-2 border-gray-300 focus:outline-none focus:border-red-500 transition-all p-1"
                 />
-                { (name === "from" || name ==="to") && showDropdown && suggestions.length > 0 && (
+                {(name === "from" || name ==="to") && showDropdown && suggestions.length > 0 && (
                     <ul className="absolute left-0 w-full bg-white border border-gray-300 mt-1 rounded-md shadow-lg z-10">
                         {suggestions.map((item, index) => (
                             <li

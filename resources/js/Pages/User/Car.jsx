@@ -14,6 +14,8 @@ const Car = ({ cars, filters, modelsFilter, brandFilter }) => {
   const { url } = usePage();
   const queryString = url.split('?')[1] || '';
   const params = Object.fromEntries(new URLSearchParams(queryString));
+  const hasHours = "hours" in params;
+  const hoursValue = params.hours;
   const [distance, setDistance] = useState(0);
   const [duration, setDuration] = useState(0);
   const [originCoords, setOriginCoords] = useState(null);
@@ -114,7 +116,13 @@ const Car = ({ cars, filters, modelsFilter, brandFilter }) => {
           />
         </div>
         <div className='w-full md:w-3/4 mt:10 lg:mt-24'>
-          <CarTab cars={filteredCars} distance={distance} handleSubmit={handleSubmit} />
+          <CarTab 
+            cars={filteredCars} 
+            distance={distance} 
+            handleSubmit={handleSubmit} 
+            hasHours={hasHours} 
+            hoursValue={hoursValue}
+            />
         </div>
       </div>
     </div>

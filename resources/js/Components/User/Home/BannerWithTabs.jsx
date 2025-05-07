@@ -8,6 +8,7 @@ const BannerWithTabs = () => {
     const [activeButton, setActiveButton] = useState(0);
     const [isOpen, setIsOpen] = useState(true);
     const [searchURL, setSearchURL] = useState("/hotel")
+    const [carSubTab, setCarSubTab] = useState("oneWay");
 
     const handleButtonClick = (index) => {
         setActiveButton(index);
@@ -20,10 +21,7 @@ const BannerWithTabs = () => {
             case 1:
                 return formFieldsForTour;
             case 2:
-                return formFieldsForCar.map((field, index) => ({
-                    ...field,
-                    showCenterIcon: index === 0 || index === 2,
-                }));
+                return carSubTab === "oneWay" ? formFieldsForCar.filter(field => field.name !== "hours") : formFieldsForCar;
             default:
                 return [];
         }
@@ -124,9 +122,28 @@ const BannerWithTabs = () => {
 
                     {/* Normal Div (visible on lg and above) */}
                     <div className="hidden lg:block">
+                        {activeButton === 2 && (
+                            <div className="flex rounded-t-lg overflow-hidden w-full max-w-6xl mt-4">
+                                <button
+                                    onClick={() => setCarSubTab("oneWay")}
+                                    className={`px-4 py-2 font-semibold rounded-tl-lg ${carSubTab === "oneWay" ? "bg-red-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-red-50"
+                                        }`}
+                                >
+                                    One way
+                                </button>
+                                <button
+                                    onClick={() => setCarSubTab("byHours")}
+                                    className={`px-4 py-2 font-semibold rounded-tr-lg ${carSubTab === "byHours" ? "bg-red-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-red-50"
+                                        }`}
+                                >
+                                    By Hour
+                                </button>
+                            </div>
+                        )}
+
                         <form action={searchURL} method="get">
                             <div
-                                className={`grid grid-cols-2 items-start sm:items-center py-2 bg-white rounded-lg sm:p-6 mt-4 mb-10 w-full max-w-6xl lg:space-y-0 lg:flex`}
+                                className={`grid grid-cols-2 items-start sm:items-center py-2 bg-white rounded-lg sm:p-6 mb-10 w-full max-w-6xl lg:space-y-0 lg:flex`}
                             >
 
                                 {renderFormFields().map((field, index) => (

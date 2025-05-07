@@ -1,4 +1,4 @@
-import { BsBoxArrowLeft, BsBoxArrowRight } from "react-icons/bs";
+import { BsBoxArrowLeft, BsBoxArrowRight,BsClock } from "react-icons/bs";
 import { CiLocationOn, CiUser } from "react-icons/ci";
 import { IoCalendarOutline } from "react-icons/io5";
 import { PiJeepThin } from "react-icons/pi";
@@ -93,4 +93,11 @@ export const formFieldsForCar = [
         type:"number",
         name:"passengers"
     },
+    {
+        icon: BsClock,
+        label: "Hours",
+        description: "8",
+        type: "number",
+        name: "hours"
+    }
 ];

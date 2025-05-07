@@ -11,11 +11,10 @@ const iconMapping = {
   FaUser: <FaUser />,
 };
 
-const CarTab = ({ cars, distance, handleSubmit }) => {
-  console.log(cars)
+const CarTab = ({ cars, distance, handleSubmit,hasHours,hoursValue }) => {
   const [sortOption, setSortOption] = useState('Best Matches');
-  const [timeEnabled, setTimeEnabled] = useState(false);
-  const [hours, setHours] = useState(4);
+  const [timeEnabled, setTimeEnabled] = useState(hasHours);
+  const [hours, setHours] = useState(hoursValue);
 
   const [favorites, setFavorites] = useState(() => {
     return JSON.parse(Cookies.get("favorites") || "[]");
