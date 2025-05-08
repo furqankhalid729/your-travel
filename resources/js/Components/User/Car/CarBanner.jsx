@@ -7,7 +7,11 @@ import { CiSearch } from "react-icons/ci";
 
 const CarBanner = () => {
   const [isOpen, setIsOpen] = useState(true);
+  const [carSubTab, setCarSubTab] = useState("oneWay");
 
+  const renderFormFields = () => {
+    return carSubTab === "oneWay" ? formFieldsForCar.filter(field => field.name !== "hours") : formFieldsForCar;
+  };
   return (
     <div
       className="relative h-screen w-full bg-cover bg-center"
@@ -23,6 +27,22 @@ const CarBanner = () => {
           {/* Accordion (visible below lg) */}
           <div className="lg:hidden">
 
+            <div className="flex rounded-t-lg overflow-hidden w-full max-w-6xl ">
+              <button
+                onClick={() => setCarSubTab("oneWay")}
+                className={`px-4 py-2 font-semibold rounded-tl-lg ${carSubTab === "oneWay" ? "bg-red-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-red-50"
+                  }`}
+              >
+                One way
+              </button>
+              <button
+                onClick={() => setCarSubTab("byHours")}
+                className={`px-4 py-2 font-semibold rounded-tr-lg ${carSubTab === "byHours" ? "bg-red-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-red-50"
+                  }`}
+              >
+                By Hour
+              </button>
+            </div>
             <form action="/car" method="get">
               {/* Accordion Content */}
               <div
@@ -30,9 +50,9 @@ const CarBanner = () => {
                   } overflow-hidden`}
               >
                 <div
-                  className={`grid grid-cols-2 items-start sm:items-center py-2 bg-white rounded-lg sm:p-6 mt-4 mb-10 w-full max-w-4xl lg:space-y-0 lg:flex`}
+                  className={`grid grid-cols-1 items-start sm:items-center px-4 py-2 bg-white rounded-lg sm:p-6 mb-10 w-full max-w-4xl lg:space-y-0 lg:flex`}
                 >
-                  {formFieldsForCar.map((field, index) => (
+                  {renderFormFields().map((field, index) => (
                     <FormField
                       key={index}
                       icon={field.icon}
@@ -57,11 +77,27 @@ const CarBanner = () => {
 
           {/* Normal Div (visible on lg and above) */}
           <div className="hidden lg:block">
+            <div className="flex rounded-t-lg overflow-hidden w-full max-w-6xl ">
+              <button
+                onClick={() => setCarSubTab("oneWay")}
+                className={`px-4 py-2 font-semibold rounded-tl-lg ${carSubTab === "oneWay" ? "bg-red-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-red-50"
+                  }`}
+              >
+                One way
+              </button>
+              <button
+                onClick={() => setCarSubTab("byHours")}
+                className={`px-4 py-2 font-semibold rounded-tr-lg ${carSubTab === "byHours" ? "bg-red-600 text-white" : "bg-gray-100 text-gray-700 hover:bg-red-50"
+                  }`}
+              >
+                By Hour
+              </button>
+            </div>
             <form action="/car" method="get">
               <div
-                className={`grid grid-cols-2 items-start sm:items-center py-2 bg-white rounded-lg sm:p-6 mt-4 mb-10 w-full max-w-4xl lg:space-y-0 lg:flex`}
+                className={`grid grid-cols-2 items-start sm:items-center py-2 bg-white rounded-lg sm:p-6 mb-10 w-full max-w-4xl lg:space-y-0 lg:flex`}
               >
-                {formFieldsForCar.map((field, index) => (
+                {renderFormFields().map((field, index) => (
                   <FormField
                     key={index}
                     icon={field.icon}
