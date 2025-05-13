@@ -1,7 +1,7 @@
 <?php
 namespace App\Jobs;
 
-use App\Models\Hotel;
+use App\Models\TBOHotel;
 use App\Services\TboService;
 use Illuminate\Bus\Queueable;
 use Illuminate\Support\Facades\Log;
@@ -24,7 +24,7 @@ class FetchHotelDataJob implements ShouldQueue
     {
         $data = TboService::getHotelDetails($this->hotelCode);
         if ($data) {
-            Hotel::updateOrCreate(
+            TBOHotel::updateOrCreate(
                 ['hotel_code' => $this->hotelCode],
                 ['data' => $data, 'fetched_at' => now()]
             );
