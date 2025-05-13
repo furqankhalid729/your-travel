@@ -28,7 +28,6 @@ class SyncTboHotels extends Command
             //FetchHotelDataJob::dispatch($code);
             Log::info("Dispatching job for hotel code: {$code}");
             dispatch(new FetchHotelDataJob($code));
-            break;
         }
 
         $this->info("All jobs dispatched.");
