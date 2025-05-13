@@ -26,7 +26,7 @@ class FetchHotelDataJob implements ShouldQueue
         if ($data) {
             TBOHotel::updateOrCreate(
                 ['hotel_code' => $this->hotelCode],
-                ['data' => $data, 'fetched_at' => now()]
+                ['data' => json_encode($data), 'fetched_at' => now()]
             );
             Log::info("Hotel data fetched and stored for code: {$this->hotelCode}");
         } else {

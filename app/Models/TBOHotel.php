@@ -11,4 +11,9 @@ class TBOHotel extends Model
         'data',
         'fetched_at',
     ];
+
+    protected $casts = [
+        'data' => 'array',
+        'fetched_at' => 'datetime',
+    ];
 }
