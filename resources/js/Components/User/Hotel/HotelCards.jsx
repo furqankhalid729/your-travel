@@ -95,8 +95,8 @@ function HotelCards({ hotels, TBO_Hotel }) {
               <div className="object-cover relative w-full h-auto md:block md:max-w-[33%] md:min-h-[250px]">
                 <img
                   src={
-                    hotelData?.images?.length > 0
-                      ? hotelData.images[0]
+                    hotelData?.Images?.length > 0
+                      ? hotelData.Images[0]
                       : '/storage/images/dummy.png'
                   }
                   alt=""
