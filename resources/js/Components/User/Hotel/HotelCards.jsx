@@ -10,7 +10,6 @@ import Cookies from "js-cookie";
 function HotelCards({ hotels, TBO_Hotel }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
-  console.log(TBO_Hotel.data)
   const [favorites, setFavorites] = useState(() => {
     return JSON.parse(Cookies.get("favorites") || "[]");
   });
@@ -73,8 +72,9 @@ function HotelCards({ hotels, TBO_Hotel }) {
       <div>
         {TBO_Hotel.data.map((hotel) => {
           const isFavorited = favorites.some((fav) => fav.id === hotel.id);
+           console.log(JSON.parse(hotel.data).HotelDetails)
           const data = JSON.parse(hotel.data).HotelDetails[0];
-          console.log(JSON.parse(hotel.data).HotelDetails)
+         
           return (
             <div key={hotel.id} className="flex flex-col lg:flex-row gap-6 bg-white shadow-md rounded-lg p-2 border md:border-gray-200 mt-6">
 
