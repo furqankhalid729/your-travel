@@ -72,16 +72,15 @@ function HotelCards({ hotels, TBO_Hotel }) {
       <div>
         {TBO_Hotel.data.map((hotel) => {
           const isFavorited = favorites.some((fav) => fav.id === hotel.id);
-           console.log(JSON.parse(hotel.data).HotelDetails)
-          const data = JSON.parse(hotel.data).HotelDetails[0];
-         
+          console.log(JSON.parse(hotel.data).HotelDetails)
+          const hotelData = JSON.parse(hotel.data).HotelDetails[0];
           return (
             <div key={hotel.id} className="flex flex-col lg:flex-row gap-6 bg-white shadow-md rounded-lg p-2 border md:border-gray-200 mt-6">
 
               {/* Left - Hotel Image and Favorite Icon */}
               <div className="object-cover relative w-full h-auto md:block md:max-w-[33%] md:min-h-[250px]">
                 <img
-                  src={data?.images?.length > 0 ? data.images[0] : '/storage/images/dummy.png'}
+                  src={hotelData?.images?.length > 0 ? hotelData.images[0] : '/storage/images/dummy.png'}
                   alt=""
                   className="object-cover w-full md:h-full rounded-lg"
                 />
@@ -94,21 +93,21 @@ function HotelCards({ hotels, TBO_Hotel }) {
               <div className='block md:flex md:gap-5 md:py-4 flex-1'>
                 {/* Middle - Hotel Information */}
                 <div className="flex flex-col w-full md:w-6/12 lg:w-8/12">
-                  <h2 className="text-xl font-semibold text-gray-900">{data.HotelName}</h2>
+                  <h2 className="text-xl font-semibold text-gray-900">{hotelData.HotelName}</h2>
 
-                  <p className="text-gray-500 text-sm mt-1">{hotel.distance}</p>
+                  <p className="text-gray-500 text-sm mt-1">{hotelData.distance}</p>
 
                   {/* Rating */}
                   <div className="flex items-center mt-2">
-                    <span className="bg-red-500 text-white font-semibold px-2 md:py-1 rounded-xl ">{data.HotelRating}</span>
-                    <p className="ml-2 text-gray-600 text-sm">{data.HotelRating >= 4 ? "Good" : "Average"}</p>
-                    <p className="ml-2 text-gray-500 text-[10px] md:text-sm">({hotel.reviews} reviews)</p>
+                    <span className="bg-red-500 text-white font-semibold px-2 md:py-1 rounded-xl ">{hotelData.HotelRating}</span>
+                    <p className="ml-2 text-gray-600 text-sm">{hotelData.HotelRating >= 4 ? "Good" : "Average"}</p>
+                    <p className="ml-2 text-gray-500 text-[10px] md:text-sm">({hotelData.reviews} reviews)</p>
                   </div>
 
                   {/* Icons for amenities */}
                   <div className="flex flex-wrap md:flex-nowrap gap-2 mt-4 text-red-500  md:text-xl">
                     <ul className="space-y-2">
-                      {data.HotelFacilities.slice(0, 5).map((facility, index) => (
+                      {hotelData?.HotelFacilities.slice(0, 5).map((facility, index) => (
                         <li key={index} className="flex items-center gap-2">
                           <span className="text-sm text-gray-700">{facility}</span>
                         </li>
