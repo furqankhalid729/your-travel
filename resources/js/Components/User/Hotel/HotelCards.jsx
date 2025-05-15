@@ -10,7 +10,7 @@ import Cookies from "js-cookie";
 function HotelCards({ hotels, TBO_Hotel }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const toggleDropdown = () => setIsDropdownOpen(!isDropdownOpen);
-
+  console.log(TBO_Hotel.data)
   const [favorites, setFavorites] = useState(() => {
     return JSON.parse(Cookies.get("favorites") || "[]");
   });
