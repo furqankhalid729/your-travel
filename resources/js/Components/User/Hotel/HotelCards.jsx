@@ -92,7 +92,7 @@ function HotelCards({ hotels, TBO_Hotel }) {
               className="flex flex-col lg:flex-row gap-6 bg-white shadow-md rounded-lg p-2 border md:border-gray-200 mt-6"
             >
               {/* Left - Hotel Image and Favorite Icon */}
-              <div className="object-cover relative w-full h-auto md:block md:max-w-[33%] md:min-h-[250px]">
+              <div className="relative w-full h-[250px] md:max-w-[33%]">
                 <img
                   src={
                     hotelData?.Images?.length > 0
@@ -100,7 +100,7 @@ function HotelCards({ hotels, TBO_Hotel }) {
                       : '/storage/images/dummy.png'
                   }
                   alt=""
-                  className="object-cover w-full md:h-full rounded-lg"
+                  className="w-full h-full object-cover object-center rounded-lg"
                 />
                 <div
                   className={`absolute top-2 right-2 rounded-full p-1 shadow cursor-pointer transition ${isFavorited ? 'bg-red-500 text-white' : 'bg-white text-gray-500'
@@ -109,7 +109,6 @@ function HotelCards({ hotels, TBO_Hotel }) {
                   <CiHeart className="text-[8px] md:text-2xl" />
                 </div>
               </div>
-
               <div className="block md:flex md:gap-5 md:py-4 flex-1">
                 {/* Middle - Hotel Information */}
                 <div className="flex flex-col w-full md:w-6/12 lg:w-8/12">
@@ -131,13 +130,13 @@ function HotelCards({ hotels, TBO_Hotel }) {
                   </div>
 
                   <div className="flex flex-wrap md:flex-nowrap gap-2 mt-4 text-red-500 md:text-xl">
-                    <ul className="space-y-2">
-                      {hotelData?.HotelFacilities?.slice(0, 5).map((facility, index) => (
-                        <li key={index} className="flex items-center gap-2">
-                          <span className="text-sm text-gray-700">{facility}</span>
-                        </li>
-                      ))}
-                    </ul>
+                    <div className="flex flex-wrap md:flex-nowrap gap-2 mt-4 text-red-500  md:text-xl">
+                      <span className="bg-red-500 text-white px-1 py-1 rounded-md"><IoIosSnow /></span>
+                      <span className="bg-red-500 text-white px-1 py-1 rounded-md"><FiWifi /></span>
+                      <span className="bg-red-500 text-white px-1 py-1 rounded-md"><FiTv /></span>
+                      <span className="bg-red-500 text-white px-1 py-1 rounded-md"><BiFridge /></span>
+                      <span className="bg-red-500 text-white px-1 py-1 rounded-md"><FiCoffee /></span>
+                    </div>
                   </div>
                 </div>
 

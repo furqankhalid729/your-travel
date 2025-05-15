@@ -59,7 +59,7 @@ const BannerWithTabs = () => {
 
                 {/* Buttons */}
                 <div className="flex space-x-2 md:space-x-4 bg-black p-2 md:p-4 rounded-full">
-                    {["Hotel", "Tour", "Car"].map((label, index) => (
+                    {["Hotel", "Tour", "Transfer"].map((label, index) => (
                         <button
                             key={index}
                             onClick={() => handleButtonClick(index)}
