@@ -72,8 +72,10 @@ function HotelCards({ hotels, TBO_Hotel }) {
       <div>
         {TBO_Hotel.data.map((hotel) => {
           const isFavorited = favorites.some((fav) => fav.id === hotel.id);
-          console.log(JSON.parse(hotel.data).HotelDetails)
-          const hotelData = JSON.parse(hotel.data).HotelDetails[0];
+          const parsedData = JSON.parse(hotel.data);
+          console.log('HotelDetails:', JSON.stringify(parsedData.HotelDetails)); // force evaluation
+          const hotelData = parsedData.HotelDetails?.[0];
+          console.log('hotelData:', hotelData);
           return (
             <div key={hotel.id} className="flex flex-col lg:flex-row gap-6 bg-white shadow-md rounded-lg p-2 border md:border-gray-200 mt-6">
 
