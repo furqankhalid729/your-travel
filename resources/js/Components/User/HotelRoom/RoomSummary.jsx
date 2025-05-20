@@ -47,11 +47,12 @@ const RoomSummary = ({ hotel, hotelRooms }) => {
     <div className="my-8">
       <div>
         <h2 className="text-xl font-semibold mb-1">Summary</h2>
-        <p className="text-xs md:text-sm text-gray-700">
-          {hotel.description}
-        </p>
+        <div
+          className="text-xs md:text-sm text-gray-700"
+          dangerouslySetInnerHTML={{ __html: hotel.Description }}
+        />
       </div>
-      <div className="my-12">
+      {/* <div className="my-12">
         <h2 className="text-xl font-semibold mb-4">Types</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4   text-sm">
           {hotel.types.map((type, index) => (
@@ -62,15 +63,15 @@ const RoomSummary = ({ hotel, hotelRooms }) => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
       <div className="my-12">
         <h2 className="text-xl font-semibold mb-4">Facilities</h2>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4   text-sm">
-          {hotel.facilities.map((facility, index) => (
+          {hotel.HotelFacilities.map((facility, index) => (
             <div key={index} className="text-gray-800 flex mb-4">
-              <span className="text-xl text-red-500 mr-2" >{iconMapping[facility.icon]}
-              </span>
-              {facility.name}
+              {/* <span className="text-xl text-red-500 mr-2" >{iconMapping[facility.icon]}
+              </span> */}
+              {facility}
             </div>
           ))}
         </div>

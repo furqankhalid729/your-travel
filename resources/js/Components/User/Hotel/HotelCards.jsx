@@ -146,7 +146,7 @@ function HotelCards({ hotels, TBO_Hotel }) {
                     {/* Room Types can go here */}
                   </div>
                   <Link
-                    href={route('hotel.show', { id: hotel.id })}
+                    href={route('hotel.show', { id: hotelData.HotelCode })}
                     className="mt-4 px-4 py-3 md:px-8 md:py-2 bg-red-500 text-white font-semibold rounded-lg hover:bg-red-600 text-sm md:text-lg"
                   >
                     See Details

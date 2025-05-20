@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Enums\InertiaViews;
 use App\Models\HotelRoom;
 use App\Models\Hotel;
+use App\Models\TBOHotel;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\Log;
@@ -27,20 +28,23 @@ class HotelRoomController extends Controller
      */
     public function show(string $id)
     {
-        $hotel = Hotel::find($id);
 
-        if (!$hotel) {
+        // Try finding in TBOHotel
+        $tboHotel = TBOHotel::all()->filter(function ($hotel) use ($id) {
+            $decoded = json_decode($hotel->data, true);
+            return isset($decoded['HotelDetails'][0]['HotelCode']) && $decoded['HotelDetails'][0]['HotelCode'] == $id;
+        })->first();
+        Log::info($tboHotel);
+
+        if (!$tboHotel) {
             return redirect()->back()->withErrors(['error' => 'Hotel room not found!']);
         }
 
-        $hotelRooms = HotelRoom::where('hotel_id', $hotel->id)->get();
-        $hotel->facilities = json_decode($hotel->facilities, true);
-        $hotel->types = json_decode($hotel->types, true);
-        $hotel->tour_images = json_decode($hotel->tour_images, true);
-
+        // If TBO hotel is found, prepare the data
+        $hotelData = json_decode($tboHotel->data, true);
         return Inertia::render(InertiaViews::HotelDetail->value, [
-            'hotel' => $hotel,
-            'hotelRooms' => $hotelRooms
+            'hotel' => $hotelData,
+            'isTBOHotel' => true
         ]);
     }
 

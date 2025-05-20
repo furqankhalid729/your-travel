@@ -9,9 +9,8 @@ import ImageGallery from '../snippets/ImageGallery';
 import { Link, usePage, router } from '@inertiajs/react';
 import Cookies from "js-cookie";
 const RoomProfile = ({ hotel, hotelRooms }) => {
-  console.log(hotel)
   const [bookingDate, setBookingDate] = useState("");
-  const images = JSON.parse(hotel.images).map(image => '/storage/' + image);
+  const images = hotel?.images?.length>0 ? hotel.Images : [];
   const { auth } = usePage().props;
   const dispatch = useDispatch();
   const [wishList, setWishList] = useState(false);
@@ -68,7 +67,7 @@ const RoomProfile = ({ hotel, hotelRooms }) => {
   }
 
   const openInMaps = () => {
-    const encodedLocation = encodeURIComponent(hotel.location);
+    const encodedLocation = encodeURIComponent(hotel.Address);
     const googleMapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodedLocation}`;
     window.open(googleMapsUrl, "_blank");
   }
@@ -89,7 +88,7 @@ const RoomProfile = ({ hotel, hotelRooms }) => {
           <h1 className="max-[320px]:text-base text-lg md:text-3xl font-bold">{hotel.name}</h1>
           <div className="md:flex justify-between space-x-2  hidden">
             <span onClick={handleFavorite} className={`text-lg md:text-xl lg:text-4xl text-red-500 md:mt-4 ${wishList ? 'bg-red-500 text-white rounded-[50%]' : ''}`}><CiHeart /></span>
-            <div className='flex flex-col'><p className='text-xs md:text-sm text-gray-500 text-right'>from</p> <p className="text-base md:text-2xl font-semibold text-gray-800">${hotelRooms[0].price || 200}</p></div>
+            {/* <div className='flex flex-col'><p className='text-xs md:text-sm text-gray-500 text-right'>from</p> <p className="text-base md:text-2xl font-semibold text-gray-800">${hotelRooms[0].price || 200}</p></div> */}
             <button onClick={ScrollTo} className="px-2 lg:px-6 py-1 mt-1 lg:mt-0 lg:py-2  bg-red-500 text-white text-[10px] md:text-sm rounded-full">Book Now</button>
           </div>
         </div>

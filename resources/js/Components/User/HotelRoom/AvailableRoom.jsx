@@ -18,17 +18,16 @@ const TypeIconMapping = {
   FaTimes: <FaTimes />,
 };
 
-const AvailableRoom = ({ hotel, hotelRooms }) => {
+const AvailableRoom = ({ hotel }) => {
   console.log(hotel)
   const date = new Date();
   date.setDate(date.getDate() + 2);
+  const [hotelRooms, setHotelRooms] = useState([]);
   const [checkInDate, setCheckInDate] = useState( new Date().toISOString().split("T")[0]);
   const [checkOutDate, setCheckOutDate] = useState(date.toISOString().split("T")[0]);
   const [selectedPeople, setSelectedPeople] = useState("2 persons");
   const { auth } = usePage().props;
   const dispatch = useDispatch();
-
-
   const options = { day: "numeric", month: "long", year: "numeric" };
   const newDateString = date.toLocaleDateString("en-US", options);
 
@@ -110,47 +109,53 @@ const AvailableRoom = ({ hotel, hotelRooms }) => {
         </div>
       </div>
       <div>
-        {hotelRooms.map((room) => (
-          <div key={room.id} className="min-h-[250px] flex lg:flex-row flex-col px-3 py-4 gap-5  border border-gray-400 rounded-lg shadow-sm my-4 ">
+        {hotelRooms.length > 0 ? (
+          hotelRooms.map((room) => (
+            <div key={room.id} className="min-h-[250px] flex lg:flex-row flex-col px-3 py-4 gap-5  border border-gray-400 rounded-lg shadow-sm my-4 ">
 
-            <div className="w-full md:w-[50%] lg:w-[25%] ">
-              <img
-                src={defaultImage || (hotel.images && hotel.images[0])}
-                alt={room.room_type}
-                className="rounded-xl overflow-hidden w-full h-full object-cover"
-              />
-            </div>
-
-            <div className='flex w-full lg:w-[75%] justify-between p-5'>
-              <div className=' w-[60%] mt-4 md:mt-0 flex flex-col gap-5  '>
-                <h3 className="text-base sm:text-[24px] font-[600] leading-[28px] flex gap-4">{room.room_type} <spn className="text-red-500 flex text-lg mt-1"><FaUser /><FaUser /></spn></h3>
-                <p className="text-gray-500 text-sm flex gap-2"><span className='text-red-500 mt-1'><FaCheck />
-                </span> Free cancellation before {newDateString}</p>
-                <ul className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 text-sm gap-4">
-                  {hotel.facilities.map((facility, index) => (
-                    <li key={index} className="text-gray-800 flex items-center mb-4 opacity-60">
-                      <span className="text-white bg-red-500 p-1 rounded-md text-sm sm:text-lg mr-1 sm:mr-2" >{iconMapping[facility.icon]}
-                      </span>
-                      <span className='text-[10px] sm:text-sm'>{facility.name}</span>
-                    </li>
-                  ))}
-                </ul>
+              <div className="w-full md:w-[50%] lg:w-[25%] ">
+                <img
+                  src={defaultImage || (hotel.images && hotel.images[0])}
+                  alt={room.room_type}
+                  className="rounded-xl overflow-hidden w-full h-full object-cover"
+                />
               </div>
-              <div className="lg:w-[20%] flex flex-col items-center justify-between">
-                <div className='flex gap-2 justify-center lg:items-end flex-col lg:text-end'>
-                  <p className="text-gray-500 text-base lg:text-sm">From</p>
-                  <p className="text-2sm font-bold ">${room.price}</p>
-                  <p className="text-gray-500 text-base lg:text-sm">/night</p>
-                  <p className="text-red-500 text-base lg:text-sm">Total: ${room.price}</p>
 
+              <div className='flex w-full lg:w-[75%] justify-between p-5'>
+                <div className=' w-[60%] mt-4 md:mt-0 flex flex-col gap-5  '>
+                  <h3 className="text-base sm:text-[24px] font-[600] leading-[28px] flex gap-4">{room.room_type} <spn className="text-red-500 flex text-lg mt-1"><FaUser /><FaUser /></spn></h3>
+                  <p className="text-gray-500 text-sm flex gap-2"><span className='text-red-500 mt-1'><FaCheck />
+                  </span> Free cancellation before {newDateString}</p>
+                  <ul className="grid grid-cols-2  md:grid-cols-3 lg:grid-cols-4 text-sm gap-4">
+                    {hotel.facilities.map((facility, index) => (
+                      <li key={index} className="text-gray-800 flex items-center mb-4 opacity-60">
+                        <span className="text-white bg-red-500 p-1 rounded-md text-sm sm:text-lg mr-1 sm:mr-2" >{iconMapping[facility.icon]}
+                        </span>
+                        <span className='text-[10px] sm:text-sm'>{facility.name}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
-                <button onClick={() => handleBookNow(room.id, room.price)} className=" bg-red-500 text-[16px] leading-[19px] text-white font-[500] px-2 py-1 rounded-full w-32 h-[30px] lg:w-[130px] hover:bg-red-600 ">
-                  Book Now
-                </button>
+                <div className="lg:w-[20%] flex flex-col items-center justify-between">
+                  <div className='flex gap-2 justify-center lg:items-end flex-col lg:text-end'>
+                    <p className="text-gray-500 text-base lg:text-sm">From</p>
+                    <p className="text-2sm font-bold ">${room.price}</p>
+                    <p className="text-gray-500 text-base lg:text-sm">/night</p>
+                    <p className="text-red-500 text-base lg:text-sm">Total: ${room.price}</p>
+
+                  </div>
+                  <button onClick={() => handleBookNow(room.id, room.price)} className=" bg-red-500 text-[16px] leading-[19px] text-white font-[500] px-2 py-1 rounded-full w-32 h-[30px] lg:w-[130px] hover:bg-red-600 ">
+                    Book Now
+                  </button>
+                </div>
               </div>
             </div>
+          ))
+        ) : (
+          <div className="text-center py-8">
+            <p className="text-gray-500">No rooms available</p>
           </div>
-        ))}
+        )}
       </div>
     </div>
   )
