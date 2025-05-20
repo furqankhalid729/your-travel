@@ -79,13 +79,13 @@ const RoomProfile = ({ hotel, hotelRooms }) => {
       <nav className="text-sm text-red-500 mb-4">
         <Link href="/" className="hover:text-red-800">Home</Link> &gt;
         <Link href={route('hotel.frontendIndex')} className="hover:text-red-800"> Hotels</Link> &gt;
-        <span className="text-red-400">{hotel.name}</span>
+        <span className="text-red-400">{hotel.HotelName}</span>
       </nav>
 
       {/* Title and Rating */}
       <div className='my-12'>
         <div className="md:flex items-center justify-between">
-          <h1 className="max-[320px]:text-base text-lg md:text-3xl font-bold">{hotel.name}</h1>
+          <h1 className="max-[320px]:text-base text-lg md:text-3xl font-bold">{hotel.HotelName}</h1>
           <div className="md:flex justify-between space-x-2  hidden">
             <span onClick={handleFavorite} className={`text-lg md:text-xl lg:text-4xl text-red-500 md:mt-4 ${wishList ? 'bg-red-500 text-white rounded-[50%]' : ''}`}><CiHeart /></span>
             {/* <div className='flex flex-col'><p className='text-xs md:text-sm text-gray-500 text-right'>from</p> <p className="text-base md:text-2xl font-semibold text-gray-800">${hotelRooms[0].price || 200}</p></div> */}
@@ -95,7 +95,7 @@ const RoomProfile = ({ hotel, hotelRooms }) => {
         <div>
           <div className="items-center space-x-2 mb-1">
             <span className='text-red-500 text-[14px] md:text-[10px] md:text-sm inline-block'><MdLocationPin /></span>
-            <span className="text-gray-500 text-[14px] md:text-[10px] md:text-sm"> {hotel.location}</span>
+            <span className="text-gray-500 text-[14px] md:text-[10px] md:text-sm"> {hotel.Address}</span>
           </div>
         </div>
       </div>
