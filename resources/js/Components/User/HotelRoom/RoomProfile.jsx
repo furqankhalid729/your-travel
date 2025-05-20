@@ -10,7 +10,7 @@ import { Link, usePage, router } from '@inertiajs/react';
 import Cookies from "js-cookie";
 const RoomProfile = ({ hotel, hotelRooms }) => {
   const [bookingDate, setBookingDate] = useState("");
-  const images = hotel?.images?.length>0 ? hotel.Images : [];
+  const images = hotel?.Images?.length>0 ? hotel.Images : [];
   const { auth } = usePage().props;
   const dispatch = useDispatch();
   const [wishList, setWishList] = useState(false);
