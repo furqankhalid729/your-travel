@@ -28,7 +28,6 @@ class HotelRoomController extends Controller
      */
     public function show(string $id)
     {
-
         // Try finding in TBOHotel
         $tboHotel = TBOHotel::all()->filter(function ($hotel) use ($id) {
             $decoded = json_decode($hotel->data, true);

@@ -55,12 +55,12 @@ const RoomProfile = ({ hotel, hotelRooms }) => {
   };
 
   const handleFavorite = () => {
-    const isFavorited = favorites.some((fav) => fav.id === hotel.id);
+    const isFavorited = favorites.some((fav) => fav.id === hotel.HotelCode);
     let updatedFavorites = [...favorites];
     if (isFavorited) {
-      updatedFavorites = updatedFavorites.filter((item) => item.id !== hotel.id);
+      updatedFavorites = updatedFavorites.filter((item) => item.id !== hotel.HotelCode);
     } else {
-      updatedFavorites.push({ id: hotel.id, name: hotel.name, image: JSON.parse(hotel.images)[0], type: "hotel" });
+      updatedFavorites.push({ id: hotel.HotelCode, name: hotel.HotelName, image: hotel.Images, type: "hotel" });
     }
     Cookies.set("favorites", JSON.stringify(updatedFavorites), { expires: 30 });
     setFavorites(updatedFavorites);

@@ -158,6 +158,21 @@ function HotelCards({ hotels, TBO_Hotel }) {
         })}
       </div>
 
+      <div className="flex justify-center mt-8 space-x-2 flex-wrap">
+        {TBO_Hotel.links.map((link, index) => (
+          <Link
+            key={index}
+            href={link.url || '#'}
+            dangerouslySetInnerHTML={{ __html: link.label }}
+            className={`
+                                px-3 py-1 rounded-md text-sm border 
+                                ${link.active ? 'bg-blue-600 text-white border-blue-600' : 'bg-white text-gray-700 hover:bg-gray-100 border-gray-300'}
+                                ${!link.url ? 'opacity-50 cursor-not-allowed' : ''}
+                            `}
+          />
+        ))}
+      </div>
+
     </div>
   );
 }
