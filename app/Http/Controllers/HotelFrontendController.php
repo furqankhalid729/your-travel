@@ -32,4 +32,12 @@ class HotelFrontendController extends Controller
         $hotels = Hotel::with('rooms')->limit($limit)->get();
         return response()->json($hotels);
     }
+
+    public function getRooms(Request $request)
+    {
+        $hotelId = $request->input('hotel_id');
+        $rooms = Hotel::findOrFail($hotelId)->rooms;
+
+        return response()->json($rooms);
+    }
 }

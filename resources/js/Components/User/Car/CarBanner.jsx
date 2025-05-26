@@ -14,17 +14,16 @@ const CarBanner = () => {
   };
   return (
     <div
-      className="relative h-screen w-full bg-cover bg-center"
+      className="relative h-[50vh] w-full bg-cover bg-center"
       style={{ backgroundImage: `url('storage/images/carbg.png')` }}
     >
       <div className="absolute inset-0"></div>
-      <div className="relative z-10 flex flex-col items-center justify-start lg:justify-center h-full text-white px-8 text-center">
+      {/* <div className="relative z-10 flex flex-col items-center justify-start lg:justify-center h-full text-white px-8 text-center">
         <h1 className="mt-28 md:mt-44 lg:mt-32 text-lg  md:text-3xl lg:text-5xl font-bold mb-2">
           Find your best Ride
         </h1>
 
         <div className="w-full max-w-4xl mx-auto mt-6">
-          {/* Accordion (visible below lg) */}
           <div className="lg:hidden">
 
             <div className="flex rounded-t-lg overflow-hidden w-full max-w-6xl ">
@@ -44,7 +43,6 @@ const CarBanner = () => {
               </button>
             </div>
             <form action="/car" method="get">
-              {/* Accordion Content */}
               <div
                 className={`transition-all duration-300 ${isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
                   } overflow-hidden`}
@@ -65,7 +63,6 @@ const CarBanner = () => {
                     />
                   ))}
 
-                  {/* Search Button */}
                   <button className="bg-red-600 px-2 md:px-6 py-1 md:py-3 rounded-lg font-semibold flex items-center w-24 md:w-32 space-x-2 mt-2 ml-2 lg:mt-0">
                     <CiSearch className="text-white text-sm md:text-lg" />
                     <span>Search</span>
@@ -74,8 +71,6 @@ const CarBanner = () => {
               </div>
             </form>
           </div>
-
-          {/* Normal Div (visible on lg and above) */}
           <div className="hidden lg:block">
             <div className="flex rounded-t-lg overflow-hidden w-full max-w-6xl ">
               <button
@@ -110,7 +105,6 @@ const CarBanner = () => {
                   />
                 ))}
 
-                {/* Search Button */}
                 <button className="bg-red-600 px-2 md:px-6 py-1 md:py-3 rounded-lg font-semibold flex items-center w-24 md:w-32 space-x-2 mt-2 ml-2 lg:mt-0">
                   <CiSearch className="text-white text-sm md:text-lg" />
                   <span>Search</span>
@@ -119,7 +113,7 @@ const CarBanner = () => {
             </form>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

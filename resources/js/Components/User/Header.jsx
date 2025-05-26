@@ -82,7 +82,6 @@ const Header = () => {
       dropdown: true,
       items: [
         { name: "Hotel", to: "/hotel" },
-        { name: "Transfer", to: "/car" },
         { name: "Trip", to: "/tour" },
       ],
     },

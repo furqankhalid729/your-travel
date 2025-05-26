@@ -83,7 +83,7 @@ export const formFieldsForCar = [
         icon: IoCalendarOutline,
         label: "Start Time",
         description: "Add date",
-        type:"date",
+        type: "datetime-local",
         name:"start_date"
     },
     {

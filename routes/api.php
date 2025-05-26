@@ -49,3 +49,5 @@ Route::post('/add/booking', [BookingController::class, 'booking'])->name('bookin
 Route::post('/contact', [EnquiryController::class , 'store'])->name('contact.store');
 Route::post('/api/subscribe', [SubscriptionController::class, 'store'])->name('subscription.store');
 Route::put('/api/transactions/{id}/update-status',[AdminTransactionController::class, 'updateStatus'])->name('transaction.updateStatus');
+
+Route::get('/hotel/get-rooms', [HotelFrontendController::class, 'getRooms'])->name('hotel.getRooms');

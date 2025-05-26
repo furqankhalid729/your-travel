@@ -109,6 +109,9 @@ const BannerWithTabs = () => {
                                 </button>
                             </div>
                         )}
+                        {activeButton !== 2 && (
+                            <div className="h-[40px]"></div>
+                        )}
                         <form action={searchURL} method="get"
                             className={`transition-all duration-300 ${isOpen ? "max-h-[500px] opacity-100" : "max-h-0 opacity-0"
                                 } overflow-hidden`}
@@ -126,6 +129,7 @@ const BannerWithTabs = () => {
                                         isLast={index === formFields.length - 1}
                                         showCenterIcon={field.showCenterIcon}
                                         name={field.name}
+                                        carSubTab={carSubTab}
                                     />
                                 ))}
 
@@ -158,6 +162,9 @@ const BannerWithTabs = () => {
                                 </button>
                             </div>
                         )}
+                        {activeButton !== 2 && (
+                            <div className="h-[40px]"></div>
+                        )}
 
                         <form action={searchURL} method="get">
                             <div
@@ -174,6 +181,7 @@ const BannerWithTabs = () => {
                                         isLast={index === formFields.length - 1}
                                         showCenterIcon={field.showCenterIcon}
                                         name={field.name}
+                                        carSubTab={carSubTab}
                                     />
                                 ))}
 

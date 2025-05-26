@@ -52,7 +52,7 @@ const CarTab = ({ cars, distance, handleSubmit,hasHours,hoursValue }) => {
             {cars.length} Cars Available
           </h2>
           {/* Toggle with label */}
-          <div className="flex items-center gap-2">
+          {/* <div className="flex items-center gap-2">
             <span className="text-xs md:text-sm">By KM</span>
             <label className="relative inline-flex items-center cursor-pointer">
               <input type="checkbox" className="sr-only peer"
@@ -63,9 +63,9 @@ const CarTab = ({ cars, distance, handleSubmit,hasHours,hoursValue }) => {
               <div className="absolute left-0.5 top-0.5 w-5 h-5 bg-white rounded-full shadow-md transform peer-checked:translate-x-full transition-transform duration-300"></div>
             </label>
             <span className="text-xs md:text-sm">By Hour</span>
-          </div>
+          </div> */}
           {/* Hour Input Field */}
-          {timeEnabled && (
+          {/* {timeEnabled && (
             <input
               value={hours}
               onChange={(e) => setHours(e.target.value)}
@@ -74,7 +74,7 @@ const CarTab = ({ cars, distance, handleSubmit,hasHours,hoursValue }) => {
               placeholder="Hours"
               className="w-20 md:w-24 px-2 py-1 text-xs md:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
-          )}
+          )} */}
         </div>
 
         <div className="flex items-center space-x-1 text-gray-700 text-[12px] md:text-xl cursor-pointer">
