@@ -6,6 +6,7 @@ const Login = ({ onSwitchToSignup, setShowLogin }) => {
   const { data, setData, post, processing, errors } = useForm({
     email: "",
     password: "",
+    redirect: route().params.redirect ?? null,
   });
 
   const submit = (e) => {
@@ -54,6 +55,10 @@ const Login = ({ onSwitchToSignup, setShowLogin }) => {
             <span className="text-red-500 text-sm">{errors.password}</span>
           )}
         </div>
+        <input
+          type="hidden"
+          name="redirect"
+          value={data.redirect} />
         <button
           type="submit"
           disabled={processing}

@@ -63,15 +63,20 @@ const Car = ({ cars, filters, modelsFilter, brandFilter }) => {
 
     getDistance();
 
-    if (params.from && params.to) {
+    if (params.from) {
       getCoordinates(params.from).then(setOriginCoords);
-      getCoordinates(params.to).then(setDestinationCoords);
+
+      const destination = params.to || params.from;
+      getCoordinates(destination).then(setDestinationCoords);
     }
   }, [cars, params.from, params.to]);
 
-  const handleSubmit = (carId,carName,price,timeEnabled, hours) => {
+  const handleSubmit = (carId, carName, price, timeEnabled, hours) => {
     if (!auth.user) {
-      router.visit('/login');
+      const currentUrl = window.location.pathname + window.location.search;
+      router.visit(`/login`, {
+        data: { redirect: currentUrl },
+      });
       return;
     }
     const bookingData = {
@@ -113,16 +118,18 @@ const Car = ({ cars, filters, modelsFilter, brandFilter }) => {
             duration={duration}
             originCoords={originCoords}
             destinationCoords={destinationCoords}
+            hasHours={hasHours}
+            hoursValue={hoursValue}
           />
         </div>
         <div className='w-full md:w-3/4 mt:10 lg:mt-24'>
-          <CarTab 
-            cars={filteredCars} 
-            distance={distance} 
-            handleSubmit={handleSubmit} 
-            hasHours={hasHours} 
+          <CarTab
+            cars={filteredCars}
+            distance={distance}
+            handleSubmit={handleSubmit}
+            hasHours={hasHours}
             hoursValue={hoursValue}
-            />
+          />
         </div>
       </div>
     </div>

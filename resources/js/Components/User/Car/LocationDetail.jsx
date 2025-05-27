@@ -1,6 +1,6 @@
 import { FaMapMarkerAlt, FaCalendarAlt, FaClock, FaUser, FaCheck } from "react-icons/fa";
 import PinMap from "../../PinMap";
-export default function LocationDetail({ from, to, startDate, passengers, distance, duration,originCoords, destinationCoords }) {
+export default function LocationDetail({ from, to, startDate, passengers, distance, duration,originCoords, destinationCoords,hasHours,hoursValue }) {
     const items = [
         "Taxes and Tolls",
         "Flight Monitoring",
@@ -54,10 +54,9 @@ export default function LocationDetail({ from, to, startDate, passengers, distan
                 <h2 className="text-lg font-semibold text-red-600 mb-2">Trip Details</h2>
 
                 <div className="text-gray-700 text-sm mb-2">
-                    <p><span className="font-semibold">Transfer Time:</span>{duration}</p>
-                    <p><span className="font-semibold">Distance:</span> {distance} km</p>
+                    <p><span className="font-semibold">Transfer Time:</span>{duration || hoursValue}</p>
+                    {!hasHours && ( <p><span className="font-semibold">Distance:</span> {distance} km</p>)}
                 </div>
-
                 <div className="rounded overflow-hidden">
                     <PinMap 
                         origin={originCoords}
