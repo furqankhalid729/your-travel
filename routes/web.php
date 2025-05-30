@@ -34,6 +34,11 @@ Route::get('/tour', [TourFrontendController::class, 'frontendIndex'])->name('tou
 Route::get('/checkout', [BookingController::class, 'index'])->name('checkout');
 Route::get('/hotel/hotel-details/{id}', [HotelRoomController::class, 'show'])->name('hotel.show');
 Route::get('/tour/tour-details/{id}', [TourFrontendController::class, 'show'])->name('tour.show');
+
+Route::get('/privacy-policy', function () {
+    return Inertia::render('User/PrivacyPolicy');
+});
+
 Route::get('/contact', function () {
     return Inertia::render('User/Contact');
 });

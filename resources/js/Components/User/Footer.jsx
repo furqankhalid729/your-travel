@@ -91,7 +91,7 @@ function Footer() {
               <ul className='text-sm lg:text-base'>
                 {services.map((link, index) => (
                   <li key={index} className='pt-2'>
-                    <a href={link.url} className="text-gray-600 hover:text-red-600">{link.name}</a>
+                    <Link href={link.url} className="text-gray-600 hover:text-red-600">{link.name}</Link>
                   </li>
                 ))}
               </ul>
@@ -103,7 +103,7 @@ function Footer() {
               <ul className='text-sm lg:text-base'>
                 {support.map((link, index) => (
                   <li key={index} className='pt-2'>
-                    <a href={link.url} className="text-gray-600 hover:text-red-600">{link.name}</a>
+                    <Link href={link.url} className="text-gray-600 hover:text-red-600">{link.name}</Link>
                   </li>
                 ))}
               </ul>
@@ -114,21 +114,13 @@ function Footer() {
               <h3 className="text-lg font-bold my-2">Contact Us</h3>
               <div className='text-xs lg:text-base'>
                 <p className="text-gray-600">Toll Free Customer Care</p>
-                <p className="text-red-600 font-bold">+44 123 456 7890</p>
+                <p className="text-red-600 font-bold">+41 44 523 75 64</p>
                 <p className="text-gray-600 mt-2">Need live support?</p>
-                <p className="text-red-600 font-semibold">hr@yourtrip24.com</p></div>
-              <div className="mt-4">
-                <div className="flex">
-                  <a href="#" className="mr-2">
-                    <img src="storage/images/Android.jpeg" alt="umer1" className='w-[100px] md:w-[150px] ' />
-                  </a>
-                </div>
-                <div className="flex mt-2">
-                  <a href="#">
-                    <img src="storage/images/Apple.png" alt="umer1" className='w-[100px] md:w-[150px]' />
-                  </a>
-                </div>
+                <p className="text-red-600 font-semibold">info@yourtrip24.com</p>
+                <p className="text-gray-600 mt-2">Address</p>
+                <p className="text-red-600 font-semibold">Weihermattstrasse 75, 5000 Aarau</p>
               </div>
+
 
             </div>
           </div>

@@ -1,20 +1,14 @@
 
 const company = [
     { name: "About Us", url: "/about" },
-    { name: "Careers", url: "/career" },
     { name: "Blog", url: "/blog" },
-    { name: "Press", url: "/press" },
-    { name: "Gift Cards", url: "/gift-cards" },
-    { name: "Magazine Us", url: "/magazine" }
+    { name: "Press", url: "/press" }
 ];
 
 const services = [
-    { name: "Car hire", url: "/car-hire" },
-    { name: "Activity Finder", url: "/activity-finder" },
-    { name: "Tour", url: "/tour" },
-    { name: "Travel Agent", url: "/profile" },
-    { name: "Data driven", url: "/data-driven" },
-    { name: "Best Guide", url: "/best-guide" }
+    { name: "Transfer", url: "/car-hire" },
+    { name: "Trip", url: "/tour" },
+    { name: "Hotel", url: "/hotel" }
 ];
 
 const support = [
@@ -22,7 +16,6 @@ const support = [
     { name: "Legal Notice", url: "/legal-notice" },
     { name: "Privacy Policy", url: "/privacy-policy" },
     { name: "Terms and Conditions", url: "/terms-condition" },
-    { name: "Sitemap", url: "/sitemap" }
 ];
 
 export { company, services, support };
