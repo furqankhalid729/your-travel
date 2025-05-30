@@ -18,14 +18,14 @@ const ContactBanner = () => {
           icon: MdOutlineAttachEmail,
           title: "Email us",
           paragraph1: "We are available to assist.",
-          paragraph2: "yourtrip24@info.com",
+          paragraph2: "info@yourtrip24.com",
         },
         {
           id: 3,
           icon: TbPhonePlus,
           title: "Contact us",
           paragraph1: "We are available to assist you. 24/7",
-          paragraph2: "Toll Free +(44) 123 456 7890",
+          paragraph2: "+41 44 523 75 64",
          
         },
         {
@@ -33,7 +33,7 @@ const ContactBanner = () => {
           icon: SlLocationPin,
           title: "Visit us",
           paragraph1: "Our crew is available to assist you.",
-          paragraph2: "Falkenstrasse 28A, 8008 Zürich, Switzerland",
+          paragraph2: "Weihermattstrasse 75, 5000 Aarau",
         },
       ];
   return (
